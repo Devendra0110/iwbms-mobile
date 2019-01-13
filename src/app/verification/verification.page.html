@@ -5,7 +5,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card>
+  <ion-card *ngIf="!otpflag" >
     <ion-card-header>
       <ion-card-title>
         Mobile &amp; Aadhar Verification
@@ -23,7 +23,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Aadhar Number / आधार क्रमांक</ion-label>
-          <ion-input  type="text" maxlength='12' id="aadharNo" formControlName="aadharNo"></ion-input>
+          <ion-input  type="tel" maxlength='12' id="aadharNo" formControlName="aadharNo"></ion-input>
           <div class="text-danger" *ngIf="aadharNo.invalid && aadharNo.touched">
             <small *ngIf="!!aadharNo.errors?.required">Please enter your Aadhar Number.</small>
             <small *ngIf="!!aadharNo.errors?.pattern">Please enter appropriate Aadhar Number.</small>
@@ -56,7 +56,7 @@
        <ion-card-content>
          <ion-item>
            <ion-label position="floating">
-             Enter OTP
+            OTP
            </ion-label>
            <ion-input type="tel" maxlength="6" #otp></ion-input>
          </ion-item>

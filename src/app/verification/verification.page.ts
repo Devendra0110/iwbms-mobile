@@ -55,7 +55,7 @@ export class VerificationPage implements OnInit {
       this.mobileVerification.sendOTP(mobileNo, aadharNo).subscribe(
         (res: any) => {
           if (res.message === 'OTP Sent') {
-            this.otpflag=true;
+            this.otpflag = true;
             this.unverifiedUser = false;
           }
         },

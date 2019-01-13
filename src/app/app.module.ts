@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { Network } from '@ionic-native/network/ngx';
+import { HTTP} from '@ionic-native/http/ngx';
 
 import { AppComponent } from './app.component';
 import {SuggestionBoxComponent } from './components/suggestion-box/suggestion-box.component';
@@ -22,6 +23,7 @@ import { RegistrationService } from './services/registration.service';
 import { EventService } from './services/event.service';
 import { HttpService } from './services/http.service';
 import { UserManagementService } from './services/user-management.service';
+import { AuthGuardService } from './services/auth-guard.service';
 import { FormControlDirective } from './directives/form-control.directive';
 
 
@@ -41,13 +43,16 @@ import { FormControlDirective } from './directives/form-control.directive';
     SplashScreen,
     Dialogs,
     Network,
+    HTTP,
     TransliterationService,
     ValidationService,
     RegistrationService,
     EventService,
     HttpService,
     UserManagementService,
+    AuthGuardService,
     Camera,
+
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

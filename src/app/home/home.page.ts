@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { Network } from '@ionic-native/network/ngx';
+import { ValidationService } from '../services/validation.service';
 
 @Component({
   selector: 'app-home',
@@ -12,30 +13,24 @@ import { Network } from '@ionic-native/network/ngx';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  loginForm: FormGroup;
+  public loginForm: FormGroup;
   public wrongUser: boolean;
   constructor(
     private userManagementService: UserManagementService,
+    private validationService: ValidationService,
     private router: Router,
     private storage: Storage,
     private network: Network,
     private dialogs: Dialogs) {
 
-
-     // network subscribers check the status of network even its type 
+    // network subscribers check the status of network even its type 
     this.network.onDisconnect().subscribe(() => { });
-    this.network.onConnect().subscribe(() => { })
-
-
-
+    this.network.onConnect().subscribe(() => { });
     this.wrongUser = false;
-    this.storage.get('token').then((val) => {
-      if (val)
-        this.router.navigate(['/dashboard'])
-    });
+    
 
     this.loginForm = new FormGroup({
-      username: new FormControl('', [Validators.required]),
+      username: new FormControl('', this.validationService.createValidatorsArray('userName')),
       password: new FormControl('', [Validators.required])
     });
   }

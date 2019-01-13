@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
+import { Network } from '@ionic-native/network/ngx';
 
 import { states } from '../models/states';
 import { Modes } from '../../assets/modes';
@@ -34,6 +36,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public startDateForDob: any;
   public startDate: any;
   public todaysDate: any;
+  public endDate:any;
   public maxAppointmentDate: any;
   public dateOfBirth: any;
   public attachmentDetails: any = [];
@@ -47,6 +50,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public isIfscCodeFound: boolean;
   public statewiseListArray = states;
   public states: any[] = [];
+  public elseStateFlag:boolean
   public districts: any[] = [];
   public talukasRes: any[] = [];
   public postOfficeArrayRes: any[] = [];
@@ -143,18 +147,23 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     private userMgmntService: UserManagementService,
     private httpService: HttpService,
     private camera: Camera,
-    private storage: Storage) {
+    private storage: Storage,
+    private network: Network,
+    private dialogs: Dialogs) {
+
+    // network subscribers check the status of network even its type 
+    this.network.onDisconnect().subscribe(() => { });
+    this.network.onConnect().subscribe(() => { })
 
 
-    this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.mobileNo = this.router.getCurrentNavigation().extras.state.mobile;
-        this.aadharNo = this.router.getCurrentNavigation().extras.state.aadhar;
-      } else {
-        this.router.navigate(['/verification']);
-      }
-    });
-
+    // this.route.queryParams.subscribe(params => {
+    //   if (this.router.getCurrentNavigation().extras.state) {
+    //     this.mobileNo = this.router.getCurrentNavigation().extras.state.mobile;
+    //     this.aadharNo = this.router.getCurrentNavigation().extras.state.aadhar;
+    //   } else {
+    //     this.router.navigate(['/verification']);
+    //   }
+    // });
 
     //re-route to homepage if not logged-in
     this.storage.get('token').then((val) => {
@@ -199,7 +208,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
 
     // tslint:disable-next-line: max-line-length
-    this.familyHeaderOptions = ['SNo.', 'First Name', 'Surname', 'Father/ Husband Name', 'DOB', 'Age (year)', 'Relation', 'Profession', 'Education', 'Nominee', 'Delete'];
     this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
       for (const i of familyRelationArrObj) {
         this.familyRelationOptions[i.relation_title_en] = i.family_relation_id;
@@ -244,6 +252,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.httpService.getStates().subscribe((statesArrObj: any) => {
       // create state-name:state-id key-value in states
       for (const i of statesArrObj) this.states[i.state_name] = i.state_id;
+      console.log(this.states);
     }, err => console.log(err));
 
     this.registrationFormGroup = new FormGroup({
@@ -262,24 +271,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       day: new Date().getDate()
     };
 
-    this.startDate = {
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-      day: new Date().getDate()
-    };
+    this.startDate = this.changeToIonDateTime(60, 'years');
 
-    const maxAppointmentDate = moment(
-      new Date(this.todaysDate.year, this.todaysDate.month - 1, this.todaysDate.day))
-      .subtract(3, 'months').format('DD/MM/YYYY').split('/');
+    this.endDate = this.changeToIonDateTime(18, 'years');
 
-
-    // this.maxAppointmentDate = {
-    //   year: Number(maxAppointmentDate[2]),
-    //   month: Number(maxAppointmentDate[1]),
-    //   day: Number(maxAppointmentDate[0])
-    // };
-
-    this.maxAppointmentDate = `${Number(maxAppointmentDate[2])}-0${Number(maxAppointmentDate[1])}-${Number(maxAppointmentDate[0])}`;
+    this.maxAppointmentDate = this.changeToIonDateTime(3, 'months');
 
     this.attachmentDetails = [
       {
@@ -420,6 +416,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // residential address
     this.district.valueChanges.subscribe(value => {
       this.talukasRes = [];
+      debugger;
       this.postOfficeArrayRes = [];
       if (this.state.value && value) {
         // create taluka-name:taluka-id key-value in talukaRes
@@ -457,19 +454,23 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         this.migrant.patchValue(false);
         this.migrant_mr.patchValue(false);
       } else {
+
         this.migrant.patchValue(true);
         this.migrant_mr.patchValue(true);
       }
+      this.statePer.setValue(Number(value), {emitEvent:false});
     });
 
     this.districtPer.valueChanges.subscribe(value => {
       this.talukasPer = [];
+      debugger;
       if (this.statePer.value && value) {
-        // create taluka-name:taluka-id key-value in talukaRes
         this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
           for (const i of talukaArrObj) {
             this.talukasPer[i.taluka_name] = i.taluka_id;
           }
+          // const districtValue = Object.keys(this.districts).find(key => this.districts[key] === value);
+          // this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('district').setValue(districtValue, { emitEvent: false });
         }, err => console.log(err));
       } else {
         this.talukasPer = [];
@@ -478,24 +479,29 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
     this.talukaPer.valueChanges.subscribe(value => {
       this.postOfficeArrayPer = [];
-      if (this.statePer.value && this.districtPer.value && value) {
-        // create post-office-name:post-office-id key-value in postOfficeArrayRes
-        this.httpService.getPostOffices(value).subscribe((postOfficeArrObj: any) => {
-
-          for (const i of postOfficeArrObj) {
-            this.postOfficeArrayPer[i.post_office_name] = i.post_office_id;
-            this.pincodeArrayPer[i.post_office_id] = i.pincode;
-          }
-        }, err => console.log(err));
-      } else {
-        this.postOfficeArrayPer = [];
-      }
+        if (this.statePer.value && this.districtPer.value && value) {
+          this.httpService.getPostOffices(value).subscribe((postOfficeArrObj: any) => {
+            for (const i of postOfficeArrObj) {
+              this.postOfficeArrayPer[i.post_office_name] = i.post_office_id;
+              this.pincodeArrayPer[i.post_office_name] = i.pincode;
+            }
+            const talukaValue = Object.keys(this.talukasPer).find(key => this.talukasPer[key] === value);
+            this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka').setValue(talukaValue, { emitEvent: false });
+          }, err => console.log(err));
+        } else {
+          this.postOfficeArrayPer = [];
+        }
+      
     });
 
     this.postOfficePer.valueChanges.subscribe(value => {
+      setTimeout(() => {
       if (this.statePer.value && this.districtPer.value && this.talukaPer.value) {
+        const postOfficeValue = Object.keys(this.postOfficeArrayPer).find(key => this.postOfficeArrayPer[key] === value);
+        this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('postOffice').setValue(postOfficeValue, { emitEvent: false });
         this.pincode.patchValue(this.pincodeArrayPer[value]);
       }
+      }, 2000)
     });
 
     // employer detail
@@ -513,12 +519,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       const dob = val[0] + '-' + val[1] + '-' + val[2];
       this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(dob, { emitEvent: false });
     }, err => console.log(err));
-
-    // this.dispatchDateEmp.valueChanges.subscribe(value => {
-    //   const val = new Date(value).toJSON().slice(0, 10).split('-');
-    //   const dob = val[0] + '-' + val[1] + '-' + val[2]
-    //   this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp').patchValue(dob, { emitEvent: false })
-    // },err=>console.log(err));
 
   }
 
@@ -732,12 +732,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-  // getSpecialDropDownValue(value: string) {
-  //   return this.specialOptions.marathi[this.specialOptions.english.indexOf(value)];
-  // }
-
   calculateAge() {
-
+    if (this.registrationFormGroup.get('personalDetails').get('dobPersonal').value){
     const val = new Date(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value).toJSON().slice(0, 10).split('-');
     const dob = moment(
       val[0] + '-' + val[1] + '-' + val[2],
@@ -749,16 +745,19 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
       if (dob) {
         if (age > 17 && age < 61) {
-          this.dobFamily.patchValue(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value);
+          this.dobFamily.patchValue(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value, { emitEvent: false });
           this.dobFamily.disable();
           this.ageFamily.patchValue(age);
           this.registrationFormGroup.get('personalDetails').get('agePersonal').setValue(age);
         } else {
-          alert('Applicant age should be greater than 18 and less than 60 ');
+          this.dialogs.alert('Applicant age should be greater than 18 and less than 60 ');
           this.registrationFormGroup.get('personalDetails').get('agePersonal').setValue('');
           this.registrationFormGroup.get('personalDetails').get('dobPersonal').setValue('');
         }
       }
+    } 
+    } else {
+      // alert('select date');
     }
   }
 
@@ -842,6 +841,18 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   //   }
   // }
 
+  changeToIonDateTime(diff:any,timeUnit:string){
+    const date = moment(
+      new Date(this.todaysDate.year, this.todaysDate.month - 1, this.todaysDate.day))
+      .subtract(diff, timeUnit).format('DD/MM/YYYY').split('/');
+
+    if (Number(date[1]) < 10 && Number(date[0]) < 10) return `${Number(date[2])}-0${Number(date[1])}-0${Number(date[0])}`;
+    else if (Number(date[1]) < 10 && Number(date[0]) >= 10) return `${Number(date[2])}-0${Number(date[1])}-${Number(date[0])}`;
+    else if (Number(date[1]) >= 10 && Number(date[0]) < 10) return `${Number(date[2])}-${Number(date[1])}-0${Number(date[0])}`;
+    else return `${Number(date[2])}-${Number(date[1])}-${Number(date[0])}`; 
+    }
+
+
 
   searchByIfscCode() {
     this.bankDetails = {
@@ -859,7 +870,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     },
       error1 => {
-        alert('IFSC Code Not Found.Please fill bank details manually');
+        this.dialogs.alert('IFSC Code Not Found.Please fill bank details manually');
         this.bankDetails = {
           BANK: '',
           BRANCH: '',
@@ -897,7 +908,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // tslint:disable-next-line: max-line-length
     const toDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value ? new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value).toJSON().slice(0, 10).split('-') : null;
     if (fromDate && toDate) {
-
+      
       const fromServerDate = fromDate[0] + '-' + fromDate[1] + '-' + fromDate[2];
       const toServerDate = toDate[0] + '-' + toDate[1] + '-' + toDate[2];
       
@@ -920,10 +931,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       // console.log(totalWorkingDays);
 
       if (this.workingDay < 90) {
-        alert('Working days is less than 90');
-        this.workingDayFlag = false;
-      } else {
+        // alert('Working days is less than 90');
         this.workingDayFlag = true;
+      } else {
+        this.workingDayFlag = false;
       }
     }
   }
@@ -941,6 +952,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       const fileImage = new File([blobImage], `${Date.now()}-img.jpg`);
       this.files.applicantPhoto = fileImage;
       this.fileOptions.applicantPhoto = `${Date.now()}-img`;
+      console.log(this.currentImage);
+      console.log(fileImage);
+      console.log(this.registrationFormGroup.value);
     }, (err) => {
       // Handle error
       console.log("Camera issue:" + err);
@@ -1022,7 +1036,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         // console.log(this.token_id);
         // formData.append('wfc_id', String(this.wfcID));
       }
-      debugger;
       this.httpService.saveData(formData, this.JWTToken).subscribe(
         (res: any) => {
           alert('Data Saved');
@@ -1110,10 +1123,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       area: new FormControl('', this.validationService.createValidatorsArray('area')),
       city: new FormControl('', this.validationService.createValidatorsArray('city')),
       importantPlace: new FormControl('', this.validationService.createValidatorsArray('importantPlace')),
-      postOffice: new FormControl('', this.validationService.createValidatorsArray('postOffice')),
-      taluka: new FormControl('', this.validationService.createValidatorsArray('taluka')),
-      district: new FormControl('', this.validationService.createValidatorsArray('district')),
       state: new FormControl('', this.validationService.createValidatorsArray('state')),
+      district: new FormControl('', this.validationService.createValidatorsArray('district')),
+      taluka: new FormControl('', this.validationService.createValidatorsArray('taluka')),
+      postOffice: new FormControl('', this.validationService.createValidatorsArray('postOffice')),
       pincode: new FormControl('', this.validationService.createValidatorsArray('pincode')),
       stdcode: new FormControl('', this.validationService.createValidatorsArray('stdcode')),
       phone: new FormControl('', this.validationService.createValidatorsArray('phone')),
@@ -1131,15 +1144,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   employerDetailsFormFroup(): FormGroup {
     return new FormGroup({
-      contractorNameEmp: new FormControl('', [Validators.pattern('[a-zA-z\\s]{1,60}')]),
-      contractorCompanyNameEmp: new FormControl('', [Validators.maxLength(40)]),
-      contractorPhoneEmp: new FormControl('', [Validators.pattern('^[0-9]{5,12}$')]),
+      contractorNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorNameEmp')),
+      contractorCompanyNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorCompanyNameEmp')),
+      contractorPhoneEmp: new FormControl('', [Validators.required,Validators.pattern('^[0-9]{5,12}$')]),
       workPlaceEmp: new FormControl('', [Validators.maxLength(50)]),
       townEmp: new FormControl('', [Validators.required]),
       talukaEmp: new FormControl('', [Validators.required]),
       districtEmp: new FormControl('', [Validators.required]),
-      pinCodeEmp: new FormControl('', [Validators.pattern('^\\d{6}$')]),
-      appointmentDateEmp: new FormControl(null),
+      pinCodeEmp: new FormControl('', [Validators.required,Validators.pattern('^\\d{6}$')]),
+      appointmentDateEmp: new FormControl(null,[Validators.required]),
       remunerationPerDayEmp: new FormControl('', [Validators.maxLength(8)]),
       natureOfWorkEmp: new FormControl('', [Validators.required]),
       // typeOfEmployerEmp: new FormControl(''),
@@ -1159,22 +1172,22 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       talukaEmp_mr: new FormControl(''),
       districtEmp_mr: new FormControl(''),
       natureOfWorkEmp_mr: new FormControl(''),
-      typeOfEmployerEmp_mr: new FormControl(''),
-      fullNameOfIssuerEmp_mr: new FormControl(''),
-      registrationTypeEmp_mr: new FormControl('')
+      // typeOfEmployerEmp_mr: new FormControl(''),
+      // fullNameOfIssuerEmp_mr: new FormControl(''),
+      // registrationTypeEmp_mr: new FormControl('')
     });
   }
-
+//[A-Za-z]+\s{1}[A-Za-z]+(\s{1}[A-Za-z]+)*
   employerWorkDetailsFormFroup(): FormGroup {
     return new FormGroup({
-      typeOfEmployerEmp: new FormControl(''),
-      fullNameOfIssuerEmp: new FormControl('', [Validators.pattern('[a-zA-z\\s]{8,50}')]),
+      typeOfEmployerEmp: new FormControl('', [Validators.required]),
+      fullNameOfIssuerEmp: new FormControl('', [Validators.required,Validators.pattern('[a-zA-z\\s]{8,50}')]),
       registrationNumberEmp: new FormControl('', [Validators.pattern('^[0-9]{5,12}$')]),
-      registrationTypeEmp: new FormControl(''),
-      mobileNumberOfIssuerEmp: new FormControl('', [Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
+      registrationTypeEmp: new FormControl('', [Validators.required]),
+      mobileNumberOfIssuerEmp: new FormControl('', [Validators.required,Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
       documentRefNumberEmp: new FormControl('', [Validators.maxLength(20)]),
-      fromDateEmp: new FormControl(null),
-      toDateEmp: new FormControl(null),
+      fromDateEmp: new FormControl(null, [Validators.required]),
+      toDateEmp: new FormControl(null, [Validators.required]),
       // MNREGACardNumberEmp: new FormControl(''),
       // contractorNameEmp_mr: new FormControl(''),
       // contractorCompanyNameEmp_mr: new FormControl(''),

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { serverUrl } from '../../assets/config';
+import { HTTP } from '@ionic-native/http/ngx';
 @Injectable({
   providedIn: 'root'
 })
 export class UserManagementService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private httpNative : HTTP) {
   }
 
   login(loginObj: any) {

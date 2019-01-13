@@ -23,20 +23,23 @@ export class ValidationService {
       case 'firstName': {
         validatorsArr = [
           Validators.required,
-          Validators.maxLength(20)
+          Validators.maxLength(20),
+          Validators.pattern('^[A-Za-z]+$')
         ];
         break;
       }
       case 'middleName': {
         validatorsArr = [
-          Validators.maxLength(20)
+          Validators.maxLength(20),
+          Validators.pattern('^[A-Za-z]+$')
         ];
         break;
       }
       case 'lastName': {
         validatorsArr = [
           Validators.required,
-          Validators.maxLength(20)
+          Validators.maxLength(20),
+          Validators.pattern('^[A-Za-z]+$')
         ];
         break;
       }
@@ -59,7 +62,16 @@ export class ValidationService {
         break;
       }
       case 'rationCardNumber': {
-        validatorsArr = [Validators.maxLength(14)
+        validatorsArr = [
+          Validators.required,
+          Validators.maxLength(12),
+          Validators.minLength(8),
+          Validators.pattern('^([a-zA-Z0-9]){8,12}\\s*$')
+        ];
+        break;
+      }
+      case 'rationCardType' :{
+        validatorsArr = [Validators.required
         ];
         break;
       }
@@ -69,19 +81,26 @@ export class ValidationService {
         break;
       }
       case 'pfOrUan': {
-        validatorsArr = [Validators.maxLength(20)];
+        validatorsArr = [Validators.maxLength(22)];
         break;
       }
       case 'esicNo': {
-        validatorsArr = [Validators.maxLength(20)];
+        validatorsArr = [
+          Validators.maxLength(17),
+          Validators.pattern('^(\\d{4})(\\d{1,6})(\\d{3})(\\d{4})$')
+        ];
+        break;
+      }
+      case 'userName': {
+        validatorsArr = [
+          Validators.required,
+          Validators.email
+        ];
         break;
       }
       case 'email': {
         validatorsArr = [
-          Validators.email,
-          Validators.pattern(
-            '^((?!\\.)[\\w-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$'
-          )
+          Validators.email
         ];
         break;
       }
@@ -115,13 +134,6 @@ export class ValidationService {
         ];
         break;
       }
-      case 'area': {
-        validatorsArr = [
-          Validators.required,
-          Validators.maxLength(40)
-        ];
-        break;
-      }
       case 'city': {
         validatorsArr = [
           Validators.required,
@@ -131,7 +143,6 @@ export class ValidationService {
       }
       case 'importantPlace': {
         validatorsArr = [
-          Validators.required,
           Validators.maxLength(40)
         ];
         break;
@@ -155,7 +166,7 @@ export class ValidationService {
         break;
       }
       case 'stdcode': {
-        validatorsArr = [Validators.maxLength(3), Validators.minLength(2)];
+        validatorsArr = [Validators.maxLength(5), Validators.minLength(2)];
         break;
       }
       case 'phone': {
@@ -164,23 +175,29 @@ export class ValidationService {
       }
       // bankvalidation
       case 'ifscCode': {
-        validatorsArr = [Validators.maxLength(11), Validators.minLength(11),Validators.required];
+        validatorsArr = [Validators.maxLength(11), Validators.minLength(11), Validators.required, Validators.pattern('^[A-Za-z]{4}0[A-Z0-9a-z]{6}$')];
         break;
       }
       case 'fullName': {
-        validatorsArr = [Validators.required];
+        validatorsArr = [
+          Validators.required,
+          Validators.pattern('[A-Za-z]+\\s{1}[A-Za-z]+(\\s{1}[A-Za-z]+)*')
+        ];
         break;
       }
       case 'bankName': {
-        validatorsArr = [Validators.maxLength(40)];
+        validatorsArr = [Validators.required, 
+          Validators.maxLength(60)];
         break;
       }
       case 'bankBranch': {
-        validatorsArr = [Validators.maxLength(40)];
+        validatorsArr = [Validators.required, 
+          Validators.maxLength(60)];
         break;
       }
       case 'bankAddress': {
-        validatorsArr = [Validators.maxLength(255)];
+        validatorsArr = [Validators.required, 
+          Validators.maxLength(255)];
         break;
       }
       case 'micrCode': {
@@ -188,8 +205,20 @@ export class ValidationService {
         break;
       }
       case 'accountNumber': {
-        validatorsArr = [Validators.required, Validators.pattern('^\\d{9,18}$')];
+        validatorsArr = [Validators.required,
+           Validators.pattern('^\\d{9,18}$')];
         break;
+      }
+      case 'contractorNameEmp' :{
+        validatorsArr = [Validators.required, 
+          Validators.pattern('[A-Za-z0-9]+\\s*[A-Za-z0-9]\\s*([A-Za-z0-9]+\\s*)*')];
+        break;
+      }
+
+      case 'contractorCompanyNameEmp' :{
+        validatorsArr = [Validators.required, 
+          Validators.pattern('[A-Za-z0-9]+\\s*[A-Za-z0-9]\\s*([A-Za-z0-9]+\\s*)*'),
+          Validators.maxLength(40)]
       }
 
       // FamilyDetails Validation
@@ -202,7 +231,7 @@ export class ValidationService {
         break;
       }
       case 'fatherOrHusbandName': {
-        validatorsArr = [Validators.maxLength(60)];
+        validatorsArr = [Validators.maxLength(60), Validators.pattern('[A-Za-z]+\\s{1}[A-Za-z]+(\\s{1}[A-Za-z]+)*')];
         break;
       }
       case 'fatherOrHusbandName_marathi': {
@@ -230,7 +259,10 @@ export class ValidationService {
         break;
       }
       case 'profession': {
-        validatorsArr = [];
+        validatorsArr = [
+          Validators.maxLength(20),
+          Validators.pattern('^[A-Za-z]+$')
+        ];
         break;
       }
       case 'education': {

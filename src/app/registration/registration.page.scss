@@ -1,0 +1,19 @@
+:host{
+    ion-select-optiion{
+        .action-sheet-button.sc-ion-action-sheet-md{
+            --background:red;
+        }
+    }
+    ion-action-sheet{
+        height:59px;
+    }
+
+    .ics{
+        --background:red;
+    }
+
+}
+
+    button[type=button]:not(:disabled), button:not(:disabled){
+        height: 58px;
+    }
