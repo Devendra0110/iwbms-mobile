@@ -6,7 +6,6 @@
 
 <ion-content>
   <form [formGroup]="registrationFormGroup">
-
     <form [formGroup]="registrationFormGroup.get('personalDetails')">
         <ion-list>
       <ion-list-header style="font-size:20px;"
@@ -18,8 +17,19 @@
       </ion-item>
 
       <ion-item>
+        <ion-label position="floating">पहिले नाव</ion-label>
+        <ion-input maxlength="20" formControlName="firstNamePersonal_mr" ></ion-input>
+      </ion-item>
+
+
+      <ion-item>
         <ion-label position="floating">Middle Name</ion-label>
         <ion-input formControlName="middleNamePersonal"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">मधले नाव</ion-label>
+        <ion-input maxlength="20" class="form-control" formControlName="middleNamePersonal_mr"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -28,17 +38,404 @@
       </ion-item>
 
       <ion-item>
+        <ion-label position="floating">आडनाव</ion-label>
+        <ion-input  maxlength="20" class="form-control" formControlName="lastNamePersonal_mr"></ion-input>
+      </ion-item>
+
+      <ion-item>
         <ion-label position="floating">Aadhar Number</ion-label>
         <ion-input type="number" maxlength="12" minlength="12" formControlName="aadharNoPersonal"></ion-input>
       </ion-item>
- 
+
       <ion-item>
         <ion-label position="floating">Gender</ion-label>
-        <ion-input formControlName="genderPersonal"></ion-input>
+        <ion-select formControlName="genderPersonal">
+          <ion-select-option value="Female">Female</ion-select-option>
+          <ion-select-option value="Male">Male</ion-select-option>
+          <ion-select-option value="Other">Other</ion-select-option>
+        </ion-select>
       </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">लिंग</ion-label>
+        <ion-select formControlName="genderPersonal_mr">
+          <ion-select-option value="पुरुष">पुरुष</ion-select-option>
+          <ion-select-option value="स्त्री">स्त्री</ion-select-option>
+          <ion-select-option value="इतर">इतर</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Marital Status</ion-label>
+        <ion-select formControlName="maritalStatusPersonal">
+          <ion-select-option value="Single">Single</ion-select-option>
+          <ion-select-option value="Married">Married</ion-select-option>
+          <ion-select-option value="Divorced">Divorced</ion-select-option>
+          <ion-select-option value="Widow">Widow</ion-select-option>
+          <ion-select-option value="Widower">Widower</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">वैवाहिक स्थिती</ion-label>
+        <ion-select formControlName="maritalStatusPersonal_mr">
+          <ion-select-option value="अविवाहित">अविवाहित</ion-select-option>
+          <ion-select-option value="विवाहित">विवाहित</ion-select-option>
+          <ion-select-option value="घटस्फोटित">घटस्फोटित<</ion-select-option>
+          <ion-select-option value="विधवा">विधवा</ion-select-option>
+          <ion-select-option value="विधुर">विधुर</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon slot="end" name="calendar"></ion-icon>
+        <ion-label position="floating">Date Of Birth - As Per Aadhar or PAN Card</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" picker-format="DD/MM/YYYY" min="1994-03-14" max="2012-12-09" formControlName="dobPersonal"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Age</ion-label>
+        <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" formControlName="agePersonal" ></ion-input>
+      </ion-item>
+
+     <ion-item>
+        <ion-label position="floating">Mobile No.</ion-label>
+        <ion-input maxlength="10" minlength="10" type="number" formControlName="mobilePersonal" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Ration Card Number</ion-label>
+        <ion-input maxlength="14"  formControlName="rationCardNumberPersonal"></ion-input>
+      </ion-item>
+       
+      <ion-item>
+        <ion-label position="floating">Ration Card Type</ion-label>
+        <ion-select formControlName="rationCardTypePersonal" >
+          <ion-select-option value="Yellow Card (below the poverty line)">Yellow Card (below the poverty line) </ion-select-option>
+          <ion-select-option value="Antyodaya food scheme card">Antyodaya food scheme card</ion-select-option>
+          <ion-select-option value="Annapurna food scheme card">Annapurna food scheme card </ion-select-option>
+          <ion-select-option value="Orange Ration Card">Orange Ration Card</ion-select-option>
+          <ion-select-option value="None of these">None of these</ion-select-option>
+        </ion-select> 
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">रेशन कार्ड प्रकार</ion-label>
+        <ion-select formControlName="rationCardTypePersonal_mr" >
+          <ion-select-option value="दारिद्र रेषेखालील पिवळे">दारिद्र रेषेखालील पिवळे </ion-select-option>
+          <ion-select-option value="अंत्योदय अन्न योजना">अंत्योदय अन्न योजना</ion-select-option>
+          <ion-select-option value="अन्नपूर्णा शिधापत्रिका">अन्नपूर्णा शिधापत्रिका</ion-select-option>
+          <ion-select-option value="केशरी शिधापत्रिका (रु. १ लाखापर्यंत वार्षिक उत्पन्न असलेली)">केशरी शिधापत्रिका (रु.
+                        १ लाखापर्यंत वार्षिक उत्पन्न असलेली)</ion-select-option>
+          <ion-select-option value="यापैकी एकही नाही">यापैकी एकही नाही</ion-select-option>
+        </ion-select> 
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Category</ion-label>
+        <ion-select  formControlName="categoryPersonal">
+          <ion-select-option value="SC">SC</ion-select-option>
+          <ion-select-option value="ST">ST</ion-select-option>
+          <ion-select-option value="NT">NT</ion-select-option>
+          <ion-select-option value="OBC">OBC</ion-select-option>
+          <ion-select-option value="Open">Open</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">वर्गवारी</ion-label>
+        <ion-select  formControlName="categoryPersonal_mr">
+          <ion-select-option value="अनुसूचित जाती">अनुसूचित जाती</ion-select-option>
+          <ion-select-option value="अनुसूचित जमाती">अनुसूचित जमाती</ion-select-option>
+          <ion-select-option value="एनटी">एनटी</ion-select-option>
+          <ion-select-option value="इमाव">इमाव</ion-select-option>
+          <ion-select-option value="खुला">खुला</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label position="floating" >PF/UAN (If available)</ion-label>
+        <ion-input formControlName="pfOrUanPersonal"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"> ESIC Number (If available) </ion-label>
+        <ion-input  maxlength="20" formControlName="esicNoPersonal"> </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email (If available)</ion-label>
+        <ion-input type="email" formControlName="emailPersonal"></ion-input>
+      </ion-item> 
+
+      <ion-item>
+         <form [formGroup]="registrationFormGroup.get('personalDetails').get('residentialAddress')">
+            <ion-list>
+              <ion-list-header style="font-size:20px;">Residential Address(स्थानिक पत्ता )</ion-list-header>
+
+              <ion-item>
+                <ion-label position="floating">House No. / Building No. </ion-label>
+                <ion-input formControlName="houseNo" maxlength="40"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">घर क्रमांक / इमारत क्रमांक</ion-label>
+                <ion-input formControlName="houseNo_mr" maxlength="40"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Road</ion-label>
+                <ion-input formControlName="road" maxlength="40"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">रास्ता / मार्ग / गल्ली</ion-label>
+                <ion-input formControlName="road_mr" maxlength="40"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Area</ion-label>
+                <ion-input formControlName="area" maxlength="40" ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">विभाग / ठिकाण / क्षेत्र</ion-label>
+                <ion-input formControlName="area_mr" maxlength="40" ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Town / City </ion-label>
+                <ion-input maxlength="40" formControlName="city"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">गाव / शहर</ion-label>
+                <ion-input maxlength="40" formControlName="city_mr"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Important Place / Nearby</ion-label>
+                <ion-input maxlength="40" formControlName="importantPlace" ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">महत्वाचे ठिकाण</ion-label>
+                <ion-input maxlength="40" formControlName="importantPlace_mr" ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating"> State </ion-label>
+                <ion-select  formControlName="state" >
+                  <ion-select-option value="Maharashtra" selected>Maharashtra</ion-select-option>
+                </ion-select>
+              </ion-item>
+ 
+              <ion-item>
+                <ion-label position="floating"> राज्य </ion-label>
+                <ion-select  formControlName="state_mr" >
+                  <ion-select-option value="Maharashtra" selected>Maharashtra</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">District</ion-label>
+                <ion-select formControlName="district" >
+                    <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">जिल्हा</ion-label>
+                <ion-select formControlName="district_mr" >
+                    <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Taluka</ion-label>
+                <ion-select formControlName="taluka">
+                  <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">तालुका </ion-label>
+                <ion-select formControlName="taluka_mr">
+                  <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Post Office</ion-label>
+                <ion-select formControlName="postOffice">
+                  <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">पोस्ट ऑफिस</ion-label>
+                <ion-select formControlName="postOffice_mr">
+                  <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Pincode</ion-label>
+                <ion-input maxlength="6" minlength="6" formControlName="pincode"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">STD code</ion-label>
+                <ion-input maxlength="3" minlength="2" formControlName="stdcode"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Landline Phone No</ion-label>
+                <ion-input maxlength="8" minlength="5" formControlName="phone"></ion-input>
+              </ion-item>
+            </ion-list>
+        </form>
+      </ion-item>
+
+      <ion-item>
+        <ion-checkbox formControlName="permanentEqualsResidentialAddress"></ion-checkbox>
+        <ion-label>स्थानिक पत्ता व कायमचा पत्ता सारखा असेल तर येथे क्लिक करा / Click here to use the same Residential Address as Permanent Address</ion-label>
+      </ion-item> 
+
+      <ion-item>
+         <form [formGroup]="registrationFormGroup.get('personalDetails').get('residentialAddress')">
+            <ion-list>
+              <ion-list-header style="font-size:20px;">Permanent Address(स्थानिक पत्ता )</ion-list-header>
+
+              <ion-item>
+                <ion-label position="floating">House No. / Building No. </ion-label>
+                <ion-input formControlName="houseNo" maxlength="40"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">घर क्रमांक / इमारत क्रमांक</ion-label>
+                <ion-input formControlName="houseNo_mr" maxlength="40"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Road</ion-label>
+                <ion-input formControlName="road" maxlength="40"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">रास्ता / मार्ग / गल्ली</ion-label>
+                <ion-input formControlName="road_mr" maxlength="40"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Area</ion-label>
+                <ion-input formControlName="area" maxlength="40" ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">विभाग / ठिकाण / क्षेत्र</ion-label>
+                <ion-input formControlName="area_mr" maxlength="40" ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Town / City </ion-label>
+                <ion-input maxlength="40" formControlName="city"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">गाव / शहर</ion-label>
+                <ion-input maxlength="40" formControlName="city_mr"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Important Place / Nearby</ion-label>
+                <ion-input maxlength="40" formControlName="importantPlace" ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">महत्वाचे ठिकाण</ion-label>
+                <ion-input maxlength="40" formControlName="importantPlace_mr" ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating"> State </ion-label>
+                <ion-select  formControlName="state" >
+                  <ion-select-option value="Maharashtra" selected>Maharashtra</ion-select-option>
+                </ion-select>
+              </ion-item>
+ 
+              <ion-item>
+                <ion-label position="floating"> राज्य </ion-label>
+                <ion-select  formControlName="state_mr" >
+                  <ion-select-option value="Maharashtra" selected>Maharashtra</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">District</ion-label>
+                <ion-select formControlName="district" >
+                    <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">जिल्हा</ion-label>
+                <ion-select formControlName="district_mr" >
+                    <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Taluka</ion-label>
+                <ion-select formControlName="taluka">
+                  <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">तालुका </ion-label>
+                <ion-select formControlName="taluka_mr">
+                  <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Post Office</ion-label>
+                <ion-select formControlName="postOffice">
+                  <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">पोस्ट ऑफिस</ion-label>
+                <ion-select formControlName="postOffice_mr">
+                  <ion-select-option></ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Pincode</ion-label>
+                <ion-input maxlength="6" minlength="6" formControlName="pincode"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">STD code</ion-label>
+                <ion-input maxlength="3" minlength="2" formControlName="stdcode"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Landline Phone No</ion-label>
+                <ion-input maxlength="8" minlength="5" formControlName="phone"></ion-input>
+              </ion-item>
+            </ion-list>
+        </form>
+      </ion-item>
+
 
     </ion-list>
     </form>
+   
     
   </form>
 </ion-content>
