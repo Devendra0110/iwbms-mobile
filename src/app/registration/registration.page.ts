@@ -8,7 +8,7 @@ import { ValidationService } from '../services/validation.service';
   styleUrls: ['./registration.page.scss'],
 })
 export class RegistrationPage implements OnInit {
-  
+
   public registrationFormGroup: FormGroup;
 
   constructor(private validationService: ValidationService) {
