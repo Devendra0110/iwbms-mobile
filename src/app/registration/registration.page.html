@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registration</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="registrationFormGroup">
+
+    <form [formGroup]="registrationFormGroup.get('personalDetails')">
+        <ion-list>
+      <ion-list-header style="font-size:20px;"
+        >Personal Details</ion-list-header>
+
+      <ion-item>
+        <ion-label position="floating">First Name</ion-label>
+        <ion-input formControlName='firstNamePersonal'  clearInput></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Middle Name</ion-label>
+        <ion-input formControlName="middleNamePersonal"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">last Name</ion-label>
+        <ion-input formControlName="lastNamePersonal"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Aadhar Number</ion-label>
+        <ion-input type="number" maxlength="12" minlength="12" formControlName="aadharNoPersonal"></ion-input>
+      </ion-item>
+ 
+      <ion-item>
+        <ion-label position="floating">Gender</ion-label>
+        <ion-input formControlName="genderPersonal"></ion-input>
+      </ion-item>
+
+    </ion-list>
+    </form>
+    
+  </form>
+</ion-content>
