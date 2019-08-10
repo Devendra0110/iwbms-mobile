@@ -164,7 +164,7 @@ export class ValidationService {
       }
       // bankvalidation
       case 'ifscCode': {
-        validatorsArr = [Validators.required];
+        validatorsArr = [Validators.maxLength(11), Validators.minLength(11),Validators.required];
         break;
       }
       case 'fullName': {

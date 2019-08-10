@@ -1,0 +1,6 @@
+<div class='sg-box-container hidden'>
+  <ul>
+    <li *ngFor='let el of input; let i = index' (click)='getValueOnClick($event)' [class.selected]='!i'>{{el}}</li>
+  </ul>
+</div>
+

@@ -1,0 +1,37 @@
+.sg-box-container {
+  position: absolute;
+  width: 200px;
+  background: #f9faf5;
+  padding: 20px 2px;
+  top: 40px;
+  border-radius: 20px;
+  border: solid 1px #0b245b;
+  font-size: 22px;
+  transform: translateX(150px);
+  z-index: 99999;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 0px;
+      text-align: center;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    li.selected {
+      background: #73a0ff;
+    }
+
+    li:hover {
+      background: #bfd1f8;
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
