@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, QueryList, ViewChildren, AfterViewInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, QueryList, ViewChildren, AfterViewInit, ViewContainerRef, ComponentRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,7 +16,7 @@ import { SuggestionBoxComponent } from '../components/suggestion-box/suggestion-
 import { RegistrationService } from '../services/registration.service';
 import { UserManagementService } from '../services/user-management.service';
 import { HttpService } from '../services/http.service';
-
+import { UserInfo } from '../../assets/common.interface';
 
 @Component({
   selector: 'app-registration',
@@ -35,7 +35,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public startDate: any;
   public todaysDate: any;
   public dateOfBirth: any;
-  public attachmentDetails: any[];
+  public attachmentDetails:any =[];
   bankDetails: any = {
     BANK: '',
     BRANCH: '',
@@ -45,227 +45,42 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public mandatoryFieldsFlag: boolean;
   public isIfscCodeFound: boolean;
   public statewiseListArray = states;
-  public states: string[];
-  public districts: string[];
-  public talukasRes: string[];
-  public postOfficeArrayRes: string[];
-  public talukasPer: string[];
-  public postOfficeArrayPer: string[];
-  public talukasEmp: string[];
-  public genderOptions: string[] =[];
-  public genderOptionsMarathi: string[]=[];
-  public maritalStatusOptions: string[];
-  public maritalStatusOptionsMarathi: string[];
-  public rationCardTypeOptions: string[];
-  public rationCardTypeOptionsMarathi: string[];
-  public categoryOptions: string[];
-  public categoryOptionsMarathi: string[];
+  public states: any[] = [];
+  public districts: any[] = [];
+  public talukasRes: any[] = [];
+  public postOfficeArrayRes: any[] = [];
+  public pincodeArrayRes: any[] =[]
+  public talukasPer: any[] = [];
+  public postOfficeArrayPer: any[] = [];
+  public pincodeArrayPer: any[] = []
+  public talukasEmp: any[] = [];
+  
+  public genderOptions: string[] = [];
+  public genderOptionsMarathi: string[] = [];
+  public maritalStatusOptions: string[] = [];
+  public maritalStatusOptionsMarathi: string[] = [];
+  public rationCardTypeOptions: string[] = [];
+  public rationCardTypeOptionsMarathi: string[] = [];
+  public categoryOptions: string[] = [];
+  public categoryOptionsMarathi: string[] = [];
   public familyHeaderOptions: string[];
-  public natureOfWorkOptions: string[];
-  public natureOfWorkOptionsMarathi: string[];
-  public typeOfIssuerOptions: string[];
-  public typeOfIssuerOptionsMarathi: string[];
-  public registrationTypeOptions: string[];
-  public registrationTypeOptionsMarathi: string[];
+  public familyRelationOptions:string[]=[];
+  public familyRelationOptionsMarathi:string[]=[]
+  public educationOptions:string[] = [];
+  public educationOptionsMarathi: string[] = [];
+  public natureOfWorkOptions: string[] = [];
+  public natureOfWorkOptionsMarathi: string[] = [];
+  public typeOfIssuerOptions: string[] = [];
+  public typeOfIssuerOptionsMarathi: string[] = [];
+  public registrationTypeOptions: string[] = [];
+  public registrationTypeOptionsMarathi: string[] = [];
   public workerTypeOptions: string[];
   public workerTypeOptionsMarathi: string[];
   public currentImage: any;
-  public specialOptions = {
-    // tslint:disable-next-line: max-line-length
-    english: ['Male', 'Female', 'Other', 'Single', 'Married', 'Divorced', 'Widow', 'Widower', 'SC', 'ST', 'NT', 'OBC', 'Open', 'Contractor/Developer', 'Gramsevak', 'Person with authorization by municipality or municipal corporation', 'others', 'BOCW Act', 'Contract Act', 'Migrant', 'Local Resident', 'Buildings',
-      'Streets',
-      'Roads',
-      'Railways',
-      'Tramways',
-      'Airfields',
-      'Irrigation',
-      'Drainage',
-      'Embankment And Navigation Works',
-      'Flood Control Works (Including Storm Water Drainage Works)',
-      'Generation',
-      'Transmission And Distribution Of Power',
-      'Water Works (Including Channels For Distribution Of Water)',
-      'Oil And Gas Installations',
-      'Electric Lines',
-      'Wireless',
-      'Radio',
-      'Television',
-      'Telephone',
-      'Telegraph and Overseas Communications',
-      'Dams',
-      'Canals',
-      'Reservoirs',
-      'Watercourses',
-      'Tunnels',
-      'Bridges',
-      'Viaducts',
-      'Aquaducts',
-      'Pipelines',
-      'Towers',
-      'Cooling Towers',
-      'Transmission Towers and Such Other Work',
-      'Cutting the stone, breaking it and crushing the stone finely',
-      'Cutting and polishing of tiles or tiles',
-      'Carpentry with paint, varnish, etc',
-      'Gutter and plumbing works',
-      'Electrical works including wiring, distribution, tensioning, etc',
-      'Installation and repair of fire extinguishers',
-      'Installation and repair of air conditioning equipment',
-      'Installation of automatic lifts, etc',
-      'Installation of security doors and equipment',
-      'Preparation and installation of iron or metal grills, windows, doors',
-      'Construction of irrigation infrastructure',
-      'Interior work (including decorative) including carpentry, virtual ceilings, lighting, plaster of Paris',
-      'Cutting glass, plastering glass and installing glass panels',
-      'Preparation of bricks, roofs, etc., not covered under the Factories Act, 1948',
-      'Installation of energy efficient equipment like solar panels etc',
-      'Installation of modular units for use in places like cooking',
-      'Preparation and installation of cement concrete material etc',
-      'Construction of sports or recreational facilities including swimming pool, golf course etc',
-      'Construction or erection of information panels, road furniture, passenger shelters or bus stations, signal systems',
-      'Construction of Rotaries, Installation of Fountains etc',
-      'Construction of public parks, sidewalks, picturesque terrain etc',
-      'Yellow Card (below the poverty line)',
-      'Antyodaya food scheme card',
-      'Annapurna food scheme card',
-      'Orange Ration Card',
-      'None of these',
-      'Self',
-      'Father',
-      'Mother',
-      'Wife',
-      'Husband',
-      'Brother',
-      'Sister',
-      'Sister In Law(Brother Wife)',
-      'Sister In Law(Husband Sister)',
-      'Son',
-      'Daughter',
-      'Daughter In Law',
-      'Brother In Law',
-      'Grandson',
-      'Granddaughter',
-      'Mother in law',
-      'Father in law',
-      'Post Graduate',
-      'Medical Graduate',
-      'Engineering Graduate',
-      'Phd',
-      'Graduate',
-      'Diploma',
-      'ITI',
-      'HSC',
-      '11th',
-      'SSC',
-      '9th',
-      '8th',
-      '7th',
-      '6th',
-      '5th',
-      '4th',
-      '3rd',
-      '2nd',
-      '1st',
-      'Not Educated'
-    ],
-    // tslint:disable-next-line: max-line-length
-    marathi: ['पुरुष', 'स्त्री', 'इतर', 'अविवाहित', 'विवाहित', 'घटस्फोटित', 'विधवा', 'विधुर', 'अनुसूचित जाती', 'अनुसूचित जमाती', 'एनटी', 'इमाव', 'खुला', 'ठेकेदार/विकासक', 'ग्रामसेवक', 'नगरपालिका अथवा महानगरपालिकेद्वारे अधिकृतता असलेले व्यक्ती', 'इतर', 'बीओसीडब्ल्यू कायदा', 'कॉन्ट्रॅक्ट कायदा', 'स्थलांतरीत', 'स्थानिक निवासी', 'इमारती',
-      'रस्त्यावर',
-      'रस्ते',
-      'रेल्वे',
-      'ट्रामवे',
-      'एअरफील्ड',
-      'सिंचन',
-      'ड्रेनेज',
-      'तटबंध आणि नेव्हिगेशन वर्क्स',
-      'स्टॉर्म वॉटर ड्रेनेज वर्क्ससह',
-      'निर्मिती',
-      'पारेषण आणि पॉवर वितरण',
-      'पाणी वितरणासाठी चॅनल समाविष्ट करण',
-      'तेल आणि गॅसची स्थापना',
-      'इलेक्ट्रिक लाईन्स',
-      'वायरलेस',
-      'रेडिओ',
-      'दूरदर्शन',
-      'दूरध्वनी',
-      'टेलीग्राफ आणि ओव्हरसीज कम्युनिकेशन्स',
-      'डॅम',
-      'नद्या',
-      'रक्षक',
-      'पाणीपुरवठा',
-      'टनेल',
-      'पुल',
-      'पदवीधर',
-      'जलविद्युत',
-      'पाइपलाइन',
-      'टावर्स',
-      'कूलिंग टॉवर्स',
-      'ट्रान्समिशन टावर्स आणि अशा इतर कार्य',
-      'दगड कापणे, फोडणे व दगडाचा बारीक चुरा करणे',
-      'लादी किंवा टाईल्स कापणे व पॉलिश करणे',
-      'रंग, वॉर्निश लावणे, इत्यादीसह सुतारकाम',
-      'गटार व नळजोडणीची कामे',
-      'वायरिंग, वितरण, तावदान बसविणे इत्यादीसहित विद्युत कामे',
-      'अग्निशमन यंत्रणा बसविणे व तिची दुरुस्ती करणे',
-      'वातानुकूलित यंत्रणा बसविणे व तिची दुरुस्ती करणे',
-      'उद्वाहने, स्वयंचलित जिने इत्यादी बसविणे',
-      'सुरक्षा दरवाजे उपकरणे इत्यादी बसविणे',
-      'लोखंडाच्या किंवा धातुच्या ग्रिल्स, खिडक्या, दरवाजे तयार करणे व बसविणे',
-      'जलसंचयन संरचनेचे बांधकाम करणे',
-      'सुतारकाम करणे, आभाशी छत, प्रकाश व्यवस्था, प्लास्टर ऑफ पेरीस यांसहित अंतर्गत (सजावटीचे) काम',
-      'काच कापणे, काचरोगण लावणे व काचेची तावदाने बसविणे',
-      'कारखाना अधिनियम, 1948 खाली समावेश नसलेल्या विटा, छप्परांवरील कौल इत्यादी तयार करणे',
-      'सौर तावदाने इत्यादींसारखी ऊर्जाक्षम उपकरण बसविणे',
-      'स्वयंपाकखोली सारख्या ठिकाणी वापरण्यासाठी मोडुलर (आधुनिक) युनिट बसविणे',
-      'सिमेन्ट काँक्रिटच्या साचेबद्ध वस्तू इत्यादी तयार करणे व बसविणे',
-      'जलतरण तलाव, गोल्फचे मैदान इत्यादीसह खेळ किंवा मनोरंजनाच्या सुविधांचे बांधकाम करणे',
-      'माहिती फलक, रोड फर्निचर, प्रवाशी निवारे किंवा बसस्थानके, सिग्नल यंत्रणा इत्यादी बांधणे किंवा उभारणे',
-      'रोटरीजचे बांधकाम करणे, कारंजे बसविणे इत्यादी',
-      'सार्वजनिक उद्याने, पदपथ, रमणीय भू-प्रदेश इत्यादींचे बांधकाम',
-      'दारिद्र रेषेखालील पिवळे',
-      'अंत्योदय अन्न योजना',
-      'अन्नपूर्णा शिधापत्रिका',
-      'केशरी शिधापत्रिका (रु. १ लाखापर्यंत वार्षिक उत्पन्न असलेली)',
-      'यापैकी एकही नाही',
-      'स्वतः',
-      'वडील',
-      'आई',
-      'पत्नी',
-      'पती',
-      'भाऊ',
-      'बहीण',
-      'वहिनी',
-      'ननंद',
-      'मुलगा',
-      'मुलगी',
-      'सून',
-      'देवर',
-      'नातु',
-      'नात',
-      'सासू',
-      'सासरा',
-      'पदव्युत्तर पदवी',
-      'वैद्यकीय पदवीधर',
-      'अभियांत्रिकी पदवी',
-      'पीएचडी',
-      'पदवीधर',
-      'डिप्लोमा',
-      'आय.टी.आय',
-      'एचएससी',
-      '११ वी',
-      'एसएससी',
-      '९ वी',
-      '८ वी',
-      '७ वी',
-      '६ वी',
-      '५ वी',
-      '४ थी',
-      '३ री',
-      '२ री',
-      '१ ली',
-      'अशिक्षित'
-    ]
-  };
+
+
+    //Transliterate Variables 
+
   public uploadedImage: File;
   public uploadedImageUrl: string;
   public uploadedbankPassbook: string;
@@ -297,6 +112,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       workCertificate: null,
       bankPassbook: null
     };
+
+  public suggestionBox: ComponentRef<SuggestionBoxComponent>;
+
   getterObj = {};
 
   public userType;
@@ -304,7 +122,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public modes: Modes;
   public rejectNoteFlag = false;
   public editFormFlag;
-  public genderList:any[]=[];
+  public genderList: any[] = [];
 
   constructor(private validationService: ValidationService,
               private transliterate: TransliterationService,
@@ -314,32 +132,88 @@ export class RegistrationPage implements OnInit, AfterViewInit {
               private httpService: HttpService,
               private camera: Camera) {
 
-   
-    this.genderOptions = ['Female', 'Male', 'Other'];
-    this.genderOptionsMarathi = ['पुरुष', 'स्त्री', 'इतर'];
-    this.maritalStatusOptions = ['Single', 'Married', 'Divorced', 'Widow', 'Widower'];
-    this.maritalStatusOptionsMarathi = ['अविवाहित', 'विवाहित', 'घटस्फोटित', 'विधवा', 'विधुर'];
-    // tslint:disable-next-line: max-line-length
-    this.rationCardTypeOptions = ['Yellow Card (below the poverty line)', 'Antyodaya food scheme card', 'Annapurna food scheme card', 'Orange Ration Card', 'None of these'];
-  // tslint:disable-next-line: max-line-length
-    this.rationCardTypeOptionsMarathi = ['दारिद्र रेषेखालील पिवळे', 'अंत्योदय अन्न योजना', 'अन्नपूर्णा शिधापत्रिका', 'केशरी शिधापत्रिका (रु. १ लाखापर्यंत वार्षिक उत्पन्न असलेली)', 'यापैकी एकही नाही'];
-    this.categoryOptions = ['SC', 'ST', 'NT', 'OBC', 'Open'];
-    this.categoryOptionsMarathi = ['अनुसूचित जाती', 'अनुसूचित जमाती', 'एनटी', 'इमाव', 'खुला'];
+    // fetch the list of gender from database
+    this.httpService.getGenders().subscribe((genderArrObj: any) => {
+      for (const i of genderArrObj) {
+        this.genderOptions[i.gender] = i.gender_id;
+        this.genderOptionsMarathi[i.gender_mr] = i.gender_id;
+      }
+    }, err => console.log(err));
+
+    // fetch the list of marital-status from database
+    this.httpService.getMaritalStatus().subscribe((maritalStatusArrObj: any) => {
+      for (const i of maritalStatusArrObj) {
+        this.maritalStatusOptions[i.status]=i.id;
+        this.maritalStatusOptionsMarathi[i.status_mr]=i.id;
+      }
+    }, err => console.log(err));
+
+    // fetch the list of Ration Card Types from database
+    this.httpService.getRationCardTypes().subscribe((rationCardArrObj: any) => {
+      for (const i of rationCardArrObj) {
+        this.rationCardTypeOptions[i.ration_card_type]=i.id;
+        this.rationCardTypeOptionsMarathi[i.ration_card_type_mr]=i.id;
+      }
+    }, err => console.log(err));
+
+    // fetch the list of categories from database
+    this.httpService.getCategory().subscribe((categoryArrObj: any) => {
+      for (const i of categoryArrObj) {
+        this.categoryOptions[i.category]=i.id;
+        this.categoryOptionsMarathi[i.category_mr]=i.id;
+      }
+    }, err => console.log(err));
+
+
     // tslint:disable-next-line: max-line-length
     this.familyHeaderOptions = ['SNo.', 'First Name', 'First Name Marathi', 'Surname', 'Surname Marathi', 'Father/ Husband Name', 'Father/ Husband Name Marathi', 'DOB', 'Age (year)', 'Relation', 'Profession', 'Education', 'Nominee', 'Delete'];
-      // tslint:disable-next-line: max-line-length
-    this.natureOfWorkOptions = ['Buildings', 'Streets', 'Roads', 'Railways', 'Tramways', 'Airfields', 'Irrigation', 'Drainage', 'Embankment And Navigation Works', 'Flood Control Works (Including Storm Water Drainage Works)', 'Transmission And Distribution Of Power', 'Water Works (Including Channels For Distribution Of Water)', 'Oil And Gas Installations', 'Electric Lines', 'Wireless', 'Radio', 'Television', 'Telephone', 'Telegraph and Overseas Communications', 'Dams', 'Canals', 'Reservoirs', 'Watercourses', 'Tunnels', 'Bridges', 'Viaducts', 'Aquaducts', 'Pipelines', 'Towers', 'Cooling Towers', 'Transmission Towers and Such Other Work', 'Cutting the stone, breaking it and crushing the stone finely.', 'Cutting and polishing of tiles or tiles.', 'Carpentry with paint, varnish, etc.', 'Gutter and plumbing works.', 'Electrical works including wiring, distribution, tensioning, etc.', 'Installation and repair of fire extinguishers.', 'Installation and repair of air conditioning equipment.', 'Installation of automatic lifts, etc.', 'Installation of security doors and equipment.', 'Preparation and installation of iron or metal grills, windows,doors.', 'Construction of irrigation infrastructure.', 'Interior work (including decorative) including carpentry, virtual ceilings, lighting, plaster of Paris.', 'Cutting glass, plastering glass and installing glass panels.', 'Preparation of bricks, roofs, etc., not covered under the Factories Act, 1948.', 'Installation of energy efficient equipment like solar panels etc.', 'Installation of modular units for use in places like cooking.', 'Preparation and installation of cement concrete material etc.', 'Construction of sports or recreational facilities including swimming pool, golf course etc.', 'Construction or erection of information panels, road furniture, passenger shelters or bus stations, signal systems.', 'Construction of Rotaries, Installation of Fountains etc.', 'Construction of public parks, sidewalks, picturesque terrain etc'];
-      // tslint:disable-next-line: max-line-length
-    this.natureOfWorkOptionsMarathi = ['इमारती', 'रस्त्यावर', 'रस्ते', 'रेल्वे', 'ट्रामवे', 'एअरफील्ड', 'सिंचन', 'ड्रेनेज', 'तटबंध आणि नेव्हिगेशन वर्क्स', 'स्टॉर्म वॉटर ड्रेनेज वर्क्ससह', 'निर्मिती', 'पारेषण आणि पॉवर वितरण', 'पाणी वितरणासाठी चॅनल समाविष्ट करण', 'तेल आणि गॅसची स्थापना', 'इलेक्ट्रिक लाईन्स', 'वायरलेस', 'रेडिओ', 'दूरदर्शन', 'टेलीग्राफ आणि ओव्हरसीज कम्युनिकेशन्स', 'डॅम', 'नद्या', 'रक्षक', 'पाणीपुरवठा', 'टनेल', 'पुल', 'पदवीधर', 'जलविद्युत', 'पाइपलाइन', 'टावर्स', 'कूलिंग टॉवर्स', 'ट्रान्समिशन टावर्स आणि अशा इतर कार्य', 'दगड कापणे, फोडणे व दगडाचा बारीक चुरा करणे.', 'लादी किंवा टाईल्स कापणे व पॉलिश करणे.', 'रंग, वॉर्निश लावणे, इत्यादीसह सुतारकाम.', 'गटार व नळजोडणीची कामे.', 'वायरिंग, वितरण, तावदान बसविणे इत्यादीसहित विद्युत कामे.', 'अग्निशमन यंत्रणा बसविणे व तिची दुरुस्ती करणे.', 'वातानुकूलित यंत्रणा बसविणे व तिची दुरुस्ती करणे.', 'उद्वाहने, स्वयंचलित जिने इत्यादी बसविणे.', 'सुरक्षा दरवाजे उपकरणे इत्यादी बसविणे.', 'लोखंडाच्या किंवा धातुच्या ग्रिल्स, खिडक्या, दरवाजे तयार करणे व बसविणे.', 'जलसंचयन संरचनेचे बांधकाम करणे.', 'सुतारकाम करणे, आभाशी छत, प्रकाश व्यवस्था, प्लास्टर ऑफ पेरीस यांसहित अंतर्गत(सजावटीचे) काम.', 'काच कापणे, काचरोगण लावणे व काचेची तावदाने बसविणे.', 'कारखाना अधिनियम, 1948 खाली समावेश नसलेल्या विटा, छप्परांवरील कौल इत्यादी तयार करणे.', 'सौर तावदाने इत्यादींसारखी ऊर्जाक्षम उपकरण बसविणे.', 'स्वयंपाकखोली सारख्या ठिकाणी वापरण्यासाठी मोडुलर (आधुनिक) युनिट बसविणे.', 'सिमेन्ट काँक्रिटच्या साचेबद्ध वस्तू इत्यादी तयार करणे व बसविणे.', 'जलतरण तलाव, गोल्फचे मैदान इत्यादीसह खेळ किंवा मनोरंजनाच्या सुविधांचे बांधकाम करणे.', 'माहिती फलक, रोड फर्निचर, प्रवाशी निवारे किंवा बसस्थानके, सिग्नल यंत्रणा इत्यादी बांधणे किंवा उभारणे.', 'रोटरीजचे बांधकाम करणे, कारंजे बसविणे इत्यादी.', 'सार्वजनिक उद्याने, पदपथ, रमणीय भू-प्रदेश इत्यादींचे बांधकाम'];
-     // tslint:disable-next-line: max-line-length
-    this.typeOfIssuerOptions = ['Contractor/Developer', 'Gramsevak', 'Person with authorization by municipality or municipal corporation', 'Others'];
-    this.typeOfIssuerOptionsMarathi = ['ठेकेदार/विकासक', 'ग्रामसेवक', 'नगरपालिका अथवा महानगरपालिकेद्वारे अधिकृतता असलेले व्यक्ती', 'इतर'];
-    this.registrationTypeOptions = ['BOCW Act', 'Contract Act'];
-    this.registrationTypeOptionsMarathi = ['बीओसीडब्ल्यू कायदा', 'कॉन्ट्रॅक्ट कायदा'];
-    this.workerTypeOptions = ['Migrant', 'Local Resident'];
-    this.workerTypeOptionsMarathi = ['स्थलांतरीत',  'स्थानिक निवासी'];
+
+    this.httpService.getFamilyRelations().subscribe((familyRelationArrObj:any)=>{
+      for(const  i of familyRelationArrObj){
+        this.familyRelationOptions[i.relation_title_en] = i.family_relation_id;
+        this.familyRelationOptionsMarathi[i.relation_title_mr] = i.family_relation_id;
+      }
+    })
+
+    this.httpService.getEducation().subscribe((educationArrObj: any) => {
+      for (const i of educationArrObj) {
+        this.educationOptions[i.education_level_en] = i.education_level_id;
+        this.educationOptionsMarathi[i.education_level_mr] = i.education_level_id;
+      }
+    })
+
+
+    // fetch the list of Nature of Work from database
+    this.httpService.getNatureOfWork().subscribe((natureOfWorkArrObj: any) => {
+      for (const i of natureOfWorkArrObj) {
+        this.natureOfWorkOptions[i.type_of_worker_title] = i.type_of_worker_id;
+        this.natureOfWorkOptionsMarathi[i.type_of_worker_title_mr] = i.type_of_worker_id;
+      }
+    }, err => console.log(err));
+
+    // fetch the list of Issuer types from database
+    this.httpService.getIssuerTypes().subscribe((issuerTypesArrObj: any) => {
+      for (const i of issuerTypesArrObj) {
+        this.typeOfIssuerOptions[i.type_of_issuer]=i.id;
+        this.typeOfIssuerOptionsMarathi[i.type_of_issuer_mr] = i.id;
+      }
+    }, err => console.log(err));
+    // fetch the list of issuer type registration from database
+    this.httpService.getIssuerRegistrationTypes().subscribe((issuerRegistrationTypesArrObj: any) => {
+      for (const i of issuerRegistrationTypesArrObj) {
+        this.registrationTypeOptions[i.registration_type]=i.id;
+        this.registrationTypeOptionsMarathi[i.registration_type_mr]=i.id;
+      }
+    }, err => console.log(err));
+
+    // fetch the list of states from database
+    this.httpService.getStates().subscribe((statesArrObj: any) => {
+        // create state-name:state-id key-value in states
+      for (const i of statesArrObj) this.states[i.state_name] = i.state_id;
+    }, err => console.log(err));
 
     this.registrationFormGroup = new FormGroup({
+      bocw_id: new FormControl(''),
       personalDetails: this.personalDetailsFormFroup(),
       familyDetails: new FormArray([this.familyDetailsFormGroup()]),
       bankDetails: this.bankDetailsFormFroup(),
@@ -362,17 +236,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       {
         document_en: `Proof of age (Aadhar card / passport / PAN card / driver's license / birth certificate / school leaving certificate) One of these`,
         document_mr: `वयाबाबतचा पुरावा (आधारकार्ड / पारपत्र / पॅनकार्ड / वाहनचालक परवाना / जन्माचा दाखला / शाळा सोडल्याचे प्रमाणपत्र) यापैकी एक`,
-        attachmentType: [
-          { key: `Aadhar card / आधारकार्ड`, value: 1 },
-          { key: `Passport / पारपत्र`, value: 2 },
-          { key: `PAN Card / पॅनकार्ड`, value: 3 },
-          { key: `Driving Licence / वाहनचालक परवाना`, value: 4 },
-          { key: `Birth Certificate / जन्माचा दाखला`, value: 5 },
-          {
-            key: `School Leaving Certificate / शाळा सोडल्याचे प्रमाणपत्र`,
-            value: 6
-          }
-        ],
+        attachmentType: [],
         uploaded: false,
         required: true
       },
@@ -381,15 +245,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
          Certificate of Authority made) one of these`,
         document_mr: `मागील वर्षात ९० किंवा अधिक दिवस काम केल्याचे प्रमाणपत्र (मालकाचे / ग्रामसेवक / म.न .पा./ न. पा. ने प्राधिकृत
           केलेल्या अधिकाऱ्याचे प्रमाणपत्र) यापैकी एक`,
-        attachmentType: [
-          { key: `Owner's Certificate / मालकाचे`, value: 7 },
-          { key: `Gramsevak Certificate / ग्रामसेवक`, value: 8 },
-          { key: `MNC Certificate / म.न.पा.`, value: 9 },
-          {
-            key: `Nagar palika office Certificate / न. पा. ने प्राधिकृत केलेल्या अधिकाऱ्याचे प्रमाणपत्र`,
-            value: 10
-          }
-        ],
+        attachmentType: [],
         uploaded: false,
         required: true
       },
@@ -398,45 +254,72 @@ export class RegistrationPage implements OnInit, AfterViewInit {
          Gram Panchayat Certificate) One of these`,
         document_mr: `रहिवासी पुरावा (आधारकार्ड / पारपत्र / वाहनचालक परवाना / शिधापत्रिका / मागील महिन्याचे विद्युत देयक /
           ग्रामपंचायत दाखला ) यापैकी एक`,
-        attachmentType: [
-          { key: `Aadhar card / आधारकार्ड`, value: 1 },
-          { key: `Passport / पारपत्र`, value: 2 },
-          { key: `Driving Licence / वाहनचालक परवाना`, value: 4 },
-          { key: `Ration Card / शिधापत्रिका`, value: 11 },
-          {
-            key: `Last two month Light Bill / मागील महिन्याचे विद्युत देयक`,
-            value: 12
-          },
-          { key: `Grampanchayat Certificate / ग्रामपंचायत दाखला`, value: 13 }
-        ],
+        attachmentType: [],
         uploaded: false,
         required: true
       },
       {
         document_en: `Photo ID Proof (Aadhar Card / Passport / Driver's License / PAN Card / Voter ID Card)`,
         document_mr: `फोटो आयडी पुरावा (आधार कार्ड / पारपत्र / वाहनचालक परवाना / पॅनकार्ड / मतदाता ओळखपत्र) एकाकी एक`,
-        attachmentType: [
-          { key: `Aadhar card / आधारकार्ड`, value: 1 },
-          { key: `Passport / पारपत्र`, value: 2 },
-          { key: `Driving Licence / वाहनचालक परवाना`, value: 4 },
-          { key: `Pan Card / पॅनकार्ड`, value: 3 },
-          { key: `Election Card / मतदाता ओळखपत्र`, value: 14 }
-        ],
+        attachmentType: [],
         uploaded: false,
         required: true
       },
       {
         document_en: `Xerox of bank passbook`,
         document_mr: `बँक पासबुक ची झेरॉक्स`,
-        attachmentType: [
-          { key: `Bank Passbook Xerox / बँक पासबुक ची झेरॉक्स`, value: 15 }
-        ],
+        attachmentType: [],
         uploaded: false,
         required: false
       }
     ];
 
-    this.states = Object.keys(states);
+    
+
+    this.httpService.getDocumentTypes().subscribe((attDetailsArrObj: any) => {
+      for (const i of attDetailsArrObj) {
+        switch (i.document_types_id) {
+          case 1: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 2: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 3: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 4: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 5: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 6: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 7: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 8: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 9: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 10: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 11: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 12: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 13: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 14: this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+          case 15: this.attachmentDetails[4].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
+        }
+
+      }
+    }, err => console.log(err));
 
     const attachmentList = this.registrationFormGroup.get('supportingDocuments').get('attachmentList') as FormArray;
     for (const i in this.attachmentDetails) {
@@ -445,72 +328,147 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.userMgmntService.getUserTypes().subscribe(
-      (userTypes: any) => {
-        this.userType = userTypes.find(x => x._id === localStorage.getItem('userType')).description;
-        this.userTypeId = userTypes.find(x => x._id === localStorage.getItem('userType'))._id;
-      },
-      err => console.log(err)
-    );
-    this.state.setValue('MAHARASHTRA');
+    // this.userMgmntService.getUserTypes().subscribe(
+    //   (userTypes: any) => {
+    //     this.userType = userTypes.find(x => x._id === localStorage.getItem('userType')).description;
+    //     this.userTypeId = userTypes.find(x => x._id === localStorage.getItem('userType'))._id;
+    //   },
+    //   err => console.log(err)
+    // );
+    this.state.patchValue('21');
     this.relation.patchValue('Self'); this.relation.disable();
     this.relation_mr.patchValue('स्वतः'); this.relation_mr.disable();
-    this.userMgmntService.getUserTypes().subscribe(
-      (userTypes: any) => {
-        this.userType = userTypes.find(x => x._id === localStorage.getItem('userType')).description;
-        if (!!this.userType && this.userType === 'Applicant') {
-          this.getApplicantsDetails();
-        } else if (!!this.userType && (this.userType === 'Data Entry Operator' || this.userType === 'Field Agents')) {
-          if (!this.selectedApplicationData) this.modes = Modes.create;
-          else this.modes = Modes.update;
-        } else if (!!this.userType && (this.userType === 'Principal Secretary' || this.userType === 'Commissioner' || this.userType === 'Secretary/CEO' || this.userType === 'ACL' || this.userType === 'GLO' || this.userType === 'Asst Account Officer' || this.userType === 'Clerk' || this.userType === 'WFC I/c')) {
-          this.modes = Modes.read;
-        }
+    // this.userMgmntService.getUserTypes().subscribe(
+    //   (userTypes: any) => {
+    //     this.userType = userTypes.find(x => x._id === localStorage.getItem('userType')).description;
+    //     if (!!this.userType && this.userType === 'Applicant') {
+    //       this.getApplicantsDetails();
+    //     } else if (!!this.userType && (this.userType === 'Data Entry Operator' || this.userType === 'Field Agents')) {
+    //       if (!this.selectedApplicationData) this.modes = Modes.create;
+    //       else this.modes = Modes.update;
+    //     } else if (!!this.userType && (this.userType === 'Principal Secretary' || this.userType === 'Commissioner' || this.userType === 'Secretary/CEO' || this.userType === 'ACL' || this.userType === 'GLO' || this.userType === 'Asst Account Officer' || this.userType === 'Clerk' || this.userType === 'WFC I/c')) {
+    //       this.modes = Modes.read;
+    //     }
 
-        this.checkModes();
-      },
-      err => console.log(err)
-    );
+    //     this.checkModes();
+    //   },
+    //   err => console.log(err)
+    // );
 
-    this.districts = Object.keys(this.statewiseListArray.MAHARASHTRA.district);
+    this.httpService.getDistricts(21).subscribe((districtsArrObj: any) => {
+      // create district-name:district-id key-value in district
+      for (const i of districtsArrObj) this.districts[i.district_name] = i.district_id;
+    }, err => console.log(err));
+
 
     // residential address
     this.district.valueChanges.subscribe(value => {
-      this.talukasRes = this.state.value && value ? Object.keys(this.statewiseListArray[this.state.value].district[value].taluka) : [];
-    });
-    this.taluka.valueChanges.subscribe(value => {
-      this.postOfficeArrayRes = this.state.value && this.district.value && value ? this.statewiseListArray[this.state.value].district[this.district.value].taluka[value].map(x => Object.keys(x)[0]) : [];
-    });
-    this.postOffice.valueChanges.subscribe(value => {
-      const obj = this.state.value && this.district.value && this.taluka.value ? this.statewiseListArray[this.state.value].district[this.district.value].taluka[this.taluka.value].find(x => x.hasOwnProperty(value)) : {};
-      this.pincode.patchValue(obj[value]);
+      this.talukasRes = [];
+      this.postOfficeArrayRes = [];
+      if (this.state.value && value){
+        // create taluka-name:taluka-id key-value in talukaRes
+        this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
+          for (const i of talukaArrObj) this.talukasRes[i.taluka_name] = i.taluka_id;
+        }, err => console.log(err))
+      }
+      else this.talukasRes = [];
     });
 
-    // permanent address
+
+    this.taluka.valueChanges.subscribe(value => {
+      this.postOfficeArrayRes=[]
+      if(this.state.value && this.district.value && value){
+          // create post-office-name:post-office-id key-value in postOfficeArrayRes
+          this.httpService.getPostOffices(value).subscribe((postOfficeArrObj:any)=>{
+            for (const i of postOfficeArrObj) {
+              this.postOfficeArrayRes[i.post_office_name] = i.post_office_id;
+              this.pincodeArrayRes[i.post_office_id]=i.pincode
+            }
+          },err => console.log(err));
+      }
+    });
+    
+    this.postOffice.valueChanges.subscribe(value => {
+      if(this.state.value && this.district.value && this.taluka.value){
+        this.pincode.patchValue(this.pincodeArrayRes[value]);
+      }
+    });
+
+
+    // // permanent address
     this.statePer.valueChanges.subscribe(value => {
-      this.districts = value ? Object.keys(this.statewiseListArray[value].district) : [];
+      if (value === 'MAHARASHTRA' || value === '21') {
+        this.migrant.patchValue(false);
+        this.migrant_mr.patchValue(false);
+      } else {
+        this.migrant.patchValue(true);
+        this.migrant_mr.patchValue(true);
+      }
     });
+
     this.districtPer.valueChanges.subscribe(value => {
-      this.talukasPer = this.statePer.value && value ? Object.keys(this.statewiseListArray[this.statePer.value].district[value].taluka) : [];
+      this.talukasPer = [];
+      if (this.statePer.value && value) {
+        // create taluka-name:taluka-id key-value in talukaRes
+        this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
+          for (const i of talukaArrObj) {
+            this.talukasPer[i.taluka_name] = i.taluka_id;
+          }
+        }, err => console.log(err))
+      }
+      else {
+        this.talukasPer = [];
+      }
     });
+
     this.talukaPer.valueChanges.subscribe(value => {
-      this.postOfficeArrayPer = this.statePer.value && this.districtPer.value && value ? this.statewiseListArray[this.statePer.value].district[this.districtPer.value].taluka[value].map(x => Object.keys(x)[0]) : [];
+      this.postOfficeArrayPer = []
+      if (this.statePer.value && this.districtPer.value && value) {
+        // create post-office-name:post-office-id key-value in postOfficeArrayRes
+        this.httpService.getPostOffices(value).subscribe((postOfficeArrObj: any) => {
+
+          for (const i of postOfficeArrObj) {
+            this.postOfficeArrayPer[i.post_office_name] = i.post_office_id;
+            this.pincodeArrayPer[i.post_office_id] = i.pincode
+          }
+        }, err => console.log(err));
+      }else{
+        this.postOfficeArrayPer = [];
+      }
     });
+
     this.postOfficePer.valueChanges.subscribe(value => {
-      const obj = this.statePer.value && this.districtPer.value && this.talukaPer.value ? this.statewiseListArray[this.statePer.value].district[this.districtPer.value].taluka[this.talukaPer.value].find(x => x.hasOwnProperty(value)) : {};
-      this.pincodePer.patchValue(obj[value]);
+      if (this.statePer.value && this.districtPer.value && this.talukaPer.value) {
+        this.pincode.patchValue(this.pincodeArrayPer[value]);
+      }
     });
 
     // employer detail
     this.districtEmp.valueChanges.subscribe(value => {
-      this.talukasEmp = Object.keys(this.statewiseListArray['MAHARASHTRA'].district[value].taluka);
+      this.talukasEmp = [];
+      this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
+        for (const i of talukaArrObj) {
+          this.talukasEmp[i.taluka_name] = i.taluka_id;
+        }
+      }, err => console.log(err))
     });
+
+    this.appointmentDateEmp.valueChanges.subscribe(value=>{
+      const val = new Date(value).toJSON().slice(0, 10).split('-');
+      const dob = val[0] + '-' + val[1] + '-' + val[2]
+      this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(dob, {emitEvent:false})
+    },err=>console.log(err));
+
+    this.dispatchDateEmp.valueChanges.subscribe(value => {
+      const val = new Date(value).toJSON().slice(0, 10).split('-');
+      const dob = val[0] + '-' + val[1] + '-' + val[2]
+      this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp').patchValue(dob, { emitEvent: false })
+    },err=>console.log(err));
 
   }
 
   ngAfterViewInit() {
     const list = this.listOfControlRefs.toArray();
-
     for (const el of list) {
       if (el.viewRef.element.nativeElement.classList.contains('transliterate')) {
         el.viewRef.element.nativeElement.addEventListener('ionBlur', (event) => {
@@ -576,7 +534,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-
   transliterateDirect(event) {
     if (event.target.classList.contains('transliterate')) {
       this.transliterateValue(event);
@@ -585,10 +542,53 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
+  transliterateDTP(event) { // Ditrcit taluka post-office    
+    const targetsArray = event.target.id.split('-');
+    console.log(event)
+    let target: any;
+    let DTPObject:any;
+    console.log(targetsArray)
+    debugger
+    //choose if it is district/taluka/postoffice
+    
+    if (targetsArray[2]==='district' || targetsArray[1]==='districtEmp')
+        DTPObject=this.districts
+    else if (targetsArray[2] ==='taluka' || targetsArray[1]==='talukaEmp')
+        DTPObject=this.talukasRes
+    else DTPObject=this.postOfficeArrayRes;
+    
+    //set formControl
+    if (targetsArray.length === 2) {
+      target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
+    } else target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`)
+
+    //get the string for id
+    const DTPValue = Object.keys(DTPObject).find(key => DTPObject[key] === event.target.value);
+    // if (event.target.id.split('-').length === 2) {
+    //   target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
+    // } else if (event.target.id.split('-').length === 3) {
+    //   target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`)
+    // } else {
+    //   target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(targetsArray[2]).get(`${targetsArray[3]}_mr`);
+    // }
+
+    try {
+      this.transliterate.transliterateText(DTPValue, 'NAME').subscribe((response: any) => {
+        const result = response.split(';').map((item) => {
+          return item.split('^')[0];
+        });        
+        target.patchValue(result.join(' '));
+      });
+    } catch {
+      target.patchValue('');
+    }
+    console.log(target.value);
+        //console.log(this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).value);
+  }
+
   transliterateValue(event) {
     let target: any;
     const targetsArray = event.target.id.split('-');
-
     if (event.target.id.split('-').length === 2) {
       target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
     } else if (event.target.id.split('-').length === 3) {
@@ -599,7 +599,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
     try {
       this.transliterate.transliterateText(event.target.value, 'NAME').subscribe((response: any) => {
-
+        console.log(response);
         const result = response.split(';').map((item) => {
           return item.split('^')[0];
         });
@@ -609,7 +609,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     } catch {
       target.patchValue('');
     }
-
   }
 
   copyValue(x) {
@@ -641,25 +640,30 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   handleSpecialDropdowns(event) {
     const idArray = event.target.id.split('-');
-
     if (idArray.length === 2) {
-      this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).patchValue(this.getSpecialDropDownValue(event.target.value), { emitEvent: false });
+      this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).patchValue(event.target.value, { emitEvent: false });
+      
+      console.log(this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).value);
     } else if (idArray.length === 3) {
-      this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).patchValue(this.getSpecialDropDownValue(event.target.value), { emitEvent: false });
+      this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).patchValue(event.target.value, { emitEvent: false });
+      console.log(this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).value);
     }
   }
 
-  getSpecialDropDownValue(value: string) {
-    return this.specialOptions.marathi[this.specialOptions.english.indexOf(value)];
-  }
+  // getSpecialDropDownValue(value: string) {
+  //   return this.specialOptions.marathi[this.specialOptions.english.indexOf(value)];
+  // }
 
   calculateAge() {
+
     const val = new Date(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value).toJSON().slice(0, 10).split('-');
-    if (val) {
-      const dob = moment(
-        val[0] + '-' + val[1] + '-' + val[2],
-        'YYYY-MM-DD'
-      );
+    const dob = moment(
+      val[0] + '-' + val[1] + '-' + val[2],
+      'YYYY-MM-DD'
+    );
+    const dobServer= val[0]+ '-' + val[1] + '-' + val[2]   //stores date to show in ion-datetime
+    if (dob) {
+      this.registrationFormGroup.get('personalDetails').get('dobPersonal').patchValue(dobServer, { emitEvent: false });
       const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
       if (dob) {
         if (age > 17 && age < 61) {
@@ -685,15 +689,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-
-
-
-
   copyAddress(event: any) {
-    // tslint:disable-next-line: max-line-length
-    this.talukasPer = this.state.value && this.district.value ? Object.keys(this.statewiseListArray[this.state.value].district[this.district.value].taluka) : [];
-    // tslint:disable-next-line: max-line-length
-    this.postOfficeArrayPer = this.state.value && this.district.value && this.taluka.value ? this.statewiseListArray[this.state.value].district[this.district.value].taluka[this.taluka.value].map(x => Object.keys(x)[0]) : [];
+    this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').patchValue(this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').value, { emitEvent: false });
+    this.talukasPer = this.talukasRes;
+    this.postOfficeArrayPer = this.postOfficeArrayRes;
+    this.pincodeArrayPer= this.pincodeArrayRes
+    this.migrant.patchValue(false);
+    this.migrant_mr.patchValue(false);
+
     const resAddress = this.registrationFormGroup.get('personalDetails').get(
       'residentialAddress'
     );
@@ -701,11 +704,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       'permanentAddress'
     );
     if (event.target.checked) {
-      console.log('Patch Value');
       permAddress.patchValue(resAddress.value);
       permAddress.disable();
     } else {
-      console.log('else');
       permAddress.patchValue(this.addressFormGroup().value);
       permAddress.enable();
     }
@@ -753,12 +754,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-
-  capitaliseIFSCCode() {
-    let value = this.ifscCode.value;
-    value = value.toString().toUpperCase();
-    this.ifscCode.setValue(value);
-  }
 
   searchByIfscCode() {
     this.bankDetails = {
@@ -832,10 +827,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
+  uploadFile(event) {
+    const file = event.target.files[0];
+    this.files[event.target.id] = file;
+    this.fileOptions[event.target.id] = `${Date.now()}-${file.name}`;
+  }
+
   save() {
-    debugger;
-    
     console.log(this.registrationFormGroup);
+    debugger;
     if (this.registrationFormGroup.valid) {
       const formData = new FormData();
       // tslint:disable-next-line: forin
@@ -911,6 +911,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   familyDetailsFormGroup(): FormGroup {
     return new FormGroup({
+      family_detail_id: new FormControl(''),
       firstNameFamily: new FormControl('', this.validationService.createValidatorsArray('firstName')),
       firstNameFamily_mr: new FormControl('', this.validationService.createValidatorsArray('firstName_marathi')),
       fatherOrHusbandName: new FormControl('', this.validationService.createValidatorsArray('fatherOrHusbandName')),
@@ -922,6 +923,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       relation: new FormControl('', this.validationService.createValidatorsArray('relation')),
       relation_mr: new FormControl(''),
       profession: new FormControl('', this.validationService.createValidatorsArray('profession')),
+      profession_mr: new FormControl(''),
       education: new FormControl('', this.validationService.createValidatorsArray('education')),
       education_mr: new FormControl(''),
       nominee: new FormControl('', this.validationService.createValidatorsArray('nominee')),
@@ -973,7 +975,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       mobileNumberOfIssuerEmp: new FormControl('', [Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
       documentRefNumberEmp: new FormControl('', [Validators.maxLength(20)]),
       dispatchDateEmp: new FormControl(null),
-      typeOfWorkerEmp: new FormControl('', [Validators.required]),
+      migrant: new FormControl(''),
+      migrant_mr: new FormControl(''),
       MNREGACardNumberEmp: new FormControl(''),
       contractorNameEmp_mr: new FormControl(''),
       contractorCompanyNameEmp_mr: new FormControl(''),
@@ -984,15 +987,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       natureOfWorkEmp_mr: new FormControl(''),
       typeOfEmployerEmp_mr: new FormControl(''),
       fullNameOfIssuerEmp_mr: new FormControl(''),
-      registrationTypeEmp_mr: new FormControl(''),
-      typeOfWorkerEmp_mr: new FormControl('')
+      registrationTypeEmp_mr: new FormControl('')
     });
   }
 
   attachmentListFormGroup(): FormGroup {
     return new FormGroup({
       attachmentType: new FormControl(''),
-      // file: new FormControl('', [Validators.required]),
       attached: new FormControl('')
     });
   }
@@ -1106,11 +1107,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get mobileNumberOfIssuerEmp() { return this.registrationFormGroup.get('employerDetails').get('mobileNumberOfIssuerEmp'); }
   get documentRefNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('documentRefNumberEmp'); }
   get dispatchDateEmp() { return this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp'); }
-  get typeOfWorkerEmp() { return this.registrationFormGroup.get('employerDetails').get('typeOfWorkerEmp'); }
+  get migrant() { return this.registrationFormGroup.get('employerDetails').get('migrant') }
   get MNREGACardNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('MNREGACardNumberEmp'); }
-  get contractorNameEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('contractorNameEmp_mr_mr'); }
-  get contractorCompanyNameEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('contractorCompanyNameEmp_mr_mr'); }
-  get workPlaceEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('workPlaceEmp_mr_mr'); }
+  get contractorNameEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('contractorNameEmp_mr'); }
+  get contractorCompanyNameEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('contractorCompanyNameEmp_mr'); }
+  get workPlaceEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('workPlaceEmp_mr'); }
   get townEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('townEmp_mr'); }
   get talukaEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('talukaEmp_mr'); }
   get districtEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('districtEmp_mr'); }
@@ -1118,8 +1119,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get typeOfEmployerEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('typeOfEmployerEmp_mr'); }
   get fullNameOfIssuerEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('fullNameOfIssuerEmp_mr'); }
   get registrationTypeEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('registrationTypeEmp_mr'); }
-  get typeOfWorkerEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('typeOfWorkerEmp_mr'); }
-
+  get migrant_mr() { return this.registrationFormGroup.get('employerDetails').get('migrant_mr');}
+  
   //FamilyDetails Getter
   get firstNameFamily() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('firstNameFamily'); }
   get firstNameFamily_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('firstNameFamily_mr'); }

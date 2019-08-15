@@ -15,7 +15,7 @@ export class HttpService {
     const headers = appendTokenToHeaderObject(
       new HttpHeaders()
     );
-    return this.http.post(`${serverUrl}registration-and-renewal/registration`, formData);
+    return this.http.post(`${serverUrl}bocw-registration`, formData);
   }
 
   getAllEntries() {
@@ -79,8 +79,27 @@ export class HttpService {
     return this.http.get(`${serverUrl}masters/states`);
   }
 
-  // getDistrict(){
-  //   return this.http.get(`${serverUrl}/masters/districts?state_id=`);
-  // }
+  getDistricts(id: number) {
+    return this.http.get(`${serverUrl}masters/districts?state_id=${id}`);
+  }
 
+  getTalukas(id: number) {
+    return this.http.get(`${serverUrl}masters/talukas?district_id=${id}`);
+  }
+
+  getPostOffices(id: number){
+    return this.http.get(`${serverUrl}masters/post-office?taluka_id=${id}`);
+  }
+
+  getFamilyRelations(){
+    return this.http.get(`${serverUrl}masters/family-relations`);
+  }
+
+  getEducation() {
+    return this.http.get(`${serverUrl}masters/education`);
+  }
+
+  getDocumentTypes(){
+    return this.http.get(`${serverUrl}masters/document-types`);
+  }
 }

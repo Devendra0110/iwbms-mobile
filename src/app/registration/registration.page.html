@@ -12,7 +12,7 @@
 
         <ion-item>
           <ion-label position="floating"> Registration Date</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" picker-format="DD/MM/YYYY" value="{{ todaysDate.month }}/{{ todaysDate.day }}/{{
+          <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" value="{{ todaysDate.month }}/{{ todaysDate.day }}/{{
               todaysDate.year
             }}"></ion-datetime>
         </ion-item>
@@ -24,52 +24,50 @@
             }}"></ion-datetime>
         </ion-item>
 
-        <ion-item>
+        <ion-item >
           <ion-label position="floating">First Name<span style="color: Red"> *</span></ion-label>
           <ion-input [class.is-invalid]="
               firstNamePersonal.invalid && firstNamePersonal.touched
-            " formControlName="firstNamePersonal" clearInput id="personalDetails-firstNamePersonal"
-            class="transliterate"></ion-input>
+            " formControlName="firstNamePersonal" class="transliterate" clearInput id="personalDetails-firstNamePersonal"
+            class="transliterate" (ionBlur)="transliterateDirect($event)" ></ion-input>
           <div class="text-danger" *ngIf="firstNamePersonal.invalid && firstNamePersonal.touched">
             <small *ngIf="!!firstNamePersonal.errors?.required">Please enter your First Name.</small>
             <small *ngIf="!!firstNamePersonal.errors?.maxlength">You have exceeded the max length.</small>
           </div>
         </ion-item>
 
-        <ion-item hidden="true">
-          <ion-label position="floating">पहिले नाव</ion-label>
-          <ion-input maxlength="20" formControlName="firstNamePersonal_mr"></ion-input>
+
+        <ion-item  *ngIf="firstNamePersonal_mr.value">
+          <ion-label>{{firstNamePersonal_mr.value}}</ion-label>
         </ion-item>
 
-        <ion-item>
+        <ion-item >
           <ion-label position="floating">Middle Name</ion-label>
           <ion-input maxlength="20" formControlName="middleNamePersonal"
             [class.is-invalid]="middleNamePersonal.invalid && middleNamePersonal.touched" class="transliterate"
-            id='personalDetails-middleNamePersonal' clearInput></ion-input>
+            id='personalDetails-middleNamePersonal' (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
           <div class="text-danger" *ngIf="middleNamePersonal.invalid && middleNamePersonal.touched">
             <small *ngIf="!!middleNamePersonal.errors?.maxlength">You have exceeded the max length.</small>
           </div>
         </ion-item>
 
-        <ion-item hidden="true">
-          <ion-label position="floating">मधले नाव</ion-label>
-          <ion-input maxlength="20" formControlName="middleNamePersonal_mr"></ion-input>
+        <ion-item *ngIf="middleNamePersonal_mr.value">
+          <ion-label >{{middleNamePersonal_mr.value}}</ion-label>
         </ion-item>
 
-        <ion-item>
+        <ion-item >
           <ion-label position="floating">last Name<span style="color: Red"> *</span></ion-label>
           <ion-input maxlength="20" formControlName="lastNamePersonal"
             [class.is-invalid]="lastNamePersonal.invalid && lastNamePersonal.touched"
-            id='personalDetails-lastNamePersonal' class="transliterate" clearInput></ion-input>
+            id='personalDetails-lastNamePersonal' (ionBlur)="transliterateDirect($event)" class="transliterate" clearInput></ion-input>
           <div class="text-danger" *ngIf="lastNamePersonal.invalid && lastNamePersonal.touched">
             <small *ngIf="!!lastNamePersonal.errors?.required">Please enter your Last Name.</small>
             <small *ngIf="!!lastNamePersonal.errors?.maxlength">You have exceeded the max length.</small>
           </div>
         </ion-item>
 
-        <ion-item hidden="true">
-          <ion-label position="floating">आडनाव</ion-label>
-          <ion-input maxlength="20" formControlName="lastNamePersonal_mr"></ion-input>
+        <ion-item *ngIf="lastNamePersonal_mr.value">
+          <ion-label >{{lastNamePersonal_mr.value}}</ion-label>
         </ion-item>
 
         <ion-item>
@@ -90,7 +88,7 @@
               genderPersonal.invalid && genderPersonal.touched
             " id='personalDetails-genderPersonal' interface="action-sheet"
             (ionChange)="handleSpecialDropdowns($event)">
-            <ion-select-option *ngFor="let gender of genderOptions" value="{{ gender }}">{{ gender }}
+            <ion-select-option *ngFor="let gender of genderOptions|keyvalue" value="{{ gender.value }}">{{ gender.key }}
             </ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="genderPersonal.invalid && genderPersonal.touched">
@@ -98,10 +96,10 @@
           </div>
         </ion-item>
 
-        <ion-item >
+        <ion-item hidden="true" >
           <ion-label position="floating">लिंग</ion-label>
           <ion-select formControlName="genderPersonal_mr" interface="action-sheet">
-            <ion-select-option *ngFor="let gender of genderOptionsMarathi" value="{{ gender }}">{{ gender }}
+            <ion-select-option *ngFor="let gender of genderOptionsMarathi|keyvalue" value="{{ gender.value }}">{{ gender.key }}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -112,8 +110,8 @@
             [class.is-invalid]="maritalStatusPersonal.invalid && maritalStatusPersonal.touched"
             id='personalDetails-maritalStatusPersonal' (ionChange)="handleSpecialDropdowns($event)"
             interface="action-sheet">
-            <ion-select-option *ngFor="let maritalStatus of maritalStatusOptions" value="{{ maritalStatus }}">
-              {{ maritalStatus }}</ion-select-option>
+            <ion-select-option *ngFor="let maritalStatus of maritalStatusOptions|keyvalue" value="{{ maritalStatus.value }}">
+              {{ maritalStatus.key }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="
               maritalStatusPersonal.invalid && maritalStatusPersonal.touched
@@ -125,8 +123,8 @@
         <ion-item hidden="true">
           <ion-label position="floating">वैवाहिक स्थिती</ion-label>
           <ion-select formControlName="maritalStatusPersonal_mr" interface="action-sheet">
-            <ion-select-option *ngFor="let maritalStatus of maritalStatusOptionsMarathi" value="{{ maritalStatus }}">
-              {{ maritalStatus }}</ion-select-option>
+            <ion-select-option *ngFor="let maritalStatus of maritalStatusOptionsMarathi|keyvalue" value="{{ maritalStatus.value }}">
+              {{ maritalStatus.key }}</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -134,9 +132,9 @@
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Date Of Birth - As Per Aadhar or PAN Card<span style="color: Red">
               *</span></ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" picker-format="DD/MM/YYYY" formControlName="dobPersonal"
-            [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched" (ionBlur)="calculateAge()"
-            (ionChange)="calculateAge()"></ion-datetime>
+          <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" formControlName="dobPersonal"
+            [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched" (ionBlur)="calculateAge()" 
+            (ionChange)="calculateAge()" ></ion-datetime>
           <!-- <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">
                       <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
                       <small *ngIf="!!registrationDate.errors?.ngbDate">Please enter appropriate Date.</small>
@@ -165,7 +163,7 @@
           <ion-input type="text" maxlength="14" formControlName="rationCardNumberPersonal" [class.is-invalid]="
               rationCardNumberPersonal.invalid &&
               rationCardNumberPersonal.touched
-            " id='personalDetails-rationCardNumberPersonal' clearInput></ion-input>
+            " id='personalDetails-rationCardNumberPersonal' clearInput autocapitalize="characters"></ion-input>
           <div class="text-danger" *ngIf="
               rationCardNumberPersonal.invalid &&
               rationCardNumberPersonal.touched
@@ -178,16 +176,16 @@
           <ion-label position="floating">Ration Card Type</ion-label>
           <ion-select formControlName="rationCardTypePersonal" (ionChange)="handleSpecialDropdowns($event)"
             interface="action-sheet" id='personalDetails-rationCardTypePersonal'>
-            <ion-select-option *ngFor="let rationCardType of rationCardTypeOptions" value="{{ rationCardType }}">
-              {{ rationCardType }}</ion-select-option>
+            <ion-select-option *ngFor="let rationCardType of rationCardTypeOptions|keyvalue" value="{{ rationCardType.value }}">
+              {{ rationCardType.key }}</ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item hidden="true">
           <ion-label position="floating">रेशन कार्ड प्रकार</ion-label>
           <ion-select formControlName="rationCardTypePersonal_mr" interface="action-sheet">
-            <ion-select-option *ngFor="let rationCardType of rationCardTypeOptionsMarathi" value="{{ rationCardType }}">
-              {{ rationCardType }}</ion-select-option>
+            <ion-select-option *ngFor="let rationCardType of rationCardTypeOptionsMarathi|keyvalue" value="{{ rationCardType.value }}">
+              {{ rationCardType.key }}</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -197,7 +195,7 @@
               categoryPersonal.invalid && categoryPersonal.touched
             " id='personalDetails-categoryPersonal' (ionChange)="handleSpecialDropdowns($event)"
             interface="action-sheet">
-            <ion-select-option *ngFor="let category of categoryOptions" value="{{ category }}">{{ category }}
+            <ion-select-option *ngFor="let category of categoryOptions|keyvalue" value="{{ category.value }}">{{ category.key }}
             </ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="categoryPersonal.invalid && categoryPersonal.touched">
@@ -207,9 +205,9 @@
 
         <ion-item hidden="true">
           <ion-label position="floating">वर्गवारी</ion-label>
-          <ion-select required formControlName="categoryPersonal_mr" (ionChange)="handleSpecialDropdowns($event)"
+          <ion-select formControlName="categoryPersonal_mr" (ionChange)="handleSpecialDropdowns($event)"
             interface="action-sheet">
-            <ion-select-option *ngFor="let category of categoryOptionsMarathi" value="{{ category }}">{{ category }}
+            <ion-select-option *ngFor="let category of categoryOptionsMarathi|keyvalue" value="{{ category.value }}">{{ category.key }}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -341,8 +339,9 @@
                 <ion-label position="floating"> State </ion-label>
                 <ion-select [class.is-invalid]="state.invalid && state.touched" formControlName="state"
                   class="transliterate" id='personalDetails-residentialAddress-state' interface="action-sheet">
-                  <ion-select-option *ngFor="let eachState of states" [value]="eachState">{{ eachState }}
-                  </ion-select-option>
+                  <!-- <ion-select-option *ngFor="let eachState of states|keyvalue" [value]="eachState.value">{{ eachState.key }}
+                  </ion-select-option> -->
+                  <ion-select-option [selected]="true" value="21">MAHARASHTRA</ion-select-option>
                 </ion-select>
               </ion-item>
 
@@ -354,10 +353,11 @@
               <ion-item>
                 <ion-label position="floating">District<span style="color: Red"> *</span></ion-label>
                 <ion-select required formControlName="district"
-                  [class.is-invalid]="district.invalid && district.touched" 
-                  id='personalDetails-residentialAddress-district' interface="action-sheet">
-                  <ion-select-option *ngFor="let eachDistrict of districts" [value]="eachDistrict">
-                    {{ eachDistrict }}
+                  [class.is-invalid]="district.invalid && district.touched"
+                  (ionChange)="transliterateDTP($event)" class="transliterate"
+                  id='personalDetails-residentialAddress-district' interface="action-sheet" >
+                  <ion-select-option *ngFor="let eachDistrict of districts|keyvalue" [value]="eachDistrict.value">
+                    {{ eachDistrict.key }}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -370,9 +370,9 @@
               <ion-item>
                 <ion-label position="floating">Taluka<span style="color: Red"> *</span></ion-label>
                 <ion-select required formControlName="taluka" class="transliterate"
-                  id='personalDetails-residentialAddress-taluka' 
+                  id='personalDetails-residentialAddress-taluka' (ionChange)="transliterateDTP($event)"
                   [class.is-invalid]="taluka.invalid && taluka.touched" interface="action-sheet">
-                  <ion-select-option *ngFor="let eachTaluka of talukasRes" [value]="eachTaluka">{{ eachTaluka }}
+                  <ion-select-option *ngFor="let eachTaluka of talukasRes | keyvalue" [value]="eachTaluka.value">{{ eachTaluka.key }}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -385,10 +385,10 @@
               <ion-item>
                 <ion-label position="floating">Post Office</ion-label>
                 <ion-select required formControlName="postOffice" class="transliterate"
-                  [class.is-invalid]="postOffice.invalid && postOffice.touched"
+                  [class.is-invalid]="postOffice.invalid && postOffice.touched" (ionChange)="transliterateDTP($event)"
                   id='personalDetails-residentialAddress-postOffice' (change)='transliterateDirect($event)'
                   interface="action-sheet">
-                  <ion-select-option *ngFor="let eachPost of postOfficeArrayRes" [value]="eachPost">{{ eachPost }}
+                  <ion-select-option *ngFor="let eachPost of postOfficeArrayRes|keyvalue" [value]="eachPost.value">{{ eachPost.key }}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -529,8 +529,7 @@
                 <ion-label position="floating"> State </ion-label>
                 <ion-select required class=" transliterate" id='personalDetails-permanentAddress-state'
                   [class.is-invalid]="state.invalid && state.touched" formControlName="state" interface="action-sheet">
-                  <ion-select-option *ngFor="let eachState of states" [value]="eachState">{{ eachState }}
-                  </ion-select-option>
+                  <ion-select-option [selected]="true" value="21">MAHARASHTRA</ion-select-option>
                 </ion-select>
               </ion-item>
 
@@ -544,8 +543,8 @@
                 <ion-select required interface="action-sheet" formControlName="district"
                   [class.is-invalid]="district.invalid && district.touched"
                   id='personalDetails-permanentAddress-district' (change)='transliterateDirect($event)'>
-                  <ion-select-option *ngFor="let eachDistrict of districts" [value]="eachDistrict">
-                    {{ eachDistrict }}
+                  <ion-select-option *ngFor="let eachDistrict of districts|keyvalue" [value]="eachDistrict.value">
+                    {{ eachDistrict.key }}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -560,7 +559,7 @@
                 <ion-select required interface="action-sheet" (change)='transliterateDirect($event)'
                   class="transliterate" id='personalDetails-permanentAddress-taluka' formControlName="taluka"
                   [class.is-invalid]="taluka.invalid && taluka.touched">
-                  <ion-select-option *ngFor="let eachTaluka of talukasRes" [value]="eachTaluka">{{ eachTaluka }}
+                  <ion-select-option *ngFor="let eachTaluka of talukasRes|keyvalue" [value]="eachTaluka.value">{{ eachTaluka.key }}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -575,7 +574,7 @@
                 <ion-select required interface="action-sheet" (change)='transliterateDirect($event)'
                   class="transliterate" id='personalDetails-permanentAddress-postOffice' formControlName="postOffice"
                   [class.is-invalid]="postOffice.invalid && postOffice.touched">
-                  <ion-select-option *ngFor="let eachPost of postOfficeArrayRes" [value]="eachPost">{{ eachPost }}
+                  <ion-select-option *ngFor="let eachPost of postOfficeArrayRes|keyvalue" [value]="eachPost.value">{{ eachPost.key }}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -653,7 +652,7 @@
               </ion-col>
               <ion-col>
                   
-                  <ion-datetime displayFormat="DD/MM/YYYY" picker-format="DD/MM/YYYY" min="1994-03-14" max="2012-12-09" formControlName="dobFamily">
+                  <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" min="1994-03-14" max="2012-12-09" formControlName="dobFamily">
                   </ion-datetime><ion-icon name="calendar"></ion-icon>
               </ion-col>
               <ion-col>
@@ -662,22 +661,7 @@
               <ion-col>
                   <ion-select interface="action-sheet" formControlName="relation">
                     <ion-select-option *ngIf="i === 0" value="Self">Self </ion-select-option>
-                    <ion-select-option value="Father">Father</ion-select-option>
-                    <ion-select-option value="Mother">Mother</ion-select-option>
-                    <ion-select-option value="Wife">Wife</ion-select-option>
-                    <ion-select-option value="Husband">Husband</ion-select-option>
-                    <ion-select-option value="Brother">Brother</ion-select-option>
-                    <ion-select-option value="Sister">Sister</ion-select-option>
-                    <ion-select-option value="Sister In Law(Brother Wife)">Sister In Law(Brother's Wife) </ion-select-option>
-                    <ion-select-option value="Sister In Law(Husband Sister)">Sister In Law(Husband's Sister) </ion-select-option>
-                    <ion-select-option value="Son">Son </ion-select-option>
-                    <ion-select-option value="Daughter">Daughter</ion-select-option>
-                    <ion-select-option value="Daughter In Law">Daughter in law </ion-select-option>
-                    <ion-select-option value="Brother In Law">Brother in law</ion-select-option>
-                    <ion-select-option value="Grandson">Grandson </ion-select-option>
-                    <ion-select-option value="Granddaughter">Granddaughter </ion-select-option>
-                    <ion-select-option value="Mother in law">Mother in law </ion-select-option>
-                    <ion-select-option value="Father in law">Father in law </ion-select-option>
+                    <ion-select-option *ngFor="let familyRelation of familyRelationOptions|keyvalue" value="{{familyRelation.key}}">{{familyRelation.value}}</ion-select-option>
                   </ion-select>
               </ion-col>
               <ion-col>
@@ -685,26 +669,7 @@
               </ion-col>
               <ion-col>
                 <ion-select interface="action-sheet" formControlName="education">
-                  <ion-select-option value="Post Graduate">Post Graduate </ion-select-option>
-                  <ion-select-option value="Medical Graduate">Medical Graduate </ion-select-option>
-                  <ion-select-option value="Engineering Graduate">Engineering Graduate</ion-select-option>
-                  <ion-select-option value="Phd">Phd </ion-select-option>
-                  <ion-select-option value="Graduate">Graduate </ion-select-option>
-                  <ion-select-option value="Diploma">Diploma </ion-select-option>
-                  <ion-select-option value="ITI">I.T.I </ion-select-option>
-                  <ion-select-option value="HSC">HSC </ion-select-option>
-                  <ion-select-option value="11th">11th </ion-select-option>
-                  <ion-select-option value="SSC">SSC </ion-select-option>
-                  <ion-select-option value="9th">9th </ion-select-option>
-                  <ion-select-option value="8th">8th </ion-select-option>
-                  <ion-select-option value="7th">7th </ion-select-option>
-                  <ion-select-option value="6th">6th </ion-select-option>
-                  <ion-select-option value="5th">5th </ion-select-option>
-                  <ion-select-option value="4th">4th</ion-select-option>
-                  <ion-select-option value="3rd">3rd </ion-select-option>
-                  <ion-select-option value="2nd">2nd </ion-select-option>
-                  <ion-select-option value="1st">1st </ion-select-option>
-                  <ion-select-option value="Not Educated">Uneducated </ion-select-option>
+                  <ion-select-option *ngFor="let education of educationOptions|keyvalue" value={{education.value}}>{{education.key}}</ion-select-option>
                 </ion-select>
               </ion-col>
               <ion-col>
@@ -798,16 +763,17 @@
           <ion-label position="floating">Name of Contractor / Developer / Company</ion-label>
           <ion-input class="transliterate" formControlName="contractorNameEmp" [class.is-invalid]="
               contractorNameEmp.invalid && contractorNameEmp.touched
-            " type="text" maxlength="60" id='employerDetails-contractorNameEmp' clearInput></ion-input>
+            " type="text" maxlength="60" id='employerDetails-contractorNameEmp' 
+           class="transliterate" (ionBlur)="transliterateDirect($event)"  clearInput></ion-input>
           <div class="text-danger" *ngIf="contractorNameEmp.invalid && contractorNameEmp.touched">
             <small *ngIf="!!contractorNameEmp.errors?.pattern">Please enter appropriate Name of contactor.</small>
           </div>
         </ion-item>
 
-        <ion-item hidden="true">
-          <ion-label position="floating">ठेकेदाराचे नाव / विकासक / आस्थापना</ion-label>
-          <ion-input formControlName="contractorNameEmp_mr"></ion-input>
+        <ion-item *ngIf="contractorNameEmp_mr.value">
+          <ion-label>{{contractorNameEmp_mr.value}}</ion-label>
         </ion-item>
+
 
         <ion-item>
           <ion-label position="floating">Contractor company Name</ion-label>
@@ -815,7 +781,7 @@
             formControlName="contractorCompanyNameEmp" [class.is-invalid]="
               contractorCompanyNameEmp.invalid &&
               contractorCompanyNameEmp.touched
-            " clearInput></ion-input>
+            " class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
           <div class="text-danger" *ngIf="
               contractorCompanyNameEmp.invalid &&
               contractorCompanyNameEmp.touched
@@ -824,9 +790,8 @@
           </div>
         </ion-item>
 
-        <ion-item hidden="true">
-          <ion-label position="floating">ठेकेदार कंपनीचे नाव</ion-label>
-          <ion-input formControlName="contractorCompanyNameEmp_mr"></ion-input>
+          <ion-item *ngIf="contractorCompanyNameEmp_mr.value">
+          <ion-label>{{contractorCompanyNameEmp_mr.value}}</ion-label>
         </ion-item>
 
         <ion-item>
@@ -844,22 +809,21 @@
           <ion-label position="floating">Workplace</ion-label>
           <ion-input class="transliterate" type="text" maxlength="50"
             [class.is-invalid]="workPlaceEmp.invalid && workPlaceEmp.touched" formControlName="workPlaceEmp"
-            id='employerDetails-workPlaceEmp' clearInput></ion-input>
+            id='employerDetails-workPlaceEmp' class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
           <div class="text-danger" *ngIf="workPlaceEmp.invalid && workPlaceEmp.touched">
             <small *ngIf="!!workPlaceEmp.errors?.maxlength">You have exceeded max length.</small>
           </div>
         </ion-item>
 
-        <ion-item hidden="true">
-          <ion-label position="floating">कामाचे ठिकाण</ion-label>
-          <ion-input formControlName="workPlaceEmp_mr"></ion-input>
+        <ion-item *ngIf="workPlaceEmp_mr.value">
+          <ion-label>{{workPlaceEmp_mr.value}}</ion-label>
         </ion-item>
 
         <ion-item>
           <ion-label position="floating">District</ion-label>
           <ion-select interface="action-sheet" formControlName="districtEmp" id='employerDetails-districtEmp'
-            [class.is-invalid]="districtEmp.invalid && districtEmp.touched" class="transliterate">
-            <ion-select-option *ngFor="let district of districts" [value]="district">{{ district }}</ion-select-option>
+            [class.is-invalid]="districtEmp.invalid && districtEmp.touched"(ionChange)="transliterateDTP($event)" class="transliterate">
+            <ion-select-option *ngFor="let district of districts|keyvalue" [value]="district.value">{{ district.key }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="districtEmp.invalid && districtEmp.touched">
             <small *ngIf="!!districtEmp.errors?.required">Please choose District.</small>
@@ -868,14 +832,14 @@
 
         <ion-item hidden="true">
           <ion-label position="floating">जिल्हा</ion-label>
-          <ion-input required formControlName="districtEmp"></ion-input>
+          <ion-input formControlName="districtEmp_mr"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="floating">Taluka</ion-label>
-          <ion-select required class="transliterate" id='employerDetails-talukaEmp' formControlName="talukaEmp"
-            [class.is-invalid]="talukaEmp.invalid && talukaEmp.touched" interface="action-sheet">
-            <ion-select-option *ngFor="let eachTaluka of talukasEmp" [value]="eachTaluka">{{ eachTaluka }}
+          <ion-select required id='employerDetails-talukaEmp' formControlName="talukaEmp"
+            [class.is-invalid]="talukaEmp.invalid && talukaEmp.touched" interface="action-sheet" (ionChange)="transliterateDTP($event)" class="transliterate">
+            <ion-select-option *ngFor="let eachTaluka of talukasEmp|keyvalue" [value]="eachTaluka.value">{{ eachTaluka.key }}
             </ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="talukaEmp.invalid && talukaEmp.touched">
@@ -885,7 +849,7 @@
 
         <ion-item hidden="true">
           <ion-label position="floating">तालुका</ion-label>
-          <ion-input required formControlName="talukaEmp"></ion-input>
+          <ion-input formControlName="talukaEmp_mr"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -916,7 +880,7 @@
         <ion-item>
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Appointment Date</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" picker-format="DD/MM/YYYY" min="1990-01-01"
+          <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" min="1990-01-01"
             id='employerDetails-appointmentDateEmp' formControlName="appointmentDateEmp"
             [class.is-invalid]=" appointmentDateEmp.invalid && appointmentDateEmp.touched"></ion-datetime>
         </ion-item>
@@ -937,9 +901,9 @@
           <ion-label position="floating">Nature of work</ion-label>
           <ion-select formControlName="natureOfWorkEmp" [class.is-invalid]="
               natureOfWorkEmp.invalid && natureOfWorkEmp.touched
-            " id='employerDetails-natureOfWorkEmp' (change)='handleSpecialDropdowns($event)' interface="action-sheet">
-            <ion-select-option  text-justify *ngFor="let natureOfWork of natureOfWorkOptions" value="{{ natureOfWork }}">
-              {{ natureOfWork }}</ion-select-option>
+            " id='employerDetails-natureOfWorkEmp' (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
+            <ion-select-option  text-justify *ngFor="let natureOfWork of natureOfWorkOptions|keyvalue" value="{{ natureOfWork.value }}">
+              {{ natureOfWork.key }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="!!natureOfWorkEmp.invalid && natureOfWorkEmp.touched">
             <small *ngIf="!!natureOfWorkEmp.errors?.required">Please choose your Nature of work.</small>
@@ -951,8 +915,8 @@
           <ion-label position="floating">कामाचे स्वरूप</ion-label>
           <ion-select formControlName="natureOfWorkEmp_mr" 
             [class.is-invalid]="natureOfWorkEmp_mr.invalid && natureOfWorkEmp_mr.touched">
-            <ion-select-option *ngFor="let natureOfWork of natureOfWorkOptionsMarathi" value="{{ natureOfWork }}">
-              {{ natureOfWork }}</ion-select-option>
+            <ion-select-option *ngFor="let natureOfWork of natureOfWorkOptionsMarathi|keyvalue" value="{{ natureOfWork.value }}">
+              {{ natureOfWork.key }}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>
@@ -962,38 +926,38 @@
 
         <ion-item>
           <ion-label position="floating">Type of Issuer</ion-label>
-          <ion-select id='employerDetails-typeOfEmployerEmp' (change)='handleSpecialDropdowns($event)'
+          <ion-select id='employerDetails-typeOfEmployerEmp' (ionChange)="handleSpecialDropdowns($event)"
             formControlName="typeOfEmployerEmp" [class.is-invalid]="
               typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched
             " interface="action-sheet">
-            <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptions" value="{{ typeOfIssuer }}">
-              {{ typeOfIssuer }}</ion-select-option>
+            <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptions|keyvalue" value="{{ typeOfIssuer.value }}">
+              {{ typeOfIssuer.key }}</ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item hidden="true">
           <ion-label position="floating">नियोक्ता प्रकार</ion-label>
           <ion-select formControlName="typeOfEmployerEmp_mr">
-            <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptionsMarathi" value="{{ typeOfIssuer }}">
-              {{ typeOfIssuer }}</ion-select-option>
+            <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptionsMarathi|keyvalue" value="{{ typeOfIssuer.value }}">
+              {{ typeOfIssuer.key }}</ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item>
           <ion-label position="floating">Full name</ion-label>
-          <ion-input class="transliterate" id='employerDetails-fullNameOfIssuerEmp'
+          <ion-input id='employerDetails-fullNameOfIssuerEmp'
             formControlName="fullNameOfIssuerEmp" [class.is-invalid]="
               fullNameOfIssuerEmp.invalid && fullNameOfIssuerEmp.touched
-            " clearInput></ion-input>
+            " class="transliterate" (ionBlur)="transliterateDirect($event)"  clearInput></ion-input>
           <div class="text-danger" *ngIf="fullNameOfIssuerEmp.invalid && fullNameOfIssuerEmp.touched">
             <small *ngIf="!!fullNameOfIssuerEmp.errors?.pattern">Please enter appropriate name.</small>
           </div>
         </ion-item>
 
-        <ion-item hidden="true">
-          <ion-label position="floating">संपूर्ण नाव</ion-label>
-          <ion-input formControlName="fullNameOfIssuerEmp_mr"></ion-input>
+        <ion-item *ngIf="fullNameOfIssuerEmp_mr.value">
+          <ion-label>{{fullNameOfIssuerEmp_mr.value}}</ion-label>
         </ion-item>
+
 
         <ion-item>
           <ion-label position="floating">Registration number</ion-label>
@@ -1011,23 +975,23 @@
           <ion-select formControlName="registrationTypeEmp" [class.is-invalid]="
               registrationTypeEmp.invalid && registrationTypeEmp.touched
             " interface="action-sheet" id='employerDetails-registrationTypeEmp'
-            (change)='handleSpecialDropdowns($event)'>
-            <ion-select-option *ngFor="let registrationType of registrationTypeOptions" value="{{ registrationType }}">
-              {{ registrationType }}</ion-select-option>
+            (ionChange)="handleSpecialDropdowns($event)">
+            <ion-select-option *ngFor="let registrationType of registrationTypeOptions|keyvalue" value="{{ registrationType.value }}">
+              {{ registrationType.key }}</ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item hidden="true">
           <ion-label position="floating">नोंदणी प्रकार</ion-label>
           <ion-select formControlName="registrationTypeEmp_mr">
-            <ion-select-option *ngFor="let registrationType of registrationTypeOptionsMarathi"
-              value="{{ registrationType }}">{{ registrationType }}</ion-select-option>
+            <ion-select-option *ngFor="let registrationType of registrationTypeOptionsMarathi|keyvalue"
+              value="{{ registrationType.value }}">{{ registrationType.key }}</ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item>
           <ion-label position="floating">Mobile number</ion-label>
-          <ion-input type="tel" maxlength="10" minlength="10" formControlName="mobileNumberOfIssuerEmp" [class.is-invalid]="
+          <ion-input type="tel"  maxlength="10" minlength="10" formControlName="mobileNumberOfIssuerEmp" [class.is-invalid]="
               mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched
             " id='employerDetails-mobileNumberOfIssuerEmp' clearInput></ion-input>
           <div class="text-danger" *ngIf="
@@ -1052,28 +1016,23 @@
         <ion-item>
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Dispatch Date</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" picker-format="DD/MM/YYYY" min="1990-01-01"
-            id='employerDetails-dispatchDateEmp'></ion-datetime>
+          <ion-datetime formControlName="dispatchDateEmp" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" min="1990-01-01"
+            id='employerDetails-dispatchDateEmp' ></ion-datetime>
         </ion-item>
 
         <ion-item>
           <ion-label position="floating">Type of worker</ion-label>
-          <ion-select formControlName="typeOfWorkerEmp" [class.is-invalid]="
-              typeOfWorkerEmp.invalid && typeOfWorkerEmp.touched
-            " id='employerDetails-typeOfWorkerEmp' (change)="handleSpecialDropdowns($event)" interface="action-sheet">
-            <ion-select-option *ngFor="let workerType of workerTypeOptions" value="{{ workerType }}">{{ workerType }}
-            </ion-select-option>
-          </ion-select>
+          <ion-checkbox formControlName='migrant' id='employerDetails-migrant' (ionChange)="handleSpecialDropdowns($event)">Migrant</ion-checkbox>
         </ion-item>
-
+<!-- 
         <ion-item hidden="true">
           <ion-label position="floating">कामगारांचा प्रकार</ion-label>
-          <ion-select formControlName="typeOfWorkerEmp_mr"
+          <ion-select formControlName="migrant_mr"
             [class.is-invalid]="typeOfWorkerEmp.invalid && typeOfWorkerEmp.touched">
             <ion-select-option *ngFor="let workerType of workerTypeOptionsMarathi" value="{{ workerType }}">
               {{ workerType }}</ion-select-option>
           </ion-select>
-        </ion-item>
+        </ion-item> -->
       </ion-list>
     </form>
 
@@ -1104,17 +1063,17 @@
 
         <ion-item>
           <ion-label floating> Supporting Document</ion-label><br>
-          <ion-input id='suppDocument' type="file"></ion-input>
+          <ion-input id='suppDocument' type="file"  accept="application/pdf" (change)="uploadFile($event)" ></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-label text-wrap floating>९० किंवा अधिक दिवस काम केल्याचे प्रमाणपत्र</ion-label>
-          <ion-input id='workCertificate' type="file" ></ion-input>
+          <ion-label text-wrap floating>90 Days Work Certificate</ion-label>
+          <ion-input id='workCertificate' type="file" accept="application/pdf" (change)="uploadFile($event)" ></ion-input>
         </ion-item>
         
         <ion-item>
-          <ion-label text-wrap floating> बँक पासबुक ची झेरॉक्स</ion-label>
-          <ion-input id='bankPassbook' type="file"></ion-input>
+          <ion-label text-wrap floating> Bank Passbook</ion-label>
+          <ion-input id='bankPassbook' type="file" accept="application/pdf" (change)="uploadFile($event)" ></ion-input>
         </ion-item>
 
         <ion-item>

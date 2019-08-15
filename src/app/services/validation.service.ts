@@ -159,7 +159,7 @@ export class ValidationService {
         break;
       }
       case 'phone': {
-        validatorsArr = [Validators.maxLength(5), Validators.minLength(2)];
+        validatorsArr = [Validators.maxLength(8), Validators.minLength(5)];
         break;
       }
       // bankvalidation
