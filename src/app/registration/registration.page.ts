@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, QueryList, ViewChildren, AfterViewInit, V
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 import { states } from '../models/states';
 import { Modes } from '../../assets/modes';
@@ -64,6 +65,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public categoryOptions: string[] = [];
   public categoryOptionsMarathi: string[] = [];
   public familyHeaderOptions: string[];
+  public familyHeaderOptionsMarathi:string[];
   public familyRelationOptions:string[]=[];
   public familyRelationOptionsMarathi:string[]=[]
   public educationOptions:string[] = [];
@@ -122,7 +124,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public modes: Modes;
   public rejectNoteFlag = false;
   public editFormFlag;
-  public genderList: any[] = [];
+  public tokenNo: any;
 
   constructor(private validationService: ValidationService,
               private transliterate: TransliterationService,
@@ -130,8 +132,12 @@ export class RegistrationPage implements OnInit, AfterViewInit {
               private registration: RegistrationService,
               private userMgmntService: UserManagementService,
               private httpService: HttpService,
-              private camera: Camera) {
+              private camera: Camera,
+              private storage: Storage) {
 
+    this.storage.get('token').then((tokenValue) => {
+      this.tokenNo = tokenValue;
+    });
     // fetch the list of gender from database
     this.httpService.getGenders().subscribe((genderArrObj: any) => {
       for (const i of genderArrObj) {
@@ -166,19 +172,18 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
 
     // tslint:disable-next-line: max-line-length
-    this.familyHeaderOptions = ['SNo.', 'First Name', 'First Name Marathi', 'Surname', 'Surname Marathi', 'Father/ Husband Name', 'Father/ Husband Name Marathi', 'DOB', 'Age (year)', 'Relation', 'Profession', 'Education', 'Nominee', 'Delete'];
-
+    this.familyHeaderOptions = ['SNo.', 'First Name', 'Surname', 'Father/ Husband Name', 'DOB', 'Age (year)', 'Relation', 'Profession', 'Education', 'Nominee', 'Delete'];
     this.httpService.getFamilyRelations().subscribe((familyRelationArrObj:any)=>{
       for(const  i of familyRelationArrObj){
         this.familyRelationOptions[i.relation_title_en] = i.family_relation_id;
-        this.familyRelationOptionsMarathi[i.relation_title_mr] = i.family_relation_id;
+        this.familyRelationOptionsMarathi[i.family_relation_id] = i.relation_title_mr;
       }
     })
 
     this.httpService.getEducation().subscribe((educationArrObj: any) => {
       for (const i of educationArrObj) {
         this.educationOptions[i.education_level_en] = i.education_level_id;
-        this.educationOptionsMarathi[i.education_level_mr] = i.education_level_id;
+        this.educationOptionsMarathi[i.education_level_id] = i.education_level_mr;
       }
     })
 
@@ -369,6 +374,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         // create taluka-name:taluka-id key-value in talukaRes
         this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
           for (const i of talukaArrObj) this.talukasRes[i.taluka_name] = i.taluka_id;
+          
         }, err => console.log(err))
       }
       else this.talukasRes = [];
@@ -542,21 +548,30 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
+  transliterateFamilyDetails(event){
+    const targetsArray = event.target.id.split('-');
+    if (targetsArray[2] === 'relation') {
+      this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).patchValue(this.familyRelationOptionsMarathi[event.target.value])
+    } else if (targetsArray[2] === 'education') {
+      this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).patchValue(this.educationOptionsMarathi[event.target.value])
+    }
+    
+  }
+
   transliterateDTP(event) { // Ditrcit taluka post-office    
     const targetsArray = event.target.id.split('-');
     console.log(event)
     let target: any;
     let DTPObject:any;
-    console.log(targetsArray)
-    debugger
     //choose if it is district/taluka/postoffice
-    
     if (targetsArray[2]==='district' || targetsArray[1]==='districtEmp')
         DTPObject=this.districts
-    else if (targetsArray[2] ==='taluka' || targetsArray[1]==='talukaEmp')
+    else if (targetsArray[2] ==='taluka')
         DTPObject=this.talukasRes
+    else if (targetsArray[1] === 'talukaEmp') DTPObject = this.talukasEmp
     else DTPObject=this.postOfficeArrayRes;
-    
+
+
     //set formControl
     if (targetsArray.length === 2) {
       target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
@@ -716,15 +731,16 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const familyDetails = this.registrationFormGroup.get('familyDetails')['controls'];
     for (const j in familyDetails) {
       familyDetails[j].get('nominee').setValue('no');
+      console.log(familyDetails[j].get('nominee'));
     }
     this.registrationFormGroup.get('familyDetails').get(i.toString()).get('nominee').setValue('yes');
   }
 
   calculateAgeForFamilyDetails(i: string) {
-    const val = this.registrationFormGroup.get('familyDetails').get(i.toString()).get('dobFamily').value;
+    const val = new Date(this.registrationFormGroup.get('familyDetails').get(i.toString()).get('dobFamily').value).toJSON().slice(0, 10).split('-')
     if (val) {
       const dob = moment(
-        val.year + '-' + val.month + '-' + val.day,
+        val[0] + '-' + val[1] + '-' + val[2],
         'YYYY-MM-DD'
       );
       const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
@@ -745,14 +761,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     familyDetailsArray.push(this.familyDetailsFormGroup());
   }
 
-  calculateAgeFamily(i: number) {
-    const val = this.registrationFormGroup.value.familyDetails[i].dob;
-    if (val) {
-      const dob = moment(val.year + '-' + val.month + '-' + val.day, 'YYYY-MM-DD');
-      const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
-      this.registrationFormGroup.get('familyDetails')['controls'][i].get('age').setValue(age);
-    }
-  }
+  // calculateAgeFamily(i: number) {
+  //   const val = this.registrationFormGroup.value.familyDetails[i].dob;
+  //   if (val) {
+  //     const dob = moment(val.year + '-' + val.month + '-' + val.day, 'YYYY-MM-DD');
+  //     const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
+  //     this.registrationFormGroup.get('familyDetails')['controls'][i].get('age').setValue(age);
+  //   }
+  // }
 
 
   searchByIfscCode() {
@@ -835,7 +851,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   save() {
     console.log(this.registrationFormGroup);
-    debugger;
     if (this.registrationFormGroup.valid) {
       const formData = new FormData();
       // tslint:disable-next-line: forin
@@ -847,6 +862,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         formData.append('fileOptions', JSON.stringify(this.fileOptions));
 
         formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
+        formData.append('tokenNo', this.tokenNo);
       }
       this.httpService.saveData(formData).subscribe(
         (res: any) => {
@@ -1132,7 +1148,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get relation_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('relation_mr'); }
   get fatherOrHusbandName() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('fatherOrHusbandName'); }
   get fatherOrHusbandName_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('fatherOrHusbandName_mr'); }
-
+  get education() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('education'); }
+  get education_mr(){ return this.registrationFormGroup.get('familyDetails')['controls'][0].get('education_mr');}
+  get profession() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('profession');}
+  get profession_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('profession_mr');}
+  get nominee(){ return this.registrationFormGroup.get('familyDetails')['controls'][0].get('nominee');}
 
   // BankDetail getter
 

@@ -20,5 +20,26 @@
         <!-- <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p> -->
       </ion-card-content>
     </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Login</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="loginForm">
+        <ion-item>
+          <ion-label position="floating">Username</ion-label>
+          <ion-input type="text" formControlName="username"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-button (click)="loginUser()">Log-in</ion-button>
+        </ion-item>
+      </form>
+      </ion-card-content>
+    </ion-card>
     
 </ion-content>

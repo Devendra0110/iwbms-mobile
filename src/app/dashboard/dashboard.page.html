@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Token Registration</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+<ion-card-header>  
+        <ion-card-title>Enter Details</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]='tokenForm'>
+        <ion-item>
+          <ion-label position="floating">Purpose / हेतू</ion-label>
+          <ion-input id="purpose" formControlName="purpose" type="text" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Mobile Number / दूरध्वनी क्रमांक</ion-label>
+          <ion-input type="tel" maxlength='10' id="mobileNo" formControlName="mobileNo"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Registration Number / नोंदणी क्रमांक</ion-label>
+          <ion-input  type="text" maxlength='12' id="registrationNo" formControlName="registrationNo"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Full Name / पूर्ण नाव</ion-label>
+          <ion-input id="fName" formControlName="fullName"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-button (click)="generateToken()">Generate Token</ion-button>
+        </ion-item>
+      </form>
+      </ion-card-content>
+    </ion-card>
+</ion-content>

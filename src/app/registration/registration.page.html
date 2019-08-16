@@ -12,7 +12,7 @@
 
         <ion-item>
           <ion-label position="floating"> Registration Date</ion-label>
-          <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" value="{{ todaysDate.month }}/{{ todaysDate.day }}/{{
+          <ion-datetime readonly formControlName="registrationDatePersonal" id="personalDetails-registrationDatePersonal" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" value="{{ todaysDate.month }}/{{ todaysDate.day }}/{{
               todaysDate.year
             }}"></ion-datetime>
         </ion-item>
@@ -25,7 +25,7 @@
         </ion-item>
 
         <ion-item >
-          <ion-label position="floating">First Name<span style="color: Red"> *</span></ion-label>
+          <ion-label position="floating">First Name<span style="color: Red">*</span></ion-label>
           <ion-input [class.is-invalid]="
               firstNamePersonal.invalid && firstNamePersonal.touched
             " formControlName="firstNamePersonal" class="transliterate" clearInput id="personalDetails-firstNamePersonal"
@@ -56,7 +56,7 @@
         </ion-item>
 
         <ion-item >
-          <ion-label position="floating">last Name<span style="color: Red"> *</span></ion-label>
+          <ion-label position="floating">Last Name<span style="color: Red">*</span></ion-label>
           <ion-input maxlength="20" formControlName="lastNamePersonal"
             [class.is-invalid]="lastNamePersonal.invalid && lastNamePersonal.touched"
             id='personalDetails-lastNamePersonal' (ionBlur)="transliterateDirect($event)" class="transliterate" clearInput></ion-input>
@@ -133,7 +133,7 @@
           <ion-label position="floating">Date Of Birth - As Per Aadhar or PAN Card<span style="color: Red">
               *</span></ion-label>
           <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" formControlName="dobPersonal"
-            [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched" (ionBlur)="calculateAge()" 
+            [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched" 
             (ionChange)="calculateAge()" ></ion-datetime>
           <!-- <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">
                       <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
@@ -173,7 +173,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Ration Card Type</ion-label>
+          <ion-label position="floating">Ration Card Type<span style="color: Red">*</span></ion-label>
           <ion-select formControlName="rationCardTypePersonal" (ionChange)="handleSpecialDropdowns($event)"
             interface="action-sheet" id='personalDetails-rationCardTypePersonal'>
             <ion-select-option *ngFor="let rationCardType of rationCardTypeOptions|keyvalue" value="{{ rationCardType.value }}">
@@ -256,7 +256,7 @@
               <ion-list-header style="font-size:20px;">Residential Address(स्थानिक पत्ता )</ion-list-header>
 
               <ion-item>
-                <ion-label position="floating">House No. / Building No.<span style="color: Red"> *</span>
+                <ion-label position="floating">House No. / Building No.<span style="color: Red">*</span>
                 </ion-label>
                 <ion-input required id="personalDetails-residentialAddress-houseNo" formControlName="houseNo" type="text"
                   maxlength="40" class="transliterate" [class.is-invalid]="houseNo.invalid && houseNo.touched"
@@ -276,7 +276,7 @@
                 <ion-label position="floating">Road</ion-label>
                 <ion-input formControlName="road" type="text" maxlength="40" class="transliterate"
                   id='personalDetails-residentialAddress-road' [class.is-invalid]="road.invalid && road.touched"
-                  clearInput></ion-input>
+                  class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
                 <div class="text-danger" *ngIf="road.invalid && road.touched">
                   <small *ngIf="!!road.errors?.required">Please enter Road name.</small>
                 </div>
@@ -291,7 +291,7 @@
                 <ion-label position="floating">Area<span style="color: Red"> *</span></ion-label>
                 <ion-input required formControlName="area" type="text" maxlength="40" class="transliterate"
                   id='personalDetails-residentialAddress-area' [class.is-invalid]="area.invalid && area.touched"
-                  clearInput></ion-input>
+                  class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
                 <div class="text-danger" *ngIf="area.invalid && area.touched">
                   <small *ngIf="!!area.errors?.required">Please enter your Area name.</small>
                 </div>
@@ -303,10 +303,10 @@
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating">Town / City <span style="color: Red"> *</span></ion-label>
+                <ion-label position="floating">Town / City<span style="color: Red"> *</span></ion-label>
                 <ion-input required type="text" maxlength="40" formControlName="city" class="transliterate"
                   id='personalDetails-residentialAddress-city' [class.is-invalid]="city.invalid && city.touched"
-                  clearInput></ion-input>
+                  class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
                 <div class="text-danger" *ngIf="city.invalid && city.touched">
                   <small *ngIf="!!city.errors?.required">Please enter your Town / City.</small>
                   <small *ngIf="!!city.errors?.maxlength">You have exceeded the max length.</small>
@@ -323,7 +323,7 @@
                 <ion-input [class.is-invalid]="
                     importantPlace.invalid && importantPlace.touched
                   " class="transliterate" id='personalDetails-residentialAddress-importantPlace' type="text" maxlength="40"
-                  formControlName="importantPlace" clearInput></ion-input>
+                  class="transliterate" (ionBlur)="transliterateDirect($event)" formControlName="importantPlace" clearInput></ion-input>
                 <div class="text-danger" *ngIf="importantPlace.invalid && importantPlace.touched">
                   <small *ngIf="!!importantPlace.errors?.required">Please enter your Important Place / Nearby.
                   </small>
@@ -336,7 +336,7 @@
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating"> State </ion-label>
+                <ion-label position="floating"> State<span style="color: Red">*</span></ion-label>
                 <ion-select [class.is-invalid]="state.invalid && state.touched" formControlName="state"
                   class="transliterate" id='personalDetails-residentialAddress-state' interface="action-sheet">
                   <!-- <ion-select-option *ngFor="let eachState of states|keyvalue" [value]="eachState.value">{{ eachState.key }}
@@ -383,7 +383,7 @@
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating">Post Office</ion-label>
+                <ion-label position="floating">Post Office<span style="color: red">*</span></ion-label>
                 <ion-select required formControlName="postOffice" class="transliterate"
                   [class.is-invalid]="postOffice.invalid && postOffice.touched" (ionChange)="transliterateDTP($event)"
                   id='personalDetails-residentialAddress-postOffice' (change)='transliterateDirect($event)'
@@ -399,7 +399,7 @@
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating">Pincode</ion-label>
+                <ion-label position="floating">Pincode<span style="color: Red">*</span></ion-label>
                 <ion-input required type="tel" id='personalDetails-residentialAddress-pincode'
                   [class.is-invalid]="pincode.invalid && pincode.touched" maxlength="6" minlength="6"
                   formControlName="pincode" interface="action-sheet"></ion-input>
@@ -448,7 +448,7 @@
               <ion-list-header style="font-size:20px;">Permanent Address(स्थानिक पत्ता )</ion-list-header>
 
               <ion-item>
-                <ion-label position="floating">House No. / Building No.<span style="color: Red"> *</span>
+                <ion-label position="floating">House No. / Building No.<span style="color: Red">*</span><span style="color: Red"> *</span>
                 </ion-label>
                 <ion-input required id="personalDetails-permanentAddress-houseNo"
                   [class.is-invalid]="houseNoPer.invalid && houseNoPer.touched" formControlName="houseNo"
@@ -466,9 +466,9 @@
 
               <ion-item>
                 <ion-label position="floating">Road</ion-label>
-                <ion-input formControlName="road" type="text" maxlength="40" class="transliterate"
+                <ion-input formControlName="road" type="text" maxlength="40" 
                   id='personalDetails-permanentAddress-road' [class.is-invalid]="roadPer.invalid && roadPer.touched"
-                  clearInput></ion-input>
+                  class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
                 <div class="text-danger" *ngIf="roadPer.invalid && roadPer.touched">
                   <small *ngIf="!!roadPer.errors?.required">Please enter Road name.</small>
                 </div>
@@ -480,10 +480,10 @@
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating">Area<span style="color: Red"> *</span></ion-label>
-                <ion-input required formControlName="area" class=" transliterate"
+                <ion-label position="floating">Area<span style="color: Red">*</span></ion-label>
+                <ion-input required formControlName="area" 
                   id='personalDetails-permanentAddress-area' type="text" maxlength="40"
-                  [class.is-invalid]="areaPer.invalid && areaPer.touched" clearInput></ion-input>
+                  [class.is-invalid]="areaPer.invalid && areaPer.touched" class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
                 <div class="text-danger" *ngIf="areaPer.invalid && areaPer.touched">
                   <small *ngIf="!!areaPer.errors?.required">Please enter your Area name.</small>
                 </div>
@@ -495,9 +495,9 @@
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating">Town / City <span style="color: Red"> *</span></ion-label>
-                <ion-input required class="transliterate" id='personalDetails-permanentAddress-city' type="text" maxlength="40"
-                  formControlName="city" [class.is-invalid]="cityPer.invalid && cityPer.touched" clearInput></ion-input>
+                <ion-label position="floating">Town / City<span style="color: Red">*</span></ion-label>
+                <ion-input required  id='personalDetails-permanentAddress-city' type="text" maxlength="40"
+                  formControlName="city" [class.is-invalid]="cityPer.invalid && cityPer.touched"  class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
                 <div class="text-danger" *ngIf="cityPer.invalid && cityPer.touched">
                   <small *ngIf="!!cityPer.errors?.required">Please enter your Town / City.</small>
                   <small *ngIf="!!cityPer.errors?.maxlength">You have exceeded the max length.</small>
@@ -511,9 +511,9 @@
 
               <ion-item>
                 <ion-label position="floating">Important Place / Nearby</ion-label>
-                <ion-input class="transliterate" type="text" maxlength="40" formControlName="importantPlace" [class.is-invalid]="
+                <ion-input  type="text" maxlength="40" formControlName="importantPlace" [class.is-invalid]="
                     importantPlacePer.invalid && importantPlacePer.touched
-                  " id='personalDetails-permanentAddress-importantPlace' clearInput></ion-input>
+                  "  class="transliterate" (ionBlur)="transliterateDirect($event)" id='personalDetails-permanentAddress-importantPlace' clearInput></ion-input>
                 <div class="text-danger" *ngIf="importantPlacePer.invalid && importantPlacePer.touched">
                   <small *ngIf="!!importantPlacePer.errors?.required">Please enter your Important Place / Nearby.
                   </small>
@@ -541,8 +541,8 @@
               <ion-item>
                 <ion-label position="floating">District<span style="color: Red"> *</span></ion-label>
                 <ion-select required interface="action-sheet" formControlName="district"
-                  [class.is-invalid]="district.invalid && district.touched"
-                  id='personalDetails-permanentAddress-district' (change)='transliterateDirect($event)'>
+                  [class.is-invalid]="district.invalid && district.touched"  class="transliterate"
+                  id='personalDetails-permanentAddress-district' (ionChange)="transliterateDTP($event)">
                   <ion-select-option *ngFor="let eachDistrict of districts|keyvalue" [value]="eachDistrict.value">
                     {{ eachDistrict.key }}
                   </ion-select-option>
@@ -556,7 +556,7 @@
 
               <ion-item>
                 <ion-label position="floating">Taluka<span style="color: Red"> *</span></ion-label>
-                <ion-select required interface="action-sheet" (change)='transliterateDirect($event)'
+                <ion-select required interface="action-sheet" (ionChange)="transliterateDTP($event)"
                   class="transliterate" id='personalDetails-permanentAddress-taluka' formControlName="taluka"
                   [class.is-invalid]="taluka.invalid && taluka.touched">
                   <ion-select-option *ngFor="let eachTaluka of talukasRes|keyvalue" [value]="eachTaluka.value">{{ eachTaluka.key }}
@@ -570,8 +570,8 @@
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating">Post Office</ion-label>
-                <ion-select required interface="action-sheet" (change)='transliterateDirect($event)'
+                <ion-label position="floating">Post Office<span style="color: Red">*</span></ion-label>
+                <ion-select required interface="action-sheet" (ionChange)="transliterateDTP($event)"
                   class="transliterate" id='personalDetails-permanentAddress-postOffice' formControlName="postOffice"
                   [class.is-invalid]="postOffice.invalid && postOffice.touched">
                   <ion-select-option *ngFor="let eachPost of postOfficeArrayRes|keyvalue" [value]="eachPost.value">{{ eachPost.key }}
@@ -585,7 +585,7 @@
               </ion-item>
 
               <ion-item>
-                <ion-label position="floating">Pincode</ion-label>
+                <ion-label position="floating">Pincode<span style="color: Red">*</span></ion-label>
                 <ion-input required type="tel" [class.is-invalid]="pincode.invalid && pincode.touched" maxlength="6"
                   minlength="6" formControlName="pincode" id='personalDetails-permanentAddress-pincode'></ion-input>
                 <div class="text-danger" *ngIf="pincode.invalid && pincode.touched">
@@ -633,48 +633,60 @@
                 <ion-card-header>{{i + 1}}.</ion-card-header>
               </ion-col>
               <ion-col>
-                <ion-input formControlName='firstNameFamily'  clearInput></ion-input>
+                <ion-item>
+                  <ion-input formControlName='firstNameFamily' id='familyDetails-{{i}}-firstNameFamily' class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input><br>
+                </ion-item>
+                <ion-input *ngIf="firstNameFamily_mr.value" formControlName='firstNameFamily_mr' readonly></ion-input>
               </ion-col>
               <ion-col>
-                <ion-input formControlName='firstNameFamily_mr'  clearInput></ion-input>
+                <ion-item>
+                <ion-input maxlength="20" formControlName="surname" id='familyDetails-{{i}}-surname' class="transliterate" (ionBlur)="transliterateDirect($event)"></ion-input>
+                </ion-item>
+                <ion-input *ngIf="surname_mr.value" formControlName="surname_mr" readonly> </ion-input>
+                
               </ion-col>
               <ion-col>
-                <ion-input maxlength="20" formControlName="fatherOrHusbandName" ></ion-input>
+                <ion-item>
+                <ion-input maxlength="20" formControlName="fatherOrHusbandName" id='familyDetails-{{i}}-fatherOrHusbandName' class="transliterate" (ionBlur)="transliterateDirect($event)" ></ion-input>
+                </ion-item>
+                <ion-input *ngIf="fatherOrHusbandName_mr.value" formControlName="fatherOrHusbandName_mr" readonly></ion-input>
+              </ion-col>
+
+              <ion-col>    
+                   <ion-item><ion-icon  name="calendar"></ion-icon>
+                  <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" 
+                  id='familyDetails-{{i}}-dobFamily' 
+                  min="1994-03-14" max="2012-12-09" 
+                  formControlName="dobFamily" 
+                  (ionChange)="calculateAgeForFamilyDetails(i)">
+                  </ion-datetime>
+                  </ion-item>
               </ion-col>
               <ion-col>
-                <ion-input maxlength="20" formControlName="fatherOrHusbandName_mr" ></ion-input>
+                  <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" formControlName="ageFamily" id='familyDetails-{{i}}-ageFamily' readonly ></ion-input>
               </ion-col>
               <ion-col>
-                <ion-input maxlength="20" formControlName="surname" ></ion-input>
-              </ion-col>
-              <ion-col>
-                <ion-input maxlength="20" formControlName="surname_mr" ></ion-input>
-              </ion-col>
-              <ion-col>
-                  
-                  <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" min="1994-03-14" max="2012-12-09" formControlName="dobFamily">
-                  </ion-datetime><ion-icon name="calendar"></ion-icon>
-              </ion-col>
-              <ion-col>
-                  <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" formControlName="ageFamily" ></ion-input>
-              </ion-col>
-              <ion-col>
-                  <ion-select interface="action-sheet" formControlName="relation">
+                  <ion-select interface="action-sheet" formControlName="relation" (ionChange)="transliterateFamilyDetails($event)" id='familyDetails-{{i}}-relation'>
                     <ion-select-option *ngIf="i === 0" value="Self">Self </ion-select-option>
-                    <ion-select-option *ngFor="let familyRelation of familyRelationOptions|keyvalue" value="{{familyRelation.key}}">{{familyRelation.value}}</ion-select-option>
+                    <ion-select-option *ngFor="let familyRelation of familyRelationOptions|keyvalue" value="{{familyRelation.value}}">{{familyRelation.key}}</ion-select-option>
                   </ion-select>
+                   <ion-input *ngIf="relation_mr.value" formControlName="relation_mr" readonly></ion-input>
               </ion-col>
               <ion-col>
-                  <ion-input maxlength="20" formControlName="profession" ></ion-input>
+                <ion-item>
+                  <ion-input maxlength="20" id='familyDetails-{{i}}-profession' formControlName="profession"class="transliterate" (ionBlur)="transliterateDirect($event)" ></ion-input>
+                  </ion-item> 
+                  <ion-input *ngIf="profession_mr.value" formControlName="profession_mr" readonly></ion-input>
               </ion-col>
               <ion-col>
-                <ion-select interface="action-sheet" formControlName="education">
+                <ion-select interface="action-sheet" formControlName="education" (ionChange)="transliterateFamilyDetails($event)" id='familyDetails-{{i}}-education'>
                   <ion-select-option *ngFor="let education of educationOptions|keyvalue" value={{education.value}}>{{education.key}}</ion-select-option>
                 </ion-select>
+                <ion-input *ngIf="education_mr.value" formControlName="education_mr" readonly></ion-input>
               </ion-col>
               <ion-col>
                 <ion-radio [attr.disabled]="i === 0 || null" formControlName="nominee"
-                (change)="applyNominee(i)" [value]="'yes'"></ion-radio>
+                (ionSelect)="applyNominee(i)" [value]="'yes'" [checked]="true===false"></ion-radio>
               </ion-col>
               <ion-col>
                 <!-- <ion-text color="danger" (click)="deleteFamilyDetail(i)">X</ion-text> -->
@@ -743,7 +755,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Account No.</ion-label>
+          <ion-label position="floating">Account No.<span style="color: Red">*</span></ion-label>
           <ion-input minlength="9" maxlength="18" type="tel" formControlName="accountNumber"
             [class.is-invalid]="accountNumber.invalid && accountNumber.touched" id='bankDetails-accountNumber'>
           </ion-input>
@@ -760,7 +772,7 @@
         <ion-list-header>Employer Details</ion-list-header>
 
         <ion-item>
-          <ion-label position="floating">Name of Contractor / Developer / Company</ion-label>
+          <ion-label position="floating">Name of Contractor / Developer / Company<span style="color: Red">*</span></ion-label>
           <ion-input class="transliterate" formControlName="contractorNameEmp" [class.is-invalid]="
               contractorNameEmp.invalid && contractorNameEmp.touched
             " type="text" maxlength="60" id='employerDetails-contractorNameEmp' 
@@ -776,7 +788,7 @@
 
 
         <ion-item>
-          <ion-label position="floating">Contractor company Name</ion-label>
+          <ion-label position="floating">Contractor company Name<span style="color: Red">*</span></ion-label>
           <ion-input class="transliterate" id='employerDetails-contractorCompanyNameEmp'
             formControlName="contractorCompanyNameEmp" [class.is-invalid]="
               contractorCompanyNameEmp.invalid &&
@@ -795,7 +807,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Phone / Mobile number</ion-label>
+          <ion-label position="floating">Phone / Mobile number<span style="color: Red">*</span></ion-label>
           <ion-input type="tel" maxlength="10" formControlName="contractorPhoneEmp" [class.is-invalid]="
               contractorPhoneEmp.invalid && contractorPhoneEmp.touched
             " id='employerDetails-contractorPhoneEmp' clearInput></ion-input>
@@ -806,7 +818,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Workplace</ion-label>
+          <ion-label position="floating">Workplace<span style="color: Red">*</span></ion-label>
           <ion-input class="transliterate" type="text" maxlength="50"
             [class.is-invalid]="workPlaceEmp.invalid && workPlaceEmp.touched" formControlName="workPlaceEmp"
             id='employerDetails-workPlaceEmp' class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
@@ -855,7 +867,7 @@
         <ion-item>
           <ion-label position="floating">Town / City</ion-label>
           <ion-input class="transliterate" id='employerDetails-townEmp' formControlName="townEmp"
-            [class.is-invalid]="townEmp.invalid && townEmp.touched" clearInput></ion-input>
+            [class.is-invalid]="townEmp.invalid && townEmp.touched" class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
           <div class="text-danger" *ngIf="townEmp.invalid && townEmp.touched">
             <small *ngIf="!!townEmp.errors?.required">Please enter your Town / City.</small>
           </div>
@@ -1061,19 +1073,27 @@
         </ion-item>
         <img [src]="currentImage" *ngIf="currentImage">
 
-        <ion-item>
+        <ion-item lines="none">
           <ion-label floating> Supporting Document</ion-label><br>
-          <ion-input id='suppDocument' type="file"  accept="application/pdf" (change)="uploadFile($event)" ></ion-input>
-        </ion-item>
+          </ion-item>
+          <ion-item>
+            <input id='suppDocument' type="file"  accept="application/pdf" (change)="uploadFile($event)" >
+          </ion-item>
+          
 
-        <ion-item>
-          <ion-label text-wrap floating>90 Days Work Certificate</ion-label>
-          <ion-input id='workCertificate' type="file" accept="application/pdf" (change)="uploadFile($event)" ></ion-input>
+        <ion-item lines="none">
+          <ion-label text-wrap floating>90 Days Work Certificate</ion-label>          
+        </ion-item>
+        <ion-item>        
+          <input id='workCertificate' type="file" accept="application/pdf" (change)="uploadFile($event)" >
         </ion-item>
         
-        <ion-item>
+        
+        <ion-item lines="none">
           <ion-label text-wrap floating> Bank Passbook</ion-label>
-          <ion-input id='bankPassbook' type="file" accept="application/pdf" (change)="uploadFile($event)" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <input id='bankPassbook' type="file" accept="application/pdf" (change)="uploadFile($event)" >
         </ion-item>
 
         <ion-item>
