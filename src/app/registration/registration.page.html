@@ -686,7 +686,7 @@
               </ion-col>
               <ion-col>
                 <ion-radio [attr.disabled]="i === 0 || null" formControlName="nominee"
-                (ionSelect)="applyNominee(i)" [value]="'yes'" [checked]="true===false"></ion-radio>
+                (ionSelect)="applyNominee($event,i)" [value]="'yes'" ></ion-radio>
               </ion-col>
               <ion-col>
                 <!-- <ion-text color="danger" (click)="deleteFamilyDetail(i)">X</ion-text> -->
@@ -892,7 +892,7 @@
         <ion-item>
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Appointment Date</ion-label>
-          <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" min="1990-01-01"
+          <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" min="1990-01-01" [max]="maxAppointmentDate"
             id='employerDetails-appointmentDateEmp' formControlName="appointmentDateEmp"
             [class.is-invalid]=" appointmentDateEmp.invalid && appointmentDateEmp.touched"></ion-datetime>
         </ion-item>

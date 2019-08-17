@@ -33,7 +33,7 @@ export class HomePage {
         //   console.log('Your token is', val);
         // });
 
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/registration']);
       }, err => console.log(err));
     }
 

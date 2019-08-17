@@ -32,14 +32,17 @@ export class DashboardPage implements OnInit {
     const tokenNo = Math.floor((Math.random() * 10000));
     const tokenObj = {
       formData: this.tokenForm.value,
-      wfc_id: localStorage.getItem('wfc_id'),
+      wfc_id: 1,
       tokenNo,
     };
     this.tokenService.generateToken(tokenObj).subscribe(
       (res: any) => {
         alert('Token Generated');
         this.router.navigate(['/registration']);
-      },err=>console.log(err));
+      },err=>{
+        alert('Enter Correct Details');
+        console.log(err)
+      });
 
   }
 

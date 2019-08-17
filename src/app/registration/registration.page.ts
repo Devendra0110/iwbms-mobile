@@ -35,6 +35,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public startDateForDob: any;
   public startDate: any;
   public todaysDate: any;
+  public maxAppointmentDate:any;
   public dateOfBirth: any;
   public attachmentDetails:any =[];
   bankDetails: any = {
@@ -125,6 +126,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public rejectNoteFlag = false;
   public editFormFlag;
   public tokenNo: any;
+  public JWTToken:any;
 
   constructor(private validationService: ValidationService,
               private transliterate: TransliterationService,
@@ -136,8 +138,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
               private storage: Storage) {
 
     this.storage.get('token').then((tokenValue) => {
-      this.tokenNo = tokenValue;
+      this.JWTToken = tokenValue;
     });
+
+    this.tokenNo = 9071;
     // fetch the list of gender from database
     this.httpService.getGenders().subscribe((genderArrObj: any) => {
       for (const i of genderArrObj) {
@@ -237,6 +241,20 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       month: new Date().getMonth() + 1,
       day: new Date().getDate()
     };
+
+    const maxAppointmentDate = moment(
+      new Date(this.todaysDate.year, this.todaysDate.month - 1, this.todaysDate.day))
+      .subtract(3, 'months').format('DD/MM/YYYY').split('/');
+
+
+    // this.maxAppointmentDate = {
+    //   year: Number(maxAppointmentDate[2]),
+    //   month: Number(maxAppointmentDate[1]),
+    //   day: Number(maxAppointmentDate[0])
+    // };
+
+    this.maxAppointmentDate = `${Number(maxAppointmentDate[2])}-0${Number(maxAppointmentDate[1])}-${Number(maxAppointmentDate[0])}`
+
     this.attachmentDetails = [
       {
         document_en: `Proof of age (Aadhar card / passport / PAN card / driver's license / birth certificate / school leaving certificate) One of these`,
@@ -491,7 +509,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   getApplicantsDetails() {
     const user = JSON.parse(localStorage.getItem('user'));
-    this.httpService.getApplicantsDetails(user._id).subscribe(
+    this.httpService.getApplicantsDetails(user._id,this.JWTToken).subscribe(
       data => {
         this.selectedApplicationData = data;
         this.modes = Modes.update;
@@ -618,6 +636,24 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         const result = response.split(';').map((item) => {
           return item.split('^')[0];
         });
+        switch (event.target.id) {
+          case 'personalDetails-firstNamePersonal':
+            this.firstNameFamily.patchValue(event.target.value, { emitEvent: false });
+            this.firstNameFamily.disable();
+            this.firstNameFamily_mr.patchValue(result.join(' '));
+            this.firstNameFamily_mr.disable();
+            break;
+          case 'personalDetails-middleNamePersonal':
+            this.fatherOrHusbandName.patchValue(event.target.value, { emitEvent: false });
+            this.fatherOrHusbandName_mr.patchValue(result.join(' '));
+            break;
+          case 'personalDetails-lastNamePersonal':
+            this.surname.patchValue(event.target.value, { emitEvent: false });
+            this.surname.disable();
+            this.surname_mr.patchValue(result.join(' '));
+            this.surname_mr.disable();
+            break;
+        }
 
         target.patchValue(result.join(' '));
       });
@@ -682,6 +718,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
       if (dob) {
         if (age > 17 && age < 61) {
+          this.dobFamily.patchValue(val);
+          this.dobFamily.disable();
+          this.ageFamily.patchValue(age);
           this.registrationFormGroup.get('personalDetails').get('agePersonal').setValue(age);
         } else {
           alert('Applicant age should be greater than 18 and less than 60 ');
@@ -727,14 +766,16 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-   applyNominee(i: number) {
+
+  applyNominee(event,i: number) {
+    console.log(event)
     const familyDetails = this.registrationFormGroup.get('familyDetails')['controls'];
     for (const j in familyDetails) {
       familyDetails[j].get('nominee').setValue('no');
-      console.log(familyDetails[j].get('nominee'));
-    }
+     }
     this.registrationFormGroup.get('familyDetails').get(i.toString()).get('nominee').setValue('yes');
   }
+
 
   calculateAgeForFamilyDetails(i: string) {
     const val = new Date(this.registrationFormGroup.get('familyDetails').get(i.toString()).get('dobFamily').value).toJSON().slice(0, 10).split('-')
@@ -864,7 +905,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
         formData.append('tokenNo', this.tokenNo);
       }
-      this.httpService.saveData(formData).subscribe(
+      this.httpService.saveData(formData,this.JWTToken).subscribe(
         (res: any) => {
           alert('Data Saved');
           console.log(res);

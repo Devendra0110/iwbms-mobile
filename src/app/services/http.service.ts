@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { serverUrl } from '../../assets/config';
-import { appendTokenToHeaderObject } from '../../assets/token-helper';
+import { appendTokenToHeaderObject, } from '../../assets/token-helper';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -9,43 +10,56 @@ import { appendTokenToHeaderObject } from '../../assets/token-helper';
 export class HttpService {
 
   serverUrl = serverUrl;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+            private storage:Storage) { }
 
-  saveData(formData) {
-    const headers = appendTokenToHeaderObject(
-      new HttpHeaders()
+  saveData(formData, JWTToken:any) {
+    const headers =appendTokenToHeaderObject(
+      new HttpHeaders(),JWTToken
     );
-    return this.http.post(`${serverUrl}bocw-registration`, formData);
+    return this.http.post(`${serverUrl}bocw-registration`, formData, {headers});
   }
 
-  getAllEntries() {
-    const headers = appendTokenToHeaderObject(
-      new HttpHeaders()
-    );
-    return this.http.get(`${serverUrl}registration-and-renewal/registration`);
-  }
+  // getAllEntries() {
+  //   const headers = appendTokenToHeaderObject(
+  //     new HttpHeaders()
+  //   );
+  //   return this.http.get(`${serverUrl}registration-and-renewal/registration`);
+  // }
 
-  getApplicantsDetails(userId) {
+  getApplicantsDetails(userId,JWTToken) {
     const headers = appendTokenToHeaderObject(
-      new HttpHeaders()
+      new HttpHeaders(), JWTToken
     );
     return this.http.get(`${serverUrl}registration-and-renewal/registration`, { params: { userId }});
   }
 
-  updateApplicationStatus(ackNo: string, applicationStatus: any) {
-    const headers = appendTokenToHeaderObject(
-      new HttpHeaders().append('Content-Type', 'application/json')
-    );
-    return this.http.put(`${serverUrl}registration-and-renewal/application-status`, { ackNo, applicationStatus });
+  // updateApplicationStatus(ackNo: string, applicationStatus: any) {
+  //   const headers = appendTokenToHeaderObject(
+  //     new HttpHeaders().append('Content-Type', 'application/json')
+  //   );
+  //   return this.http.put(`${serverUrl}registration-and-renewal/application-status`, { ackNo, applicationStatus });
+  // }
+
+  // // fetch the xls file of all registrations
+  // getRegistrationXls() {
+  //   const headers = appendTokenToHeaderObject(
+  //     new HttpHeaders()
+  //   );
+  //   return this.http.get(`${serverUrl}registration-and-renewal/registrationxls`);
+  // }
+
+
+  appendTokenToHeaderObject(headers: HttpHeaders): HttpHeaders {
+    let token;
+    this.storage.get('token').then((tokenValue) => {
+      token = tokenValue; 
+      console.log(token);
+      debugger;
+    })
+    return headers.append('x-access-token', token);
   }
 
-  // fetch the xls file of all registrations
-  getRegistrationXls() {
-    const headers = appendTokenToHeaderObject(
-      new HttpHeaders()
-    );
-    return this.http.get(`${serverUrl}registration-and-renewal/registrationxls`);
-  }
 
   getGenders() {
     return this.http.get(`${serverUrl}masters/genders`);

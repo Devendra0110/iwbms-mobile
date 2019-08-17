@@ -18,14 +18,14 @@ export class TokenService {
   }
 
   getToken() {
-    const headers = appendTokenToHeaderObject(new HttpHeaders());
+    const headers = this.appendTokenToHeaderObject(new HttpHeaders());
     return this.http.get(`${serverUrl}token-management/get-token`, { headers });
   }
 
   appendTokenToHeaderObject(headers: HttpHeaders): HttpHeaders {
     let token;
     this.storage.get('token').then((tokenValue)=>{
-      token = tokenValue
+      token = tokenValue;
     })
     return headers.append('x-access-token', token);
   }
