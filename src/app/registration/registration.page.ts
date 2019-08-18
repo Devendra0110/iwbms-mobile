@@ -125,7 +125,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public modes: Modes;
   public rejectNoteFlag = false;
   public editFormFlag;
-  public tokenNo: any;
+  public token_id: any;
   public JWTToken:any;
 
   constructor(private validationService: ValidationService,
@@ -141,7 +141,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.JWTToken = tokenValue;
     });
 
-    this.tokenNo = 9071;
+    this.token_id =16;
     // fetch the list of gender from database
     this.httpService.getGenders().subscribe((genderArrObj: any) => {
       for (const i of genderArrObj) {
@@ -180,14 +180,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.httpService.getFamilyRelations().subscribe((familyRelationArrObj:any)=>{
       for(const  i of familyRelationArrObj){
         this.familyRelationOptions[i.relation_title_en] = i.family_relation_id;
-        this.familyRelationOptionsMarathi[i.family_relation_id] = i.relation_title_mr;
+        this.familyRelationOptionsMarathi[i.relation_title_mr] = i.family_relation_id;
       }
     })
 
     this.httpService.getEducation().subscribe((educationArrObj: any) => {
       for (const i of educationArrObj) {
         this.educationOptions[i.education_level_en] = i.education_level_id;
-        this.educationOptionsMarathi[i.education_level_id] = i.education_level_mr;
+        this.educationOptionsMarathi[i.education_level_mr] = i.education_level_id;
       }
     })
 
@@ -359,8 +359,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     //   err => console.log(err)
     // );
     this.state.patchValue('21');
-    this.relation.patchValue('Self'); this.relation.disable();
-    this.relation_mr.patchValue('स्वतः'); this.relation_mr.disable();
+    this.relation.patchValue('1');
+    this.relation.disable();
+    this.relation_mr.patchValue('1');
+    this.relation_mr.disable();
     // this.userMgmntService.getUserTypes().subscribe(
     //   (userTypes: any) => {
     //     this.userType = userTypes.find(x => x._id === localStorage.getItem('userType')).description;
@@ -718,7 +720,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
       if (dob) {
         if (age > 17 && age < 61) {
-          this.dobFamily.patchValue(val);
+          this.dobFamily.patchValue(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value);
           this.dobFamily.disable();
           this.ageFamily.patchValue(age);
           this.registrationFormGroup.get('personalDetails').get('agePersonal').setValue(age);
@@ -751,24 +753,24 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.migrant.patchValue(false);
     this.migrant_mr.patchValue(false);
 
-    const resAddress = this.registrationFormGroup.get('personalDetails').get(
+    const resAddress: any = this.registrationFormGroup.get('personalDetails').get(
       'residentialAddress'
     );
     const permAddress = this.registrationFormGroup.get('personalDetails').get(
       'permanentAddress'
     );
     if (event.target.checked) {
-      permAddress.patchValue(resAddress.value);
+      permAddress.patchValue(resAddress.getRawValue());
       permAddress.disable();
     } else {
-      permAddress.patchValue(this.addressFormGroup().value);
+      permAddress.reset();
       permAddress.enable();
     }
   }
 
 
-  applyNominee(event,i: number) {
-    console.log(event)
+  applyNominee(i: number) {
+    
     const familyDetails = this.registrationFormGroup.get('familyDetails')['controls'];
     for (const j in familyDetails) {
       familyDetails[j].get('nominee').setValue('no');
@@ -903,7 +905,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         formData.append('fileOptions', JSON.stringify(this.fileOptions));
 
         formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
-        formData.append('tokenNo', this.tokenNo);
+        formData.append('token_id', this.token_id);
       }
       this.httpService.saveData(formData,this.JWTToken).subscribe(
         (res: any) => {

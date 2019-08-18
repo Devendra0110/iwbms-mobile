@@ -259,7 +259,7 @@
                 <ion-label position="floating">House No. / Building No.<span style="color: Red">*</span>
                 </ion-label>
                 <ion-input required id="personalDetails-residentialAddress-houseNo" formControlName="houseNo" type="text"
-                  maxlength="40" class="transliterate" [class.is-invalid]="houseNo.invalid && houseNo.touched"
+                  maxlength="40" class="transliterate" (ionBlur)="transliterateDirect($event)" [class.is-invalid]="houseNo.invalid && houseNo.touched"
                   clearInput></ion-input>
                 <div class="text-danger" *ngIf="houseNo.invalid && houseNo.touched">
                   <small *ngIf="!!houseNo.errors?.required">Please enter your House No./Building No.
@@ -452,7 +452,7 @@
                 </ion-label>
                 <ion-input required id="personalDetails-permanentAddress-houseNo"
                   [class.is-invalid]="houseNoPer.invalid && houseNoPer.touched" formControlName="houseNo"
-                  class="transliterate" id='personalDetails-permanentAddress-houseNo' type="text" maxlength="40" clearInput></ion-input>
+                  class="transliterate" (ionBlur)="transliterateDirect($event)" id='personalDetails-permanentAddress-houseNo' type="text" maxlength="40" clearInput></ion-input>
                 <div class="text-danger" *ngIf="houseNoPer.invalid && houseNoPer.touched">
                   <small *ngIf="!!houseNoPer.errors?.required">Please enter your House No./Building No.
                   </small>
@@ -667,10 +667,10 @@
               </ion-col>
               <ion-col>
                   <ion-select interface="action-sheet" formControlName="relation" (ionChange)="transliterateFamilyDetails($event)" id='familyDetails-{{i}}-relation'>
-                    <ion-select-option *ngIf="i === 0" value="Self">Self </ion-select-option>
+                    <!-- <ion-select-option *ngIf="i === 0" value="Self">Self </ion-select-option> -->
                     <ion-select-option *ngFor="let familyRelation of familyRelationOptions|keyvalue" value="{{familyRelation.value}}">{{familyRelation.key}}</ion-select-option>
                   </ion-select>
-                   <ion-input *ngIf="relation_mr.value" formControlName="relation_mr" readonly></ion-input>
+                   <!-- <ion-input *ngIf="relation_mr.value" formControlName="relation_mr" readonly></ion-input> -->
               </ion-col>
               <ion-col>
                 <ion-item>
@@ -679,14 +679,16 @@
                   <ion-input *ngIf="profession_mr.value" formControlName="profession_mr" readonly></ion-input>
               </ion-col>
               <ion-col>
-                <ion-select interface="action-sheet" formControlName="education" (ionChange)="transliterateFamilyDetails($event)" id='familyDetails-{{i}}-education'>
+                <ion-select interface="action-sheet" formControlName="education" (ionChange)="handleSpecialDropdowns($event)" id='familyDetails-{{i}}-education'>
                   <ion-select-option *ngFor="let education of educationOptions|keyvalue" value={{education.value}}>{{education.key}}</ion-select-option>
                 </ion-select>
-                <ion-input *ngIf="education_mr.value" formControlName="education_mr" readonly></ion-input>
+                <!-- <ion-input *ngIf="education_mr.value" formControlName="education_mr" readonly></ion-input> -->
               </ion-col>
               <ion-col>
-                <ion-radio [attr.disabled]="i === 0 || null" formControlName="nominee"
-                (ionSelect)="applyNominee($event,i)" [value]="'yes'" ></ion-radio>
+                <!-- <ion-radio [attr.disabled]="i === 0 || null" formControlName="nominee"
+                (ionSelect)="applyNominee($event,i)" [value]="'yes'" ></ion-radio> -->
+                <input type="radio" [attr.disabled]="i === 0 || null" formControlName="nominee"
+                            (change)="applyNominee(i)" [value]="'yes'">
               </ion-col>
               <ion-col>
                 <!-- <ion-text color="danger" (click)="deleteFamilyDetail(i)">X</ion-text> -->
@@ -1033,8 +1035,8 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Type of worker</ion-label>
-          <ion-checkbox formControlName='migrant' id='employerDetails-migrant' (ionChange)="handleSpecialDropdowns($event)">Migrant</ion-checkbox>
+          <ion-label >Migrant</ion-label>
+          <ion-checkbox formControlName='migrant' id='employerDetails-migrant' (ionChange)="handleSpecialDropdowns($event)"></ion-checkbox>
         </ion-item>
 <!-- 
         <ion-item hidden="true">
