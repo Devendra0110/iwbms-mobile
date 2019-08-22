@@ -7,7 +7,6 @@ import { Storage } from '@ionic/storage';
 import { states } from '../models/states';
 import { Modes } from '../../assets/modes';
 import { serverUrl} from '../../assets/config';
-
 import * as moment from 'moment';
 
 import { ValidationService } from '../services/validation.service';
@@ -73,6 +72,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public educationOptionsMarathi: string[] = [];
   public natureOfWorkOptions: string[] = [];
   public natureOfWorkOptionsMarathi: string[] = [];
+  public Days90HeaderOptions:string[]=[];
+
+  public registrationTypeEmpArray: any[];
+  public workingDay: Number;
+  public workingDayFlag: Boolean;
+  public issuers: any[];
+
   public typeOfIssuerOptions: string[] = [];
   public typeOfIssuerOptionsMarathi: string[] = [];
   public registrationTypeOptions: string[] = [];
@@ -127,6 +133,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public editFormFlag;
   public token_id: any;
   public JWTToken:any;
+  public wfcID:any;
 
   constructor(private validationService: ValidationService,
               private transliterate: TransliterationService,
@@ -137,11 +144,28 @@ export class RegistrationPage implements OnInit, AfterViewInit {
               private camera: Camera,
               private storage: Storage) {
 
-    this.storage.get('token').then((tokenValue) => {
-      this.JWTToken = tokenValue;
+    //re-route to homepage if not logged-in
+    this.storage.get('token').then((val) => {
+      if (val === null)
+        this.router.navigate(['/home'])
+      else 
+        this.JWTToken=val
     });
 
-    this.token_id =16;
+    //re-route to homepage if not logged-in
+    this.storage.get('tokenId').then((val) => {
+      if (val === null || val === undefined)
+        this.router.navigate(['/dashboard'])
+      else 
+        this.token_id=val;
+
+        console.log(val)
+    });
+
+    this.storage.get('wfc_id').then((val) => {
+      this.wfcID = val;
+    });
+    
     // fetch the list of gender from database
     this.httpService.getGenders().subscribe((genderArrObj: any) => {
       for (const i of genderArrObj) {
@@ -200,6 +224,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     }, err => console.log(err));
 
+    this.Days90HeaderOptions = ['SNo.','Type of Issuer', 'Full Name', 'Issuer Reg. No.', 'Registration Type', 'Mobile number', 'Document Ref.No', 'From Date','To Date']
+
     // fetch the list of Issuer types from database
     this.httpService.getIssuerTypes().subscribe((issuerTypesArrObj: any) => {
       for (const i of issuerTypesArrObj) {
@@ -227,6 +253,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       familyDetails: new FormArray([this.familyDetailsFormGroup()]),
       bankDetails: this.bankDetailsFormFroup(),
       employerDetails: this.employerDetailsFormFroup(),
+      employerWorkDetails: new FormArray([this.employerWorkDetailsFormFroup()]),
       supportingDocuments: this.supportingDocumentsFormFroup(),
     });
 
@@ -358,6 +385,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     //   },
     //   err => console.log(err)
     // );
+    this.workingDayFlag = true;
     this.state.patchValue('21');
     this.relation.patchValue('1');
     this.relation.disable();
@@ -485,11 +513,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(dob, {emitEvent:false})
     },err=>console.log(err));
 
-    this.dispatchDateEmp.valueChanges.subscribe(value => {
-      const val = new Date(value).toJSON().slice(0, 10).split('-');
-      const dob = val[0] + '-' + val[1] + '-' + val[2]
-      this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp').patchValue(dob, { emitEvent: false })
-    },err=>console.log(err));
+    // this.dispatchDateEmp.valueChanges.subscribe(value => {
+    //   const val = new Date(value).toJSON().slice(0, 10).split('-');
+    //   const dob = val[0] + '-' + val[1] + '-' + val[2]
+    //   this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp').patchValue(dob, { emitEvent: false })
+    // },err=>console.log(err));
 
   }
 
@@ -840,6 +868,53 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       });
   }
 
+  deleteWorkerDetail(i: number) {
+    const workerDetailsArray = this.registrationFormGroup.get('employerWorkDetails') as FormArray;
+    workerDetailsArray.removeAt(i);
+    if (workerDetailsArray.length === 0) {
+      workerDetailsArray.push(this.employerWorkDetailsFormFroup());
+    }
+  }
+
+  addMoreWorkerDetails() {
+    const workerDetailsArray = this.registrationFormGroup.get('employerWorkDetails') as FormArray;
+    workerDetailsArray.push(this.employerWorkDetailsFormFroup());
+  }
+
+  calculateDayForWorkDetails(i: string) {
+    // const fromDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value;
+    
+    const formNewDate = new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value).toJSON().slice(0, 10).split('-')
+    
+    
+    // const toDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value;
+    
+    const toNewDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value? new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value).toJSON().slice(0, 10).split('-'):null;
+ 
+    if (formNewDate && toNewDate) {
+      const fromDateMoment = moment([formNewDate[0], formNewDate[1], formNewDate[2]] );
+      const toDateMoment = moment([toNewDate[0], toNewDate[1], toNewDate[2]]);
+
+      const difference = toDateMoment.diff(fromDateMoment, 'days') + 1;
+      this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('workingDays').patchValue(difference);
+      let totalWorkingDays = 0;
+      // console.log(this.registrationFormGroup.get('employerWorkDetails').get('workingDays').value);
+      const employerWorkDetailsArr = this.registrationFormGroup.get('employerWorkDetails').value;
+      for (const each in employerWorkDetailsArr) {
+        totalWorkingDays += employerWorkDetailsArr[each].workingDays;
+      }
+      this.workingDay = totalWorkingDays;
+      // console.log(totalWorkingDays);
+
+      if (this.workingDay <= 90) {
+        alert('Working days is less than 90')
+        this.workingDayFlag = false;
+      } else {
+        this.workingDayFlag = true;
+      }
+    }
+  }
+
   takePicture() {
     const options: CameraOptions = {
       quality: 100,
@@ -847,14 +922,40 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     };
-
     this.camera.getPicture(options).then((imageData) => {
       this.currentImage = 'data:image/jpeg;base64,' + imageData;
+      const blobImage = this.b64toBlob(imageData, 'image/jpeg');
+      const fileImage = new File([blobImage], `${Date.now()}-img.jpg`);
+      this.files.applicantPhoto = fileImage;
+      this.fileOptions.applicantPhoto = `${Date.now()}-img`;
     }, (err) => {
       // Handle error
       console.log("Camera issue:" + err);
     });
   }
+
+  b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  }
+
+
+
 
   selectAttachmentType(event: any, i: number) {
     const docTypeValue = event.target.value;
@@ -906,12 +1007,16 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
         formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
         formData.append('token_id', this.token_id);
+        console.log(this.token_id);
+        formData.append('wfc_id', String(this.wfcID));
       }
       this.httpService.saveData(formData,this.JWTToken).subscribe(
         (res: any) => {
           alert('Data Saved');
           console.log(res);
-          this.router.navigate(['/home']);
+          // this.storage.remove('tokenId').then((val) => {
+          // },err=>console.log(err));
+          this.router.navigate(['/dashboard']);
         },
         (err: any) => console.error(err)
       );
@@ -1027,13 +1132,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       appointmentDateEmp: new FormControl(null),
       remunerationPerDayEmp: new FormControl('', [Validators.maxLength(8)]),
       natureOfWorkEmp: new FormControl('', [Validators.required]),
-      typeOfEmployerEmp: new FormControl(''),
-      fullNameOfIssuerEmp: new FormControl('', [Validators.pattern('[a-zA-z\\s]{8,60}')]),
-      registrationNumberEmp: new FormControl('', [Validators.pattern('^[0-9]{5,12}$')]),
-      registrationTypeEmp: new FormControl(''),
-      mobileNumberOfIssuerEmp: new FormControl('', [Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
-      documentRefNumberEmp: new FormControl('', [Validators.maxLength(20)]),
-      dispatchDateEmp: new FormControl(null),
+      // typeOfEmployerEmp: new FormControl(''),
+      // fullNameOfIssuerEmp: new FormControl('', [Validators.pattern('[a-zA-z\\s]{8,60}')]),
+      // registrationNumberEmp: new FormControl('', [Validators.pattern('^[0-9]{5,12}$')]),
+      // registrationTypeEmp: new FormControl(''),
+      // mobileNumberOfIssuerEmp: new FormControl('', [Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
+      // documentRefNumberEmp: new FormControl('', [Validators.maxLength(20)]),
+      // dispatchDateEmp: new FormControl(null),
       migrant: new FormControl(''),
       migrant_mr: new FormControl(''),
       MNREGACardNumberEmp: new FormControl(''),
@@ -1049,6 +1154,32 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       registrationTypeEmp_mr: new FormControl('')
     });
   }
+
+  employerWorkDetailsFormFroup(): FormGroup {
+    return new FormGroup({
+      typeOfEmployerEmp: new FormControl(''),
+      fullNameOfIssuerEmp: new FormControl('', [Validators.pattern('[a-zA-z\\s]{8,50}')]),
+      registrationNumberEmp: new FormControl('', [Validators.pattern('^[0-9]{5,12}$')]),
+      registrationTypeEmp: new FormControl(''),
+      mobileNumberOfIssuerEmp: new FormControl('', [Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
+      documentRefNumberEmp: new FormControl('', [Validators.maxLength(20)]),
+      fromDateEmp: new FormControl(null),
+      toDateEmp: new FormControl(null),
+      // MNREGACardNumberEmp: new FormControl(''),
+      // contractorNameEmp_mr: new FormControl(''),
+      // contractorCompanyNameEmp_mr: new FormControl(''),
+      // workPlaceEmp_mr: new FormControl(''),
+      // townEmp_mr: new FormControl(''),
+      // talukaEmp_mr: new FormControl(''),
+      //      districtEmp_mr: new FormControl(''),
+      //    natureOfWorkEmp_mr: new FormControl(''),
+      typeOfEmployerEmp_mr: new FormControl(''),
+      fullNameOfIssuerEmp_mr: new FormControl(''),
+      registrationTypeEmp_mr: new FormControl(''),
+      workingDays: new FormControl('')
+    });
+  }
+
 
   attachmentListFormGroup(): FormGroup {
     return new FormGroup({
@@ -1159,13 +1290,45 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get appointmentDateEmp() { return this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp'); }
   get remunerationPerDayEmp() { return this.registrationFormGroup.get('employerDetails').get('remunerationPerDayEmp'); }
   get natureOfWorkEmp() { return this.registrationFormGroup.get('employerDetails').get('natureOfWorkEmp'); }
-  get typeOfEmployerEmp() { return this.registrationFormGroup.get('employerDetails').get('typeOfEmployerEmp'); }
-  get fullNameOfIssuerEmp() { return this.registrationFormGroup.get('employerDetails').get('fullNameOfIssuerEmp'); }
-  get registrationNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('registrationNumberEmp'); }
-  get registrationTypeEmp() { return this.registrationFormGroup.get('employerDetails').get('registrationTypeEmp'); }
-  get mobileNumberOfIssuerEmp() { return this.registrationFormGroup.get('employerDetails').get('mobileNumberOfIssuerEmp'); }
-  get documentRefNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('documentRefNumberEmp'); }
-  get dispatchDateEmp() { return this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp'); }
+  // get typeOfEmployerEmp() { return this.registrationFormGroup.get('employerDetails').get('typeOfEmployerEmp'); }
+  // get fullNameOfIssuerEmp() { return this.registrationFormGroup.get('employerDetails').get('fullNameOfIssuerEmp'); }
+  // get registrationNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('registrationNumberEmp'); }
+  // get registrationTypeEmp() { return this.registrationFormGroup.get('employerDetails').get('registrationTypeEmp'); }
+  // get mobileNumberOfIssuerEmp() { return this.registrationFormGroup.get('employerDetails').get('mobileNumberOfIssuerEmp'); }
+  // get documentRefNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('documentRefNumberEmp'); }
+
+  get typeOfEmployerEmp() {
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp');
+  }
+
+  get fullNameOfIssuerEmp() {
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp');
+  }
+
+  get registrationNumberEmp() {
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('registrationNumberEmp');
+  }
+
+  get registrationTypeEmp() {
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('registrationTypeEmp');
+  }
+
+  get mobileNumberOfIssuerEmp() {
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('mobileNumberOfIssuerEmp');
+  }
+
+  get documentRefNumberEmp() {
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('documentRefNumberEmp');
+  }
+
+  get fromDateEmp() {
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('fromDateEmp');
+  }
+
+  get toDateEmp() {
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('toDateEmp');
+  }
+  // get dispatchDateEmp() { return this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp'); }
   get migrant() { return this.registrationFormGroup.get('employerDetails').get('migrant') }
   get MNREGACardNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('MNREGACardNumberEmp'); }
   get contractorNameEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('contractorNameEmp_mr'); }

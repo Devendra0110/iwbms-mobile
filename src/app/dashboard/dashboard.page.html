@@ -13,11 +13,8 @@
         <form [formGroup]='tokenForm'>
         <ion-item>
           <ion-label position="floating">Purpose / हेतू</ion-label>
-          <ion-select id="purpose" formControlName="purpose" type="text" interface="action-sheet" >
-            <ion-select-option value="New Registration">New Registration / नवीन नोंदणी</ion-select-option>
-            <ion-select-option value="Renewal">Renewal / नूतनीकरण</ion-select-option>
-            <ion-select-option value="Claim">Claim / लाभ></ion-select-option>
-            <ion-select-option value="Update Registration">Update Registration / अद्यावत नोंदणी></ion-select-option>
+          <ion-select interface="action-sheet" id="purpose" formControlName="purpose">
+            <ion-select-option  value="New Registration">New Registration / नवीन नोंदणी</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
@@ -32,10 +29,10 @@
           <ion-label position="floating">Full Name / पूर्ण नाव</ion-label>
           <ion-input id="fName" formControlName="fullName"></ion-input>
         </ion-item>
-        <ion-item lines="none">
-          <ion-button (click)="generateToken()">Generate Token</ion-button>
-        </ion-item>
+          <ion-button color="success" mode="ios" expand="block" (click)="generateToken()">Generate Token</ion-button>
+        
       </form>
       </ion-card-content>
     </ion-card>
+    <ion-button (click)="logout()" color="danger" mode="ios" expand="block">Log-out</ion-button>
 </ion-content>

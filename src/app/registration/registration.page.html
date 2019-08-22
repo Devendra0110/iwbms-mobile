@@ -253,7 +253,7 @@
                 .get('residentialAddress')
             ">
             <ion-list>
-              <ion-list-header style="font-size:20px;">Residential Address(स्थानिक पत्ता )</ion-list-header>
+              <ion-list-header style="font-size:20px;">Residential Address(स्थानिक पत्ता)</ion-list-header>
 
               <ion-item>
                 <ion-label position="floating">House No. / Building No.<span style="color: Red">*</span>
@@ -386,7 +386,7 @@
                 <ion-label position="floating">Post Office<span style="color: red">*</span></ion-label>
                 <ion-select required formControlName="postOffice" class="transliterate"
                   [class.is-invalid]="postOffice.invalid && postOffice.touched" (ionChange)="transliterateDTP($event)"
-                  id='personalDetails-residentialAddress-postOffice' (change)='transliterateDirect($event)'
+                  id='personalDetails-residentialAddress-postOffice' 
                   interface="action-sheet">
                   <ion-select-option *ngFor="let eachPost of postOfficeArrayRes|keyvalue" [value]="eachPost.value">{{ eachPost.key }}
                   </ion-select-option>
@@ -655,8 +655,7 @@
               <ion-col>    
                    <ion-item><ion-icon  name="calendar"></ion-icon>
                   <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" 
-                  id='familyDetails-{{i}}-dobFamily' 
-                  min="1994-03-14" max="2012-12-09" 
+                  id='familyDetails-{{i}}-dobFamily'
                   formControlName="dobFamily" 
                   (ionChange)="calculateAgeForFamilyDetails(i)">
                   </ion-datetime>
@@ -925,7 +924,7 @@
           </div>
         </ion-item>
 
-        <ion-item hidden="true">
+        <!-- <ion-item hidden="true">
           <ion-label position="floating">कामाचे स्वरूप</ion-label>
           <ion-select formControlName="natureOfWorkEmp_mr" 
             [class.is-invalid]="natureOfWorkEmp_mr.invalid && natureOfWorkEmp_mr.touched">
@@ -933,11 +932,10 @@
               {{ natureOfWork.key }}</ion-select-option>
           </ion-select>
         </ion-item>
-      </ion-list>
+       </ion-list>
       <ion-list>
         <ion-list-header>Details of the person who issued the 90 days working
           certificate</ion-list-header>
-
         <ion-item>
           <ion-label position="floating">Type of Issuer</ion-label>
           <ion-select id='employerDetails-typeOfEmployerEmp' (ionChange)="handleSpecialDropdowns($event)"
@@ -1032,12 +1030,12 @@
           <ion-label position="floating">Dispatch Date</ion-label>
           <ion-datetime formControlName="dispatchDateEmp" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" min="1990-01-01"
             id='employerDetails-dispatchDateEmp' ></ion-datetime>
-        </ion-item>
-
+        </ion-item> -->
+<!-- 
         <ion-item>
           <ion-label >Migrant</ion-label>
           <ion-checkbox formControlName='migrant' id='employerDetails-migrant' (ionChange)="handleSpecialDropdowns($event)"></ion-checkbox>
-        </ion-item>
+        </ion-item> -->
 <!-- 
         <ion-item hidden="true">
           <ion-label position="floating">कामगारांचा प्रकार</ion-label>
@@ -1050,18 +1048,115 @@
       </ion-list>
     </form>
 
+       <form [formGroup]="registrationFormGroup.get('employerWorkDetails')">
+        <ion-list>
+          <ion-list-header>Details of the person who issued the 90 days working
+          certificate</ion-list-header>
+          <div style="padding: 5%; overflow-x: scroll">
+            <ion-grid style='width: 1511px;' border="1">
+              <ion-row>
+                <ion-col  style="width: 15px" *ngFor="let header of Days90HeaderOptions">
+                <ion-card-header>
+                    {{header}}
+                </ion-card-header>
+                </ion-col>
+             </ion-row>
+               <ng-container *ngFor="let each of registrationFormGroup.get('employerWorkDetails')['controls']; let i = index">
+                <ion-row [formGroupName]="i">
+                  <ion-col  >
+                    <ion-card-header>{{i + 1}}.</ion-card-header>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-select interface="action-sheet" formControlName="typeOfEmployerEmp" id='employerWorkDetails-{{i}}-typeOfEmployerEmp' (ionChange)="handleSpecialDropdowns($event)">
+                        <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptions|keyvalue" value="{{ typeOfIssuer.value }}">
+                          {{ typeOfIssuer.key }}</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-input id='employerWorkDetails-{{i}}-fullNameOfIssuerEmp'
+            formControlName="fullNameOfIssuerEmp" class="transliterate" (ionBlur)="transliterateDirect($event)"  clearInput></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-input type="tel" maxlength="12" formControlName="registrationNumberEmp" id='employerWorkDetails-{{i}}-registrationNumberEmp' clearInput></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                  <ion-item>
+                    <ion-select formControlName="registrationTypeEmp" [class.is-invalid]="
+              registrationTypeEmp.invalid && registrationTypeEmp.touched
+            " interface="action-sheet" id='employerWorkDetails-{{i}}-registrationTypeEmp'
+            (ionChange)="handleSpecialDropdowns($event)">
+            <ion-select-option *ngFor="let registrationType of registrationTypeOptions|keyvalue" value="{{ registrationType.value }}">
+              {{ registrationType.key }}</ion-select-option>
+          </ion-select>
+                  </ion-item>
+                  </ion-col>
+                   <ion-col>
+                     <ion-item> 
+                       <ion-input type="tel"  maxlength="10" minlength="10" formControlName="mobileNumberOfIssuerEmp" [class.is-invalid]="mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched" 
+                       id='employerWorkDetails-{{i}}-mobileNumberOfIssuerEmp' clearInput></ion-input>
+
+                     </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-input type="number" formControlName="documentRefNumberEmp" [class.is-invalid]="
+              documentRefNumberEmp.invalid && documentRefNumberEmp.touched
+            " id='employerWorkDetails-{{i}}-documentRefNumberEmp' clearInput></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-icon  name="calendar"></ion-icon>
+                      <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
+                       id='employerWorkDetails-{{i}}-fromDateEmp' (ionChange)="calculateDayForWorkDetails(i)"  formControlName="fromDateEmp"></ion-datetime>
+                    </ion-item>
+                  </ion-col>
+                   <ion-col>
+                     <ion-item>
+                       <ion-icon  name="calendar"></ion-icon>
+                       <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
+                       id='employerWorkDetails-{{i}}-toDateEmp' (ionChange)="calculateDayForWorkDetails(i)" formControlName="toDateEmp" ></ion-datetime>
+                     </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-fab  horizontal="end">
+                      <ion-fab-button (click)="deleteWorkerDetail(i)" >
+                      <ion-icon name="close"></ion-icon>
+                      </ion-fab-button>
+                     </ion-fab>
+              </ion-col>
+                </ion-row>
+              </ng-container>
+            </ion-grid>
+          </div>
+          <ion-item>
+            Working Days {{workingDay}}
+          </ion-item>
+          <ion-item margin-bottom>
+            <ion-button  (click)="addMoreWorkerDetails()">Add More </ion-button>
+          </ion-item>
+        </ion-list>
+      </form> 
+
     <form  [formGroup]="registrationFormGroup.get('supportingDocuments')">
       <ion-list>
         <ion-list-header  style="font-size:20px;">Supporting Documents should be in .jpeg , .png and .pdf</ion-list-header>
         <ng-container formArrayName="attachmentList" *ngFor="let each of attachmentDetails;let i = index;" >
           <ion-item  [formGroupName]="i">
-          <ion-label text-wrap position="floating">{{each.document_en}}</ion-label>
-          <ion-select formControlName="attachmentType" [required]="!!each.required" (change)="selectAttachmentType($event,i)"
+          <ion-label text-wrap >{{each.document_en}}</ion-label>
+          
+          <ion-select slot="end" formControlName="attachmentType" [required]="!!each.required" (ionChange)="selectAttachmentType($event,i)"
             [class.is-invalid]="registrationFormGroup.get('supportingDocuments').get('attachmentList').get(i.toString()).get('attachmentType').invalid && registrationFormGroup.get('supportingDocuments').get('attachmentList').get(i.toString()).get('attachmentType').touched" interface="action-sheet">
             <ion-select-option value="" selected>Select</ion-select-option>
             <ion-select-option *ngFor="let eachOption of each.attachmentType" [value]="eachOption.value">{{eachOption.key}}</ion-select-option>
           </ion-select>
-          <ion-input type="checkbox" formControlName="attached"></ion-input>
+          <input slot="end" readonly type="checkbox" formControlName="attached">
         </ion-item>
         </ng-container>       
         
@@ -1098,9 +1193,7 @@
           <input id='bankPassbook' type="file" accept="application/pdf" (change)="uploadFile($event)" >
         </ion-item>
 
-        <ion-item>
-          <ion-button (click)="save()">Save</ion-button>
-        </ion-item>
+          <ion-button mode="ios" expand="block" (click)="save()">Save</ion-button>
 
       </ion-list>
       

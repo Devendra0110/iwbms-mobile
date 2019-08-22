@@ -49,18 +49,6 @@ export class HttpService {
   //   return this.http.get(`${serverUrl}registration-and-renewal/registrationxls`);
   // }
 
-
-  appendTokenToHeaderObject(headers: HttpHeaders): HttpHeaders {
-    let token;
-    this.storage.get('token').then((tokenValue) => {
-      token = tokenValue; 
-      console.log(token);
-      debugger;
-    })
-    return headers.append('x-access-token', token);
-  }
-
-
   getGenders() {
     return this.http.get(`${serverUrl}masters/genders`);
   }
