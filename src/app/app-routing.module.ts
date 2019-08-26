@@ -15,8 +15,8 @@ const routes: Routes = [
   loadChildren: './registration/registration.module#RegistrationPageModule'
 },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
-  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' }
+  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
+  { path: 'verification', loadChildren: './verification/verification.module#VerificationPageModule' }
 ];
 
 @NgModule({

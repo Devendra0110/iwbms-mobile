@@ -144,27 +144,27 @@ export class RegistrationPage implements OnInit, AfterViewInit {
               private camera: Camera,
               private storage: Storage) {
 
-    //re-route to homepage if not logged-in
-    this.storage.get('token').then((val) => {
-      if (val === null)
-        this.router.navigate(['/home'])
-      else 
-        this.JWTToken=val
-    });
+    // //re-route to homepage if not logged-in
+    // this.storage.get('token').then((val) => {
+    //   if (val === null)
+    //     this.router.navigate(['/home'])
+    //   else 
+    //     this.JWTToken=val
+    // });
 
-    //re-route to homepage if not logged-in
-    this.storage.get('tokenId').then((val) => {
-      if (val === null || val === undefined)
-        this.router.navigate(['/dashboard'])
-      else 
-        this.token_id=val;
+    // //re-route to homepage if not logged-in
+    // this.storage.get('tokenId').then((val) => {
+    //   if (val === null || val === undefined)
+    //     this.router.navigate(['/dashboard'])
+    //   else 
+    //     this.token_id=val;
 
-        console.log(val)
-    });
+    //     console.log(val)
+    // });
 
-    this.storage.get('wfc_id').then((val) => {
-      this.wfcID = val;
-    });
+    // this.storage.get('wfc_id').then((val) => {
+    //   this.wfcID = val;
+    // });
     
     // fetch the list of gender from database
     this.httpService.getGenders().subscribe((genderArrObj: any) => {
@@ -1006,9 +1006,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         formData.append('fileOptions', JSON.stringify(this.fileOptions));
 
         formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
-        formData.append('token_id', this.token_id);
-        console.log(this.token_id);
-        formData.append('wfc_id', String(this.wfcID));
+        // formData.append('token_id', this.token_id);
+        // console.log(this.token_id);
+        // formData.append('wfc_id', String(this.wfcID));
       }
       this.httpService.saveData(formData,this.JWTToken).subscribe(
         (res: any) => {
