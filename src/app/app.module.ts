@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule} from '@angular/common/http';
-import { Camera } from '@ionic-native/camera/ngx';
 
+import { Camera } from '@ionic-native/camera/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
- 
+import { Dialogs } from '@ionic-native/dialogs/ngx';
+import { Network } from '@ionic-native/network/ngx';
+
 import { AppComponent } from './app.component';
 import {SuggestionBoxComponent } from './components/suggestion-box/suggestion-box.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,8 +22,6 @@ import { RegistrationService } from './services/registration.service';
 import { EventService } from './services/event.service';
 import { HttpService } from './services/http.service';
 import { UserManagementService } from './services/user-management.service';
-
-
 import { FormControlDirective } from './directives/form-control.directive';
 
 
@@ -39,6 +39,8 @@ import { FormControlDirective } from './directives/form-control.directive';
   providers: [
     StatusBar,
     SplashScreen,
+    Dialogs,
+    Network,
     TransliterationService,
     ValidationService,
     RegistrationService,

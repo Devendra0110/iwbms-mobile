@@ -34,9 +34,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public startDateForDob: any;
   public startDate: any;
   public todaysDate: any;
-  public maxAppointmentDate:any;
+  public maxAppointmentDate: any;
   public dateOfBirth: any;
-  public attachmentDetails:any =[];
+  public attachmentDetails: any = [];
   bankDetails: any = {
     BANK: '',
     BRANCH: '',
@@ -50,12 +50,12 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public districts: any[] = [];
   public talukasRes: any[] = [];
   public postOfficeArrayRes: any[] = [];
-  public pincodeArrayRes: any[] =[]
+  public pincodeArrayRes: any[] = [];
   public talukasPer: any[] = [];
   public postOfficeArrayPer: any[] = [];
-  public pincodeArrayPer: any[] = []
+  public pincodeArrayPer: any[] = [];
   public talukasEmp: any[] = [];
-  
+
   public genderOptions: string[] = [];
   public genderOptionsMarathi: string[] = [];
   public maritalStatusOptions: string[] = [];
@@ -65,18 +65,18 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public categoryOptions: string[] = [];
   public categoryOptionsMarathi: string[] = [];
   public familyHeaderOptions: string[];
-  public familyHeaderOptionsMarathi:string[];
-  public familyRelationOptions:string[]=[];
-  public familyRelationOptionsMarathi:string[]=[]
-  public educationOptions:string[] = [];
+  public familyHeaderOptionsMarathi: string[];
+  public familyRelationOptions: string[] = [];
+  public familyRelationOptionsMarathi: string[] = [];
+  public educationOptions: string[] = [];
   public educationOptionsMarathi: string[] = [];
   public natureOfWorkOptions: string[] = [];
   public natureOfWorkOptionsMarathi: string[] = [];
-  public Days90HeaderOptions:string[]=[];
+  public Days90HeaderOptions: string[] = [];
 
   public registrationTypeEmpArray: any[];
-  public workingDay: Number;
-  public workingDayFlag: Boolean;
+  public workingDay: number;
+  public workingDayFlag: boolean;
   public issuers: any[];
 
   public typeOfIssuerOptions: string[] = [];
@@ -87,8 +87,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public workerTypeOptionsMarathi: string[];
   public currentImage: any;
 
-
-    //Transliterate Variables 
 
   public uploadedImage: File;
   public uploadedImageUrl: string;
@@ -131,24 +129,38 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public modes: Modes;
   public rejectNoteFlag = false;
   public editFormFlag;
-  public token_id: any;
-  public JWTToken:any;
-  public wfcID:any;
+  public JWTToken: any;
+  public wfcID: any;
+
+  public mobileNo: number;
+  public aadharNo: number;
 
   constructor(private validationService: ValidationService,
               private transliterate: TransliterationService,
               private router: Router,
+              private route: ActivatedRoute,
               private registration: RegistrationService,
               private userMgmntService: UserManagementService,
               private httpService: HttpService,
               private camera: Camera,
               private storage: Storage) {
 
+    
+      this.route.queryParams.subscribe(params=>{
+        if (this.router.getCurrentNavigation().extras.state){
+          this.mobileNo = this.router.getCurrentNavigation().extras.state.mobile;
+          this.aadharNo = this.router.getCurrentNavigation().extras.state.aadhar;
+        }else{
+          this.router.navigate(['/verification']);
+        }
+      });
+
+
     // //re-route to homepage if not logged-in
     // this.storage.get('token').then((val) => {
     //   if (val === null)
     //     this.router.navigate(['/home'])
-    //   else 
+    //   else
     //     this.JWTToken=val
     // });
 
@@ -156,7 +168,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // this.storage.get('tokenId').then((val) => {
     //   if (val === null || val === undefined)
     //     this.router.navigate(['/dashboard'])
-    //   else 
+    //   else
     //     this.token_id=val;
 
     //     console.log(val)
@@ -165,7 +177,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // this.storage.get('wfc_id').then((val) => {
     //   this.wfcID = val;
     // });
-    
+
     // fetch the list of gender from database
     this.httpService.getGenders().subscribe((genderArrObj: any) => {
       for (const i of genderArrObj) {
@@ -177,43 +189,43 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // fetch the list of marital-status from database
     this.httpService.getMaritalStatus().subscribe((maritalStatusArrObj: any) => {
       for (const i of maritalStatusArrObj) {
-        this.maritalStatusOptions[i.status]=i.id;
-        this.maritalStatusOptionsMarathi[i.status_mr]=i.id;
+        this.maritalStatusOptions[i.status] = i.id;
+        this.maritalStatusOptionsMarathi[i.status_mr] = i.id;
       }
     }, err => console.log(err));
 
     // fetch the list of Ration Card Types from database
     this.httpService.getRationCardTypes().subscribe((rationCardArrObj: any) => {
       for (const i of rationCardArrObj) {
-        this.rationCardTypeOptions[i.ration_card_type]=i.id;
-        this.rationCardTypeOptionsMarathi[i.ration_card_type_mr]=i.id;
+        this.rationCardTypeOptions[i.ration_card_type] = i.id;
+        this.rationCardTypeOptionsMarathi[i.ration_card_type_mr] = i.id;
       }
     }, err => console.log(err));
 
     // fetch the list of categories from database
     this.httpService.getCategory().subscribe((categoryArrObj: any) => {
       for (const i of categoryArrObj) {
-        this.categoryOptions[i.category]=i.id;
-        this.categoryOptionsMarathi[i.category_mr]=i.id;
+        this.categoryOptions[i.category] = i.id;
+        this.categoryOptionsMarathi[i.category_mr] = i.id;
       }
     }, err => console.log(err));
 
 
     // tslint:disable-next-line: max-line-length
     this.familyHeaderOptions = ['SNo.', 'First Name', 'Surname', 'Father/ Husband Name', 'DOB', 'Age (year)', 'Relation', 'Profession', 'Education', 'Nominee', 'Delete'];
-    this.httpService.getFamilyRelations().subscribe((familyRelationArrObj:any)=>{
-      for(const  i of familyRelationArrObj){
+    this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
+      for (const  i of familyRelationArrObj) {
         this.familyRelationOptions[i.relation_title_en] = i.family_relation_id;
         this.familyRelationOptionsMarathi[i.relation_title_mr] = i.family_relation_id;
       }
-    })
+    });
 
     this.httpService.getEducation().subscribe((educationArrObj: any) => {
       for (const i of educationArrObj) {
         this.educationOptions[i.education_level_en] = i.education_level_id;
         this.educationOptionsMarathi[i.education_level_mr] = i.education_level_id;
       }
-    })
+    });
 
 
     // fetch the list of Nature of Work from database
@@ -224,20 +236,20 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     }, err => console.log(err));
 
-    this.Days90HeaderOptions = ['SNo.','Type of Issuer', 'Full Name', 'Issuer Reg. No.', 'Registration Type', 'Mobile number', 'Document Ref.No', 'From Date','To Date']
+    this.Days90HeaderOptions = ['SNo.', 'Type of Issuer', 'Full Name', 'Issuer Reg. No.', 'Registration Type', 'Mobile number', 'Document Ref.No', 'From Date', 'To Date'];
 
     // fetch the list of Issuer types from database
     this.httpService.getIssuerTypes().subscribe((issuerTypesArrObj: any) => {
       for (const i of issuerTypesArrObj) {
-        this.typeOfIssuerOptions[i.type_of_issuer]=i.id;
+        this.typeOfIssuerOptions[i.type_of_issuer] = i.id;
         this.typeOfIssuerOptionsMarathi[i.type_of_issuer_mr] = i.id;
       }
     }, err => console.log(err));
     // fetch the list of issuer type registration from database
     this.httpService.getIssuerRegistrationTypes().subscribe((issuerRegistrationTypesArrObj: any) => {
       for (const i of issuerRegistrationTypesArrObj) {
-        this.registrationTypeOptions[i.registration_type]=i.id;
-        this.registrationTypeOptionsMarathi[i.registration_type_mr]=i.id;
+        this.registrationTypeOptions[i.registration_type] = i.id;
+        this.registrationTypeOptionsMarathi[i.registration_type_mr] = i.id;
       }
     }, err => console.log(err));
 
@@ -280,7 +292,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     //   day: Number(maxAppointmentDate[0])
     // };
 
-    this.maxAppointmentDate = `${Number(maxAppointmentDate[2])}-0${Number(maxAppointmentDate[1])}-${Number(maxAppointmentDate[0])}`
+    this.maxAppointmentDate = `${Number(maxAppointmentDate[2])}-0${Number(maxAppointmentDate[1])}-${Number(maxAppointmentDate[0])}`;
 
     this.attachmentDetails = [
       {
@@ -324,48 +336,48 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     ];
 
-    
+
 
     this.httpService.getDocumentTypes().subscribe((attDetailsArrObj: any) => {
       for (const i of attDetailsArrObj) {
         switch (i.document_types_id) {
           case 1: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                  this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+                  break;
           case 2: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                  this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+                  break;
           case 3: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+                  break;
           case 4: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                  this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+                  break;
           case 5: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                  break;
           case 6: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                  break;
           case 7: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                  break;
           case 8: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                  break;
           case 9: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                  break;
           case 10: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                   break;
           case 11: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                   break;
           case 12: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                   break;
           case 13: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                   break;
           case 14: this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                   break;
           case 15: this.attachmentDetails[4].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
+                   break;
         }
 
       }
@@ -391,6 +403,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.relation.disable();
     this.relation_mr.patchValue('1');
     this.relation_mr.disable();
+    this.mobilePersonal.patchValue(this.mobileNo);
+    this.aadharNoPersonal.patchValue(this.aadharNo);
+    this.mobilePersonal.disable();
+    this.aadharNoPersonal.disable()
     // this.userMgmntService.getUserTypes().subscribe(
     //   (userTypes: any) => {
     //     this.userType = userTypes.find(x => x._id === localStorage.getItem('userType')).description;
@@ -418,32 +434,31 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.district.valueChanges.subscribe(value => {
       this.talukasRes = [];
       this.postOfficeArrayRes = [];
-      if (this.state.value && value){
+      if (this.state.value && value) {
         // create taluka-name:taluka-id key-value in talukaRes
         this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
           for (const i of talukaArrObj) this.talukasRes[i.taluka_name] = i.taluka_id;
-          
-        }, err => console.log(err))
-      }
-      else this.talukasRes = [];
+
+        }, err => console.log(err));
+      } else this.talukasRes = [];
     });
 
 
     this.taluka.valueChanges.subscribe(value => {
-      this.postOfficeArrayRes=[]
-      if(this.state.value && this.district.value && value){
+      this.postOfficeArrayRes = [];
+      if (this.state.value && this.district.value && value) {
           // create post-office-name:post-office-id key-value in postOfficeArrayRes
-          this.httpService.getPostOffices(value).subscribe((postOfficeArrObj:any)=>{
+          this.httpService.getPostOffices(value).subscribe((postOfficeArrObj: any) => {
             for (const i of postOfficeArrObj) {
               this.postOfficeArrayRes[i.post_office_name] = i.post_office_id;
-              this.pincodeArrayRes[i.post_office_id]=i.pincode
+              this.pincodeArrayRes[i.post_office_id] = i.pincode;
             }
-          },err => console.log(err));
+          }, err => console.log(err));
       }
     });
-    
+
     this.postOffice.valueChanges.subscribe(value => {
-      if(this.state.value && this.district.value && this.taluka.value){
+      if (this.state.value && this.district.value && this.taluka.value) {
         this.pincode.patchValue(this.pincodeArrayRes[value]);
       }
     });
@@ -468,25 +483,24 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           for (const i of talukaArrObj) {
             this.talukasPer[i.taluka_name] = i.taluka_id;
           }
-        }, err => console.log(err))
-      }
-      else {
+        }, err => console.log(err));
+      } else {
         this.talukasPer = [];
       }
     });
 
     this.talukaPer.valueChanges.subscribe(value => {
-      this.postOfficeArrayPer = []
+      this.postOfficeArrayPer = [];
       if (this.statePer.value && this.districtPer.value && value) {
         // create post-office-name:post-office-id key-value in postOfficeArrayRes
         this.httpService.getPostOffices(value).subscribe((postOfficeArrObj: any) => {
 
           for (const i of postOfficeArrObj) {
             this.postOfficeArrayPer[i.post_office_name] = i.post_office_id;
-            this.pincodeArrayPer[i.post_office_id] = i.pincode
+            this.pincodeArrayPer[i.post_office_id] = i.pincode;
           }
         }, err => console.log(err));
-      }else{
+      } else {
         this.postOfficeArrayPer = [];
       }
     });
@@ -504,14 +518,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         for (const i of talukaArrObj) {
           this.talukasEmp[i.taluka_name] = i.taluka_id;
         }
-      }, err => console.log(err))
+      }, err => console.log(err));
     });
 
-    this.appointmentDateEmp.valueChanges.subscribe(value=>{
+    this.appointmentDateEmp.valueChanges.subscribe(value => {
       const val = new Date(value).toJSON().slice(0, 10).split('-');
-      const dob = val[0] + '-' + val[1] + '-' + val[2]
-      this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(dob, {emitEvent:false})
-    },err=>console.log(err));
+      const dob = val[0] + '-' + val[1] + '-' + val[2];
+      this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(dob, {emitEvent: false});
+    }, err => console.log(err));
 
     // this.dispatchDateEmp.valueChanges.subscribe(value => {
     //   const val = new Date(value).toJSON().slice(0, 10).split('-');
@@ -539,7 +553,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   getApplicantsDetails() {
     const user = JSON.parse(localStorage.getItem('user'));
-    this.httpService.getApplicantsDetails(user._id,this.JWTToken).subscribe(
+    this.httpService.getApplicantsDetails(user._id, this.JWTToken).subscribe(
       data => {
         this.selectedApplicationData = data;
         this.modes = Modes.update;
@@ -596,36 +610,36 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-  transliterateFamilyDetails(event){
+  transliterateFamilyDetails(event) {
     const targetsArray = event.target.id.split('-');
     if (targetsArray[2] === 'relation') {
-      this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).patchValue(this.familyRelationOptionsMarathi[event.target.value])
+      this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).patchValue(this.familyRelationOptionsMarathi[event.target.value]);
     } else if (targetsArray[2] === 'education') {
-      this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).patchValue(this.educationOptionsMarathi[event.target.value])
+      this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).patchValue(this.educationOptionsMarathi[event.target.value]);
     }
-    
+
   }
 
-  transliterateDTP(event) { // Ditrcit taluka post-office    
+  transliterateDTP(event) { // Ditrcit taluka post-office
     const targetsArray = event.target.id.split('-');
-    console.log(event)
+    console.log(event);
     let target: any;
-    let DTPObject:any;
-    //choose if it is district/taluka/postoffice
-    if (targetsArray[2]==='district' || targetsArray[1]==='districtEmp')
-        DTPObject=this.districts
-    else if (targetsArray[2] ==='taluka')
-        DTPObject=this.talukasRes
-    else if (targetsArray[1] === 'talukaEmp') DTPObject = this.talukasEmp
-    else DTPObject=this.postOfficeArrayRes;
+    let DTPObject: any;
+    // choose if it is district/taluka/postoffice
+    if (targetsArray[2] === 'district' || targetsArray[1] === 'districtEmp')
+        DTPObject = this.districts;
+    else if (targetsArray[2] === 'taluka')
+        DTPObject = this.talukasRes;
+    else if (targetsArray[1] === 'talukaEmp') DTPObject = this.talukasEmp;
+    else DTPObject = this.postOfficeArrayRes;
 
 
-    //set formControl
+    // set formControl
     if (targetsArray.length === 2) {
       target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
-    } else target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`)
+    } else target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`);
 
-    //get the string for id
+    // get the string for id
     const DTPValue = Object.keys(DTPObject).find(key => DTPObject[key] === event.target.value);
     // if (event.target.id.split('-').length === 2) {
     //   target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
@@ -639,14 +653,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.transliterate.transliterateText(DTPValue, 'NAME').subscribe((response: any) => {
         const result = response.split(';').map((item) => {
           return item.split('^')[0];
-        });        
+        });
         target.patchValue(result.join(' '));
       });
     } catch {
       target.patchValue('');
     }
     console.log(target.value);
-        //console.log(this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).value);
+        // console.log(this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).value);
   }
 
   transliterateValue(event) {
@@ -723,7 +737,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const idArray = event.target.id.split('-');
     if (idArray.length === 2) {
       this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).patchValue(event.target.value, { emitEvent: false });
-      
+
       console.log(this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).value);
     } else if (idArray.length === 3) {
       this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).patchValue(event.target.value, { emitEvent: false });
@@ -742,7 +756,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       val[0] + '-' + val[1] + '-' + val[2],
       'YYYY-MM-DD'
     );
-    const dobServer= val[0]+ '-' + val[1] + '-' + val[2]   //stores date to show in ion-datetime
+    const dobServer = val[0] + '-' + val[1] + '-' + val[2];   // stores date to show in ion-datetime
     if (dob) {
       this.registrationFormGroup.get('personalDetails').get('dobPersonal').patchValue(dobServer, { emitEvent: false });
       const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
@@ -777,7 +791,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').patchValue(this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').value, { emitEvent: false });
     this.talukasPer = this.talukasRes;
     this.postOfficeArrayPer = this.postOfficeArrayRes;
-    this.pincodeArrayPer= this.pincodeArrayRes
+    this.pincodeArrayPer = this.pincodeArrayRes;
     this.migrant.patchValue(false);
     this.migrant_mr.patchValue(false);
 
@@ -798,7 +812,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
 
   applyNominee(i: number) {
-    
+
     const familyDetails = this.registrationFormGroup.get('familyDetails')['controls'];
     for (const j in familyDetails) {
       familyDetails[j].get('nominee').setValue('no');
@@ -808,7 +822,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
 
   calculateAgeForFamilyDetails(i: string) {
-    const val = new Date(this.registrationFormGroup.get('familyDetails').get(i.toString()).get('dobFamily').value).toJSON().slice(0, 10).split('-')
+    const val = new Date(this.registrationFormGroup.get('familyDetails').get(i.toString()).get('dobFamily').value).toJSON().slice(0, 10).split('-');
     if (val) {
       const dob = moment(
         val[0] + '-' + val[1] + '-' + val[2],
@@ -883,14 +897,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   calculateDayForWorkDetails(i: string) {
     // const fromDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value;
-    
-    const formNewDate = new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value).toJSON().slice(0, 10).split('-')
-    
-    
+
+    const formNewDate = new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value).toJSON().slice(0, 10).split('-');
+
+
     // const toDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value;
-    
-    const toNewDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value? new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value).toJSON().slice(0, 10).split('-'):null;
- 
+
+    const toNewDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value ? new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value).toJSON().slice(0, 10).split('-') : null;
+
     if (formNewDate && toNewDate) {
       const fromDateMoment = moment([formNewDate[0], formNewDate[1], formNewDate[2]] );
       const toDateMoment = moment([toNewDate[0], toNewDate[1], toNewDate[2]]);
@@ -907,7 +921,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       // console.log(totalWorkingDays);
 
       if (this.workingDay <= 90) {
-        alert('Working days is less than 90')
+        alert('Working days is less than 90');
         this.workingDayFlag = false;
       } else {
         this.workingDayFlag = true;
@@ -1010,7 +1024,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         // console.log(this.token_id);
         // formData.append('wfc_id', String(this.wfcID));
       }
-      this.httpService.saveData(formData,this.JWTToken).subscribe(
+      this.httpService.saveData(formData, this.JWTToken).subscribe(
         (res: any) => {
           alert('Data Saved');
           console.log(res);
@@ -1020,8 +1034,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         },
         (err: any) => console.error(err)
       );
-    }
-    else {
+    } else {
       alert('Form is not valid yet!');
     }
   }
@@ -1329,7 +1342,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('toDateEmp');
   }
   // get dispatchDateEmp() { return this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp'); }
-  get migrant() { return this.registrationFormGroup.get('employerDetails').get('migrant') }
+  get migrant() { return this.registrationFormGroup.get('employerDetails').get('migrant'); }
   get MNREGACardNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('MNREGACardNumberEmp'); }
   get contractorNameEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('contractorNameEmp_mr'); }
   get contractorCompanyNameEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('contractorCompanyNameEmp_mr'); }
@@ -1341,9 +1354,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get typeOfEmployerEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('typeOfEmployerEmp_mr'); }
   get fullNameOfIssuerEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('fullNameOfIssuerEmp_mr'); }
   get registrationTypeEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('registrationTypeEmp_mr'); }
-  get migrant_mr() { return this.registrationFormGroup.get('employerDetails').get('migrant_mr');}
-  
-  //FamilyDetails Getter
+  get migrant_mr() { return this.registrationFormGroup.get('employerDetails').get('migrant_mr'); }
+
+  // FamilyDetails Getter
   get firstNameFamily() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('firstNameFamily'); }
   get firstNameFamily_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('firstNameFamily_mr'); }
   get surname() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('surname'); }
@@ -1355,10 +1368,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get fatherOrHusbandName() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('fatherOrHusbandName'); }
   get fatherOrHusbandName_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('fatherOrHusbandName_mr'); }
   get education() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('education'); }
-  get education_mr(){ return this.registrationFormGroup.get('familyDetails')['controls'][0].get('education_mr');}
-  get profession() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('profession');}
-  get profession_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('profession_mr');}
-  get nominee(){ return this.registrationFormGroup.get('familyDetails')['controls'][0].get('nominee');}
+  get education_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('education_mr'); }
+  get profession() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('profession'); }
+  get profession_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('profession_mr'); }
+  get nominee() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('nominee'); }
 
   // BankDetail getter
 

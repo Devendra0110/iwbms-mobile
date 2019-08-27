@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar  color="primary">
     <ion-title>
       Home
     </ion-title>
@@ -9,24 +9,15 @@
 <ion-content>
     <ion-card class="welcome-card">
       <img src="/assets/logo.png" alt="" />
-      <ion-card-header>
-        <!-- <ion-card-subtitle>Get Started</ion-card-subtitle> -->
-        <ion-card-title>IWBMS</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <!-- <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p> -->
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Login</ion-card-title>
-      </ion-card-header>
+     <!-- <ion-card-header>
+        <ion-card-subtitle>Get Started</ion-card-subtitle> 
+        <ion-card-title>IWBMS</ion-card-title> 
+      </ion-card-header> -->
       <ion-card-content>
         <form [formGroup]="loginForm">
         <ion-item>
           <ion-label position="floating">Username</ion-label>
-          <ion-input type="text" formControlName="username"></ion-input>
+          <ion-input color="primary" type="text" formControlName="username"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Password</ion-label>
@@ -35,12 +26,12 @@
         <ion-item *ngIf="wrongUser"> 
           <ion-label style="color: Red" text-wrap >This app is only for Field-Agents to use.</ion-label>
         </ion-item>
-        <ion-button mode="ios" expand="block" (click)="loginUser()">
+        <ion-button  mode="ios" expand="block" (click)="loginUser()">
           Log-in<ion-icon slot="start" name="log-in"></ion-icon>
         </ion-button>
-      </form>
-      
+      </form >
+
+
       </ion-card-content>
-    </ion-card>
-    
+    </ion-card>    
 </ion-content>

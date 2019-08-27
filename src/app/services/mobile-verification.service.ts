@@ -8,9 +8,9 @@ export class MobileVerificationService {
 
   constructor( private http:HttpClient) { 
   }
-  sendOTP(mobileNo: string) {
+  sendOTP(mobileNo: string, aadharNo: string) {
     const headers = new HttpHeaders().append('Content-Type', 'application/json');
-    return this.http.post(`${serverUrl}otp/generate-otp`, { mobileNo }, { headers });
+    return this.http.post(`${serverUrl}otp/generate-otp`, { mobileNo, aadharNo }, { headers });
   }
 
   validateOTP(otp: string) {

@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
+    
     <ion-title>Verification</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-card>
     <ion-card-header>
@@ -32,7 +32,36 @@
 
       </form>
 
-      <ion-button [disabled]="aadharNo.valid && mobileNo.valid" (click)="verifyUser()" mode="ios" expand="block">Send OTP</ion-button>
+      <ion-button [disabled]="aadharNo.invalid || mobileNo.invalid" (click)="sendOTP()" mode="ios" expand="block"><ion-icon mode="ios" name="paper-plane" slot="start"></ion-icon>Send OTP</ion-button>
     </ion-card-content>
   </ion-card>
+
+  <!-- Error Block-->
+     <ion-card *ngIf="unverifiedUser">
+       <ion-card-content >
+        <div  [ngSwitch]='ECode'>
+        <div class="error-code" *ngSwitchCase="'E1'"><ion-icon slot="end"  name="alert" ></ion-icon>{{mobileNo.value}} is already registered.</div>
+        <div class="error-code" *ngSwitchCase="'E2'"><ion-icon slot="end"  name="alert" ></ion-icon>{{aadharNo.value}} is already registered.</div>
+        <div class="error-code" *ngSwitchCase="'E3'"><ion-icon slot="end"  name="alert" ></ion-icon>Mobile No.{{mobileNo.value}} and {{aadharNo.value}} both are already registered</div>
+        <div class="error-code" *ngSwitchCase="'E4'" ><ion-icon slot="end"  name="alert" ></ion-icon>{{mobileNo.value}} and {{aadharNo.value}} both are already registered with different users.</div>
+      </div>
+       </ion-card-content>
+     </ion-card>
+
+      <!--  OTP Verification -->     
+      <ion-card *ngIf="otpflag">
+       <ion-card-header>
+         <ion-card-title>Verify OTP</ion-card-title>
+       </ion-card-header>
+       <ion-card-content>
+         <ion-item>
+           <ion-label position="floating">
+             Enter OTP
+           </ion-label>
+           <ion-input type="tel" maxlength="6" #otp></ion-input>
+         </ion-item>
+         <ion-button mode="ios" [disabled]="!otp.value"  expand="block" (click)="validateOTP(otp.value)">Verify<ion-icon name="finger-print" slot="start" ></ion-icon></ion-button>
+       </ion-card-content>
+     </ion-card>
+
 </ion-content>

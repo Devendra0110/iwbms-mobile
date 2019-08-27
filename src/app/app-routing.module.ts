@@ -14,7 +14,6 @@ const routes: Routes = [
   { path: 'registration',
   loadChildren: './registration/registration.module#RegistrationPageModule'
 },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
   { path: 'verification', loadChildren: './verification/verification.module#VerificationPageModule' }
 ];
