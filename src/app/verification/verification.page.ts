@@ -86,6 +86,8 @@ export class VerificationPage implements OnInit {
               aadhar: this.verificationForm.get('aadharNo').value
             }
           }
+          this.verificationForm.reset();
+          this.otpflag = false;
           this.router.navigate(['/registration'], mobileAndAadhar);
         }
       },

@@ -41,9 +41,9 @@ export class HomePage {
   }
 
   loginUser() {
-    // if (this.network.type === 'none' || this.network.type === 'NONE') {
-    //   this.dialogs.alert('You are not connected to internet');
-    // } else {
+    if (this.network.type === 'none' || this.network.type === 'NONE') {
+      this.dialogs.alert('You are not connected to internet');
+    } else {
       this.userManagementService.login(this.loginForm.value).subscribe((res: any) => {
         const data = JSON.parse(JSON.stringify(res));
 
@@ -55,7 +55,7 @@ export class HomePage {
           this.wrongUser = true;
         }
       }, err => console.log(err));
-    // }
+    }
 
   }
 }

@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 
 import { states } from '../models/states';
 import { Modes } from '../../assets/modes';
-import { serverUrl} from '../../assets/config';
+import { serverUrl } from '../../assets/config';
 import * as moment from 'moment';
 
 import { ValidationService } from '../services/validation.service';
@@ -136,47 +136,34 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public aadharNo: number;
 
   constructor(private validationService: ValidationService,
-              private transliterate: TransliterationService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private registration: RegistrationService,
-              private userMgmntService: UserManagementService,
-              private httpService: HttpService,
-              private camera: Camera,
-              private storage: Storage) {
-
-    
-      this.route.queryParams.subscribe(params=>{
-        if (this.router.getCurrentNavigation().extras.state){
-          this.mobileNo = this.router.getCurrentNavigation().extras.state.mobile;
-          this.aadharNo = this.router.getCurrentNavigation().extras.state.aadhar;
-        }else{
-          this.router.navigate(['/verification']);
-        }
-      });
+    private transliterate: TransliterationService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private registration: RegistrationService,
+    private userMgmntService: UserManagementService,
+    private httpService: HttpService,
+    private camera: Camera,
+    private storage: Storage) {
 
 
-    // //re-route to homepage if not logged-in
-    // this.storage.get('token').then((val) => {
-    //   if (val === null)
-    //     this.router.navigate(['/home'])
-    //   else
-    //     this.JWTToken=val
-    // });
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.mobileNo = this.router.getCurrentNavigation().extras.state.mobile;
+        this.aadharNo = this.router.getCurrentNavigation().extras.state.aadhar;
+      } else {
+        this.router.navigate(['/verification']);
+      }
+    });
 
-    // //re-route to homepage if not logged-in
-    // this.storage.get('tokenId').then((val) => {
-    //   if (val === null || val === undefined)
-    //     this.router.navigate(['/dashboard'])
-    //   else
-    //     this.token_id=val;
 
-    //     console.log(val)
-    // });
+    //re-route to homepage if not logged-in
+    this.storage.get('token').then((val) => {
+      if (val === null)
+        this.router.navigate(['/home'])
+      else
+        this.JWTToken = val
+    });
 
-    // this.storage.get('wfc_id').then((val) => {
-    //   this.wfcID = val;
-    // });
 
     // fetch the list of gender from database
     this.httpService.getGenders().subscribe((genderArrObj: any) => {
@@ -214,7 +201,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // tslint:disable-next-line: max-line-length
     this.familyHeaderOptions = ['SNo.', 'First Name', 'Surname', 'Father/ Husband Name', 'DOB', 'Age (year)', 'Relation', 'Profession', 'Education', 'Nominee', 'Delete'];
     this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
-      for (const  i of familyRelationArrObj) {
+      for (const i of familyRelationArrObj) {
         this.familyRelationOptions[i.relation_title_en] = i.family_relation_id;
         this.familyRelationOptionsMarathi[i.relation_title_mr] = i.family_relation_id;
       }
@@ -255,7 +242,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
     // fetch the list of states from database
     this.httpService.getStates().subscribe((statesArrObj: any) => {
-        // create state-name:state-id key-value in states
+      // create state-name:state-id key-value in states
       for (const i of statesArrObj) this.states[i.state_name] = i.state_id;
     }, err => console.log(err));
 
@@ -342,42 +329,42 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       for (const i of attDetailsArrObj) {
         switch (i.document_types_id) {
           case 1: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
           case 2: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
           case 3: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
           case 4: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
           case 5: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 6: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 7: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 8: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 9: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 10: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+            break;
           case 11: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+            break;
           case 12: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+            break;
           case 13: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+            break;
           case 14: this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+            break;
           case 15: this.attachmentDetails[4].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+            break;
         }
 
       }
@@ -447,13 +434,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.taluka.valueChanges.subscribe(value => {
       this.postOfficeArrayRes = [];
       if (this.state.value && this.district.value && value) {
-          // create post-office-name:post-office-id key-value in postOfficeArrayRes
-          this.httpService.getPostOffices(value).subscribe((postOfficeArrObj: any) => {
-            for (const i of postOfficeArrObj) {
-              this.postOfficeArrayRes[i.post_office_name] = i.post_office_id;
-              this.pincodeArrayRes[i.post_office_id] = i.pincode;
-            }
-          }, err => console.log(err));
+        // create post-office-name:post-office-id key-value in postOfficeArrayRes
+        this.httpService.getPostOffices(value).subscribe((postOfficeArrObj: any) => {
+          for (const i of postOfficeArrObj) {
+            this.postOfficeArrayRes[i.post_office_name] = i.post_office_id;
+            this.pincodeArrayRes[i.post_office_id] = i.pincode;
+          }
+        }, err => console.log(err));
       }
     });
 
@@ -524,7 +511,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.appointmentDateEmp.valueChanges.subscribe(value => {
       const val = new Date(value).toJSON().slice(0, 10).split('-');
       const dob = val[0] + '-' + val[1] + '-' + val[2];
-      this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(dob, {emitEvent: false});
+      this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(dob, { emitEvent: false });
     }, err => console.log(err));
 
     // this.dispatchDateEmp.valueChanges.subscribe(value => {
@@ -580,7 +567,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-   viewAttachedDocuments() {
+  viewAttachedDocuments() {
     const docs = this.selectedApplicationData.supportingDocuments;
     for (const item in docs) {
       if (!!docs[item]) {
@@ -627,9 +614,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     let DTPObject: any;
     // choose if it is district/taluka/postoffice
     if (targetsArray[2] === 'district' || targetsArray[1] === 'districtEmp')
-        DTPObject = this.districts;
+      DTPObject = this.districts;
     else if (targetsArray[2] === 'taluka')
-        DTPObject = this.talukasRes;
+      DTPObject = this.talukasRes;
     else if (targetsArray[1] === 'talukaEmp') DTPObject = this.talukasEmp;
     else DTPObject = this.postOfficeArrayRes;
 
@@ -660,7 +647,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       target.patchValue('');
     }
     console.log(target.value);
-        // console.log(this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).value);
+    // console.log(this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).value);
   }
 
   transliterateValue(event) {
@@ -724,7 +711,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       control.valueChanges.subscribe((changes) => {
         control.patchValue(changes, { emitEvent: false });
       });
-    // tslint:disable-next-line: align
+      // tslint:disable-next-line: align
     } if (idArray.length === 4) {
       const control = this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(idArray[2]).get(idArray[3]);
       control.valueChanges.subscribe((changes) => {
@@ -816,7 +803,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const familyDetails = this.registrationFormGroup.get('familyDetails')['controls'];
     for (const j in familyDetails) {
       familyDetails[j].get('nominee').setValue('no');
-     }
+    }
     this.registrationFormGroup.get('familyDetails').get(i.toString()).get('nominee').setValue('yes');
   }
 
@@ -885,6 +872,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   deleteWorkerDetail(i: number) {
     const workerDetailsArray = this.registrationFormGroup.get('employerWorkDetails') as FormArray;
     workerDetailsArray.removeAt(i);
+    let totalWorkingDays = 0;
+    // console.log(this.registrationFormGroup.get('employerWorkDetails').get('workingDays').value);
+    const employerWorkDetailsArr = this.registrationFormGroup.get('employerWorkDetails').value;
+    for (const each in employerWorkDetailsArr) {
+      totalWorkingDays += employerWorkDetailsArr[each].workingDays;
+    }
+    this.workingDay = totalWorkingDays;
     if (workerDetailsArray.length === 0) {
       workerDetailsArray.push(this.employerWorkDetailsFormFroup());
     }
@@ -896,19 +890,24 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   calculateDayForWorkDetails(i: string) {
-    // const fromDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value;
 
-    const formNewDate = new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value).toJSON().slice(0, 10).split('-');
+    // tslint:disable-next-line: max-line-length
+    const fromDate = new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value).toJSON().slice(0, 10).split('-');
 
+    // tslint:disable-next-line: max-line-length
+    const toDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value ? new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value).toJSON().slice(0, 10).split('-') : null;
+    if (fromDate && toDate) {
 
-    // const toDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value;
-
-    const toNewDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value ? new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value).toJSON().slice(0, 10).split('-') : null;
-
-    if (formNewDate && toNewDate) {
-      const fromDateMoment = moment([formNewDate[0], formNewDate[1], formNewDate[2]] );
-      const toDateMoment = moment([toNewDate[0], toNewDate[1], toNewDate[2]]);
-
+      const fromServerDate = fromDate[0] + '-' + fromDate[1] + '-' + fromDate[2];
+      const toServerDate = toDate[0] + '-' + toDate[1] + '-' + toDate[2];
+      
+      this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').patchValue(fromServerDate, { emitEvent: false });
+      this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').patchValue(toServerDate, {emitEvent:false});
+      
+      console.log(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value);
+      
+      const fromDateMoment = moment([fromDate[0], fromDate[1], fromDate[2]]);
+      const toDateMoment = moment([toDate[0], toDate[1], toDate[2]]);
       const difference = toDateMoment.diff(fromDateMoment, 'days') + 1;
       this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('workingDays').patchValue(difference);
       let totalWorkingDays = 0;
@@ -920,7 +919,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.workingDay = totalWorkingDays;
       // console.log(totalWorkingDays);
 
-      if (this.workingDay <= 90) {
+      if (this.workingDay < 90) {
         alert('Working days is less than 90');
         this.workingDayFlag = false;
       } else {
@@ -967,8 +966,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const blob = new Blob(byteArrays, { type: contentType });
     return blob;
   }
-
-
 
 
   selectAttachmentType(event: any, i: number) {
@@ -1020,10 +1017,12 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         formData.append('fileOptions', JSON.stringify(this.fileOptions));
 
         formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
+        formData.append('modeOfApplication','byFieldAgent')
         // formData.append('token_id', this.token_id);
         // console.log(this.token_id);
         // formData.append('wfc_id', String(this.wfcID));
       }
+      debugger;
       this.httpService.saveData(formData, this.JWTToken).subscribe(
         (res: any) => {
           alert('Data Saved');
@@ -1038,8 +1037,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       alert('Form is not valid yet!');
     }
   }
-
-
 
 
   personalDetailsFormFroup(): FormGroup {
@@ -1210,7 +1207,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
-    // Getters
+  // Getters
 
   get firstName() {
     return this.registrationFormGroup.get('personalDetails').get('firstName');
