@@ -380,8 +380,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     //   },
     //   err => console.log(err)
     // );
+    this.elseStateFlag=false;
     this.workingDayFlag = true;
     this.state.patchValue('21');
+    this.state_mr.patchValue('महाराष्ट्र')
     this.relation.patchValue('1');
     this.relation.disable();
     this.relation_mr.patchValue('1');
@@ -416,7 +418,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // residential address
     this.district.valueChanges.subscribe(value => {
       this.talukasRes = [];
-      debugger;
       this.postOfficeArrayRes = [];
       if (this.state.value && value) {
         // create taluka-name:taluka-id key-value in talukaRes
@@ -451,26 +452,31 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // // permanent address
     this.statePer.valueChanges.subscribe(value => {
       if (value === 'MAHARASHTRA' || value === '21') {
+        this.statePer.patchValue('MAHARASHTRA')
+        this.elseStateFlag=false;
         this.migrant.patchValue(false);
         this.migrant_mr.patchValue(false);
       } else {
-
+        this.elseStateFlag=true;
         this.migrant.patchValue(true);
         this.migrant_mr.patchValue(true);
       }
-      this.statePer.setValue(Number(value), {emitEvent:false});
     });
 
     this.districtPer.valueChanges.subscribe(value => {
       this.talukasPer = [];
-      debugger;
+      if (typeof value === 'number') {
+        const districtValue = Object.keys(this.districts).find(key => this.districts[key] === value);
+        this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('district').setValue(districtValue, { emitEvent: false });
+      }
+      if(typeof value === 'string') {
+        value = this.districts[value];
+      }
       if (this.statePer.value && value) {
         this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
           for (const i of talukaArrObj) {
             this.talukasPer[i.taluka_name] = i.taluka_id;
           }
-          // const districtValue = Object.keys(this.districts).find(key => this.districts[key] === value);
-          // this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('district').setValue(districtValue, { emitEvent: false });
         }, err => console.log(err));
       } else {
         this.talukasPer = [];
@@ -479,29 +485,38 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
     this.talukaPer.valueChanges.subscribe(value => {
       this.postOfficeArrayPer = [];
+      setTimeout(() => {
+        if (typeof value === 'number') {
+          const talukaValue = Object.keys(this.talukasPer).find(key => this.talukasPer[key] === value);
+          this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka').setValue(talukaValue, { emitEvent: false });
+        }
+        if (typeof value === 'string') {
+          value = this.talukasPer[value];
+        }
         if (this.statePer.value && this.districtPer.value && value) {
           this.httpService.getPostOffices(value).subscribe((postOfficeArrObj: any) => {
             for (const i of postOfficeArrObj) {
               this.postOfficeArrayPer[i.post_office_name] = i.post_office_id;
               this.pincodeArrayPer[i.post_office_name] = i.pincode;
             }
-            const talukaValue = Object.keys(this.talukasPer).find(key => this.talukasPer[key] === value);
-            this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka').setValue(talukaValue, { emitEvent: false });
           }, err => console.log(err));
         } else {
           this.postOfficeArrayPer = [];
         }
-      
+      }, 1000);
     });
 
     this.postOfficePer.valueChanges.subscribe(value => {
-      setTimeout(() => {
-      if (this.statePer.value && this.districtPer.value && this.talukaPer.value) {
-        const postOfficeValue = Object.keys(this.postOfficeArrayPer).find(key => this.postOfficeArrayPer[key] === value);
-        this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('postOffice').setValue(postOfficeValue, { emitEvent: false });
-        this.pincode.patchValue(this.pincodeArrayPer[value]);
+      if(typeof value === 'number'){
+        setTimeout(() => {
+          if (this.statePer.value && this.districtPer.value && this.talukaPer.value) {
+            const postOfficeValue = Object.keys(this.postOfficeArrayPer).find(key => this.postOfficeArrayPer[key] === value);
+            this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('postOffice').setValue(postOfficeValue, { emitEvent: false });
+            // this.pincode.patchValue(this.pincodeArrayPer[value]);
+          }
+        }, 2000)
       }
-      }, 2000)
+      this.pincodePer.patchValue(this.pincodeArrayPer[value]);
     });
 
     // employer detail
@@ -627,14 +642,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     } else target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`);
 
     // get the string for id
-    const DTPValue = Object.keys(DTPObject).find(key => DTPObject[key] === event.target.value);
-    // if (event.target.id.split('-').length === 2) {
-    //   target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
-    // } else if (event.target.id.split('-').length === 3) {
-    //   target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`)
-    // } else {
-    //   target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(targetsArray[2]).get(`${targetsArray[3]}_mr`);
-    // }
+    const DTPValue = typeof event.target.value ==='string'?event.target.value:Object.keys(DTPObject).find(key => DTPObject[key] === event.target.value);
 
     try {
       this.transliterate.transliterateText(DTPValue, 'NAME').subscribe((response: any) => {
@@ -1138,7 +1146,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       postOffice_mr: new FormControl(''),
       taluka_mr: new FormControl(''),
       district_mr: new FormControl(''),
-      state_mr: new FormControl('महाराष्ट्र'),
+      state_mr: new FormControl(''),
     });
   }
 

@@ -27,7 +27,7 @@
         <ion-item >
           <ion-label position="floating">First Name<span style="color: Red">*</span></ion-label>
           <ion-input [class.is-invalid]="firstNamePersonal.invalid && firstNamePersonal.touched"
-            formControlName="firstNamePersonal" class="transliterate" clearInput id="personalDetails-firstNamePersonal"
+            formControlName="firstNamePersonal" clearInput id="personalDetails-firstNamePersonal"
             class="transliterate" (ionBlur)="transliterateDirect($event)" ></ion-input>
           <div class="text-danger" *ngIf="firstNamePersonal.invalid && firstNamePersonal.touched">
             <small *ngIf="!!firstNamePersonal.errors?.required">Please enter your First Name.</small>
@@ -525,8 +525,8 @@
               <ion-item>
                 <ion-label position="floating"> State<span style="color: Red"> *</span> </ion-label>
                 <ion-select required class=" transliterate" id='personalDetails-permanentAddress-state'
-                  [class.is-invalid]="state.invalid && state.touched" formControlName="state" interface="action-sheet">
-                  <ion-select-option *ngFor="let eachState of states|keyvalue" [value]="eachState.value">{{eachState.key}}</ion-select-option>
+                  [class.is-invalid]="state.invalid && state.touched" formControlName="state" (ionChange)="transliterateDTP($event)" interface="action-sheet">
+                  <ion-select-option *ngFor="let eachState of states|keyvalue" [value]="eachState.key">{{eachState.key}}</ion-select-option>
                 </ion-select>
                 <div class="text-danger" *ngIf="state.invalid && state.touched">
                   <small *ngIf="!!statePer.errors?.required">Please choose your State.</small>
@@ -540,13 +540,14 @@
 
               <ion-item>
                 <ion-label position="floating">District<span style="color: Red"> *</span></ion-label>
-                <ion-select required interface="action-sheet" formControlName="district"
+                <ion-select *ngIf="!elseStateFlag" required interface="action-sheet" formControlName="district"
                   [class.is-invalid]="districtPer.invalid && districtPer.touched"  class="transliterate"
                   id='personalDetails-permanentAddress-district' (ionChange)="transliterateDTP($event)">
                   <ion-select-option *ngFor="let eachDistrict of districts|keyvalue" [value]="eachDistrict.key">
                     {{ eachDistrict.key }}
                   </ion-select-option>
                 </ion-select>
+                <ion-input *ngIf="elseStateFlag" formControlName="district" [class.is-invalid]="districtPer.invalid && districtPer.touched" id='personalDetails-permanentAddress-district' class="transliterate" (ionBlur)="transliterateDirect($event)"></ion-input>
               </ion-item>
 
               <ion-item hidden="true">
@@ -556,12 +557,15 @@
 
               <ion-item>
                 <ion-label position="floating">Taluka<span style="color: Red"> *</span></ion-label>
-                <ion-select required interface="action-sheet" (ionChange)="transliterateDTP($event)"
+                <ion-select *ngIf="!elseStateFlag" required interface="action-sheet" (ionChange)="transliterateDTP($event)"
                   class="transliterate" id='personalDetails-permanentAddress-taluka' formControlName="taluka"
                   [class.is-invalid]="taluka.invalid && taluka.touched">
                   <ion-select-option *ngFor="let eachTaluka of talukasPer|keyvalue" [value]="eachTaluka.key">{{ eachTaluka.key }}
                   </ion-select-option>
                 </ion-select>
+                <ion-input *ngIf="elseStateFlag"  class="transliterate" id='personalDetails-permanentAddress-taluka' formControlName="taluka" (ionBlur)="transliterateDirect($event)"
+                  [class.is-invalid]="taluka.invalid && taluka.touched">
+                </ion-input>
               </ion-item>
 
               <ion-item hidden="true">
@@ -571,12 +575,16 @@
 
               <ion-item>
                 <ion-label position="floating">Post Office<span style="color: Red">*</span></ion-label>
-                <ion-select required interface="action-sheet" (ionChange)="transliterateDTP($event)"
+                <ion-select *ngIf="!elseStateFlag" required interface="action-sheet" (ionChange)="transliterateDTP($event)"
                   class="transliterate" id='personalDetails-permanentAddress-postOffice' formControlName="postOffice"
                   [class.is-invalid]="postOffice.invalid && postOffice.touched">
                   <ion-select-option *ngFor="let eachPost of postOfficeArrayPer|keyvalue" [value]="eachPost.key">{{ eachPost.key }}
                   </ion-select-option>
                 </ion-select>
+                <ion-input *ngIf="elseStateFlag" class="transliterate" id='personalDetails-permanentAddress-postOffice' formControlName="postOffice" (ionBlur)="transliterateDirect($event)"
+                  [class.is-invalid]="postOffice.invalid && postOffice.touched">
+
+                </ion-input>
               </ion-item>
 
               <ion-item hidden="true">
@@ -1276,7 +1284,7 @@
           <input id='bankPassbook' type="file" accept="application/pdf" (change)="uploadFile($event)" >
         </ion-item>
 
-          <ion-button mode="ios" [disabled]="registrationFormGroup.invalid"  expand="block" (click)="save()">Save</ion-button>
+          <ion-button mode="ios"   expand="block" (click)="save()">Save</ion-button>
 
       </ion-list>
       
