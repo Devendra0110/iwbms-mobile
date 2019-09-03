@@ -12,7 +12,6 @@ export class AuthGuardService implements CanActivate{
   }
 
   canActivate(route: ActivatedRouteSnapshot){
-    console.log(route)
     this.storage.get('token').then((tokenValue) => {
       if (tokenValue)
         this.router.navigate(['/dashboard']);

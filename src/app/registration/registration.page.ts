@@ -156,14 +156,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.network.onConnect().subscribe(() => { })
 
 
-    // this.route.queryParams.subscribe(params => {
-    //   if (this.router.getCurrentNavigation().extras.state) {
-    //     this.mobileNo = this.router.getCurrentNavigation().extras.state.mobile;
-    //     this.aadharNo = this.router.getCurrentNavigation().extras.state.aadhar;
-    //   } else {
-    //     this.router.navigate(['/verification']);
-    //   }
-    // });
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
+        this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+      } else {
+        this.router.navigate(['/verification']);
+      }
+    });
 
     //re-route to homepage if not logged-in
     this.storage.get('token').then((val) => {
@@ -252,7 +252,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.httpService.getStates().subscribe((statesArrObj: any) => {
       // create state-name:state-id key-value in states
       for (const i of statesArrObj) this.states[i.state_name] = i.state_id;
-      console.log(this.states);
     }, err => console.log(err));
 
     this.registrationFormGroup = new FormGroup({
@@ -373,13 +372,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // this.userMgmntService.getUserTypes().subscribe(
-    //   (userTypes: any) => {
-    //     this.userType = userTypes.find(x => x._id === localStorage.getItem('userType')).description;
-    //     this.userTypeId = userTypes.find(x => x._id === localStorage.getItem('userType'))._id;
-    //   },
-    //   err => console.log(err)
-    // );
+
     this.elseStateFlag=false;
     this.workingDayFlag = true;
     this.state.patchValue('21');
@@ -388,32 +381,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.relation.disable();
     this.relation_mr.patchValue('1');
     this.relation_mr.disable();
-    this.mobilePersonal.patchValue(this.mobileNo);
-    this.aadharNoPersonal.patchValue(this.aadharNo);
     this.mobilePersonal.disable();
     this.aadharNoPersonal.disable()
-    // this.userMgmntService.getUserTypes().subscribe(
-    //   (userTypes: any) => {
-    //     this.userType = userTypes.find(x => x._id === localStorage.getItem('userType')).description;
-    //     if (!!this.userType && this.userType === 'Applicant') {
-    //       this.getApplicantsDetails();
-    //     } else if (!!this.userType && (this.userType === 'Data Entry Operator' || this.userType === 'Field Agents')) {
-    //       if (!this.selectedApplicationData) this.modes = Modes.create;
-    //       else this.modes = Modes.update;
-    //     } else if (!!this.userType && (this.userType === 'Principal Secretary' || this.userType === 'Commissioner' || this.userType === 'Secretary/CEO' || this.userType === 'ACL' || this.userType === 'GLO' || this.userType === 'Asst Account Officer' || this.userType === 'Clerk' || this.userType === 'WFC I/c')) {
-    //       this.modes = Modes.read;
-    //     }
-
-    //     this.checkModes();
-    //   },
-    //   err => console.log(err)
-    // );
 
     this.httpService.getDistricts(21).subscribe((districtsArrObj: any) => {
       // create district-name:district-id key-value in district
       for (const i of districtsArrObj) this.districts[i.district_name] = i.district_id;
     }, err => console.log(err));
-
 
     // residential address
     this.district.valueChanges.subscribe(value => {
@@ -448,10 +422,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     });
 
-
     // // permanent address
     this.statePer.valueChanges.subscribe(value => {
-      if (value === 'MAHARASHTRA' || value === '21') {
+      if (value === 'MAHARASHTRA' || value === 21) {
         this.statePer.patchValue('MAHARASHTRA')
         this.elseStateFlag=false;
         this.migrant.patchValue(false);
@@ -632,6 +605,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       DTPObject = this.districts;
     else if (targetsArray[2] === 'taluka')
       DTPObject = this.talukasRes;
+      else if(targetsArray[2]==='state') DTPObject = this.states;
     else if (targetsArray[1] === 'talukaEmp') DTPObject = this.talukasEmp;
     else DTPObject = this.postOfficeArrayRes;
 

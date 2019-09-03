@@ -26,7 +26,7 @@
 
         <ion-item >
           <ion-label position="floating">First Name<span style="color: Red">*</span></ion-label>
-          <ion-input [class.is-invalid]="firstNamePersonal.invalid && firstNamePersonal.touched"
+          <ion-input maxlength="20" [class.is-invalid]="firstNamePersonal.invalid && firstNamePersonal.touched"
             formControlName="firstNamePersonal" clearInput id="personalDetails-firstNamePersonal"
             class="transliterate" (ionBlur)="transliterateDirect($event)" ></ion-input>
           <div class="text-danger" *ngIf="firstNamePersonal.invalid && firstNamePersonal.touched">
@@ -203,7 +203,7 @@
           <ion-label position="floating">PF/UAN (If available)</ion-label>
           <ion-input [class.is-invalid]="
               pfOrUanPersonal.invalid && pfOrUanPersonal.touched
-            " formControlName="pfOrUanPersonal" id='personalDetails-pfOrUanPersonal' maxlength="20" clearInput>
+            " formControlName="pfOrUanPersonal" id='personalDetails-pfOrUanPersonal' maxlength="20" autocapitalize="characters" clearInput>
           </ion-input>
           <div class="text-danger" *ngIf="pfOrUanPersonal.invalid && pfOrUanPersonal.touched">
             <small *ngIf="!!pfOrUanPersonal.errors?.maxlength">You have exceeded the max length.</small>
@@ -216,7 +216,7 @@
           </ion-label>
           <ion-input maxlength="20" type="tel" formControlName="esicNoPersonal" [class.is-invalid]="
               esicNoPersonal.invalid && esicNoPersonal.touched
-            " id='personalDetails-esicNoPersonal' clearInput>
+            " id='personalDetails-esicNoPersonal' clearInput autocapitalize="characters">
           </ion-input>
           <div class="text-danger" *ngIf="esicNoPersonal.invalid && esicNoPersonal.touched">
             <small *ngIf="!!esicNoPersonal.errors?.maxlength">You have exceeded the max length.</small>
@@ -327,7 +327,6 @@
                   </ion-select-option> -->
                   <ion-select-option [selected]="true" value="21">MAHARASHTRA</ion-select-option>
                 </ion-select>
-                
               </ion-item>
 
               <ion-item hidden="true">
@@ -464,7 +463,7 @@
                 <ion-label position="floating">Road</ion-label>
                 <ion-input formControlName="road" type="text" maxlength="40" 
                   id='personalDetails-permanentAddress-road' [class.is-invalid]="roadPer.invalid && roadPer.touched"
-                  class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
+                  class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
                 <div class="text-danger" *ngIf="roadPer.invalid && roadPer.touched">
                   <small *ngIf="!!roadPer.errors?.required">Please enter Road name.</small>
                   <small *ngIf="!!roadPer.errors?.maxlength">You have exceeded the max length.</small>
@@ -480,7 +479,7 @@
                 <ion-label position="floating">Area<span style="color: Red">*</span></ion-label>
                 <ion-input required formControlName="area" 
                   id='personalDetails-permanentAddress-area' type="text" maxlength="40"
-                  [class.is-invalid]="areaPer.invalid && areaPer.touched" class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
+                  [class.is-invalid]="areaPer.invalid && areaPer.touched" class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
                 <div class="text-danger" *ngIf="areaPer.invalid && areaPer.touched">
                   <small *ngIf="!!areaPer.errors?.required">Please enter your Area name.</small>
                   <small *ngIf="!!areaPer.errors?.maxlength">You have exceeded the max length.</small>
@@ -495,10 +494,11 @@
               <ion-item>
                 <ion-label position="floating">Town / City<span style="color: Red">*</span></ion-label>
                 <ion-input required  id='personalDetails-permanentAddress-city' type="text" maxlength="40"
-                  formControlName="city" [class.is-invalid]="cityPer.invalid && cityPer.touched"  class="transliterate" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
+                  formControlName="city" [class.is-invalid]="cityPer.invalid && cityPer.touched"  class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
                 <div class="text-danger" *ngIf="cityPer.invalid && cityPer.touched">
                   <small *ngIf="!!cityPer.errors?.required">Please enter your Town / City.</small>
                   <small *ngIf="!!cityPer.errors?.maxlength">You have exceeded the max length.</small>
+                  <small *ngIf="!!cityPer.errors?.pattern">Please enter appropriate city name.</small>
                 </div>
               </ion-item>
 
@@ -511,7 +511,7 @@
                 <ion-label position="floating">Important Place / Nearby</ion-label>
                 <ion-input  type="text" maxlength="40" formControlName="importantPlace" [class.is-invalid]="
                     importantPlacePer.invalid && importantPlacePer.touched
-                  "  class="transliterate" (ionBlur)="transliterateDirect($event)" id='personalDetails-permanentAddress-importantPlace' clearInput></ion-input>
+                  "  class="transliterate" (ionBlur)="transliterateDirect($event)" id='personalDetails-permanentAddress-importantPlace' autocapitalize="words" clearInput></ion-input>
                 <div class="text-danger" *ngIf="importantPlacePer.invalid && importantPlacePer.touched">
                   <small *ngIf="!!importantPlacePer.errors?.maxlength">You have exceeded the max length.</small>
                 </div>
@@ -526,7 +526,7 @@
                 <ion-label position="floating"> State<span style="color: Red"> *</span> </ion-label>
                 <ion-select required class=" transliterate" id='personalDetails-permanentAddress-state'
                   [class.is-invalid]="state.invalid && state.touched" formControlName="state" (ionChange)="transliterateDTP($event)" interface="action-sheet">
-                  <ion-select-option *ngFor="let eachState of states|keyvalue" [value]="eachState.key">{{eachState.key}}</ion-select-option>
+                  <ion-select-option *ngFor="let eachState of states|keyvalue" [value]="eachState.value">{{eachState.key}}</ion-select-option>
                 </ion-select>
                 <div class="text-danger" *ngIf="state.invalid && state.touched">
                   <small *ngIf="!!statePer.errors?.required">Please choose your State.</small>
@@ -547,7 +547,7 @@
                     {{ eachDistrict.key }}
                   </ion-select-option>
                 </ion-select>
-                <ion-input *ngIf="elseStateFlag" formControlName="district" [class.is-invalid]="districtPer.invalid && districtPer.touched" id='personalDetails-permanentAddress-district' class="transliterate" (ionBlur)="transliterateDirect($event)"></ion-input>
+                <ion-input *ngIf="elseStateFlag" formControlName="district" [class.is-invalid]="districtPer.invalid && districtPer.touched" id='personalDetails-permanentAddress-district' class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
               </ion-item>
 
               <ion-item hidden="true">
@@ -564,7 +564,7 @@
                   </ion-select-option>
                 </ion-select>
                 <ion-input *ngIf="elseStateFlag"  class="transliterate" id='personalDetails-permanentAddress-taluka' formControlName="taluka" (ionBlur)="transliterateDirect($event)"
-                  [class.is-invalid]="taluka.invalid && taluka.touched">
+                  [class.is-invalid]="taluka.invalid && taluka.touched" autocapitalize="words" clearInput>
                 </ion-input>
               </ion-item>
 
@@ -582,7 +582,7 @@
                   </ion-select-option>
                 </ion-select>
                 <ion-input *ngIf="elseStateFlag" class="transliterate" id='personalDetails-permanentAddress-postOffice' formControlName="postOffice" (ionBlur)="transliterateDirect($event)"
-                  [class.is-invalid]="postOffice.invalid && postOffice.touched">
+                  [class.is-invalid]="postOffice.invalid && postOffice.touched" autocapitalize="words" clearInput>
 
                 </ion-input>
               </ion-item>
@@ -609,6 +609,7 @@
                 <div class="text-danger" *ngIf="stdcode.invalid && stdcode.touched">
                   <small *ngIf="!!stdcodePer.errors?.minlength">STD Code should be a more than 2 digit no.</small>
                   <small *ngIf="!!stdcodePer.errors?.maxlength">STD Code should be less than 6 digit no.</small>
+                  <small *ngIf="!!stdcodePer.errors?.pattern">Only use numbers.</small>
                 </div>
               </ion-item>
 
@@ -1284,7 +1285,7 @@
           <input id='bankPassbook' type="file" accept="application/pdf" (change)="uploadFile($event)" >
         </ion-item>
 
-          <ion-button mode="ios"   expand="block" (click)="save()">Save</ion-button>
+          <ion-button mode="ios"  expand="block" (click)="save()">Save</ion-button>
 
       </ion-list>
       

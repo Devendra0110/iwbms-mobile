@@ -24,14 +24,14 @@ export class ValidationService {
         validatorsArr = [
           Validators.required,
           Validators.maxLength(20),
-          Validators.pattern('^[A-Za-z]+$')
+          Validators.pattern('^[A-Za-z]{3,}$')
         ];
         break;
       }
       case 'middleName': {
         validatorsArr = [
           Validators.maxLength(20),
-          Validators.pattern('^[A-Za-z]+$')
+          Validators.pattern('^([A-Za-z]+\\s*)+$')
         ];
         break;
       }
@@ -39,7 +39,7 @@ export class ValidationService {
         validatorsArr = [
           Validators.required,
           Validators.maxLength(20),
-          Validators.pattern('^[A-Za-z]+$')
+          Validators.pattern('^[A-Za-z]{3,}$')
         ];
         break;
       }
@@ -137,6 +137,7 @@ export class ValidationService {
       case 'city': {
         validatorsArr = [
           Validators.required,
+          Validators.pattern('^([A-Za-z]+\\s*)+$'),
           Validators.maxLength(40)
         ];
         break;
@@ -166,7 +167,7 @@ export class ValidationService {
         break;
       }
       case 'stdcode': {
-        validatorsArr = [Validators.maxLength(5), Validators.minLength(2)];
+        validatorsArr = [Validators.maxLength(5), Validators.minLength(2),Validators.pattern('^[\\d]+$')];
         break;
       }
       case 'phone': {
@@ -231,7 +232,7 @@ export class ValidationService {
         break;
       }
       case 'fatherOrHusbandName': {
-        validatorsArr = [Validators.maxLength(60), Validators.pattern('[A-Za-z]+\\s{1}[A-Za-z]+(\\s{1}[A-Za-z]+)*')];
+        validatorsArr = [Validators.maxLength(60), Validators.pattern('^([A-Za-z]+\\s*)+$')];
         break;
       }
       case 'fatherOrHusbandName_marathi': {
