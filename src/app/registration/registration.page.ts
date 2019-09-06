@@ -36,6 +36,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public startDateForDob: any;
   public startDate: any;
   public todaysDate: any;
+  public maxTodaysDate:any;
   public endDate:any;
   public maxAppointmentDate: any;
   public dateOfBirth: any;
@@ -156,14 +157,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.network.onConnect().subscribe(() => { })
 
 
-    this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
-        this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-      } else {
-        this.router.navigate(['/verification']);
-      }
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   if (this.router.getCurrentNavigation().extras.state) {
+    //     this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
+    //     this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+    //   } else {
+    //     this.router.navigate(['/verification']);
+    //   }
+    // });
 
     //re-route to homepage if not logged-in
     this.storage.get('token').then((val) => {
@@ -177,32 +178,32 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // fetch the list of gender from database
     this.httpService.getGenders().subscribe((genderArrObj: any) => {
       for (const i of genderArrObj) {
-        this.genderOptions[i.gender] = i.gender_id;
-        this.genderOptionsMarathi[i.gender_mr] = i.gender_id;
+        this.genderOptions[Number(i.gender_id)] = i.gender;
+        this.genderOptionsMarathi[Number(i.gender_id)] = i.gender_mr;
       }
     }, err => console.log(err));
 
     // fetch the list of marital-status from database
     this.httpService.getMaritalStatus().subscribe((maritalStatusArrObj: any) => {
       for (const i of maritalStatusArrObj) {
-        this.maritalStatusOptions[i.status] = i.id;
-        this.maritalStatusOptionsMarathi[i.status_mr] = i.id;
+        this.maritalStatusOptions[Number(i.id)] = i.status;
+        this.maritalStatusOptionsMarathi[Number(i.id)] = i.status_mr;
       }
     }, err => console.log(err));
 
     // fetch the list of Ration Card Types from database
     this.httpService.getRationCardTypes().subscribe((rationCardArrObj: any) => {
       for (const i of rationCardArrObj) {
-        this.rationCardTypeOptions[i.ration_card_type] = i.id;
-        this.rationCardTypeOptionsMarathi[i.ration_card_type_mr] = i.id;
+        this.rationCardTypeOptions[Number(i.id)] = i.ration_card_type;
+        this.rationCardTypeOptionsMarathi[Number(i.id)] = i.ration_card_type_mr;
       }
     }, err => console.log(err));
 
     // fetch the list of categories from database
     this.httpService.getCategory().subscribe((categoryArrObj: any) => {
       for (const i of categoryArrObj) {
-        this.categoryOptions[i.category] = i.id;
-        this.categoryOptionsMarathi[i.category_mr] = i.id;
+        this.categoryOptions[Number(i.id)] = i.category;
+        this.categoryOptionsMarathi[Number(i.id)] = i.category_mr;
       }
     }, err => console.log(err));
 
@@ -210,15 +211,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // tslint:disable-next-line: max-line-length
     this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
       for (const i of familyRelationArrObj) {
-        this.familyRelationOptions[i.relation_title_en] = i.family_relation_id;
-        this.familyRelationOptionsMarathi[i.relation_title_mr] = i.family_relation_id;
+        this.familyRelationOptions[Number(i.family_relation_id)] = i.relation_title_en;
+        this.familyRelationOptionsMarathi[Number(i.family_relation_id)] = i.relation_title_mr;
       }
     });
 
     this.httpService.getEducation().subscribe((educationArrObj: any) => {
       for (const i of educationArrObj) {
-        this.educationOptions[i.education_level_en] = i.education_level_id;
-        this.educationOptionsMarathi[i.education_level_mr] = i.education_level_id;
+        this.educationOptions[Number(i.education_level_id)] = i.education_level_en;
+        this.educationOptionsMarathi[Number(i.education_level_id)] = i.education_level_mr;
       }
     });
 
@@ -226,8 +227,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // fetch the list of Nature of Work from database
     this.httpService.getNatureOfWork().subscribe((natureOfWorkArrObj: any) => {
       for (const i of natureOfWorkArrObj) {
-        this.natureOfWorkOptions[i.type_of_worker_title] = i.type_of_worker_id;
-        this.natureOfWorkOptionsMarathi[i.type_of_worker_title_mr] = i.type_of_worker_id;
+        this.natureOfWorkOptions[Number(i.type_of_worker_id)] = i.type_of_worker_title;
+        this.natureOfWorkOptionsMarathi[Number(i.type_of_worker_id)] = i.type_of_worker_mr;
       }
     }, err => console.log(err));
 
@@ -236,15 +237,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // fetch the list of Issuer types from database
     this.httpService.getIssuerTypes().subscribe((issuerTypesArrObj: any) => {
       for (const i of issuerTypesArrObj) {
-        this.typeOfIssuerOptions[i.type_of_issuer] = i.id;
-        this.typeOfIssuerOptionsMarathi[i.type_of_issuer_mr] = i.id;
+        this.typeOfIssuerOptions[Number(i.id)] = i.type_of_issuer;
+        this.typeOfIssuerOptionsMarathi[Number(i.id)] = i.type_of_issuer_mr;
       }
     }, err => console.log(err));
     // fetch the list of issuer type registration from database
     this.httpService.getIssuerRegistrationTypes().subscribe((issuerRegistrationTypesArrObj: any) => {
       for (const i of issuerRegistrationTypesArrObj) {
-        this.registrationTypeOptions[i.registration_type] = i.id;
-        this.registrationTypeOptionsMarathi[i.registration_type_mr] = i.id;
+        this.registrationTypeOptions[Number(i.id)] = i.registration_type;
+        this.registrationTypeOptionsMarathi[Number(i.id)] = i.registration_type_mr;
       }
     }, err => console.log(err));
 
@@ -275,6 +276,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.endDate = this.changeToIonDateTime(18, 'years');
 
     this.maxAppointmentDate = this.changeToIonDateTime(3, 'months');
+    this.maxTodaysDate = this.changeToIonDateTime(0,'years');
 
     this.attachmentDetails = [
       {
@@ -368,6 +370,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const attachmentList = this.registrationFormGroup.get('supportingDocuments').get('attachmentList') as FormArray;
     for (const i in this.attachmentDetails) {
       attachmentList.push(this.attachmentListFormGroup());
+      const suppDocAtachmentsFormArray = this.registrationFormGroup.get('supportingDocuments').get('attachmentList') as FormArray;
+      suppDocAtachmentsFormArray.get(i.toString()).get('serial_no').patchValue(parseInt(i) + 1);
     }
   }
 
@@ -424,8 +428,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
     // // permanent address
     this.statePer.valueChanges.subscribe(value => {
-      if (value === 'MAHARASHTRA' || value === 21) {
-        this.statePer.patchValue('MAHARASHTRA')
+      
+      if (value === 'MAHARASHTRA' || value === '21' || value === 21) {
+        debugger;
+        this.statePer.patchValue(21, {emitEvent:false});
         this.elseStateFlag=false;
         this.migrant.patchValue(false);
         this.migrant_mr.patchValue(false);
@@ -524,7 +530,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     }
   }
-
 
   getApplicantsDetails() {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -704,13 +709,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   handleSpecialDropdowns(event) {
     const idArray = event.target.id.split('-');
+    const value = Number(event.target.value);
     if (idArray.length === 2) {
-      this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).patchValue(event.target.value, { emitEvent: false });
-
-      console.log(this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).value);
+      console.log(this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}`).value)
+      this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).patchValue(value, { emitEvent: false });
+      console.log(this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).value)
     } else if (idArray.length === 3) {
-      this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).patchValue(event.target.value, { emitEvent: false });
-      console.log(this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).value);
+      console.log(this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}`).value)
+      this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).patchValue(value, { emitEvent: false });
+      console.log(this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).value)
     }
   }
 
@@ -778,16 +785,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-
   applyNominee(i: number) {
-
     const familyDetails = this.registrationFormGroup.get('familyDetails')['controls'];
     for (const j in familyDetails) {
       familyDetails[j].get('nominee').setValue('no');
     }
     this.registrationFormGroup.get('familyDetails').get(i.toString()).get('nominee').setValue('yes');
   }
-
 
   calculateAgeForFamilyDetails(i: string) {
     const val = new Date(this.registrationFormGroup.get('familyDetails').get(i.toString()).get('dobFamily').value).toJSON().slice(0, 10).split('-');
@@ -814,15 +818,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     familyDetailsArray.push(this.familyDetailsFormGroup());
   }
 
-  // calculateAgeFamily(i: number) {
-  //   const val = this.registrationFormGroup.value.familyDetails[i].dob;
-  //   if (val) {
-  //     const dob = moment(val.year + '-' + val.month + '-' + val.day, 'YYYY-MM-DD');
-  //     const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
-  //     this.registrationFormGroup.get('familyDetails')['controls'][i].get('age').setValue(age);
-  //   }
-  // }
-
   changeToIonDateTime(diff:any,timeUnit:string){
     const date = moment(
       new Date(this.todaysDate.year, this.todaysDate.month - 1, this.todaysDate.day))
@@ -833,8 +828,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     else if (Number(date[1]) >= 10 && Number(date[0]) < 10) return `${Number(date[2])}-${Number(date[1])}-0${Number(date[0])}`;
     else return `${Number(date[2])}-${Number(date[1])}-${Number(date[0])}`; 
     }
-
-
 
   searchByIfscCode() {
     this.bankDetails = {
@@ -923,24 +916,56 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   takePicture() {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      targetHeight:800,
+      targetWidth:600
     };
     this.camera.getPicture(options).then((imageData) => {
-      this.currentImage = 'data:image/jpeg;base64,' + imageData;
-      const blobImage = this.b64toBlob(imageData, 'image/jpeg');
-      const fileImage = new File([blobImage], `${Date.now()}-img.jpg`);
+      this.currentImage = 'data:image/jpg;base64,' + imageData;
+      console.log(imageData);
+      const fileImage = this.b64toFile(imageData);      
       this.files.applicantPhoto = fileImage;
-      this.fileOptions.applicantPhoto = `${Date.now()}-img`;
-      console.log(this.currentImage);
-      console.log(fileImage);
-      console.log(this.registrationFormGroup.value);
+      this.fileOptions.applicantPhoto = `${Date.now()}-img.jpg`;
     }, (err) => {
       // Handle error
       console.log("Camera issue:" + err);
     });
+  }
+
+  b64toFile = (b64Data, contentType = 'image/jpg', sliceSize = 512) => {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+
+    // const file = new File([blob], 'image.png', { type: contentType, lastModified: Date.now() });
+    const file = this.blobToFile(blob, `${Date.now()}-img.jpg`);
+    return file;
+  }
+
+  public blobToFile = (theBlob: Blob, fileName: string): File => {
+    const b: any = theBlob;
+    // A Blob() is almost a File() - it's just missing the two properties below which we will add
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+
+    // Cast to a File() type
+    return theBlob as File;
   }
 
   b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
@@ -962,7 +987,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const blob = new Blob(byteArrays, { type: contentType });
     return blob;
   }
-
 
   selectAttachmentType(event: any, i: number) {
     const docTypeValue = event.target.value;
@@ -1001,7 +1025,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   save() {
-    console.log(this.registrationFormGroup);
+    console.log(this.registrationFormGroup.getRawValue());
     if (this.registrationFormGroup.valid) {
       const formData = new FormData();
       // tslint:disable-next-line: forin
@@ -1020,7 +1044,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
       this.httpService.saveData(formData, this.JWTToken).subscribe(
         (res: any) => {
-          alert('Data Saved');
+          this.dialogs.alert('Data Captured 👍🙂')
           console.log(res);
           // this.storage.remove('tokenId').then((val) => {
           // },err=>console.log(err));
@@ -1159,7 +1183,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       // registrationTypeEmp_mr: new FormControl('')
     });
   }
-//[A-Za-z]+\s{1}[A-Za-z]+(\s{1}[A-Za-z]+)*
+  
   employerWorkDetailsFormFroup(): FormGroup {
     return new FormGroup({
       typeOfEmployerEmp: new FormControl('', [Validators.required]),
@@ -1185,11 +1209,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
-
   attachmentListFormGroup(): FormGroup {
     return new FormGroup({
+      attachment_id: new FormControl(''),
       attachmentType: new FormControl(''),
-      attached: new FormControl('')
+      // file: new FormControl('', [Validators.required]),
+      attached: new FormControl(''),
+      serial_no: new FormControl()
     });
   }
 

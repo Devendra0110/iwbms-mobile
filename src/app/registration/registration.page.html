@@ -12,9 +12,7 @@
 
         <ion-item hidden="true">
           <ion-label position="floating"> Registration Date</ion-label>
-          <ion-datetime readonly formControlName="registrationDatePersonal" id="personalDetails-registrationDatePersonal" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" value="{{ todaysDate.month }}/{{ todaysDate.day }}/{{
-              todaysDate.year
-            }}"></ion-datetime>
+          <ion-datetime readonly formControlName="registrationDatePersonal" id="personalDetails-registrationDatePersonal" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" value="{{ todaysDate.month }}/{{ todaysDate.day }}/{{todaysDate.year}}"></ion-datetime>
         </ion-item>
 
         <ion-item hidden="true">
@@ -87,7 +85,7 @@
         <ion-item>
           <ion-label position="floating">Gender<span style="color: Red"> *</span></ion-label>
           <ion-select formControlName="genderPersonal" [class.is-invalid]="genderPersonal.invalid && genderPersonal.touched" id='personalDetails-genderPersonal' interface="action-sheet" (ionChange)="handleSpecialDropdowns($event)">
-              <ion-select-option class="ics" *ngFor="let gender of genderOptions|keyvalue" value="{{ gender.value }}">{{ gender.key }}</ion-select-option>
+              <ion-select-option class="ics" *ngFor="let gender of genderOptions|keyvalue" value="{{ gender.key }}">{{ gender.value }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="genderPersonal.invalid && genderPersonal.touched">
             <small *ngIf="!!genderPersonal.errors?.required">Please choose your gender.</small>
@@ -97,15 +95,14 @@
         <ion-item hidden="true" >
           <ion-label position="floating">लिंग</ion-label>
           <ion-select formControlName="genderPersonal_mr" interface="action-sheet">
-            <ion-select-option *ngFor="let gender of genderOptionsMarathi|keyvalue" value="{{ gender.value }}">{{ gender.key }}
-            </ion-select-option>
+            <ion-select-option *ngFor="let gender of genderOptionsMarathi|keyvalue" value="{{ gender.key }}">{{ gender.value }}</ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item>
           <ion-label position="floating">Marital Status<span style="color: Red"> *</span></ion-label>
           <ion-select formControlName="maritalStatusPersonal" [class.is-invalid]="maritalStatusPersonal.invalid && maritalStatusPersonal.touched"  id='personalDetails-maritalStatusPersonal' (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
-            <ion-select-option *ngFor="let maritalStatus of maritalStatusOptions|keyvalue" value="{{ maritalStatus.value }}">{{ maritalStatus.key }}</ion-select-option>
+            <ion-select-option *ngFor="let maritalStatus of maritalStatusOptions|keyvalue" value="{{ maritalStatus.key }}">{{ maritalStatus.value }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="maritalStatusPersonal.invalid && maritalStatusPersonal.touched">
             <small *ngIf="!!maritalStatusPersonal.errors?.required">Please choose your Marital Status.</small>
@@ -115,8 +112,7 @@
         <ion-item hidden="true">
           <ion-label position="floating">वैवाहिक स्थिती</ion-label>
           <ion-select formControlName="maritalStatusPersonal_mr" interface="action-sheet">
-            <ion-select-option *ngFor="let maritalStatus of maritalStatusOptionsMarathi|keyvalue" value="{{ maritalStatus.value }}">
-              {{ maritalStatus.key }}</ion-select-option>
+            <ion-select-option *ngFor="let maritalStatus of maritalStatusOptionsMarathi|keyvalue" value="{{ maritalStatus.key }}">{{ maritalStatus.value }}</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -160,8 +156,8 @@
 
         <ion-item>
           <ion-label position="floating">Ration Card Type<span style="color: Red">*</span></ion-label>
-          <ion-select formControlName="rationCardTypePersonal" (ionChange)="handleSpecialDropdowns($event)"interface="action-sheet" id='personalDetails-rationCardTypePersonal' [class.is-invalid]="rationCardTypePersonal.invalid && rationCardTypePersonal.touched">
-            <ion-select-option *ngFor="let rationCardType of rationCardTypeOptions|keyvalue" value="{{ rationCardType.value }}">{{ rationCardType.key }}</ion-select-option>
+          <ion-select formControlName="rationCardTypePersonal" (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet" id='personalDetails-rationCardTypePersonal' [class.is-invalid]="rationCardTypePersonal.invalid && rationCardTypePersonal.touched">
+            <ion-select-option *ngFor="let rationCardType of rationCardTypeOptions|keyvalue" value="{{ rationCardType.key }}">{{ rationCardType.value }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="rationCardTypePersonal.invalid && rationCardTypePersonal.touched">
             <small *ngIf="!!rationCardTypePersonal.errors?.required">Please choose your Ration Card Type.</small>
@@ -171,19 +167,15 @@
         <ion-item hidden="true">
           <ion-label position="floating">रेशन कार्ड प्रकार</ion-label>
           <ion-select formControlName="rationCardTypePersonal_mr" interface="action-sheet">
-            <ion-select-option *ngFor="let rationCardType of rationCardTypeOptionsMarathi|keyvalue" value="{{ rationCardType.value }}">
-              {{ rationCardType.key }}</ion-select-option>
+            <ion-select-option *ngFor="let rationCardType of rationCardTypeOptionsMarathi|keyvalue" value="{{ rationCardType.key }}">
+              {{ rationCardType.value }}</ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item>
           <ion-label position="floating">Category<span style="color: Red"> *</span></ion-label>
-          <ion-select required formControlName="categoryPersonal" [class.is-invalid]="
-              categoryPersonal.invalid && categoryPersonal.touched
-            " id='personalDetails-categoryPersonal' (ionChange)="handleSpecialDropdowns($event)"
-            interface="action-sheet">
-            <ion-select-option *ngFor="let category of categoryOptions|keyvalue" value="{{ category.value }}">{{ category.key }}
-            </ion-select-option>
+          <ion-select required formControlName="categoryPersonal" [class.is-invalid]=" categoryPersonal.invalid && categoryPersonal.touched" id='personalDetails-categoryPersonal' (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
+            <ion-select-option *ngFor="let category of categoryOptions|keyvalue" value="{{ category.key }}">{{ category.value }} </ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="categoryPersonal.invalid && categoryPersonal.touched">
             <small *ngIf="!!categoryPersonal.errors?.required">Please choose your Category.</small>
@@ -194,7 +186,7 @@
           <ion-label position="floating">वर्गवारी</ion-label>
           <ion-select formControlName="categoryPersonal_mr" (ionChange)="handleSpecialDropdowns($event)"
             interface="action-sheet">
-            <ion-select-option *ngFor="let category of categoryOptionsMarathi|keyvalue" value="{{ category.value }}">{{ category.key }}
+            <ion-select-option *ngFor="let category of categoryOptionsMarathi|keyvalue" value="{{ category.key }}">{{ category.value }}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -707,11 +699,9 @@
               </ion-col>
 
               <ion-col>    
-                   <ion-item><ion-icon  name="calendar"></ion-icon>
-                  <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" 
-                  id='familyDetails-{{i}}-dobFamily'
-                  formControlName="dobFamily" 
-                  (ionChange)="calculateAgeForFamilyDetails(i)">
+                   <ion-item>
+                  <ion-icon  name="calendar"></ion-icon>
+                  <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [max]="maxTodaysDate" id='familyDetails-{{i}}-dobFamily' formControlName="dobFamily" (ionChange)="calculateAgeForFamilyDetails(i)">
                   </ion-datetime>
                   </ion-item>
               </ion-col>
@@ -719,8 +709,8 @@
                   <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" formControlName="ageFamily" id='familyDetails-{{i}}-ageFamily' readonly ></ion-input>
               </ion-col>
               <ion-col>
-                  <ion-select interface="action-sheet" formControlName="relation" (ionChange)="transliterateFamilyDetails($event)" id='familyDetails-{{i}}-relation'>
-                    <ion-select-option *ngFor="let familyRelation of familyRelationOptions|keyvalue" value="{{familyRelation.value}}">{{familyRelation.key}}</ion-select-option>
+                  <ion-select interface="action-sheet" formControlName="relation" (ionChange)="handleSpecialDropdowns($event)" id='familyDetails-{{i}}-relation'>
+                    <ion-select-option *ngFor="let familyRelation of familyRelationOptions|keyvalue" value="{{familyRelation.key}}">{{familyRelation.value}}</ion-select-option>
                   </ion-select>
                   <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('relation').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('relation').touched">
                     <small *ngIf="!!relation.errors?.required">Please choose the relation.</small>
@@ -738,7 +728,7 @@
               </ion-col>
               <ion-col>
                 <ion-select interface="action-sheet" formControlName="education" (ionChange)="handleSpecialDropdowns($event)" id='familyDetails-{{i}}-education'>
-                  <ion-select-option *ngFor="let education of educationOptions|keyvalue" value={{education.value}}>{{education.key}}</ion-select-option>
+                  <ion-select-option *ngFor="let education of educationOptions|keyvalue" value={{education.key}}>{{education.value}}</ion-select-option>
                 </ion-select>
                 <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('education').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('education').touched">
                   <small *ngIf="!!education.errors?.required">Please choose the education</small>
@@ -962,7 +952,7 @@
         <ion-item>
           <ion-label position="floating">Nature of work<span style="color: Red">*</span></ion-label>
           <ion-select formControlName="natureOfWorkEmp" [class.is-invalid]="natureOfWorkEmp.invalid && natureOfWorkEmp.touched" id='employerDetails-natureOfWorkEmp' (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
-            <ion-select-option  text-justify *ngFor="let natureOfWork of natureOfWorkOptions|keyvalue" value="{{ natureOfWork.value }}">{{ natureOfWork.key }}</ion-select-option>
+            <ion-select-option  text-justify *ngFor="let natureOfWork of natureOfWorkOptions|keyvalue" value="{{ natureOfWork.key }}">{{ natureOfWork.value }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="!!natureOfWorkEmp.invalid && natureOfWorkEmp.touched">
             <small *ngIf="!!natureOfWorkEmp.errors?.required">Please choose your Nature of work.</small>
@@ -1144,8 +1134,7 @@
                   </ion-col>
                   <ion-col>
                       <ion-select [class.is-invalid]="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched" interface="action-sheet" formControlName="typeOfEmployerEmp" id='employerWorkDetails-{{i}}-typeOfEmployerEmp' (ionChange)="handleSpecialDropdowns($event)">
-                        <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptions|keyvalue" value="{{ typeOfIssuer.value }}">
-                          {{ typeOfIssuer.key }}</ion-select-option>
+                        <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptions|keyvalue" value="{{ typeOfIssuer.key }}">{{ typeOfIssuer.value }}</ion-select-option>
                       </ion-select>
                       <div class="text-danger" *ngIf="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched">
                         <small *ngIf="!!typeOfEmployerEmp.errors?.required">Please choose Type of employer.</small>
@@ -1167,8 +1156,7 @@
                   </ion-col>
                   <ion-col>
                     <ion-select formControlName="registrationTypeEmp" [class.is-invalid]="registrationTypeEmp.invalid && registrationTypeEmp.touched" interface="action-sheet" id='employerWorkDetails-{{i}}-registrationTypeEmp' (ionChange)="handleSpecialDropdowns($event)">
-                      <ion-select-option *ngFor="let registrationType of registrationTypeOptions|keyvalue" value="{{ registrationType.value }}">
-                        {{ registrationType.key }}</ion-select-option>
+                      <ion-select-option *ngFor="let registrationType of registrationTypeOptions|keyvalue" value="{{ registrationType.key }}"> {{ registrationType.value }}</ion-select-option>
                     </ion-select>
                     <div class="text-danger" *ngIf="registrationTypeEmp.invalid && registrationTypeEmp.touched">
                       <small *ngIf="!!registrationTypeEmp.errors?.required">Please choose registration type.</small>
@@ -1196,8 +1184,7 @@
                   <ion-col>
                       <ion-item>
                         <ion-icon  name="calendar"></ion-icon>
-                      <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
-                       id='employerWorkDetails-{{i}}-fromDateEmp' (ionChange)="calculateDayForWorkDetails(i)"  formControlName="fromDateEmp"></ion-datetime>
+                      <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"   id='employerWorkDetails-{{i}}-fromDateEmp' (ionChange)="calculateDayForWorkDetails(i)"  formControlName="fromDateEmp" [max]="maxTodaysDate"></ion-datetime>
                       </ion-item>
                       <div class="text-danger" *ngIf="fromDateEmp.invalid && fromDateEmp.touched" >
                         <small *ngIf="!!fromDateEmp.errors?.required">Please choose the joining date</small>
@@ -1206,8 +1193,7 @@
                    <ion-col>
                        <ion-item>
                          <ion-icon  name="calendar"></ion-icon>
-                       <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
-                       id='employerWorkDetails-{{i}}-toDateEmp' (ionChange)="calculateDayForWorkDetails(i)" formControlName="toDateEmp" ></ion-datetime>
+                       <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"   id='employerWorkDetails-{{i}}-toDateEmp' (ionChange)="calculateDayForWorkDetails(i)" formControlName="toDateEmp" [max]="maxTodaysDate"></ion-datetime>
                        </ion-item>
                        <div class="text-danger" *ngIf="toDateEmp.invalid && toDateEmp.touched" >
                         <small *ngIf="!!toDateEmp.errors?.required">Please choose the resiging date</small>
