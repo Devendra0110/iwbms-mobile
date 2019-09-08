@@ -158,14 +158,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.network.onConnect().subscribe(() => { })
 
 
-    // this.route.queryParams.subscribe(params => {
-    //   if (this.router.getCurrentNavigation().extras.state) {
-    //     this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
-    //     this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-    //   } else {
-    //     this.router.navigate(['/verification']);
-    //   }
-    // });
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
+        this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+        this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+      } else {
+        this.router.navigate(['/verification']);
+      }
+    });
 
     //re-route to homepage if not logged-in
     this.storage.get('token').then((val) => {
@@ -388,6 +389,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.relation_mr.patchValue('1');
     this.relation_mr.disable();
     this.mobilePersonal.disable();
+    this.aadharNoFamily.disable();
     this.aadharNoPersonal.disable()
 
     this.httpService.getDistricts(21).subscribe((districtsArrObj: any) => {
@@ -946,8 +948,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-
-
   takePicture() {
     const options: CameraOptions = {
       quality: 50,
@@ -1154,8 +1154,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       education: new FormControl('', this.validationService.createValidatorsArray('education')),
       education_mr: new FormControl(''),
       nominee: new FormControl('', this.validationService.createValidatorsArray('nominee')),
+      aadharNoFamily: new FormControl('',[Validators.maxLength(16),Validators.pattern('^[0-9]{16}$')])
     });
   }
+
   addressFormGroup(): FormGroup {
     return new FormGroup({
       houseNo: new FormControl('', this.validationService.createValidatorsArray('houseNo')),
@@ -1421,12 +1423,12 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get relation_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('relation_mr'); }
   get fatherOrHusbandName() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('fatherOrHusbandName'); }
   get fatherOrHusbandName_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('fatherOrHusbandName_mr'); }
+  get aadharNoFamily() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('aadharNoFamily'); }
   get education() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('education'); }
   get education_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('education_mr'); }
   get profession() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('profession'); }
   get profession_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('profession_mr'); }
   get nominee() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('nominee'); }
-
   // BankDetail getter
 
   get fullName() {

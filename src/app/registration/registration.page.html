@@ -645,6 +645,9 @@
               <ion-col style="width: 15px">
                 <ion-card-header>Education<span style="color: Red">*</span></ion-card-header>
               </ion-col>
+              <ion-col>
+                <ion-card-header> Aadhar No. </ion-card-header>
+              </ion-col>
               <ion-col style="width: 15px">
                 <ion-card-header>Nominee</ion-card-header>
               </ion-col>
@@ -723,6 +726,14 @@
                 </ion-select>
                 <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('education').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('education').touched">
                   <small *ngIf="!!education.errors?.required">Please choose the education</small>
+                </div>
+              </ion-col>
+              <ion-col style="width:15px">
+                <ion-item>
+                  <ion-input type="tel" maxlength="16" minlength="16" type="tel" formControlName="aadharNoFamily" id='familyDetails-{{i}}-aadharNoFamily' clearInput></ion-input>
+                </ion-item>
+                <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('aadharNoFamily').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('aadharNoFamily').touched" >
+                  <small *ngIf="!!aadharNoFamily.errors?.pattern">Please enter appropriate aadhar number.</small>
                 </div>
               </ion-col>
               <ion-col style="width: 15px; text-align: center;">
@@ -1113,7 +1124,10 @@
                 </ion-col>
                 <ion-col style="width: 15px">
                   <ion-card-header >To Date<span style="color: Red">*</span></ion-card-header>
-                </ion-col>
+                </ion-col>                
+              <ion-col style="width: 15px">
+                <ion-card-header>Delete</ion-card-header>
+              </ion-col>
              </ion-row>
                <ng-container *ngFor="let each of registrationFormGroup.get('employerWorkDetails')['controls']; let i = index">
                 <ion-row [formGroupName]="i">
@@ -1188,7 +1202,7 @@
                       </div>
                   </ion-col>
                   <ion-col style="width: 15px">
-                    <ion-fab  horizontal="end">
+                    <ion-fab  style="margin-right:62px;" horizontal="end">
                       <ion-fab-button (click)="deleteWorkerDetail(i)" >
                       <ion-icon name="close"></ion-icon>
                       </ion-fab-button>
