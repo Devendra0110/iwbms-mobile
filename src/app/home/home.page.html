@@ -17,11 +17,11 @@
         <form [formGroup]="loginForm">
         <ion-item>
           <ion-label position="floating">Username</ion-label>
-          <ion-input color="primary" type="email" formControlName="username"></ion-input>
+          <ion-input color="primary" type="email" formControlName="username" clearInput></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Password</ion-label>
-          <ion-input type="password" formControlName="password"></ion-input>
+          <ion-input type="password" formControlName="password" clearInput></ion-input>
         </ion-item>
         <ion-item *ngIf="wrongUser"> 
           <ion-label style="color: Red" text-wrap >This app is only for Field-Agents to use.</ion-label>

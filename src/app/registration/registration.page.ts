@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import { Component, OnInit, ViewChild, QueryList, ViewChildren, AfterViewInit, ViewContainerRef, ComponentRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -5,12 +6,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { Network } from '@ionic-native/network/ngx';
-
 import { states } from '../models/states';
 import { Modes } from '../../assets/modes';
 import { serverUrl } from '../../assets/config';
-import * as moment from 'moment';
-
 import { ValidationService } from '../services/validation.service';
 import { TransliterationService } from '../services/transliteration.service';
 import { FormControlDirective } from '../directives/form-control.directive';
@@ -39,6 +37,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public maxTodaysDate:any;
   public endDate:any;
   public maxAppointmentDate: any;
+  public minAppointmentDate: any;
+  public minFromDate:string;
+  public maxToDate:string;
   public dateOfBirth: any;
   public attachmentDetails: any = [];
   bankDetails: any = {
@@ -207,7 +208,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     }, err => console.log(err));
 
-
+    // fetch the list of family-relations from database
     // tslint:disable-next-line: max-line-length
     this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
       for (const i of familyRelationArrObj) {
@@ -276,6 +277,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.endDate = this.changeToIonDateTime(18, 'years');
 
     this.maxAppointmentDate = this.changeToIonDateTime(3, 'months');
+    this.minAppointmentDate = this.changeToIonDateTime(18, 'years');
     this.maxTodaysDate = this.changeToIonDateTime(0,'years');
 
     this.attachmentDetails = [
@@ -511,8 +513,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.appointmentDateEmp.valueChanges.subscribe(value => {
       const val = new Date(value).toJSON().slice(0, 10).split('-');
       const dob = val[0] + '-' + val[1] + '-' + val[2];
+      this.minFromDate = dob;
       this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(dob, { emitEvent: false });
     }, err => console.log(err));
+
+    this.dispatchDateEmp.valueChanges.subscribe(value=>{
+      const val = new Date(value).toJSON().slice(0, 10).split('-');
+      this.maxToDate = val[0] + '-' + val[1] + '-' + val[2];
+    },err=> console.log(err))
 
   }
 
@@ -748,6 +756,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     } else {
       // alert('select date');
     }
+    this.minAppointmentDate = this.changeToIonDateTime(Number(this.agePersonal.value) - 18, 'years');
   }
 
   getter(formGroup) {
@@ -806,10 +815,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   deleteFamilyDetail(i: number) {
-    const familyDetailsArray = this.registrationFormGroup.get('familyDetails') as FormArray;
-    familyDetailsArray.removeAt(i);
-    if (familyDetailsArray.length === 0) {
-      familyDetailsArray.push(this.familyDetailsFormGroup());
+    if(i===0){
+      return;
+    }else {
+      const familyDetailsArray = this.registrationFormGroup.get('familyDetails') as FormArray;
+      familyDetailsArray.removeAt(i);
+      if (familyDetailsArray.length === 0) {
+        familyDetailsArray.push(this.familyDetailsFormGroup());
+      }
     }
   }
 
@@ -875,8 +888,27 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     workerDetailsArray.push(this.employerWorkDetailsFormFroup());
   }
 
-  calculateDayForWorkDetails(i: string) {
+  minFDate(i: number) {
+    return i === 0 ? this.minFromDate : this.registrationFormGroup.get('employerWorkDetails').get((i - 1).toString()).get('toDateEmp').value;
+  }
 
+  maxFDate(i: number) {
+    // if (i == 0)
+     return this.maxToDate;
+    // else return this.registrationFormGroup.get('employerWorkDetails').get((i - 1).toString()).get('toDateEmp').value
+  }
+  
+  minTDate(i: number) {
+    // if (i === 0)
+      return this.registrationFormGroup.get('employerWorkDetails').get((i).toString()).get('fromDateEmp').value;
+  }
+
+  maxTDate(i: number) {
+    // if (i == 0) 
+    return this.maxToDate;
+  }
+
+  calculateDayForWorkDetails(i: string) {
     // tslint:disable-next-line: max-line-length
     const fromDate = new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value).toJSON().slice(0, 10).split('-');
 
@@ -913,6 +945,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     }
   }
+
+
 
   takePicture() {
     const options: CameraOptions = {
@@ -1037,7 +1071,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         formData.append('fileOptions', JSON.stringify(this.fileOptions));
 
         formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
-        formData.append('modeOfApplication','byFieldAgent')
+        formData.append('modeOfApplication','By Field Agent')
         // formData.append('token_id', this.token_id);
         // console.log(this.token_id);
         // formData.append('wfc_id', String(this.wfcID));
@@ -1159,6 +1193,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       districtEmp: new FormControl('', [Validators.required]),
       pinCodeEmp: new FormControl('', [Validators.required,Validators.pattern('^\\d{6}$')]),
       appointmentDateEmp: new FormControl(null,[Validators.required]),
+      dispatchDateEmp: new FormControl(null),
       remunerationPerDayEmp: new FormControl('', [Validators.maxLength(8)]),
       natureOfWorkEmp: new FormControl('', [Validators.required]),
       // typeOfEmployerEmp: new FormControl(''),
@@ -1167,7 +1202,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       // registrationTypeEmp: new FormControl(''),
       // mobileNumberOfIssuerEmp: new FormControl('', [Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
       // documentRefNumberEmp: new FormControl('', [Validators.maxLength(20)]),
-      // dispatchDateEmp: new FormControl(null),
+      
       migrant: new FormControl(''),
       migrant_mr: new FormControl(''),
       MNREGACardNumberEmp: new FormControl(''),
@@ -1319,6 +1354,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get districtEmp() { return this.registrationFormGroup.get('employerDetails').get('districtEmp'); }
   get pinCodeEmp() { return this.registrationFormGroup.get('employerDetails').get('pinCodeEmp'); }
   get appointmentDateEmp() { return this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp'); }
+  get dispatchDateEmp() { return this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp'); }
   get remunerationPerDayEmp() { return this.registrationFormGroup.get('employerDetails').get('remunerationPerDayEmp'); }
   get natureOfWorkEmp() { return this.registrationFormGroup.get('employerDetails').get('natureOfWorkEmp'); }
   // get typeOfEmployerEmp() { return this.registrationFormGroup.get('employerDetails').get('typeOfEmployerEmp'); }
@@ -1359,7 +1395,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get toDateEmp() {
     return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('toDateEmp');
   }
-  // get dispatchDateEmp() { return this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp'); }
+  
   get migrant() { return this.registrationFormGroup.get('employerDetails').get('migrant'); }
   get MNREGACardNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('MNREGACardNumberEmp'); }
   get contractorNameEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('contractorNameEmp_mr'); }

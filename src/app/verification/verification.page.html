@@ -15,7 +15,7 @@
       <form [formGroup]="verificationForm">
         <ion-item>
           <ion-label position="floating">Mobile Number / दूरध्वनी क्रमांक</ion-label>
-          <ion-input type="tel" maxlength='10' id="mobileNo" formControlName="mobileNo"></ion-input>
+          <ion-input type="tel" maxlength='10' id="mobileNo" formControlName="mobileNo" clearInput></ion-input>
           <div class="text-danger" *ngIf="mobileNo.invalid && mobileNo.touched">
             <small *ngIf="!!mobileNo.errors?.required">Please enter your Mobile No.</small>
             <small *ngIf="!!mobileNo.errors?.pattern">Please enter appropriate Mobile Number.</small>
@@ -23,7 +23,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Aadhar Number / आधार क्रमांक</ion-label>
-          <ion-input  type="tel" maxlength='12' id="aadharNo" formControlName="aadharNo"></ion-input>
+          <ion-input  type="tel" maxlength='12' id="aadharNo" formControlName="aadharNo" clearInput></ion-input>
           <div class="text-danger" *ngIf="aadharNo.invalid && aadharNo.touched">
             <small *ngIf="!!aadharNo.errors?.required">Please enter your Aadhar Number.</small>
             <small *ngIf="!!aadharNo.errors?.pattern">Please enter appropriate Aadhar Number.</small>
@@ -32,7 +32,7 @@
 
       </form>
 
-      <ion-button [disabled]="aadharNo.invalid || mobileNo.invalid" (click)="sendOTP()" mode="ios" expand="block"><ion-icon mode="ios" name="paper-plane" slot="start"></ion-icon>Send OTP</ion-button>
+      <ion-button style="margin-top: 16px;" [disabled]="aadharNo.invalid || mobileNo.invalid" (click)="sendOTP()" mode="ios" expand="block"><ion-icon mode="ios" name="paper-plane" slot="start"></ion-icon>Send OTP</ion-button>
     </ion-card-content>
   </ion-card>
 

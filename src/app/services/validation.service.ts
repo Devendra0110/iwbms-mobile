@@ -63,7 +63,6 @@ export class ValidationService {
       }
       case 'rationCardNumber': {
         validatorsArr = [
-          Validators.required,
           Validators.maxLength(12),
           Validators.minLength(8),
           Validators.pattern('^([a-zA-Z0-9]){8,12}\\s*$')
@@ -71,8 +70,7 @@ export class ValidationService {
         break;
       }
       case 'rationCardType' :{
-        validatorsArr = [Validators.required
-        ];
+        validatorsArr = [        ];
         break;
       }
       case 'category': {
@@ -81,7 +79,7 @@ export class ValidationService {
         break;
       }
       case 'pfOrUan': {
-        validatorsArr = [Validators.maxLength(22)];
+        validatorsArr = [Validators.maxLength(22), Validators.pattern('^([A-Z]{2})([A-Z]{3})([0-9]{1,7})([0-9]{3})?([0-9]{1,7})|[0-9]{12}$')];
         break;
       }
       case 'esicNo': {
