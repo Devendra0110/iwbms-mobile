@@ -65,7 +65,7 @@ export class ValidationService {
         validatorsArr = [
           Validators.maxLength(12),
           Validators.minLength(8),
-          Validators.pattern('^([a-zA-Z0-9]){8,12}\\s*$')
+          Validators.pattern('^([0-9]){8,12}\\s*$')
         ];
         break;
       }
@@ -174,7 +174,7 @@ export class ValidationService {
       }
       // bankvalidation
       case 'ifscCode': {
-        validatorsArr = [Validators.maxLength(11), Validators.minLength(11), Validators.required, Validators.pattern('^[A-Za-z]{4}0[A-Z0-9a-z]{6}$')];
+        validatorsArr = [Validators.maxLength(11), Validators.minLength(11), Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')];
         break;
       }
       case 'fullName': {

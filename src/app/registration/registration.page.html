@@ -143,7 +143,7 @@
 
         <ion-item>
           <ion-label position="floating">Ration Card Number</ion-label>
-          <ion-input type="text" minlength="8" maxlength="12" formControlName="rationCardNumberPersonal" [class.is-invalid]="rationCardNumberPersonal.invalid && rationCardNumberPersonal.touched" id='personalDetails-rationCardNumberPersonal' clearInput autocapitalize="characters"></ion-input>
+          <ion-input type="tel" minlength="8" maxlength="12" formControlName="rationCardNumberPersonal" [class.is-invalid]="rationCardNumberPersonal.invalid && rationCardNumberPersonal.touched" id='personalDetails-rationCardNumberPersonal' clearInput autocapitalize="characters"></ion-input>
           <div class="text-danger" *ngIf="rationCardNumberPersonal.invalid && rationCardNumberPersonal.touched">
             <small *ngIf="!!rationCardNumberPersonal.errors?.maxlength">You have exceeded the max length.</small>
             <small *ngIf="!!rationCardNumberPersonal.errors?.minlength">Ration Card No.length should be greater than or equals to 8 characters</small>
@@ -767,8 +767,7 @@
 
         <ion-item>
           <ion-label position="floating">IFSC Code<span style="color: Red">*</span> </ion-label>
-          <ion-input formControlName="ifscCode" [class.is-invalid]="ifscCode.invalid && ifscCode.touched" clearInput type="text" maxlength="11" minlength="11" autocapitalize="characters"
-          ></ion-input>
+          <ion-input type="text" formControlName="ifscCode" [class.is-invalid]="ifscCode.invalid && ifscCode.touched" clearInput type="text" maxlength="11" minlength="11" autocapitalize="characters"></ion-input>
           <ion-button (click)="searchByIfscCode()">Search</ion-button>
           <div class="text-danger" *ngIf="ifscCode.invalid && ifscCode.touched">
             <small *ngIf="!!ifscCode.errors?.required">Please enter IFSC code.</small>
@@ -945,7 +944,7 @@
         <ion-item>
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Dispatch Date<span style="color: Red">*</span></ion-label>
-          <ion-datetime formControlName="dispatchDateEmp" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" min="1990-01-01" [max]="maxTodaysDate"  id='employerDetails-dispatchDateEmp' ></ion-datetime>
+          <ion-datetime formControlName="dispatchDateEmp" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [min]="minFromDate" [max]="maxTodaysDate"  id='employerDetails-dispatchDateEmp' ></ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -1236,7 +1235,7 @@
             <ion-select-option value="" selected>Select</ion-select-option>
             <ion-select-option *ngFor="let eachOption of each.attachmentType" [value]="eachOption.value">{{eachOption.key}}</ion-select-option>
           </ion-select>
-          <input slot="end" readonly type="checkbox" formControlName="attached">
+          <!-- <input slot="end" readonly type="checkbox" formControlName="attached"> -->
         </ion-item>
         </ng-container>       
         

@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import * as uuidv4 from 'uuid/v4';
 import { Component, OnInit, ViewChild, QueryList, ViewChildren, AfterViewInit, ViewContainerRef, ComponentRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -434,7 +435,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.statePer.valueChanges.subscribe(value => {
       
       if (value === 'MAHARASHTRA' || value === '21' || value === 21) {
-        debugger;
         this.statePer.patchValue(21, {emitEvent:false});
         this.elseStateFlag=false;
         this.migrant.patchValue(false);
@@ -913,21 +913,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   calculateDayForWorkDetails(i: string) {
     // tslint:disable-next-line: max-line-length
     const fromDate = new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value).toJSON().slice(0, 10).split('-');
-
     // tslint:disable-next-line: max-line-length
     const toDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value ? new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value).toJSON().slice(0, 10).split('-') : null;
     if (fromDate && toDate) {
-      
       const fromServerDate = fromDate[0] + '-' + fromDate[1] + '-' + fromDate[2];
       const toServerDate = toDate[0] + '-' + toDate[1] + '-' + toDate[2];
-      
       this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').patchValue(fromServerDate, { emitEvent: false });
       this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').patchValue(toServerDate, {emitEvent:false});
-      
-      console.log(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value);
-      
-      const fromDateMoment = moment([fromDate[0], fromDate[1], fromDate[2]]);
-      const toDateMoment = moment([toDate[0], toDate[1], toDate[2]]);
+      const fromDateMoment = moment(fromServerDate, 'YYYY-MM-DD');
+      const toDateMoment = moment(toServerDate, 'YYYY-MM-DD');
       const difference = toDateMoment.diff(fromDateMoment, 'days') + 1;
       this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('workingDays').patchValue(difference);
       let totalWorkingDays = 0;
@@ -937,8 +931,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         totalWorkingDays += employerWorkDetailsArr[each].workingDays;
       }
       this.workingDay = totalWorkingDays;
-      // console.log(totalWorkingDays);
-
       if (this.workingDay < 90) {
         // alert('Working days is less than 90');
         this.workingDayFlag = true;
@@ -959,10 +951,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     };
     this.camera.getPicture(options).then((imageData) => {
       this.currentImage = 'data:image/jpg;base64,' + imageData;
-      console.log(imageData);
-      const fileImage = this.b64toFile(imageData);      
+      const fileImage = this.b64toFile(imageData);
       this.files.applicantPhoto = fileImage;
-      this.fileOptions.applicantPhoto = `${Date.now()}-img.jpg`;
+      this.fileOptions.applicantPhoto = `${uuidv4()}.${fileImage.name.split('.')[length]}`;
     }, (err) => {
       // Handle error
       console.log("Camera issue:" + err);
@@ -972,22 +963,16 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   b64toFile = (b64Data, contentType = 'image/jpg', sliceSize = 512) => {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
-
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
       const slice = byteCharacters.slice(offset, offset + sliceSize);
-
       const byteNumbers = new Array(slice.length);
       for (let i = 0; i < slice.length; i++) {
         byteNumbers[i] = slice.charCodeAt(i);
       }
-
       const byteArray = new Uint8Array(byteNumbers);
       byteArrays.push(byteArray);
     }
-
     const blob = new Blob(byteArrays, { type: contentType });
-
-    // const file = new File([blob], 'image.png', { type: contentType, lastModified: Date.now() });
     const file = this.blobToFile(blob, `${Date.now()}-img.jpg`);
     return file;
   }
@@ -997,29 +982,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // A Blob() is almost a File() - it's just missing the two properties below which we will add
     b.lastModifiedDate = new Date();
     b.name = fileName;
-
     // Cast to a File() type
     return theBlob as File;
-  }
-
-  b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
-
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-
-    const blob = new Blob(byteArrays, { type: contentType });
-    return blob;
   }
 
   selectAttachmentType(event: any, i: number) {
@@ -1055,7 +1019,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   uploadFile(event) {
     const file = event.target.files[0];
     this.files[event.target.id] = file;
-    this.fileOptions[event.target.id] = `${Date.now()}-${file.name}`;
+    this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}`;
   }
 
   save() {
@@ -1090,7 +1054,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       alert('Form is not valid yet!');
     }
   }
-
 
   personalDetailsFormFroup(): FormGroup {
     return new FormGroup({
@@ -1188,7 +1151,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       contractorNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorNameEmp')),
       contractorCompanyNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorCompanyNameEmp')),
-      contractorPhoneEmp: new FormControl('', [Validators.required,Validators.pattern('^[0-9]{5,12}$')]),
+      contractorPhoneEmp: new FormControl('', [Validators.required,Validators.pattern('^[0-9]{10}$')]),
       workPlaceEmp: new FormControl('', [Validators.maxLength(50)]),
       townEmp: new FormControl('', [Validators.required]),
       talukaEmp: new FormControl('', [Validators.required]),
