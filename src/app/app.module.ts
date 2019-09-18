@@ -11,6 +11,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { HTTP} from '@ionic-native/http/ngx';
+import { Toast } from '@ionic-native/toast/ngx';
 
 import { AppComponent } from './app.component';
 import {SuggestionBoxComponent } from './components/suggestion-box/suggestion-box.component';
@@ -43,6 +44,7 @@ import { FormControlDirective } from './directives/form-control.directive';
     SplashScreen,
     Dialogs,
     Network,
+    Toast,
     HTTP,
     TransliterationService,
     ValidationService,

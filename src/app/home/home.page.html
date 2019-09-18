@@ -24,9 +24,9 @@
           <ion-input type="password" formControlName="password" clearInput></ion-input>
         </ion-item>
         <ion-item *ngIf="wrongUser"> 
-          <ion-label style="color: Red" text-wrap >This app is only for Field-Agents to use.</ion-label>
+          <ion-label style="color: Red" text-wrap >Please enter a valid username and password.</ion-label>
         </ion-item>
-        <ion-button  mode="ios" expand="block" (click)="loginUser()">
+        <ion-button [disabled]='!loginForm.valid' mode="ios" expand="block" (click)="loginUser()">
           Log-in<ion-icon slot="start" name="log-in"></ion-icon>
         </ion-button>
       </form >

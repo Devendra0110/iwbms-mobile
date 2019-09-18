@@ -187,8 +187,7 @@
 
         <ion-item>
           <ion-label position="floating">PF/UAN (If available)</ion-label>
-          <ion-input [class.is-invalid]="pfOrUanPersonal.invalid && pfOrUanPersonal.touched" type="text"
-           formControlName="pfOrUanPersonal" id='personalDetails-pfOrUanPersonal' maxlength="22" autocapitalize="characters" clearInput>
+          <ion-input [class.is-invalid]="pfOrUanPersonal.invalid && pfOrUanPersonal.touched" type="text" formControlName="pfOrUanPersonal" id='personalDetails-pfOrUanPersonal' maxlength="22" autocapitalize="characters" clearInput>
           </ion-input>
           <div class="text-danger" *ngIf="pfOrUanPersonal.invalid && pfOrUanPersonal.touched">
             <small *ngIf="!!pfOrUanPersonal.errors?.maxlength">You have exceeded the max length.</small>
@@ -691,16 +690,16 @@
               </ion-col>
 
               <ion-col >    
-                   <ion-item style="width: 225px;">
+                <ion-item style="width: 225px;">
                   <ion-icon  name="calendar"></ion-icon>
                   <ion-datetime [readonly]='i===0' displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [max]="maxTodaysDate" id='familyDetails-{{i}}-dobFamily' formControlName="dobFamily" (ionChange)="calculateAgeForFamilyDetails(i)">
                   </ion-datetime>
                   </ion-item>
               </ion-col>
               <ion-col >
-                 <ion-item>
+                <ion-item>
                     <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" formControlName="ageFamily" id='familyDetails-{{i}}-ageFamily' readonly ></ion-input>
-                 </ion-item>
+                </ion-item>
               </ion-col>
               <ion-col style="width: 15px">
                   <ion-select interface="action-sheet" formControlName="relation" (ionChange)="handleSpecialDropdowns($event)" id='familyDetails-{{i}}-relation'>
@@ -754,7 +753,6 @@
           <ion-item margin-bottom>
             <ion-button  (click)="addMoreFamilyDetails()">Add More </ion-button>
           </ion-item>
-           
         </ion-list>
       </form>
       
@@ -958,7 +956,7 @@
         <ion-item>
           <ion-label position="floating">Nature of work<span style="color: Red">*</span></ion-label>
           <ion-select formControlName="natureOfWorkEmp" [class.is-invalid]="natureOfWorkEmp.invalid && natureOfWorkEmp.touched" id='employerDetails-natureOfWorkEmp' (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
-            <ion-select-option  text-justify *ngFor="let natureOfWork of natureOfWorkOptions|keyvalue" value="{{ natureOfWork.key }}">{{ natureOfWork.value }}</ion-select-option>
+            <ion-select-option class="ion-padding-top ion-padding-bottom" text-justify *ngFor="let natureOfWork of natureOfWorkOptions|keyvalue" value="{{ natureOfWork.key }}">{{ natureOfWork.value }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="!!natureOfWorkEmp.invalid && natureOfWorkEmp.touched">
             <small *ngIf="!!natureOfWorkEmp.errors?.required">Please choose your Nature of work.</small>
@@ -1085,7 +1083,7 @@
       </ion-list>
     </form>
 
-       <form [formGroup]="registrationFormGroup.get('employerWorkDetails')">
+      <form [formGroup]="registrationFormGroup.get('employerWorkDetails')">
         <ion-list>
           <ion-list-header style="font-size:20px;">Details of the person who issued the 90 days working
           certificate</ion-list-header>
@@ -1253,7 +1251,7 @@
           <ion-label floating> Supporting Document</ion-label><br>
           </ion-item>
           <ion-item>
-            <input id='suppDocument' type="file"  accept="application/pdf" (change)="uploadFile($event)" >
+            <input id='supportingDocuments' type="file"  accept="application/pdf" (change)="uploadFile($event)" >
           </ion-item>
           
 

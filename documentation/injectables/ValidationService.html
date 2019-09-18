@@ -1,0 +1,537 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>newApp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">newApp documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>ValidationService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/services/validation.service.ts</code>
+        </p>
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#createValidatorsArray">createValidatorsArray</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/services/validation.service.ts:8</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createValidatorsArray"></a>
+                    <span class="name">
+                        <b>
+                            createValidatorsArray
+                        </b>
+                        <a href="#createValidatorsArray"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createValidatorsArray(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="13"
+                            class="link-to-prism">src/app/services/validation.service.ts:13</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { Validators } from &#x27;@angular/forms&#x27;;
+
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class ValidationService {
+
+
+  constructor() { }
+
+  createValidatorsArray(key: string) {
+    let validatorsArr &#x3D; [];
+    switch (key) {
+      case &#x27;aadharNo&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+          Validators.pattern(&#x27;^\\d{12}$&#x27;)
+        ];
+        break;
+      }
+      case &#x27;firstName&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern(&#x27;^[A-Za-z]{3,}$&#x27;)
+        ];
+        break;
+      }
+      case &#x27;middleName&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.maxLength(20),
+          Validators.pattern(&#x27;^([A-Za-z]+\\s*)+$&#x27;)
+        ];
+        break;
+      }
+      case &#x27;lastName&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern(&#x27;^[A-Za-z]{3,}$&#x27;)
+        ];
+        break;
+      }
+      case &#x27;gender&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+        ];
+        break;
+      }
+      case &#x27;dob&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+        ];
+        break;
+      }
+      case &#x27;maritalStatus&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+        ];
+        break;
+      }
+      case &#x27;rationCardNumber&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.maxLength(12),
+          Validators.minLength(8),
+          Validators.pattern(&#x27;^([0-9]){8,12}\\s*$&#x27;)
+        ];
+        break;
+      }
+      case &#x27;rationCardType&#x27; :{
+        validatorsArr &#x3D; [        ];
+        break;
+      }
+      case &#x27;category&#x27;: {
+        validatorsArr &#x3D; [Validators.required
+        ];
+        break;
+      }
+      case &#x27;pfOrUan&#x27;: {
+        validatorsArr &#x3D; [Validators.maxLength(22), Validators.pattern(&#x27;^([A-Z]{2})([A-Z]{3})([0-9]{1,7})([0-9]{3})?([0-9]{1,7})|[0-9]{12}$&#x27;)];
+        break;
+      }
+      case &#x27;esicNo&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.maxLength(17),
+          Validators.pattern(&#x27;^(\\d{4})(\\d{1,6})(\\d{3})(\\d{4})$&#x27;)
+        ];
+        break;
+      }
+      case &#x27;userName&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+          Validators.email
+        ];
+        break;
+      }
+      case &#x27;email&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.email
+        ];
+        break;
+      }
+      case &#x27;mobile&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+          Validators.maxLength(10),
+          Validators.pattern(
+            &#x27;^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[67890]\\d{9}$&#x27;
+          )
+        ];
+        break;
+      }
+      case &#x27;houseNo&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+          Validators.maxLength(40)
+        ];
+        break;
+      }
+      case &#x27;road&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.maxLength(40)
+        ];
+        break;
+      }
+      case &#x27;area&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+          Validators.maxLength(40)
+        ];
+        break;
+      }
+      case &#x27;city&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+          Validators.pattern(&#x27;^([A-Za-z]+\\s*)+$&#x27;),
+          Validators.maxLength(40)
+        ];
+        break;
+      }
+      case &#x27;importantPlace&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.maxLength(40)
+        ];
+        break;
+      }
+      case &#x27;postOffice&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.maxLength(40)
+        ];
+        break;
+      }
+      case &#x27;taluka&#x27;: {
+        validatorsArr &#x3D; [Validators.required];
+        break;
+      }
+      case &#x27;district&#x27;: {
+        validatorsArr &#x3D; [Validators.required];
+        break;
+      }
+      case &#x27;state&#x27;: {
+        validatorsArr &#x3D; [Validators.required];
+        break;
+      }
+      case &#x27;stdcode&#x27;: {
+        validatorsArr &#x3D; [Validators.maxLength(5), Validators.minLength(2),Validators.pattern(&#x27;^[\\d]+$&#x27;)];
+        break;
+      }
+      case &#x27;phone&#x27;: {
+        validatorsArr &#x3D; [Validators.maxLength(8), Validators.minLength(5)];
+        break;
+      }
+      // bankvalidation
+      case &#x27;ifscCode&#x27;: {
+        validatorsArr &#x3D; [Validators.maxLength(11), Validators.minLength(11), Validators.required, Validators.pattern(&#x27;^[A-Z]{4}0[A-Z0-9]{6}$&#x27;)];
+        break;
+      }
+      case &#x27;fullName&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.required,
+          Validators.pattern(&#x27;[A-Za-z]+\\s{1}[A-Za-z]+(\\s{1}[A-Za-z]+)*&#x27;)
+        ];
+        break;
+      }
+      case &#x27;bankName&#x27;: {
+        validatorsArr &#x3D; [Validators.required, 
+          Validators.maxLength(60)];
+        break;
+      }
+      case &#x27;bankBranch&#x27;: {
+        validatorsArr &#x3D; [Validators.required, 
+          Validators.maxLength(60)];
+        break;
+      }
+      case &#x27;bankAddress&#x27;: {
+        validatorsArr &#x3D; [Validators.required, 
+          Validators.maxLength(255)];
+        break;
+      }
+      case &#x27;micrCode&#x27;: {
+        validatorsArr &#x3D; [Validators.pattern(&#x27;[0-9]{9}&#x27;)];
+        break;
+      }
+      case &#x27;accountNumber&#x27;: {
+        validatorsArr &#x3D; [Validators.required,
+           Validators.pattern(&#x27;^\\d{9,18}$&#x27;)];
+        break;
+      }
+      case &#x27;contractorNameEmp&#x27; :{
+        validatorsArr &#x3D; [Validators.required, 
+          Validators.pattern(&#x27;[A-Za-z0-9]+\\s*[A-Za-z0-9]\\s*([A-Za-z0-9]+\\s*)*&#x27;)];
+        break;
+      }
+
+      case &#x27;contractorCompanyNameEmp&#x27; :{
+        validatorsArr &#x3D; [Validators.required, 
+          Validators.pattern(&#x27;[A-Za-z0-9]+\\s*[A-Za-z0-9]\\s*([A-Za-z0-9]+\\s*)*&#x27;),
+          Validators.maxLength(40)]
+      }
+
+      // FamilyDetails Validation
+      case &#x27;firstNameFamily&#x27;: {
+        validatorsArr &#x3D; [Validators.required, Validators.maxLength(20)];
+        break;
+      }
+      case &#x27;firstName_marathi&#x27;: {
+        validatorsArr &#x3D; [];
+        break;
+      }
+      case &#x27;fatherOrHusbandName&#x27;: {
+        validatorsArr &#x3D; [Validators.maxLength(60), Validators.pattern(&#x27;^([A-Za-z]+\\s*)+$&#x27;)];
+        break;
+      }
+      case &#x27;fatherOrHusbandName_marathi&#x27;: {
+        validatorsArr &#x3D; [];
+        break;
+      }
+      case &#x27;surname&#x27;: {
+        validatorsArr &#x3D; [Validators.required, Validators.maxLength(20)];
+        break;
+      }
+      case &#x27;surname_marathi&#x27;: {
+        validatorsArr &#x3D; [];
+        break;
+      }
+      case &#x27;ageFamily&#x27;: {
+        validatorsArr &#x3D; [];
+        break;
+      }
+      case &#x27;dobFamily&#x27;: {
+        validatorsArr &#x3D; [];
+        break;
+      }
+      case &#x27;relation&#x27;: {
+        validatorsArr &#x3D; [Validators.required];
+        break;
+      }
+      case &#x27;profession&#x27;: {
+        validatorsArr &#x3D; [
+          Validators.maxLength(20),
+          Validators.pattern(&#x27;^[A-Za-z]+$&#x27;)
+        ];
+        break;
+      }
+      case &#x27;education&#x27;: {
+        validatorsArr &#x3D; [Validators.required];
+        break;
+      }
+      case &#x27;nominee&#x27;: {
+        validatorsArr &#x3D; [];
+        break;
+      }
+
+    }
+    return validatorsArr;
+  }
+
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ValidationService.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

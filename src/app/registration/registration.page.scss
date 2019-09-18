@@ -1,8 +1,58 @@
-:host{
+:root{
     button{
         line-height:initial !important ;
     }
     .action-sheet-button{
         height:62px !important ; 
     }
+}
+
+:host{
+    button{
+        .ion-action-sheet{
+            .action-sheet-button{
+                height:62px !important ; 
+            }
+        }
+    }
+    button{
+        .action-sheet-button{
+            .ion-action-sheet{
+                height:62px !important ; 
+            }
+        }
+    }
+
+    .ion-action-sheet{
+        button{
+            .action-sheet-button{
+                height:62px !important ; 
+            }
+        }
+    }
+
+    .ion-action-sheet{
+        .action-sheet-button{
+            button{
+                height:62px !important ; 
+            }
+        }
+    }
+
+    .action-sheet-button{
+        button{
+            .ion-action-sheet{
+                height:62px !important ; 
+            }
+        }
+    }
+
+    .action-sheet-button{
+        .ion-action-sheet{
+            button{
+                height:62px !important ; 
+            }
+        }
+    }
+
 }

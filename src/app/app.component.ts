@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AuthenticationService } from './services/authentication.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,25 +13,22 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent {
 
-  public showSplash=false;
+  public showSplash = false;
 
   public appPages = [
     {
       title: 'Home',
       url: '/home',
       icon: 'home'
-    },
-    // {
-    //   title: 'Registration',
-    //   url: '/registration',
-    //   icon: 'person-add'
-    // }
+    }
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private router: Router,
+    private authService: AuthenticationService
   ) {
     this.initializeApp();
   }
@@ -40,10 +38,13 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.styleLightContent();
       this.statusBar.backgroundColorByHexString('#000000');
-    // this.splashScreen.show();
-    //   this.splashScreen.hide();
-
-
+      this.authService.authenticationState.subscribe((state) => {
+      if (state) {
+        this.router.navigate(['/dashboard']);
+      } else {
+        this.router.navigate(['/home']);
+      }
+      });
     });
   }
 }

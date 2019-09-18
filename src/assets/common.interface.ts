@@ -7,3 +7,9 @@ export interface UserInfo {
     wfc_taluka: string;
     wfc_name: string;
 }
+
+export interface NavigatorCordova extends Navigator {
+    app: {
+        exitApp: () => any; // Or whatever is the type of the exitApp function
+    }
+}
