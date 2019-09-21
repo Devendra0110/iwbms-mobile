@@ -2,6 +2,7 @@ import * as moment from 'moment';
 import * as uuidv4 from 'uuid/v4';
 import { Component, OnInit, ViewChild, QueryList, ViewChildren, AfterViewInit, ViewContainerRef, ComponentRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
@@ -18,7 +19,9 @@ import { SuggestionBoxComponent } from '../components/suggestion-box/suggestion-
 import { RegistrationService } from '../services/registration.service';
 import { UserManagementService } from '../services/user-management.service';
 import { HttpService } from '../services/http.service';
-import { UserInfo } from '../../assets/common.interface';
+import { UserInfo, familyModalData, EmployerModalData } from '../../assets/common.interface';
+import { FamilyModalPage } from '../family-modal/family-modal.page';
+import { EmployerModalPage } from '../employer-modal/employer-modal.page';
 
 @Component({
   selector: 'app-registration',
@@ -143,18 +146,20 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public mobileNo: number;
   public aadharNo: number;
 
-  constructor(private validationService: ValidationService,
-              private transliterate: TransliterationService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private registration: RegistrationService,
-              private userMgmntService: UserManagementService,
-              private httpService: HttpService,
-              private camera: Camera,
-              private storage: Storage,
-              private network: Network,
-              private dialogs: Dialogs,
-              private toast: Toast) {
+  constructor(
+    private validationService: ValidationService,
+    private transliterate: TransliterationService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private registration: RegistrationService,
+    private userMgmntService: UserManagementService,
+    private httpService: HttpService,
+    private mdlController: ModalController,
+    private camera: Camera,
+    private storage: Storage,
+    private network: Network,
+    private dialogs: Dialogs,
+    private toast: Toast) {
 
     // network subscribers check the status of network even its type
     this.network.onDisconnect().subscribe(() => { });
@@ -275,11 +280,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       month: new Date().getMonth() + 1,
       day: new Date().getDate()
     };
-
     this.startDate = this.changeToIonDateTime(60, 'years');
-
     this.endDate = this.changeToIonDateTime(18, 'years');
-
     this.maxAppointmentDate = this.changeToIonDateTime(3, 'months');
     this.minAppointmentDate = this.changeToIonDateTime(18, 'years');
     this.maxTodaysDate = this.changeToIonDateTime(0, 'years');
@@ -357,17 +359,17 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           case 9: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
                   break;
           case 10: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+                  break;
           case 11: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+                  break;
           case 12: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+                  break;
           case 13: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+                  break;
           case 14: this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+                  break;
           case 15: this.attachmentDetails[4].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                   break;
+                  break;
         }
 
       }
@@ -515,15 +517,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
 
     this.appointmentDateEmp.valueChanges.subscribe(value => {
-      const val = new Date(value).toJSON().slice(0, 10).split('-');
-      const dob = val[0] + '-' + val[1] + '-' + val[2];
-      this.minFromDate = dob;
-      this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(dob, { emitEvent: false });
+      this.minFromDate = moment(value).format('YYYY-MM-DD');
+      this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(this.minFromDate, { emitEvent: false });
     }, err => console.log(err));
 
     this.dispatchDateEmp.valueChanges.subscribe(value => {
-      const val = new Date(value).toJSON().slice(0, 10).split('-');
-      this.maxToDate = val[0] + '-' + val[1] + '-' + val[2];
+      this.maxToDate = moment(value).format('YYYY-MM-DD');
+      this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp').patchValue(this.maxToDate, { emitEvent: false });
     }, err => console.log(err));
 
   }
@@ -614,7 +614,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   transliterateDTP(event) { // Ditrcit taluka post-office
     const targetsArray = event.target.id.split('-');
-    console.log(event);
     let target: any;
     let DTPObject: any;
     // choose if it is district/taluka/postoffice
@@ -645,8 +644,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     } catch {
       target.patchValue('');
     }
-    console.log(target.value);
-    // console.log(this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`).value);
   }
 
   transliterateValue(event) {
@@ -662,7 +659,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
     try {
       this.transliterate.transliterateText(event.target.value, 'NAME').subscribe((response: any) => {
-        console.log(response);
         const result = response.split(';').map((item) => {
           return item.split('^')[0];
         });
@@ -723,27 +719,18 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const idArray = event.target.id.split('-');
     const value = Number(event.target.value);
     if (idArray.length === 2) {
-      console.log(this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}`).value);
       this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).patchValue(value, { emitEvent: false });
-      console.log(this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).value);
-    } else if (idArray.length === 3) {
-      console.log(this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}`).value);
+      } else if (idArray.length === 3) {
       this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).patchValue(value, { emitEvent: false });
-      console.log(this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).value);
     }
   }
 
   calculateAge() {
     if (this.registrationFormGroup.get('personalDetails').get('dobPersonal').value) {
-    const val = new Date(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value).toJSON().slice(0, 10).split('-');
-    const dob = moment(
-      val[0] + '-' + val[1] + '-' + val[2],
-      'YYYY-MM-DD'
-    );
-    const dobServer = val[0] + '-' + val[1] + '-' + val[2];   // stores date to show in ion-datetime
-    if (dob) {
-      this.registrationFormGroup.get('personalDetails').get('dobPersonal').patchValue(dobServer, { emitEvent: false });
-      const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
+      const dob = moment(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value).format('YYYY-MM-DD');
+      if (dob) {
+      this.registrationFormGroup.get('personalDetails').get('dobPersonal').patchValue(dob, { emitEvent: false });
+      const age = moment().diff(dob, 'years');
       if (dob) {
         if (age > 17 && age < 61) {
           this.dobFamily.patchValue(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value, { emitEvent: false });
@@ -807,15 +794,48 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   calculateAgeForFamilyDetails(i: string) {
-    const val = new Date(this.registrationFormGroup.get('familyDetails').get(i.toString()).get('dobFamily').value).toJSON().slice(0, 10).split('-');
+    const val = moment(this.registrationFormGroup.get('familyDetails').get(i.toString()).get('dobFamily').value).format('YYYY-MM-DD');
     if (val) {
-      const dob = moment(
-        val[0] + '-' + val[1] + '-' + val[2],
-        'YYYY-MM-DD'
-      );
-      const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
+      const age = moment().diff(val, 'years');
       this.registrationFormGroup.get('familyDetails').get(i.toString()).get('ageFamily').setValue(age);
     }
+  }
+
+  async showFamilyModal(index: number, mode: string, familyForm?: any) {
+
+    const familyDetail: familyModalData = {
+      index,
+      mode,
+      familyDetail: familyForm
+    };
+    const familyModal = await this.mdlController.create({
+      component: FamilyModalPage,
+      componentProps: {
+        modalData: familyDetail
+      }
+    });
+    const familyDetailsArray = this.registrationFormGroup.get('familyDetails') as FormArray;
+    await familyModal.present();
+    familyModal.onDidDismiss()
+    .then( res => {
+      if (res.data.formState === 'add') {
+        familyDetailsArray.push(this.familyDetailsFormGroup());
+        this.registrationFormGroup.get('familyDetails').get(`${index}`).patchValue(res.data.formData.value);
+      } else if (res.data.formState === 'delete') this.deleteFamilyDetail(index);
+      else {
+        this.registrationFormGroup.get('familyDetails').get(`${index}`).patchValue(res.data.formData.value);
+      }
+    }
+  );
+  }
+
+  addMoreFamilyDetails() {
+    const familyDetailsArray = this.registrationFormGroup.get('familyDetails') as FormArray;
+    this.showFamilyModal(familyDetailsArray.length, 'add');
+  }
+
+  editFamilyDetail(i: number) {
+    this.showFamilyModal(i, 'update', this.registrationFormGroup.get('familyDetails').get(`${i}`));
   }
 
   deleteFamilyDetail(i: number) {
@@ -828,11 +848,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         familyDetailsArray.push(this.familyDetailsFormGroup());
       }
     }
-  }
-
-  addMoreFamilyDetails() {
-    const familyDetailsArray = this.registrationFormGroup.get('familyDetails') as FormArray;
-    familyDetailsArray.push(this.familyDetailsFormGroup());
   }
 
   changeToIonDateTime(diff: any, timeUnit: string) {
@@ -872,24 +887,66 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       });
   }
 
+  async showEmployerModal(index: number, mode: string, employerForm?: any) {
+    const employerData: EmployerModalData = {
+      index,
+      mode,
+      employerDetail: employerForm,
+      appointmentDate: this.minFromDate,
+      dispatchDate: this.maxToDate,
+      fromDate: index > 0 ? this.registrationFormGroup.get('employerWorkDetails').get(`${index - 1}`).get('fromDateEmp').value : this.minFromDate,
+      toDate: index > 0 ? this.registrationFormGroup.get('employerWorkDetails').get(`${index - 1}`).get('toDateEmp').value : this.maxToDate,
+    };
+
+    const employerModal = await this.mdlController.create({
+      component: EmployerModalPage,
+      componentProps: {
+        modalData: employerData
+      }
+    });
+    const workerDetailsArray = this.registrationFormGroup.get('employerWorkDetails') as FormArray;
+    await employerModal.present();
+    employerModal.onDidDismiss()
+    .then(res => {
+      debugger;
+      if (res.data.formState === 'add') {
+        workerDetailsArray.push(this.employerWorkDetailsFormFroup());
+        this.registrationFormGroup.get('employerWorkDetails').get(`${index}`).setValue(res.data.formData.value);
+        this.calculateDayForWorkDetails(`${index}`);
+      } else if (res.data.formState === 'delete') this.deleteWorkerDetail(index);
+      else {
+        this.registrationFormGroup.get('employerWorkDetails').get(`${index}`).setValue(res.data.formData.value);
+      }
+    });
+  }
+
+  addMoreWorkerDetails() {
+    const workerDetailsArray = this.registrationFormGroup.get('employerWorkDetails') as FormArray;
+    this.showEmployerModal(workerDetailsArray.length, 'add');
+  }
+
+  editWorkerDetail(i: number) {
+    if (this.appointmentDateEmp.value && this.dispatchDateEmp.value) {
+      this.showEmployerModal(i, 'update', this.registrationFormGroup.get('employerWorkDetails').get(`${i}`));
+    } else if (this.appointmentDateEmp.value) {
+      alert('Please choose the dispatch date');
+    } else {
+      alert('Please choose the appointment date');
+    }
+  }
+
   deleteWorkerDetail(i: number) {
     const workerDetailsArray = this.registrationFormGroup.get('employerWorkDetails') as FormArray;
     workerDetailsArray.removeAt(i);
     let totalWorkingDays = 0;
-    // console.log(this.registrationFormGroup.get('employerWorkDetails').get('workingDays').value);
     const employerWorkDetailsArr = this.registrationFormGroup.get('employerWorkDetails').value;
     for (const each in employerWorkDetailsArr) {
-      totalWorkingDays += employerWorkDetailsArr[each].workingDays;
+      totalWorkingDays += Number(employerWorkDetailsArr[each].workingDays);
     }
     this.workingDay = totalWorkingDays;
     if (workerDetailsArray.length === 0) {
       workerDetailsArray.push(this.employerWorkDetailsFormFroup());
     }
-  }
-
-  addMoreWorkerDetails() {
-    const workerDetailsArray = this.registrationFormGroup.get('employerWorkDetails') as FormArray;
-    workerDetailsArray.push(this.employerWorkDetailsFormFroup());
   }
 
   minFDate(i: number) {
@@ -914,23 +971,18 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   calculateDayForWorkDetails(i: string) {
     // tslint:disable-next-line: max-line-length
-    const fromDate = new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value).toJSON().slice(0, 10).split('-');
+    const fromDate = moment(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').value).format('YYYY-MM-DD');
     // tslint:disable-next-line: max-line-length
-    const toDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value ? new Date(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value).toJSON().slice(0, 10).split('-') : null;
+    const toDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value ? moment(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value).format('YYYY-MM-DD') : null;
     if (fromDate && toDate) {
-      const fromServerDate = fromDate[0] + '-' + fromDate[1] + '-' + fromDate[2];
-      const toServerDate = toDate[0] + '-' + toDate[1] + '-' + toDate[2];
-      this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').patchValue(fromServerDate, { emitEvent: false });
-      this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').patchValue(toServerDate, {emitEvent: false});
-      const fromDateMoment = moment(fromServerDate, 'YYYY-MM-DD');
-      const toDateMoment = moment(toServerDate, 'YYYY-MM-DD');
-      const difference = toDateMoment.diff(fromDateMoment, 'days') + 1;
+      this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').patchValue(fromDate, { emitEvent: false });
+      this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').patchValue(toDate, {emitEvent: false});
+      const difference = moment(toDate).diff(fromDate, 'days') + 1;
       this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('workingDays').patchValue(difference);
       let totalWorkingDays = 0;
-      // console.log(this.registrationFormGroup.get('employerWorkDetails').get('workingDays').value);
       const employerWorkDetailsArr = this.registrationFormGroup.get('employerWorkDetails').value;
       for (const each in employerWorkDetailsArr) {
-        totalWorkingDays += employerWorkDetailsArr[each].workingDays;
+        totalWorkingDays += Number(employerWorkDetailsArr[each].workingDays);
       }
       this.workingDay = totalWorkingDays;
       if (this.workingDay < 90) {
@@ -1022,19 +1074,16 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const file = event.target.files[0];
     if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152 && (file.type === 'application/pdf' || file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === "image/png")) {
       this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
-        console.log(toast);
-      })
+      });
       this.files[event.target.id] = file;
       this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}`;
     } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
       this.toast.show('File Should Be PDF or JPG or PNG', '1000', 'bottom').subscribe((toast) => {
-        console.log(toast);
-      })
+      });
       this.registrationFormGroup.get('supportingDocuments').get(event.target.id).reset();
     } else {
       this.toast.show('File Should Be Less Than 2MB', '1000', 'bottom').subscribe((toast) => {
-        console.log(toast);
-      })
+      });
       this.registrationFormGroup.get('supportingDocuments').get(event.target.id).reset();
     }
   }

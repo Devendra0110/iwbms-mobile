@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Employer Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="employerWorkDetailsFormFroup">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Type of Issuer<span style="color: Red">*</span></ion-label>
+        <ion-select [class.is-invalid]="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched" interface="action-sheet"
+          formControlName="typeOfEmployerEmp" id='typeOfEmployerEmp' (ionChange)="handleDropdown($event)">
+          <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptions|keyvalue" value="{{ typeOfIssuer.key }}">{{ typeOfIssuer.value }}</ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched">
+          <small *ngIf="!!typeOfEmployerEmp.errors?.required">Please choose Type of employer.</small>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Full Name<span style="color: Red">*</span></ion-label>
+        <ion-input id='fullNameOfIssuerEmp' formControlName="fullNameOfIssuerEmp"
+          class="transliterate" (ionBlur)="transliterateDirect($event)"
+          [class.is-invalid]="fullNameOfIssuerEmp.invalid && fullNameOfIssuerEmp.touched" autocapitalize="words" clearInput>
+        </ion-input>
+        <div class="text-danger" *ngIf="fullNameOfIssuerEmp.invalid && fullNameOfIssuerEmp.touched">
+          <small *ngIf="!!fullNameOfIssuerEmp.errors?.required">Please enter full name.</small>
+          <small *ngIf="!!fullNameOfIssuerEmp.errors?.pattern">Please enter appropriate name.</small>
+        </div>
+        </ion-item>
+      <ion-item>
+        <ion-label position="floating">Issuer Reg. No.</ion-label>
+        <ion-input type="tel" maxlength="12" formControlName="registrationNumberEmp" id='registrationNumberEmp' clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Registration Type<span style="color: Red">*</span></ion-label>
+        <ion-select formControlName="registrationTypeEmp" [class.is-invalid]="registrationTypeEmp.invalid && registrationTypeEmp.touched" interface="action-sheet"
+          id='registrationTypeEmp' (ionChange)="handleDropdown($event)">
+          <ion-select-option *ngFor="let registrationType of registrationTypeOptions|keyvalue"
+            value="{{ registrationType.key }}"> {{ registrationType.value }}</ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="registrationTypeEmp.invalid && registrationTypeEmp.touched">
+          <small *ngIf="!!registrationTypeEmp.errors?.required">Please choose registration type.</small>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Mobile number<span style="color: Red">*</span></ion-label>
+        <ion-input type="tel" maxlength="10" minlength="10" formControlName="mobileNumberOfIssuerEmp"
+          [class.is-invalid]="mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched"
+          id='mobileNumberOfIssuerEmp' clearInput></ion-input>
+        <div class="text-danger" *ngIf="mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched">
+          <small *ngIf="!!mobileNumberOfIssuerEmp.errors?.required">Please enter your Mobile number.</small>
+          <small *ngIf="!!mobileNumberOfIssuerEmp.errors?.pattern">Please enter appropriate Mobile number.</small>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Document Ref.No</ion-label>
+        <ion-input type="tel" maxlength="20" formControlName="documentRefNumberEmp"
+          [class.is-invalid]="documentRefNumberEmp.invalid && documentRefNumberEmp.touched"
+          id='documentRefNumberEmp' clearInput></ion-input>
+        <div class="text-danger" *ngIf="documentRefNumberEmp.invalid && documentRefNumberEmp.touched">
+          <small *ngIf="!!documentRefNumberEmp.errors?.required">Please enter Dispatch number.</small>
+          <small *ngIf="!!documentRefNumberEmp.errors?.maxlength">You have exceeded max length.</small>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="end" name="calendar"></ion-icon>
+        <ion-label position="floating">From Date<span style="color: Red">*</span></ion-label>
+        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" id='fromDateEmp' (ionChange)="changeIonDateTime($event)" formControlName="fromDateEmp" [min]="minFromDate" [max]="maxFromDate">
+        </ion-datetime>
+        <div class="text-danger" *ngIf="fromDateEmp.invalid && fromDateEmp.touched">
+          <small *ngIf="!!fromDateEmp.errors?.required">Please choose the joining date</small>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="end" name="calendar"></ion-icon>
+        <ion-label position="floating">To Date<span style="color: Red">*</span></ion-label>
+        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" id='toDateEmp' formControlName="toDateEmp" (ionChange)="changeIonDateTime($event)" [min]="minToDate" [max]="maxToDate">
+        </ion-datetime>
+        <div class="text-danger" *ngIf="toDateEmp.invalid && toDateEmp.touched">
+          <small *ngIf="!!toDateEmp.errors?.required">Please choose the joining date</small>
+        </div>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-fab horizontal="start">
+      <ion-fab-button (click)="dismissModal()" color="danger" class="fabicon">
+        <ion-icon name="close"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <!-- <ion-fab horizontal="center">
+      <ion-fab-button (click)="showForm()" class="fabicon">
+        <ion-icon name="bug"></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
+    <ion-fab *ngIf="addFlag" horizontal="end">
+      <ion-fab-button (click)="saveModal()" class="fabicon">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab *ngIf="!addFlag" horizontal="end">
+      <ion-fab-button (click)="saveModal()" color="success"  class="fabicon">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-toolbar>
+</ion-footer>

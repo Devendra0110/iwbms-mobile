@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 
 import { Camera } from '@ionic-native/camera/ngx';
@@ -26,13 +27,19 @@ import { HttpService } from './services/http.service';
 import { UserManagementService } from './services/user-management.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { FormControlDirective } from './directives/form-control.directive';
+import { FamilyModalPageModule } from './family-modal/family-modal.module';
+import { EmployerModalPageModule } from './employer-modal/employer-modal.module';
 
 
 @NgModule({
   declarations: [AppComponent, FormControlDirective, SuggestionBoxComponent],
   entryComponents: [],
   imports: [
+    FamilyModalPageModule,
+    EmployerModalPageModule,
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
     IonicModule.forRoot(),

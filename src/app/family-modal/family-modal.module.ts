@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
 import { IonicModule } from '@ionic/angular';
-
-import { RegistrationPage } from './registration.page';
-import { FamilyModalPageModule } from '../family-modal/family-modal.module';
+import { FamilyModalPage } from './family-modal.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: RegistrationPage
+    component: FamilyModalPage
   }
 ];
 
@@ -23,6 +20,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [RegistrationPage]
+  declarations: [FamilyModalPage],
+  entryComponents:[FamilyModalPage],
+  exports:[FamilyModalPage]
 })
-export class RegistrationPageModule {}
+export class FamilyModalPageModule {}

@@ -8,6 +8,7 @@ import { Platform } from '@ionic/angular';
 import { ValidationService } from '../services/validation.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserManagementService } from '../services/user-management.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { UserManagementService } from '../services/user-management.service';
 export class HomePage {
   public loginForm: FormGroup;
   public wrongUser: boolean;
-  public subscription: any;
+  public subscription: Subscription;
   constructor(
     private userManagementService: UserManagementService,
     private validationService: ValidationService,
