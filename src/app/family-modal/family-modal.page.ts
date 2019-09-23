@@ -78,7 +78,11 @@ export class FamilyModalPage implements OnInit {
   ngOnInit() {
     if (this.modalData.mode === 'update') {
       this.familyFormGroup.patchValue(this.modalData.familyDetail.getRawValue());
-      this.addFlag = false;
+      debugger;
+      this.familyFormGroup.get('nominee').setValue(this.nominee.value === 'yes' ? true : false);
+      this.addFlag = false
+    }else{
+      this.familyFormGroup.get('nominee').setValue(false);
     }
     if (this.modalData.index === 0) {
       this.relation.patchValue('1');
@@ -98,6 +102,10 @@ export class FamilyModalPage implements OnInit {
     } catch {
       target.patchValue('');
     }
+  }
+
+  checkNominee(event) {
+    console.log(this.nominee.value);
   }
 
   handleDropdown(event) {
@@ -120,6 +128,7 @@ export class FamilyModalPage implements OnInit {
 
   async dismissModal() {
     if (this.modalData.mode === 'update') {
+      this.nominee.setValue(this.nominee.value ? 'yes' : 'no');
       this.formResponse.formState = 'update';
       this.formResponse.formData = this.familyFormGroup;
       await this.mdlController.dismiss(this.formResponse);
@@ -130,14 +139,21 @@ export class FamilyModalPage implements OnInit {
   }
 
   async saveModal() {
-    if (this.modalData.mode === 'update') {
-      this.formResponse.formState = 'update';
-      this.formResponse.formData = this.familyFormGroup;
-      await this.mdlController.dismiss(this.formResponse);
+    if(this.familyFormGroup.valid){
+      if (this.modalData.mode === 'update') {
+        this.nominee.setValue(this.nominee.value ? 'yes' : 'no');
+        this.formResponse.formState = 'update';
+        this.formResponse.formData = this.familyFormGroup;
+        await this.mdlController.dismiss(this.formResponse);
+      } else {
+        this.nominee.setValue(this.nominee.value ? 'yes' : 'no');
+        this.formResponse.formState = 'add';
+        this.formResponse.formData = this.familyFormGroup;
+        await this.mdlController.dismiss(this.formResponse);
+      }
     } else {
-      this.formResponse.formState = 'add';
-      this.formResponse.formData = this.familyFormGroup;
-      await this.mdlController.dismiss(this.formResponse);
+      this.familyFormGroup.markAllAsTouched();
+      alert('Please fill all the details properly');
     }
   }
 

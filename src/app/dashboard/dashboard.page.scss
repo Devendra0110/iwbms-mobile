@@ -4,4 +4,10 @@
     margin-top: 43px;
     width: 200px;
     }
+    ion-content.background{
+    // --background: url(../../assets/b3f0be54b52df9740c9cacd0bd6604f3.jpg) 0 0/100% 100% no-repeat;
+    }
+    ion-card{
+        --background:white;
+    }
 }

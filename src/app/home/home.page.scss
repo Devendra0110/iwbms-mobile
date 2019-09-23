@@ -1,3 +1,8 @@
-ion-button{
+:host{
+    ion-button{
     margin-top:10px
+    }
+    ion-content.background{
+    // --background: url(../../assets/undraw_Login_v483.svg) 0 0/100% 100% no-repeat;
+    }
 }

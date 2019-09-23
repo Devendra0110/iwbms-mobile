@@ -249,6 +249,10 @@ export class ValidationService {
         validatorsArr = [];
         break;
       }
+      case 'age':{
+        validatorsArr = [Validators.required];
+        break;
+      }
       case 'dobFamily': {
         validatorsArr = [];
         break;

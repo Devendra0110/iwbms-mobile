@@ -2,7 +2,7 @@ import * as moment from 'moment';
 import * as uuidv4 from 'uuid/v4';
 import { Component, OnInit, ViewChild, QueryList, ViewChildren, AfterViewInit, ViewContainerRef, ComponentRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
@@ -22,6 +22,8 @@ import { HttpService } from '../services/http.service';
 import { UserInfo, familyModalData, EmployerModalData } from '../../assets/common.interface';
 import { FamilyModalPage } from '../family-modal/family-modal.page';
 import { EmployerModalPage } from '../employer-modal/employer-modal.page';
+import { Subscription } from 'rxjs';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
 
 @Component({
   selector: 'app-registration',
@@ -159,7 +161,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     private storage: Storage,
     private network: Network,
     private dialogs: Dialogs,
-    private toast: Toast) {
+    private toast: Toast,
+    private fileChooser: FileChooser) {
 
     // network subscribers check the status of network even its type
     this.network.onDisconnect().subscribe(() => { });
@@ -821,9 +824,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       if (res.data.formState === 'add') {
         familyDetailsArray.push(this.familyDetailsFormGroup());
         this.registrationFormGroup.get('familyDetails').get(`${index}`).patchValue(res.data.formData.value);
+        if(this.registrationFormGroup.get('familyDetails').get(`${index}`).get('nominee').value==='yes'){
+          this.applyNominee(index)
+        }
       } else if (res.data.formState === 'delete') this.deleteFamilyDetail(index);
       else {
         this.registrationFormGroup.get('familyDetails').get(`${index}`).patchValue(res.data.formData.value);
+        if (this.registrationFormGroup.get('familyDetails').get(`${index}`).get('nominee').value === 'yes') {
+          this.applyNominee(index)
+        }
       }
     }
   );
@@ -1098,6 +1107,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         for (const item in this.files) {
           if (this.files[item]) {
             formData.append('files', this.files[item], this.fileOptions[item]);
+          }else{
+            this.dialogs.alert('Please upload all required documents 📝');
           }
           formData.append('files', JSON.stringify(this.registrationFormGroup.get('supportingDocuments').value));
           formData.append('fileOptions', JSON.stringify(this.fileOptions));
@@ -1112,10 +1123,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           (err: any) => console.error(err)
         );
       } else {
+        console.log(this.registrationFormGroup.controls);
+        this.registrationFormGroup.markAllAsTouched();
         this.dialogs.alert('Form is not valid yet!');
       }
     }
-
   }
 
   personalDetailsFormFroup(): FormGroup {
@@ -1224,12 +1236,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       dispatchDateEmp: new FormControl(null),
       remunerationPerDayEmp: new FormControl('', [Validators.maxLength(8)]),
       natureOfWorkEmp: new FormControl('', [Validators.required]),
-      // typeOfEmployerEmp: new FormControl(''),
-      // fullNameOfIssuerEmp: new FormControl('', [Validators.pattern('[a-zA-z\\s]{8,60}')]),
-      // registrationNumberEmp: new FormControl('', [Validators.pattern('^[0-9]{5,12}$')]),
-      // registrationTypeEmp: new FormControl(''),
-      // mobileNumberOfIssuerEmp: new FormControl('', [Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
-      // documentRefNumberEmp: new FormControl('', [Validators.maxLength(20)]),
 
       migrant: new FormControl(''),
       migrant_mr: new FormControl(''),
@@ -1241,9 +1247,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       talukaEmp_mr: new FormControl(''),
       districtEmp_mr: new FormControl(''),
       natureOfWorkEmp_mr: new FormControl(''),
-      // typeOfEmployerEmp_mr: new FormControl(''),
-      // fullNameOfIssuerEmp_mr: new FormControl(''),
-      // registrationTypeEmp_mr: new FormControl('')
     });
   }
 
@@ -1257,14 +1260,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       documentRefNumberEmp: new FormControl('', [Validators.maxLength(20)]),
       fromDateEmp: new FormControl(null, [Validators.required]),
       toDateEmp: new FormControl(null, [Validators.required]),
-      // MNREGACardNumberEmp: new FormControl(''),
-      // contractorNameEmp_mr: new FormControl(''),
-      // contractorCompanyNameEmp_mr: new FormControl(''),
-      // workPlaceEmp_mr: new FormControl(''),
-      // townEmp_mr: new FormControl(''),
-      // talukaEmp_mr: new FormControl(''),
-      //      districtEmp_mr: new FormControl(''),
-      //    natureOfWorkEmp_mr: new FormControl(''),
       typeOfEmployerEmp_mr: new FormControl(''),
       fullNameOfIssuerEmp_mr: new FormControl(''),
       registrationTypeEmp_mr: new FormControl(''),
@@ -1276,7 +1271,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       attachment_id: new FormControl(''),
       attachmentType: new FormControl(''),
-      // file: new FormControl('', [Validators.required]),
       attached: new FormControl(''),
       serial_no: new FormControl()
     });

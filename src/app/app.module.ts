@@ -13,6 +13,7 @@ import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { HTTP} from '@ionic-native/http/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx'
 
 import { AppComponent } from './app.component';
 import {SuggestionBoxComponent } from './components/suggestion-box/suggestion-box.component';
@@ -35,8 +36,6 @@ import { EmployerModalPageModule } from './employer-modal/employer-modal.module'
   declarations: [AppComponent, FormControlDirective, SuggestionBoxComponent],
   entryComponents: [],
   imports: [
-    FamilyModalPageModule,
-    EmployerModalPageModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
@@ -44,7 +43,9 @@ import { EmployerModalPageModule } from './employer-modal/employer-modal.module'
     RouterModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    FamilyModalPageModule,
+    EmployerModalPageModule,
   ],
   providers: [
     StatusBar,
@@ -52,6 +53,7 @@ import { EmployerModalPageModule } from './employer-modal/employer-modal.module'
     Dialogs,
     Network,
     Toast,
+    FileChooser,
     HTTP,
     TransliterationService,
     ValidationService,

@@ -6,6 +6,7 @@ import { MobileVerificationService } from '../services/mobile-verification.servi
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-verification',
@@ -19,6 +20,8 @@ export class VerificationPage implements OnInit {
   public unverifiedUser = false;
   public ECode: string;
   public otpflag = false;
+  public resendOtpFlag=true;
+  public otpCountdown:number;
   // E0 : unregistered mobile no and aadhar
   // E1 : already registered mobile no
   // E2 : already registered aadhar
@@ -30,7 +33,9 @@ export class VerificationPage implements OnInit {
     private mobileVerification: MobileVerificationService,
     private dialogs: Dialogs,
     private network: Network,
+    private loadingController:LoadingController,
     private toast: Toast) {
+      this.otpCountdown=32;
       this.network.onDisconnect().subscribe(() => { });
       this.network.onConnect().subscribe(() => { });
       this.verificationForm = new FormGroup({
@@ -55,13 +60,26 @@ export class VerificationPage implements OnInit {
     return this.verificationForm.get('aadharNo');
   }
 
-  sendOTP() {
+  resetMobileNo(){
+    this.unverifiedUser=false;
+  }
+
+  async sendOTP() {
+    this.resendOtpFlag = true;
+    this.otpCountdown = 32
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
       if (this.verificationForm.valid) {
         const mobileNo = this.verificationForm.get('mobileNo').value;
         const aadharNo = this.verificationForm.get('aadharNo').value;
+        const loading = await this.loadingController.create({
+          message: 'Please Wait',
+          duration: 2000,
+          spinner: "crescent"
+        });
+        await loading.present();
+        await loading.onDidDismiss();
         this.mobileVerification.sendOTP(mobileNo, aadharNo).subscribe(
           (res: any) => {
             if (res.message === 'OTP Sent') {
@@ -72,6 +90,10 @@ export class VerificationPage implements OnInit {
               );
               this.otpflag = true;
               this.unverifiedUser = false;
+              setInterval(()=>{
+                this.otpCountdown--;
+                this.resendOtpFlag = this.otpCountdown<1?false:true
+              },1000)
             }
           },
           (err: any) => {
@@ -90,10 +112,17 @@ export class VerificationPage implements OnInit {
     }
   }
 
-  validateOTP(otp) {    // fallback, if sendotp is enabled
+  async validateOTP(otp) {    // fallback, if sendotp is enabled
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
+      const loading = await this.loadingController.create({
+        message: 'Please Wait',
+        duration: 2000,
+        spinner: "crescent"
+      });
+      await loading.present();
+      await loading.onDidDismiss();
       this.mobileVerification.validateOTP(otp).subscribe(
         (res: any) => {
           if (res.message === 'OTP Verified') {
@@ -111,10 +140,8 @@ export class VerificationPage implements OnInit {
         },
         (err: any) => {
           this.dialogs.alert('Invalid OTP');
-          console.log('invalid otp');
         }
       );
     }
   }
-
 }
