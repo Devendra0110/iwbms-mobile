@@ -789,6 +789,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   applyNominee(i: number) {
+    debugger;
     const familyDetails = this.registrationFormGroup.get('familyDetails')['controls'];
     for (const j in familyDetails) {
       familyDetails[j].get('nominee').setValue('no');
@@ -917,7 +918,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     await employerModal.present();
     employerModal.onDidDismiss()
     .then(res => {
-      debugger;
       if (res.data.formState === 'add') {
         workerDetailsArray.push(this.employerWorkDetailsFormFroup());
         this.registrationFormGroup.get('employerWorkDetails').get(`${index}`).setValue(res.data.formData.value);
@@ -1016,7 +1016,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.currentImage = 'data:image/jpg;base64,' + imageData;
       const fileImage = this.b64toFile(imageData);
       this.files.applicantPhoto = fileImage;
-      this.fileOptions.applicantPhoto = `${uuidv4()}.${fileImage.name.split('.')[length]}`;
+      this.fileOptions.applicantPhoto = `${uuidv4()}.${fileImage.name.split('.')[length]}.png`;
     }, (err) => {
       // Handle error
       console.log("Camera issue:" + err);
@@ -1081,20 +1081,24 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   uploadFile(event) {
     const file = event.target.files[0];
-    if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152 && (file.type === 'application/pdf' || file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === "image/png")) {
-      this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
-      });
-      this.files[event.target.id] = file;
-      this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}`;
-    } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
-      this.toast.show('File Should Be PDF or JPG or PNG', '1000', 'bottom').subscribe((toast) => {
-      });
-      this.registrationFormGroup.get('supportingDocuments').get(event.target.id).reset();
-    } else {
-      this.toast.show('File Should Be Less Than 2MB', '1000', 'bottom').subscribe((toast) => {
-      });
-      this.registrationFormGroup.get('supportingDocuments').get(event.target.id).reset();
-    }
+    this.files[event.target.id] = file;
+    this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
+
+    // if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152 && (file.type === 'application/pdf' || file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === "image/png")) {
+    //   this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
+    //   });
+    //   this.files[event.target.id] = file;
+    //   this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}`;
+    // } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
+    //   this.toast.show('File Should Be PDF or JPG or PNG', '1000', 'bottom').subscribe((toast) => {
+    //   });
+    //   this.registrationFormGroup.get('supportingDocuments').get(event.target.id).reset();
+    // } else {
+    //   this.toast.show('File Should Be Less Than 2MB', '1000', 'bottom').subscribe((toast) => {
+    //   });
+    //   this.registrationFormGroup.get('supportingDocuments').get(event.target.id).reset();
+    // }
+
   }
 
   save() {
@@ -1107,8 +1111,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         for (const item in this.files) {
           if (this.files[item]) {
             formData.append('files', this.files[item], this.fileOptions[item]);
-          }else{
-            this.dialogs.alert('Please upload all required documents 📝');
           }
           formData.append('files', JSON.stringify(this.registrationFormGroup.get('supportingDocuments').value));
           formData.append('fileOptions', JSON.stringify(this.fileOptions));
@@ -1192,7 +1194,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       education: new FormControl('', this.validationService.createValidatorsArray('education')),
       education_mr: new FormControl(''),
       nominee: new FormControl('', this.validationService.createValidatorsArray('nominee')),
-      aadharNoFamily: new FormControl('', [Validators.maxLength(16), Validators.pattern('^[0-9]{16}$')])
+      aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$')])
     });
   }
 

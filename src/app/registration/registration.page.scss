@@ -5,6 +5,11 @@
     .action-sheet-button{
         height:62px !important ; 
     }
+     app-registration {
+  .action-sheet-button.sc-ion-action-sheet-md {
+    height: 88px !important;
+  }
+}
 }
 
 :host{
@@ -54,5 +59,13 @@
             }
         }
     }
+    app-registration {
+        .action-sheet-button.sc-ion-action-sheet-md {
+            height: 88px !important;
+        }
+    }
+    form .inner-form{
+        width: 100%;
 
+    }
 }

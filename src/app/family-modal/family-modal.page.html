@@ -34,7 +34,7 @@
   <ion-item>
     <ion-label position="floating">Father/ Husband Name</ion-label>
     <ion-input maxlength="20" [class.is-invalid]="fatherOrHusbandName.invalid && fatherOrHusbandName.touched" (ionBlur)="transliterateDirect($event)" 
-      [readonly]="selfFlag" formControlName="fatherOrHusbandName"  id="fatherOrHusbandName" class="transliterate" autocapitalize="words" clearInput ></ion-input>
+      formControlName="fatherOrHusbandName"  id="fatherOrHusbandName" class="transliterate" autocapitalize="words" clearInput ></ion-input>
     <div class="text-danger" *ngIf="fatherOrHusbandName.invalid && fatherOrHusbandName.touched">
       <small *ngIf="!!fatherOrHusbandName.errors?.required">Please enter your First Name.</small>
       <small *ngIf="!!fatherOrHusbandName.errors?.maxlength">You have exceeded the max length.</small>
@@ -85,14 +85,14 @@
   </ion-item>
   <ion-item>
     <ion-label position="floating">Aadhar No</ion-label>
-    <ion-input [readonly]="selfFlag" type="tel" maxlength="16" formControlName="aadharNoFamily" [class.is-invalid]="aadharNoFamily.invalid && aadharNoFamily.touched" class="transliterate" clearInput></ion-input>
+    <ion-input [readonly]="selfFlag" type="tel" maxlength="12" formControlName="aadharNoFamily" [class.is-invalid]="aadharNoFamily.invalid && aadharNoFamily.touched" class="transliterate" clearInput></ion-input>
     <div class="text-danger" *ngIf="aadharNoFamily.invalid && aadharNoFamily.touched">
       <small *ngIf="!!aadharNoFamily.errors?.pattern">Please enter appropriate aadhar number.</small>
     </div>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="!selfFlag">
     <ion-label>Nominee</ion-label>
-    <ion-checkbox [disabled]="selfFlag" mode="ios" formControlName="nominee" color="primary" slot="start" (ionChange)="checkNominee($event)" ></ion-checkbox>
+    <ion-checkbox   mode="ios" formControlName="nominee" color="primary" slot="start" (ionChange)="checkNominee($event)" ></ion-checkbox>
   </ion-item>
 </ion-list>
 

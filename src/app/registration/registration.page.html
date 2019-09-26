@@ -8,7 +8,7 @@
   <form [formGroup]="registrationFormGroup">
     <form [formGroup]="registrationFormGroup.get('personalDetails')">
       <ion-list>
-        <ion-list-header style="font-size:20px;">Personal Details</ion-list-header>
+        <ion-list-header color="tertiary"  style="font-size:20px;">Personal Details</ion-list-header>
 
         <ion-item hidden="true">
           <ion-label position="floating"> Registration Date</ion-label>
@@ -220,9 +220,9 @@
         </ion-item>
 
         <ion-item>
-          <form [formGroup]="registrationFormGroup.get('personalDetails').get('residentialAddress')">
+          <form [formGroup]="registrationFormGroup.get('personalDetails').get('residentialAddress')" class="inner-form">
             <ion-list>
-              <ion-list-header style="font-size:20px;">Residential Address(स्थानिक पत्ता)</ion-list-header>
+              <ion-list-header color="tertiary" style="font-size:20px;">Residential Address(स्थानिक पत्ता)</ion-list-header>
 
               <ion-item>
                 <ion-label position="floating">House No. / Building No.<span style="color: Red">*</span>
@@ -418,13 +418,9 @@
         </ion-item>
 
         <ion-item>
-          <form [formGroup]="
-              registrationFormGroup
-                .get('personalDetails')
-                .get('permanentAddress')
-            ">
+          <form [formGroup]="registrationFormGroup.get('personalDetails').get('permanentAddress')" class="inner-form">
             <ion-list>
-              <ion-list-header style="font-size:20px;">Permanent Address(स्थानिक पत्ता )</ion-list-header>
+              <ion-list-header color="tertiary" style="font-size:20px;">Permanent Address(स्थानिक पत्ता )</ion-list-header>
 
               <ion-item>
                 <ion-label position="floating">House No. / Building No.<span style="color: Red">*</span>
@@ -620,7 +616,7 @@
 
     <form [formGroup]="registrationFormGroup.get('familyDetails')">
         <ion-list>
-          <ion-list-header style="font-size:20px;">Family Details</ion-list-header>
+          <ion-list-header color="tertiary" style="font-size:20px;">Family Details</ion-list-header>
           <div style="padding: 5%; overflow-x: scroll">
           <ion-grid style='width: 1511px;' border="1">
             <ion-row>
@@ -778,7 +774,7 @@
       
     <form [formGroup]="registrationFormGroup.get('bankDetails')">
       <ion-list>
-        <ion-list-header style="font-size:20px;">
+        <ion-list-header color="tertiary" style="font-size:20px;">
           Bank account details / documents required<br />
           (बँक खात्याचा तपशील / आवश्यक असलेली कागदपत्रे)
         </ion-list-header>
@@ -843,7 +839,7 @@
 
     <form [formGroup]="registrationFormGroup.get('employerDetails')">
       <ion-list>
-        <ion-list-header style="font-size:20px;">Employer Details</ion-list-header>
+        <ion-list-header color="tertiary" style="font-size:20px;">Employer Details</ion-list-header>
 
         <ion-item>
           <ion-label position="floating">Name of Contractor/Developer/Company<span style="color: Red">*</span></ion-label>
@@ -989,7 +985,7 @@
 
       <form [formGroup]="registrationFormGroup.get('employerWorkDetails')">
         <ion-list>
-          <ion-list-header style="font-size:20px;">Details of the person who issued the 90 days working
+          <ion-list-header color="tertiary" style="font-size:20px;">Details of the person who issued the 90 days working
           certificate</ion-list-header>
           <div style="padding: 5%; overflow-x: scroll">
             <ion-grid style='width: 1511px;' border="1">
@@ -1137,7 +1133,7 @@
 
     <form  [formGroup]="registrationFormGroup.get('supportingDocuments')">
       <ion-list>
-        <ion-list-header  style="font-size:20px;">Supporting Documents should be in .jpeg , .png and .pdf<span style="color: Red">*</span></ion-list-header>
+        <ion-list-header color="tertiary"  style="font-size:20px;">Supporting Documents should be in .jpeg , .png and .pdf<span style="color: Red">*</span></ion-list-header>
         <ng-container formArrayName="attachmentList" *ngFor="let each of attachmentDetails;let i = index;" >
           <ion-item  [formGroupName]="i">
           <ion-label text-wrap >{{each.document_en}}</ion-label>

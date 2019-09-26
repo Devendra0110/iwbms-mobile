@@ -64,7 +64,7 @@ export class VerificationPage implements OnInit {
     this.unverifiedUser=false;
   }
 
-  async sendOTP() {
+   sendOTP() {
     this.resendOtpFlag = true;
     this.otpCountdown = 32
     if (this.network.type === 'none' || this.network.type === 'NONE') {
@@ -73,15 +73,16 @@ export class VerificationPage implements OnInit {
       if (this.verificationForm.valid) {
         const mobileNo = this.verificationForm.get('mobileNo').value;
         const aadharNo = this.verificationForm.get('aadharNo').value;
-        const loading = await this.loadingController.create({
+        const loading = this.loadingController.create({
           message: 'Please Wait',
-          duration: 2000,
+          duration: 500,
           spinner: "crescent"
+        }).then((res)=>{
+          res.present();
         });
-        await loading.present();
-        await loading.onDidDismiss();
         this.mobileVerification.sendOTP(mobileNo, aadharNo).subscribe(
           (res: any) => {
+            this.loadingController.dismiss();
             if (res.message === 'OTP Sent') {
               this.toast.show(`OTP sent`, '2000', 'bottom').subscribe(
                 toast => {
@@ -97,6 +98,7 @@ export class VerificationPage implements OnInit {
             }
           },
           (err: any) => {
+            this.loadingController.dismiss();
             console.log(err);
             this.unverifiedUser = true;
             if (err.error.message === 'Mobile No. already Registered') {
@@ -116,13 +118,13 @@ export class VerificationPage implements OnInit {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
-      const loading = await this.loadingController.create({
+      const loading = this.loadingController.create({
         message: 'Please Wait',
-        duration: 2000,
+        duration: 500,
         spinner: "crescent"
+      }).then((res)=>{
+        res.present();
       });
-      await loading.present();
-      await loading.onDidDismiss();
       this.mobileVerification.validateOTP(otp).subscribe(
         (res: any) => {
           if (res.message === 'OTP Verified') {
@@ -136,9 +138,11 @@ export class VerificationPage implements OnInit {
             this.verificationForm.reset();
             this.otpflag = false;
             this.router.navigate(['/registration'], mobileAndAadhar);
+            this.loadingController.dismiss();
           }
         },
         (err: any) => {
+          this.loadingController.dismiss();
           this.dialogs.alert('Invalid OTP');
         }
       );

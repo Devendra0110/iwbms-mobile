@@ -47,16 +47,17 @@ export class HomePage {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
-      const loading = await this.loadingController.create({
+      this.loadingController.create({
         message: 'Please Wait',
-        duration: 2000,
+        duration:500,
         spinner:"crescent"
+      }).then((res)=>{
+        res.present();
       });
-      await loading.present();
-      await loading.onDidDismiss();
 
       this.userManagementService.login(this.loginForm.value).subscribe((res: any) => {
         // const data = JSON.parse(JSON.stringify(res));
+        this.loadingController.dismiss();
         if (res.userInfo.userType === 10) {
           this.wrongUser = false;
           this.storage.set('wfc_id', res.userInfo.wfc_id);
@@ -67,6 +68,7 @@ export class HomePage {
         }
       }, err => {
         console.log(err);
+          this.loadingController.dismiss();
         this.wrongUser = true;
         this.dialogs.alert('You have entered wrong email or password')
       });

@@ -57,7 +57,7 @@ export class FamilyModalPage implements OnInit {
       education: new FormControl('', this.validationService.createValidatorsArray('education')),
       education_mr: new FormControl(''),
       nominee: new FormControl('', this.validationService.createValidatorsArray('nominee')),
-      aadharNoFamily: new FormControl('', [Validators.maxLength(16), Validators.pattern('^[0-9]{16}$')])
+      aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$')])
     });
 
       this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
@@ -78,7 +78,6 @@ export class FamilyModalPage implements OnInit {
   ngOnInit() {
     if (this.modalData.mode === 'update') {
       this.familyFormGroup.patchValue(this.modalData.familyDetail.getRawValue());
-      debugger;
       this.familyFormGroup.get('nominee').setValue(this.nominee.value === 'yes' ? true : false);
       this.addFlag = false
     }else{
