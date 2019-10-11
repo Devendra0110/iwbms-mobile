@@ -46,11 +46,10 @@
   </ion-item>
   <ion-item>
     <ion-icon slot="end" name="calendar"></ion-icon>
-    <ion-label position="floating">Date of Birth</ion-label>
+    <ion-label position="floating">Date of Birth<span style="color: Red">*</span></ion-label>
     <ion-datetime [readonly]="selfFlag" formControlName="dobFamily" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="dobFamily.touched && dobFamily.invalid" (ionChange)="calculateAge($event)"></ion-datetime>
     <div class="text-danger" *ngIf="dobFamily.touched && dobFamily.invalid">
       <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
-      <small *ngIf="!!registrationDate.errors?.ngbDate">Please enter appropriate Date.</small>
     </div>
   </ion-item>
   <ion-item>
@@ -91,6 +90,20 @@
     </div>
   </ion-item>
   <ion-item *ngIf="!selfFlag">
+    <ion-label>BOCW Registered Worker</ion-label>
+    <ion-checkbox mode="ios" formControlName="isRegisteredInBOCW" color="primary" slot="start" (ionChange)="bocwValidatorsChange()" >
+    </ion-checkbox>
+  </ion-item>
+  <ion-item *ngIf="isRegisteredInBOCW.value">
+    <ion-label position="floating"> BOCW Reg. No.</ion-label>
+    <ion-input [readonly]="selfFlag" type="tel" maxlength="12" formControlName="bocwRegistrationNo"
+      [class.is-invalid]="bocwRegistrationNo.invalid && bocwRegistrationNo.touched" class="transliterate" clearInput></ion-input>
+    <div class="text-danger" *ngIf="bocwRegistrationNo.invalid && bocwRegistrationNo.touched">
+      <small *ngIf="!!bocwRegistrationNo.errors?.required">Please enter BOCW registration number.</small>
+      <small *ngIf="!!bocwRegistrationNo.errors?.pattern">Please enter appropriate BOCW registration number.</small>
+    </div>
+  </ion-item>
+  <ion-item *ngIf="!selfFlag">
     <ion-label>Nominee</ion-label>
     <ion-checkbox   mode="ios" formControlName="nominee" color="primary" slot="start" (ionChange)="checkNominee($event)" ></ion-checkbox>
   </ion-item>
@@ -105,11 +118,6 @@
         <ion-icon name="close"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-    <!-- <ion-fab horizontal="center">
-      <ion-fab-button (click)="showForm()" class="fabicon">
-        <ion-icon name="bug"></ion-icon>
-      </ion-fab-button>
-    </ion-fab> -->
     <ion-fab *ngIf="addFlag" horizontal="end">
       <ion-fab-button (click)="saveModal()" class="fabicon">
         <ion-icon name="add"></ion-icon>

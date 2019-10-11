@@ -8,7 +8,7 @@
   <form [formGroup]="registrationFormGroup">
     <form [formGroup]="registrationFormGroup.get('personalDetails')">
       <ion-list>
-        <ion-list-header color="tertiary"  style="font-size:20px;">Personal Details</ion-list-header>
+        <ion-list-header color="primary"  style="font-size:20px;">Personal Details</ion-list-header>
 
         <ion-item hidden="true">
           <ion-label position="floating"> Registration Date</ion-label>
@@ -222,7 +222,7 @@
         <ion-item>
           <form [formGroup]="registrationFormGroup.get('personalDetails').get('residentialAddress')" class="inner-form">
             <ion-list>
-              <ion-list-header color="tertiary" style="font-size:20px;">Residential Address(स्थानिक पत्ता)</ion-list-header>
+              <ion-list-header color="primary" style="font-size:20px;">Residential Address(स्थानिक पत्ता)</ion-list-header>
 
               <ion-item>
                 <ion-label position="floating">House No. / Building No.<span style="color: Red">*</span>
@@ -420,7 +420,7 @@
         <ion-item>
           <form [formGroup]="registrationFormGroup.get('personalDetails').get('permanentAddress')" class="inner-form">
             <ion-list>
-              <ion-list-header color="tertiary" style="font-size:20px;">Permanent Address(स्थानिक पत्ता )</ion-list-header>
+              <ion-list-header color="primary" style="font-size:20px;">Permanent Address(स्थानिक पत्ता )</ion-list-header>
 
               <ion-item>
                 <ion-label position="floating">House No. / Building No.<span style="color: Red">*</span>
@@ -616,7 +616,7 @@
 
     <form [formGroup]="registrationFormGroup.get('familyDetails')">
         <ion-list>
-          <ion-list-header color="tertiary" style="font-size:20px;">Family Details</ion-list-header>
+          <ion-list-header color="primary" style="font-size:20px;">Family Details</ion-list-header>
           <div style="padding: 5%; overflow-x: scroll">
           <ion-grid style='width: 1511px;' border="1">
             <ion-row>
@@ -639,7 +639,7 @@
               <ion-card-header>Father/ Husband Name</ion-card-header>
               </ion-col>
               <ion-col style="text-align: center">
-                <ion-card-header style="width: 215px">DOB</ion-card-header>
+                <ion-card-header style="width: 215px">DOB<span style="color: Red">*</span></ion-card-header>
               </ion-col>
               <ion-col style="width: 10px">
                 <ion-card-header>Age (year)</ion-card-header>
@@ -653,8 +653,14 @@
               <ion-col style="width: 15px">
                 <ion-card-header>Education<span style="color: Red">*</span></ion-card-header>
               </ion-col>
-              <ion-col>
+              <ion-col style="width: 15px">
                 <ion-card-header> Aadhar No. </ion-card-header>
+              </ion-col>
+              <ion-col style="width: 15px">
+                <ion-card-header> BOCW Worker </ion-card-header>
+              </ion-col>
+              <ion-col style="width: 15px">
+                <ion-card-header> BOCW Reg. No. </ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
                 <ion-card-header>Nominee</ion-card-header>
@@ -711,6 +717,10 @@
                   <ion-datetime [readonly]='i===0' displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [max]="maxTodaysDate" id='familyDetails-{{i}}-dobFamily' formControlName="dobFamily" (ionChange)="calculateAgeForFamilyDetails(i)">
                   </ion-datetime>
                   </ion-item>
+                  <div class="text-danger"
+                    *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('dobFamily').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('dobFamily').touched">
+                    <small *ngIf="!!dobFamily.errors?.required">Please choose the date.</small>
+                  </div>
               </ion-col>
               <ion-col >
                 <ion-item>
@@ -743,12 +753,24 @@
                   <small *ngIf="!!education.errors?.required">Please choose the education</small>
                 </div>
               </ion-col>
-              <ion-col style="width:15px">
+              <ion-col style="width:15px"> 
                 <ion-item>
-                  <ion-input type="tel" maxlength="16" minlength="16" type="tel" formControlName="aadharNoFamily" id='familyDetails-{{i}}-aadharNoFamily' clearInput></ion-input>
+                  <ion-input type="tel" maxlength="12" minlength="12" type="tel" formControlName="aadharNoFamily" id='familyDetails-{{i}}-aadharNoFamily' clearInput></ion-input>
                 </ion-item>
                 <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('aadharNoFamily').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('aadharNoFamily').touched" >
                   <small *ngIf="!!aadharNoFamily.errors?.pattern">Please enter appropriate aadhar number.</small>
+                </div>
+              </ion-col>
+              <ion-col style="width: 15px; text-align: center;">
+                <ion-checkbox [attr.disabled]="i === 0 || null" formControlName="isRegisteredInBOCW" (ionChange)="isBocwRegistered(i)" ></ion-checkbox>
+              </ion-col>
+              <ion-col style="width:15px">
+                <ion-item>
+                  <ion-input type="tel"  maxlength="12" minlength="12" formControlName="bocwRegistrationNo"  id='familyDetails-{{i}}-bocwRegistrationNo' clearInput></ion-input>
+                </ion-item>
+                <div class="text-danger"
+                  *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('bocwRegistrationNo').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('bocwRegistrationNo').touched">
+                  <small *ngIf="!!bocwRegistrationNo.errors?.pattern">Please enter appropriate bocw registration number.</small>
                 </div>
               </ion-col>
               <ion-col style="width: 15px; text-align: center;">
@@ -774,14 +796,14 @@
       
     <form [formGroup]="registrationFormGroup.get('bankDetails')">
       <ion-list>
-        <ion-list-header color="tertiary" style="font-size:20px;">
+        <ion-list-header color="primary" style="font-size:20px;">
           Bank account details / documents required<br />
           (बँक खात्याचा तपशील / आवश्यक असलेली कागदपत्रे)
         </ion-list-header>
 
         <ion-item>
           <ion-label position="floating">IFSC Code<span style="color: Red">*</span> </ion-label>
-          <ion-input type="text" formControlName="ifscCode" [class.is-invalid]="ifscCode.invalid && ifscCode.touched" clearInput type="text" maxlength="11" minlength="11" autocapitalize="characters"></ion-input>
+          <ion-input type="text" formControlName="ifscCode" [class.is-invalid]="ifscCode.invalid && ifscCode.touched"  maxlength="11" minlength="11" autocapitalize="characters" clearInput></ion-input>
           <ion-button (click)="searchByIfscCode()">Search</ion-button>
           <div class="text-danger" *ngIf="ifscCode.invalid && ifscCode.touched">
             <small *ngIf="!!ifscCode.errors?.required">Please enter IFSC code.</small>
@@ -839,7 +861,7 @@
 
     <form [formGroup]="registrationFormGroup.get('employerDetails')">
       <ion-list>
-        <ion-list-header color="tertiary" style="font-size:20px;">Employer Details</ion-list-header>
+        <ion-list-header color="primary" style="font-size:20px;">Employer Details</ion-list-header>
 
         <ion-item>
           <ion-label position="floating">Name of Contractor/Developer/Company<span style="color: Red">*</span></ion-label>
@@ -985,7 +1007,7 @@
 
       <form [formGroup]="registrationFormGroup.get('employerWorkDetails')">
         <ion-list>
-          <ion-list-header color="tertiary" style="font-size:20px;">Details of the person who issued the 90 days working
+          <ion-list-header color="primary" style="font-size:20px;">Details of the person who issued the 90 days working
           certificate</ion-list-header>
           <div style="padding: 5%; overflow-x: scroll">
             <ion-grid style='width: 1511px;' border="1">
@@ -1133,7 +1155,7 @@
 
     <form  [formGroup]="registrationFormGroup.get('supportingDocuments')">
       <ion-list>
-        <ion-list-header color="tertiary"  style="font-size:20px;">Supporting Documents should be in .jpeg , .png and .pdf<span style="color: Red">*</span></ion-list-header>
+        <ion-list-header color="primary"  style="font-size:20px;">Supporting Documents should be in .jpeg , .png and .pdf<span style="color: Red">*</span></ion-list-header>
         <ng-container formArrayName="attachmentList" *ngFor="let each of attachmentDetails;let i = index;" >
           <ion-item  [formGroupName]="i">
           <ion-label text-wrap >{{each.document_en}}</ion-label>
@@ -1161,7 +1183,7 @@
           <ion-label floating> Supporting Document<span style="color: Red">*</span></ion-label><br>
           </ion-item>
           <ion-item>
-            <input id='supportingDocuments' type="file"  accept="application/pdf" (change)="uploadFile($event)" >
+            <input id='supportingDocuments' formControlName="supportingDocuments" type="file"  accept="application/pdf" (change)="uploadFile($event)" >
           </ion-item>
           
 
@@ -1169,13 +1191,13 @@
           <ion-label text-wrap floating>90 Days Work Certificate<span style="color: Red">*</span></ion-label>          
         </ion-item>
         <ion-item>        
-          <input id='workCertificate' type="file" accept="application/pdf" (change)="uploadFile($event)" >
+          <input id='workCertificate' formControlName="workCertificate" type="file" accept="application/pdf" (change)="uploadFile($event)" >
         </ion-item>
         <ion-item lines="none">
           <ion-label text-wrap floating> Bank Passbook<span style="color: Red">*</span></ion-label>
         </ion-item>
         <ion-item>
-          <input id='bankPassbook' type="file" accept="application/pdf" (change)="uploadFile($event)" >
+          <input id='bankPassbook' formControlName="bankPassbook" type="file" accept="application/pdf" (change)="uploadFile($event)" >
         </ion-item>
 
           <ion-button mode="ios"  expand="block" (click)="save()">Save</ion-button>

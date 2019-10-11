@@ -254,7 +254,7 @@ export class ValidationService {
         break;
       }
       case 'dobFamily': {
-        validatorsArr = [];
+        validatorsArr = [Validators.required];
         break;
       }
       case 'relation': {

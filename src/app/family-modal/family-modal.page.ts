@@ -57,7 +57,9 @@ export class FamilyModalPage implements OnInit {
       education: new FormControl('', this.validationService.createValidatorsArray('education')),
       education_mr: new FormControl(''),
       nominee: new FormControl('', this.validationService.createValidatorsArray('nominee')),
-      aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$')])
+        aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$')]),
+        isRegisteredInBOCW: new FormControl(''),
+        bocwRegistrationNo: new FormControl('')
     });
 
       this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
@@ -81,6 +83,7 @@ export class FamilyModalPage implements OnInit {
       this.familyFormGroup.get('nominee').setValue(this.nominee.value === 'yes' ? true : false);
       this.addFlag = false
     }else{
+      this.isRegisteredInBOCW.setValue(false)
       this.familyFormGroup.get('nominee').setValue(false);
     }
     if (this.modalData.index === 0) {
@@ -110,6 +113,16 @@ export class FamilyModalPage implements OnInit {
   handleDropdown(event) {
     const target = this.familyFormGroup.get(`${event.target.id}_mr`);
     target.patchValue(`${event.target.value}`);
+  }
+
+  bocwValidatorsChange(){
+    if(this.isRegisteredInBOCW.value){
+      this.bocwRegistrationNo.setValidators([Validators.maxLength(12), Validators.minLength(12), Validators.required]);
+    }else{
+      this.bocwRegistrationNo.clearValidators()
+      this.bocwRegistrationNo.reset();
+    }
+    this.bocwRegistrationNo.updateValueAndValidity();
   }
 
   calculateAge(event) {
@@ -151,6 +164,7 @@ export class FamilyModalPage implements OnInit {
         await this.mdlController.dismiss(this.formResponse);
       }
     } else {
+      console.log(this.familyFormGroup);
       this.familyFormGroup.markAllAsTouched();
       alert('Please fill all the details properly');
     }
@@ -172,6 +186,7 @@ export class FamilyModalPage implements OnInit {
   get profession() { return this.familyFormGroup.get('profession'); }
   get profession_mr() { return this.familyFormGroup.get('profession_mr'); }
   get nominee() { return this.familyFormGroup.get('nominee'); }
-
+  get isRegisteredInBOCW() { return this.familyFormGroup.get('isRegisteredInBOCW'); }
+  get bocwRegistrationNo() { return this.familyFormGroup.get('bocwRegistrationNo');  }
 
 }

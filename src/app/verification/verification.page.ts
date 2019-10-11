@@ -143,6 +143,8 @@ export class VerificationPage implements OnInit {
         },
         (err: any) => {
           this.loadingController.dismiss();
+          this.otpCountdown=0;
+          this.resendOtpFlag=false;
           this.dialogs.alert('Invalid OTP');
         }
       );

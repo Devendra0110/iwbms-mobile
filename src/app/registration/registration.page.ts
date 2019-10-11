@@ -529,6 +529,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp').patchValue(this.maxToDate, { emitEvent: false });
     }, err => console.log(err));
 
+    this.isBocwRegistered(0);
   }
 
   ngAfterViewInit() {
@@ -789,12 +790,21 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   applyNominee(i: number) {
-    debugger;
     const familyDetails = this.registrationFormGroup.get('familyDetails')['controls'];
     for (const j in familyDetails) {
       familyDetails[j].get('nominee').setValue('no');
     }
     this.registrationFormGroup.get('familyDetails').get(i.toString()).get('nominee').setValue('yes');
+  }
+
+  isBocwRegistered(index:number){
+    if (this.registrationFormGroup.get('familyDetails')['controls'][index].get('isRegisteredInBOCW').value) {
+      this.registrationFormGroup.get('familyDetails')['controls'][index].get('bocwRegistrationNo').enable()
+    }else{
+      this.registrationFormGroup.get('familyDetails')['controls'][index].get('isRegisteredInBOCW').value=false
+      this.registrationFormGroup.get('familyDetails')['controls'][index].get('bocwRegistrationNo').disable();
+    }
+
   }
 
   calculateAgeForFamilyDetails(i: string) {
@@ -1081,24 +1091,26 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   uploadFile(event) {
     const file = event.target.files[0];
+    this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
+    });
     this.files[event.target.id] = file;
     this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
-
     // if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152 && (file.type === 'application/pdf' || file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === "image/png")) {
     //   this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
     //   });
     //   this.files[event.target.id] = file;
-    //   this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}`;
+    //   this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
     // } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
-    //   this.toast.show('File Should Be PDF or JPG or PNG', '1000', 'bottom').subscribe((toast) => {
+    //   this.registrationFormGroup.get(event.target.id).patchValue(null);
+    //   this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
     //   });
-    //   this.registrationFormGroup.get('supportingDocuments').get(event.target.id).reset();
+      
     // } else {
-    //   this.toast.show('File Should Be Less Than 2MB', '1000', 'bottom').subscribe((toast) => {
+    //   this.registrationFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
+    //   this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
     //   });
-    //   this.registrationFormGroup.get('supportingDocuments').get(event.target.id).reset();
+      
     // }
-
   }
 
   save() {
@@ -1163,6 +1175,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
+
   bankDetailsFormFroup(): FormGroup {
     return new FormGroup({
       ifscCode: new FormControl('', this.validationService.createValidatorsArray('ifscCode')),
@@ -1194,7 +1207,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       education: new FormControl('', this.validationService.createValidatorsArray('education')),
       education_mr: new FormControl(''),
       nominee: new FormControl('', this.validationService.createValidatorsArray('nominee')),
-      aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$')])
+      aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$')]),
+      isRegisteredInBOCW: new FormControl(''),
+      bocwRegistrationNo: new FormControl('', [Validators.maxLength(12), Validators.minLength(12)])
     });
   }
 
@@ -1283,7 +1298,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       attachmentList: new FormArray([]),
       supportingDocuments: new FormControl(''),
       applicantPhoto: new FormControl(''),
-      registrationReceipt: new FormControl('')
+      registrationReceipt: new FormControl(''),
+      bankPassbook: new FormControl(''),
+      workCertificate:new FormControl('')
     });
   }
 
@@ -1451,6 +1468,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get profession() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('profession'); }
   get profession_mr() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('profession_mr'); }
   get nominee() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('nominee'); }
+  get isRegisteredInBOCW() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('isRegisteredInBOCW'); }
+  get bocwRegistrationNo() { return this.registrationFormGroup.get('familyDetails')['controls'][0].get('bocwRegistrationNo'); }
+
   // BankDetail getter
 
   get fullName() {
@@ -1488,4 +1508,5 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get dateOfRegistration() {
     return this.registrationFormGroup.get('bankDetails').get('dateOfRegistration');
   }
+
 }
