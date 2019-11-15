@@ -45,6 +45,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public endDate: any;
   public maxAppointmentDate: any;
   public minAppointmentDate: any;
+  public appointmentDate: any;
   public minFromDate: string;
   public maxToDate: string;
   public dateOfBirth: any;
@@ -241,7 +242,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.httpService.getNatureOfWork().subscribe((natureOfWorkArrObj: any) => {
       for (const i of natureOfWorkArrObj) {
         this.natureOfWorkOptions[Number(i.type_of_worker_id)] = i.type_of_worker_title;
-        this.natureOfWorkOptionsMarathi[Number(i.type_of_worker_id)] = i.type_of_worker_mr;
+        this.natureOfWorkOptionsMarathi[Number(i.type_of_worker_id)] = i.type_of_worker_title_mr;
       }
     }, err => console.log(err));
 
@@ -288,6 +289,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.maxAppointmentDate = this.changeToIonDateTime(3, 'months');
     this.minAppointmentDate = this.changeToIonDateTime(18, 'years');
     this.maxTodaysDate = this.changeToIonDateTime(0, 'years');
+    this.minFromDate = this.changeToIonDateTime(1, 'years')
 
     this.attachmentDetails = [
       {
@@ -337,42 +339,42 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       for (const i of attDetailsArrObj) {
         switch (i.document_types_id) {
           case 1: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
           case 2: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
           case 3: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
           case 4: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
+            break;
           case 5: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 6: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 7: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 8: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 9: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 10: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 11: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 12: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 13: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 14: this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
           case 15: this.attachmentDetails[4].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-                  break;
+            break;
         }
 
       }
@@ -390,6 +392,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
     this.elseStateFlag = false;
     this.workingDayFlag = true;
+    this.workingDay = 0;
     this.state.patchValue('21');
     this.state_mr.patchValue('महाराष्ट्र');
     this.relation.patchValue('1');
@@ -442,7 +445,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.statePer.valueChanges.subscribe(value => {
 
       if (value === 'MAHARASHTRA' || value === '21' || value === 21) {
-        this.statePer.patchValue(21, {emitEvent: false});
+        this.statePer.patchValue(21, { emitEvent: false });
         this.elseStateFlag = false;
         this.migrant.patchValue(false);
         this.migrant_mr.patchValue(false);
@@ -520,8 +523,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
 
     this.appointmentDateEmp.valueChanges.subscribe(value => {
-      this.minFromDate = moment(value).format('YYYY-MM-DD');
-      this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(this.minFromDate, { emitEvent: false });
+      if (moment(value).diff(this.minFromDate, 'years') === 0) {
+        this.minFromDate = moment(value).format('YYYY-MM-DD');
+      }
+      this.appointmentDate = moment(value).format('YYYY-MM-DD');
+      this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(this.appointmentDate, { emitEvent: false });
     }, err => console.log(err));
 
     this.dispatchDateEmp.valueChanges.subscribe(value => {
@@ -625,7 +631,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       DTPObject = this.districts;
     else if (targetsArray[2] === 'taluka')
       DTPObject = this.talukasRes;
-      else if (targetsArray[2] === 'state') DTPObject = this.states;
+    else if (targetsArray[2] === 'state') DTPObject = this.states;
     else if (targetsArray[1] === 'talukaEmp') DTPObject = this.talukasEmp;
     else DTPObject = this.postOfficeArrayRes;
 
@@ -724,7 +730,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const value = Number(event.target.value);
     if (idArray.length === 2) {
       this.registrationFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).patchValue(value, { emitEvent: false });
-      } else if (idArray.length === 3) {
+    } else if (idArray.length === 3) {
       this.registrationFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).patchValue(value, { emitEvent: false });
     }
   }
@@ -733,21 +739,22 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     if (this.registrationFormGroup.get('personalDetails').get('dobPersonal').value) {
       const dob = moment(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value).format('YYYY-MM-DD');
       if (dob) {
-      this.registrationFormGroup.get('personalDetails').get('dobPersonal').patchValue(dob, { emitEvent: false });
-      const age = moment().diff(dob, 'years');
-      if (dob) {
-        if (age > 17 && age < 61) {
-          this.dobFamily.patchValue(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value, { emitEvent: false });
-          this.dobFamily.disable();
-          this.ageFamily.patchValue(age);
-          this.registrationFormGroup.get('personalDetails').get('agePersonal').setValue(age);
-        } else {
-          this.dialogs.alert('Applicant age should be greater than 18 and less than 60 ');
-          this.registrationFormGroup.get('personalDetails').get('agePersonal').setValue('');
-          this.registrationFormGroup.get('personalDetails').get('dobPersonal').setValue('');
+        this.registrationFormGroup.get('personalDetails').get('dobPersonal').patchValue(dob, { emitEvent: false });
+        const age = moment().diff(dob, 'years');
+        if (dob) {
+          if (age > 17 && age < 61) {
+            this.dobFamily.patchValue(this.registrationFormGroup.get('personalDetails').get('dobPersonal').value, { emitEvent: false });
+            this.dobFamily.disable();
+            this.ageFamily.patchValue(age);
+            this.registrationFormGroup.get('personalDetails').get('agePersonal').setValue(age);
+          } else {
+            this.dialogs.alert('Applicant age should be greater than 18 and less than 60 ');
+            alert('Applicant age should be greater than 18 and less than 60 ')
+            this.registrationFormGroup.get('personalDetails').get('agePersonal').setValue('');
+            this.registrationFormGroup.get('personalDetails').get('dobPersonal').setValue('');
+          }
         }
       }
-    }
     } else {
       // alert('select date');
     }
@@ -797,11 +804,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.registrationFormGroup.get('familyDetails').get(i.toString()).get('nominee').setValue('yes');
   }
 
-  isBocwRegistered(index:number){
+  isBocwRegistered(index: number) {
     if (this.registrationFormGroup.get('familyDetails')['controls'][index].get('isRegisteredInBOCW').value) {
       this.registrationFormGroup.get('familyDetails')['controls'][index].get('bocwRegistrationNo').enable()
-    }else{
-      this.registrationFormGroup.get('familyDetails')['controls'][index].get('isRegisteredInBOCW').value=false
+    } else {
+      this.registrationFormGroup.get('familyDetails')['controls'][index].get('isRegisteredInBOCW').value = false
       this.registrationFormGroup.get('familyDetails')['controls'][index].get('bocwRegistrationNo').disable();
     }
 
@@ -831,22 +838,22 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const familyDetailsArray = this.registrationFormGroup.get('familyDetails') as FormArray;
     await familyModal.present();
     familyModal.onDidDismiss()
-    .then( res => {
-      if (res.data.formState === 'add') {
-        familyDetailsArray.push(this.familyDetailsFormGroup());
-        this.registrationFormGroup.get('familyDetails').get(`${index}`).patchValue(res.data.formData.value);
-        if(this.registrationFormGroup.get('familyDetails').get(`${index}`).get('nominee').value==='yes'){
-          this.applyNominee(index)
-        }
-      } else if (res.data.formState === 'delete') this.deleteFamilyDetail(index);
-      else {
-        this.registrationFormGroup.get('familyDetails').get(`${index}`).patchValue(res.data.formData.value);
-        if (this.registrationFormGroup.get('familyDetails').get(`${index}`).get('nominee').value === 'yes') {
-          this.applyNominee(index)
+      .then(res => {
+        if (res.data.formState === 'add') {
+          familyDetailsArray.push(this.familyDetailsFormGroup());
+          this.registrationFormGroup.get('familyDetails').get(`${index}`).patchValue(res.data.formData.value);
+          if (this.registrationFormGroup.get('familyDetails').get(`${index}`).get('nominee').value === 'yes') {
+            this.applyNominee(index)
+          }
+        } else if (res.data.formState === 'delete') this.deleteFamilyDetail(index);
+        else {
+          this.registrationFormGroup.get('familyDetails').get(`${index}`).patchValue(res.data.formData.value);
+          if (this.registrationFormGroup.get('familyDetails').get(`${index}`).get('nominee').value === 'yes') {
+            this.applyNominee(index)
+          }
         }
       }
-    }
-  );
+      );
   }
 
   addMoreFamilyDetails() {
@@ -879,7 +886,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     else if (Number(date[1]) < 10 && Number(date[0]) >= 10) return `${Number(date[2])}-0${Number(date[1])}-${Number(date[0])}`;
     else if (Number(date[1]) >= 10 && Number(date[0]) < 10) return `${Number(date[2])}-${Number(date[1])}-0${Number(date[0])}`;
     else return `${Number(date[2])}-${Number(date[1])}-${Number(date[0])}`;
-    }
+  }
 
   searchByIfscCode() {
     this.bankDetails = {
@@ -898,6 +905,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     },
       error1 => {
         this.dialogs.alert('IFSC Code Not Found.Please fill bank details manually');
+        alert('IFSC Code Not Found.Please fill bank details manually');
         this.bankDetails = {
           BANK: '',
           BRANCH: '',
@@ -927,16 +935,16 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const workerDetailsArray = this.registrationFormGroup.get('employerWorkDetails') as FormArray;
     await employerModal.present();
     employerModal.onDidDismiss()
-    .then(res => {
-      if (res.data.formState === 'add') {
-        workerDetailsArray.push(this.employerWorkDetailsFormFroup());
-        this.registrationFormGroup.get('employerWorkDetails').get(`${index}`).setValue(res.data.formData.value);
-        this.calculateDayForWorkDetails(`${index}`);
-      } else if (res.data.formState === 'delete') this.deleteWorkerDetail(index);
-      else {
-        this.registrationFormGroup.get('employerWorkDetails').get(`${index}`).setValue(res.data.formData.value);
-      }
-    });
+      .then(res => {
+        if (res.data.formState === 'add') {
+          workerDetailsArray.push(this.employerWorkDetailsFormFroup());
+          this.registrationFormGroup.get('employerWorkDetails').get(`${index}`).setValue(res.data.formData.value);
+          this.calculateDayForWorkDetails(`${index}`);
+        } else if (res.data.formState === 'delete') this.deleteWorkerDetail(index);
+        else {
+          this.registrationFormGroup.get('employerWorkDetails').get(`${index}`).setValue(res.data.formData.value);
+        }
+      });
   }
 
   addMoreWorkerDetails() {
@@ -980,7 +988,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   minTDate(i: number) {
     // if (i === 0)
-      return this.registrationFormGroup.get('employerWorkDetails').get((i).toString()).get('fromDateEmp').value;
+    return this.registrationFormGroup.get('employerWorkDetails').get((i).toString()).get('fromDateEmp').value;
   }
 
   maxTDate(i: number) {
@@ -995,7 +1003,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const toDate = this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value ? moment(this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').value).format('YYYY-MM-DD') : null;
     if (fromDate && toDate) {
       this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('fromDateEmp').patchValue(fromDate, { emitEvent: false });
-      this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').patchValue(toDate, {emitEvent: false});
+      this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('toDateEmp').patchValue(toDate, { emitEvent: false });
       const difference = moment(toDate).diff(fromDate, 'days') + 1;
       this.registrationFormGroup.get('employerWorkDetails').get(i.toString()).get('workingDays').patchValue(difference);
       let totalWorkingDays = 0;
@@ -1104,13 +1112,20 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     //   this.registrationFormGroup.get(event.target.id).patchValue(null);
     //   this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
     //   });
-      
+
     // } else {
     //   this.registrationFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
     //   this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
     //   });
-      
+
     // }
+  }
+
+  public joinWfcNames(wfcs) {
+    const wfcNames = wfcs.map((wf) => {
+      return wf.office_name;
+    });
+    return wfcNames.join(' or ');
   }
 
   save() {
@@ -1131,15 +1146,20 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         }
         this.httpService.saveData(formData, this.JWTToken).subscribe(
           (res: any) => {
-            this.dialogs.alert('Data Captured 👍🙂');
+            this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
+            alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
             this.router.navigate(['/dashboard']);
           },
           (err: any) => console.error(err)
         );
       } else {
-        console.log(this.registrationFormGroup.controls);
         this.registrationFormGroup.markAllAsTouched();
-        this.dialogs.alert('Form is not valid yet!');
+
+        if (this.workingDay < 90){
+          alert('Working Days are less than ')
+        }else{
+          alert('The form is invalid. Please fill all the * mark fields with appropriate details')
+        }
       }
     }
   }
@@ -1227,6 +1247,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       pincode: new FormControl('', this.validationService.createValidatorsArray('pincode')),
       stdcode: new FormControl('', this.validationService.createValidatorsArray('stdcode')),
       phone: new FormControl('', this.validationService.createValidatorsArray('phone')),
+      typeOfResidence: new FormControl('', [Validators.required]),
+      typeOfHouse: new FormControl('', [Validators.required]),
+      typeOfResidence_mr: new FormControl(''),
+      typeOfHouse_mr: new FormControl(''),
       houseNo_mr: new FormControl(''),
       road_mr: new FormControl(''),
       area_mr: new FormControl(''),
@@ -1251,7 +1275,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       pinCodeEmp: new FormControl('', [Validators.required, Validators.pattern('^\\d{6}$')]),
       appointmentDateEmp: new FormControl(null, [Validators.required]),
       dispatchDateEmp: new FormControl(null),
-      remunerationPerDayEmp: new FormControl('', [Validators.maxLength(8)]),
+      remunerationPerDayEmp: new FormControl('', [Validators.required,Validators.maxLength(8)]),
       natureOfWorkEmp: new FormControl('', [Validators.required]),
 
       migrant: new FormControl(''),
@@ -1260,6 +1284,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       contractorNameEmp_mr: new FormControl(''),
       contractorCompanyNameEmp_mr: new FormControl(''),
       workPlaceEmp_mr: new FormControl(''),
+      typeOfWorkEmp: new FormControl('', [Validators.required]),
+      typeOfWorkEmp_mr: new FormControl(''),
       townEmp_mr: new FormControl(''),
       talukaEmp_mr: new FormControl(''),
       districtEmp_mr: new FormControl(''),
@@ -1300,7 +1326,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       applicantPhoto: new FormControl(''),
       registrationReceipt: new FormControl(''),
       bankPassbook: new FormControl(''),
-      workCertificate:new FormControl('')
+      workCertificate: new FormControl('')
     });
   }
 
@@ -1338,6 +1364,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
 
   // personal residential address
+  get typeOfResidence() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('typeOfResidence'); }
+  get typeOfHouse() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('typeOfHouse'); }
+  get typeOfResidence_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('typeOfResidence_mr'); }
+  get typeOfHouse_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('typeOfHouse_mr'); }
   get houseNo() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('houseNo'); }
   get road() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('road'); }
   get area() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('area'); }
@@ -1362,6 +1392,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
 
   // personal permanent address
+  get typeOfResidencePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('typeOfResidence'); }
+  get typeOfResidencePer_mr() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('typeOfResidence_mr'); }
+  get typeOfHousePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('typeOfHouse'); }
+  get typeOfHousePer_mr() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('typeOfHouse_mr'); }
   get houseNoPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('houseNo'); }
   get roadPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('road'); }
   get areaPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('area'); }
@@ -1394,6 +1428,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get talukaEmp() { return this.registrationFormGroup.get('employerDetails').get('talukaEmp'); }
   get districtEmp() { return this.registrationFormGroup.get('employerDetails').get('districtEmp'); }
   get pinCodeEmp() { return this.registrationFormGroup.get('employerDetails').get('pinCodeEmp'); }
+  get typeOfWorkEmp() { return this.registrationFormGroup.get('employerDetails').get('typeOfWorkEmp'); }
+  get typeOfWorkEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('typeOfWorkEmp_mr'); }
   get appointmentDateEmp() { return this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp'); }
   get dispatchDateEmp() { return this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp'); }
   get remunerationPerDayEmp() { return this.registrationFormGroup.get('employerDetails').get('remunerationPerDayEmp'); }

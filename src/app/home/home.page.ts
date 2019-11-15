@@ -20,6 +20,8 @@ export class HomePage {
   public loginForm: FormGroup;
   public wrongUser: boolean;
   public subscription: Subscription;
+  public passwordIcon: string;
+  public passwordType: string;
   constructor(
     private userManagementService: UserManagementService,
     private validationService: ValidationService,
@@ -35,12 +37,18 @@ export class HomePage {
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
     this.wrongUser = false;
-
+    this.passwordIcon = 'eye';
+    this.passwordType = 'password';
 
     this.loginForm = new FormGroup({
       username: new FormControl('', this.validationService.createValidatorsArray('userName')),
       password: new FormControl('', [Validators.required])
     });
+  }
+
+  showPassword() {
+    this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+    this.passwordIcon = this.passwordType === 'password' ? 'eye' : 'eye-off';
   }
 
   async loginUser() {
@@ -50,8 +58,8 @@ export class HomePage {
       this.loadingController.create({
         message: 'Please Wait',
         duration:500,
-        spinner:"crescent"
-      }).then((res)=>{
+        spinner: 'crescent'
+      }).then((res) => {
         res.present();
       });
 
@@ -68,12 +76,12 @@ export class HomePage {
         }
       }, err => {
         console.log(err);
-          this.loadingController.dismiss();
+        this.loadingController.dismiss();
         this.wrongUser = true;
-        this.dialogs.alert('You have entered wrong email or password')
+        this.dialogs.alert('You have entered wrong email or password');
       });
 
-      
+
     }
   }
 

@@ -6,6 +6,7 @@ import { HttpService } from '../services/http.service';
 import { TransliterationService } from '../services/transliteration.service';
 import { ModalController } from '@ionic/angular';
 import { familyModalData } from 'src/assets/common.interface';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
 
 
 @Component({
@@ -31,13 +32,16 @@ export class FamilyModalPage implements OnInit {
   public familyRelationOptionsMarathi: string[] = [];
   public educationOptions: string[] = [];
   public educationOptionsMarathi: string[] = [];
+  public adultFlag:boolean;
 
   constructor(
     private validationService: ValidationService,
     private httpService: HttpService,
     private transliterate: TransliterationService,
-    private mdlController: ModalController
+    private mdlController: ModalController,
+    private dialogs: Dialogs,
     ) {
+      this.adultFlag=false;
       this.addFlag = true;
       this.selfFlag = false;
       this.familyFormGroup = new FormGroup({
@@ -75,6 +79,12 @@ export class FamilyModalPage implements OnInit {
         this.educationOptionsMarathi[Number(i.education_level_id)] = i.education_level_mr;
       }
     });
+
+      this.ageFamily.valueChanges.subscribe((value)=>{
+        this.adultFlag = value >= 18;
+        this.isRegisteredInBOCW.setValue(false);
+        this.bocwValidatorsChange();
+      })
     }
 
   ngOnInit() {
@@ -106,9 +116,6 @@ export class FamilyModalPage implements OnInit {
     }
   }
 
-  checkNominee(event) {
-    console.log(this.nominee.value);
-  }
 
   handleDropdown(event) {
     const target = this.familyFormGroup.get(`${event.target.id}_mr`);
@@ -132,10 +139,6 @@ export class FamilyModalPage implements OnInit {
       const age = moment().diff(moment(dob, 'YYYY-MM-DD'), 'years');
       this.ageFamily.patchValue(age);
     }
-  }
-
-  showForm() {
-    console.log(this.familyFormGroup.value);
   }
 
   async dismissModal() {
@@ -164,9 +167,8 @@ export class FamilyModalPage implements OnInit {
         await this.mdlController.dismiss(this.formResponse);
       }
     } else {
-      console.log(this.familyFormGroup);
       this.familyFormGroup.markAllAsTouched();
-      alert('Please fill all the details properly');
+      this.dialogs.alert('Please fill all the details properly');
     }
   }
 

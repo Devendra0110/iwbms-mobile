@@ -1,0 +1,400 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>BOCW Renewal Form</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="renewalFormGroup">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Registration No. / नोंदणी क्रमांक</ion-label>
+        <ion-input disabled formControlName="registrationNo"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contractor Name / Developer / ठेकेदाराचे नाव/ विकासक<span style="color: Red">*</span></ion-label>
+        <ion-input class="transliterate" formControlName="contractorNameEmp"
+          [class.is-invalid]="contractorNameEmp.invalid && contractorNameEmp.touched" type="text" maxlength="60"
+          id='contractorNameEmp' class="transliterate" (ionBlur)="transliterateDirect($event)"
+          autocapitalize="words" clearInput></ion-input>
+        <div class="text-danger" *ngIf="contractorNameEmp.invalid && contractorNameEmp.touched">
+          <small *ngIf="!!contractorNameEmp.errors?.required">Please enter Name of contactor.</small>
+          <small *ngIf="!!contractorNameEmp.errors?.pattern">Please enter appropriate name.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item *ngIf="contractorNameEmp_mr.value">
+        <ion-label>{{contractorNameEmp_mr.value}}</ion-label>
+      </ion-item>
+      
+      
+      <ion-item>
+        <ion-label position="floating">Contractor Company Name / ठेकेदार कंपनीचे नाव<span style="color: Red">*</span></ion-label>
+        <ion-input class="transliterate" maxlength="40" id='contractorCompanyNameEmp'
+          formControlName="contractorCompanyNameEmp"
+          [class.is-invalid]="contractorCompanyNameEmp.invalid && contractorCompanyNameEmp.touched" class="transliterate"
+          (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
+        <div class="text-danger" *ngIf="contractorCompanyNameEmp.invalid && contractorCompanyNameEmp.touched">
+          <small *ngIf="!!contractorCompanyNameEmp.errors?.required">Please enter Name of company.</small>
+          <small *ngIf="!!contractorCompanyNameEmp.errors?.maxlength">You have exceeded max length.</small>
+          <small *ngIf="!!contractorCompanyNameEmp.errors?.pattern">Please enter appropriate name.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item *ngIf="contractorCompanyNameEmp_mr.value">
+        <ion-label>{{contractorCompanyNameEmp_mr.value}}</ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Mobile Number / भ्रमणध्वनी क्<span style="color: Red">*</span></ion-label>
+        <ion-input type="tel" maxlength="10" formControlName="contractorPhoneEmp"
+          [class.is-invalid]="contractorPhoneEmp.invalid && contractorPhoneEmp.touched"
+          id='contractorPhoneEmp' clearInput></ion-input>
+        <div class="text-danger" *ngIf="contractorPhoneEmp.invalid && contractorPhoneEmp.touched">
+          <small *ngIf="!!contractorPhoneEmp.errors?.required">Please enter Mobile number.</small>
+          <small *ngIf="!!contractorPhoneEmp.errors?.pattern">Please enter appropriate Mobile number.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Type of Work /कामाचा प्रकार<span style="color: Red">*</span></ion-label>
+        <ion-input [class.is-invalid]="typeOfWorkEmp.invalid && typeOfWorkEmp.touched" maxlength="50"
+          formControlName='typeOfWorkEmp' class='transliterate' id='typeOfWorkEmp'
+          (ionBlur)="transliterateDirect($event)"></ion-input>
+        <div class="text-danger" *ngIf="typeOfWorkEmp.invalid && typeOfWorkEmp.touched">
+          <small *ngIf="!!typeOfWorkEmp.errors?.required">Please enter type of work.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item *ngIf="typeOfWorkEmp_mr.value">
+        <ion-label>{{typeOfWorkEmp_mr.value}}</ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Workplace / कामाचे ठिकाण<span style="color: Red">*</span></ion-label>
+        <ion-input class="transliterate" type="text" maxlength="50"
+          [class.is-invalid]="workPlaceEmp.invalid && workPlaceEmp.touched" formControlName="workPlaceEmp"
+          id='workPlaceEmp' class="transliterate" (ionBlur)="transliterateDirect($event)"
+          autocapitalize="words" clearInput></ion-input>
+        <div class="text-danger" *ngIf="workPlaceEmp.invalid && workPlaceEmp.touched">
+          <small *ngIf="!!workPlaceEmp.errors?.required">Please enter workplace</small>
+          <small *ngIf="!!workPlaceEmp.errors?.maxlength">You have exceeded max length.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item *ngIf="workPlaceEmp_mr.value">
+        <ion-label>{{workPlaceEmp_mr.value}}</ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">District / जिल्हा<span style="color: Red">*</span></ion-label>
+        <ion-select interface="action-sheet" formControlName="districtEmp" id='districtEmp'
+          [class.is-invalid]="districtEmp.invalid && districtEmp.touched" (ionChange)="transliterateDTP($event)"
+          class="transliterate">
+          <ion-select-option *ngFor="let district of districts|keyvalue" [value]="district.value">{{ district.key }}
+          </ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="districtEmp.invalid && districtEmp.touched">
+          <small *ngIf="!!districtEmp.errors?.required">Please choose District.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item *ngIf="districtEmp_mr.value">
+        <ion-label >{{districtEmp_mr.value}}</ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Taluka / तालुका<span style="color: Red">*</span></ion-label>
+        <ion-select required id='talukaEmp' formControlName="talukaEmp"
+          [class.is-invalid]="talukaEmp.invalid && talukaEmp.touched" interface="action-sheet"
+          (ionChange)="transliterateDTP($event)" class="transliterate">
+          <ion-select-option *ngFor="let eachTaluka of talukas|keyvalue" [value]="eachTaluka.value">{{ eachTaluka.key }}
+          </ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="talukaEmp.invalid && talukaEmp.touched">
+          <small *ngIf="!!talukaEmp.errors?.required">Please choose Taluka.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item *ngIf="talukaEmp_mr.value ">
+        <ion-label>{{talukaEmp_mr.value}}</ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Town / City / गाव / शहर<span style="color: Red">*</span></ion-label>
+        <ion-input class="transliterate" id='townEmp' formControlName="townEmp"
+          [class.is-invalid]="townEmp.invalid && townEmp.touched" class="transliterate"
+          (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
+        <div class="text-danger" *ngIf="townEmp.invalid && townEmp.touched">
+          <small *ngIf="!!townEmp.errors?.required">Please enter your Town/City.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item *ngIf="townEmp_mr.value" >
+        <ion-label>{{townEmp_mr.value}}</ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Pincode / पिन कोड<span style="color: Red">*</span></ion-label>
+        <ion-input type="tel" formControlName="pinCodeEmp" minlength="6" maxlength="6"
+          [class.is-invalid]="pinCodeEmp.invalid && pinCodeEmp.touched" id='pinCodeEmp' clearInput>
+        </ion-input>
+        <div class="text-danger" *ngIf="pinCodeEmp.invalid && pinCodeEmp.touched">
+          <small *ngIf="!!pinCodeEmp.errors?.required">Please enter your Pincode.</small>
+          <small *ngIf="!!pinCodeEmp.errors?.pattern">Please enter appropriate Pincode.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item>
+        <ion-icon slot="end" name="calendar"></ion-icon>
+        <ion-label position="floating">Appointment Date<span style="color: Red">*</span></ion-label>
+        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [max]="maxAppointmentDispatchDate"
+          [min]="minAppointmentDate" id='appointmentDateEmp' formControlName="appointmentDateEmp"
+          [class.is-invalid]=" appointmentDateEmp.invalid && appointmentDateEmp.touched"></ion-datetime>
+        <div class="text-danger" *ngIf="appointmentDateEmp.invalid && appointmentDateEmp.touched">
+          <small *ngIf="!!appointmentDateEmp.errors?.required">Please enter your Appointment Date.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item>
+        <ion-icon slot="end" name="calendar"></ion-icon>
+        <ion-label position="floating">Dispatch Date<span style="color: Red">*</span></ion-label>
+        <ion-datetime formControlName="dispatchDateEmp" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
+          [min]="appointmentDate" [max]="maxAppointmentDispatchDate" id='dispatchDateEmp'></ion-datetime>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Wages per day / दिवसा मजुरी<span style="color: Red">*</span></ion-label>
+        <ion-input formControlName="remunerationPerDayEmp" maxlength="8" type="tel"
+          [class.is-invalid]="remunerationPerDayEmp.invalid && remunerationPerDayEmp.touched"
+          id='remunerationPerDayEmp' clearInput></ion-input>
+        <div class="text-danger" *ngIf="remunerationPerDayEmp.invalid && remunerationPerDayEmp.touched">
+          <small *ngIf="!!remunerationPerDayEmp.errors?.required">Please enter your Remuneration per day.</small>
+        </div>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Nature of work<span style="color: Red">*</span></ion-label>
+        <ion-select formControlName="natureOfWorkEmp" [class.is-invalid]="natureOfWorkEmp.invalid && natureOfWorkEmp.touched"
+          id='natureOfWorkEmp' (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
+          <ion-select-option class="ion-padding-top ion-padding-bottom" text-justify
+            *ngFor="let natureOfWork of natureOfWorkOptions|keyvalue" value="{{ natureOfWork.key }}">{{ natureOfWork.value }}
+          </ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="!!natureOfWorkEmp.invalid && natureOfWorkEmp.touched">
+          <small *ngIf="!!natureOfWorkEmp.errors?.required">Please choose your Nature of work.</small>
+          <small *ngIf="!!natureOfWorkEmp.errors?.maxlength">You have exceeded max length.</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="natureOfWorkEmp.value">
+        {{natureOfWorkOptionsMarathi[natureOfWorkEmp.value]}}
+      </ion-item>
+      
+        <form [formGroup]="renewalFormGroup.get('employerWorkDetails')">
+          <ion-list>
+            <ion-list-header color="primary" style="font-size:20px;">Details of the person who issued the 90 days working
+              certificate</ion-list-header>
+            <div style="padding: 5%; overflow-x: scroll">
+              <ion-grid style='width: 1511px;' border="1">
+                <ion-row *ngIf="appointmentDateEmp.value===null || dispatchDateEmp.value ===null">
+                  <ion-col>
+                    <small style="color:red;">Please choose the appointment and dispatch date first.</small>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col style="width: 15px">
+                    <ion-card-header>SNo.</ion-card-header>
+                  </ion-col>
+                  <ion-col style="width: 15px;margin-left: -71px;">
+                    <ion-card-header>Edit</ion-card-header>
+                  </ion-col>
+                  <ion-col style="width: 15px;margin-left: -71px;">
+                    <ion-card-header>Type of Issuer <span style="color: Red">*</span></ion-card-header>
+                  </ion-col>
+                  <ion-col style="width: 15px">
+                    <ion-card-header>Full Name<span style="color: Red">*</span></ion-card-header>
+                  </ion-col>
+                  <ion-col style="width: 15px">
+                    <ion-card-header>Issuer Reg. No.</ion-card-header>
+                  </ion-col>
+                  <ion-col style="width: 15px">
+                    <ion-card-header>Registration Type<span style="color: Red">*</span></ion-card-header>
+                  </ion-col>
+                  <ion-col style="width: 15px">
+                    <ion-card-header>Mobile number<span style="color: Red">*</span></ion-card-header>
+                  </ion-col>
+                  <ion-col style="width: 15px">
+                    <ion-card-header>Document Ref.No</ion-card-header>
+                  </ion-col>
+                  <ion-col style="width: 15px">
+                    <ion-card-header>From Date<span style="color: Red">*</span></ion-card-header>
+                  </ion-col>
+                  <ion-col style="width: 15px">
+                    <ion-card-header>To Date<span style="color: Red">*</span></ion-card-header>
+                  </ion-col>
+                  <ion-col style="width: 15px">
+                    <ion-card-header>Delete</ion-card-header>
+                  </ion-col>
+                </ion-row>
+                <ng-container *ngFor="let each of renewalFormGroup.get('employerWorkDetails')['controls']; let i = index">
+                  <ion-row [formGroupName]="i">
+                    <ion-col style="width: 15px">
+                      <ion-card-header>{{i + 1}}.</ion-card-header>
+                    </ion-col>
+                    <ion-col>
+                      <ion-fab style="margin-top: -25px;margin-left: -57px">
+                        <ion-fab-button style="height: 45px;width: 45px;" (click)="editWorkerDetail(i)">
+                          <ion-icon name="create"></ion-icon>
+                        </ion-fab-button>
+                      </ion-fab>
+                    </ion-col>
+                    <ion-col style="width: 15px;margin-left: -71px;">
+                      <ion-select [class.is-invalid]="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched"
+                        interface="action-sheet" formControlName="typeOfEmployerEmp"
+                        id='employerWorkDetails-{{i}}-typeOfEmployerEmp' (ionChange)="handleSpecialDropdowns($event)">
+                        <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptions|keyvalue"
+                          value="{{ typeOfIssuer.key }}">{{ typeOfIssuer.value }}</ion-select-option>
+                      </ion-select>
+                      <div class="text-danger" *ngIf="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched">
+                        <small *ngIf="!!typeOfEmployerEmp.errors?.required">Please choose Type of employer.</small>
+                      </div>
+                    </ion-col>
+                    <ion-col style="width: 15px">
+                      <ion-item>
+                        <ion-input id='employerWorkDetails-{{i}}-fullNameOfIssuerEmp' formControlName="fullNameOfIssuerEmp"
+                          class="transliterate" (ionBlur)="transliterateDirect($event)"
+                          [class.is-invalid]="fullNameOfIssuerEmp.invalid && fullNameOfIssuerEmp.touched" autocapitalize="words"
+                          clearInput></ion-input>
+                      </ion-item>
+                      <div class="text-danger" *ngIf="fullNameOfIssuerEmp.invalid && fullNameOfIssuerEmp.touched">
+                        <small *ngIf="!!fullNameOfIssuerEmp.errors?.required">Please enter Fullname of Employer.</small>
+                        <small *ngIf="!!fullNameOfIssuerEmp.errors?.pattern">Please enter appropriate name.</small>
+                      </div>
+                    </ion-col>
+                    <ion-col style="width: 15px">
+                      <ion-item>
+                        <ion-input type="tel" maxlength="12" formControlName="registrationNumberEmp"
+                          id='employerWorkDetails-{{i}}-registrationNumberEmp' clearInput></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col style="width: 15px">
+                      <ion-select formControlName="registrationTypeEmp"
+                        [class.is-invalid]="registrationTypeEmp.invalid && registrationTypeEmp.touched" interface="action-sheet"
+                        id='employerWorkDetails-{{i}}-registrationTypeEmp' (ionChange)="handleSpecialDropdowns($event)">
+                        <ion-select-option *ngFor="let registrationType of registrationTypeOptions|keyvalue"
+                          value="{{ registrationType.key }}"> {{ registrationType.value }}</ion-select-option>
+                      </ion-select>
+                      <div class="text-danger" *ngIf="registrationTypeEmp.invalid && registrationTypeEmp.touched">
+                        <small *ngIf="!!registrationTypeEmp.errors?.required">Please choose registration type.</small>
+                      </div>
+                    </ion-col>
+                    <ion-col style="width: 15px">
+                      <ion-item>
+                        <ion-input type="tel" maxlength="10" minlength="10" formControlName="mobileNumberOfIssuerEmp"
+                          [class.is-invalid]="mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched"
+                          id='employerWorkDetails-{{i}}-mobileNumberOfIssuerEmp' clearInput></ion-input>
+                      </ion-item>
+                      <div class="text-danger" *ngIf="mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched">
+                        <small *ngIf="!!mobileNumberOfIssuerEmp.errors?.required">Please enter Mobile number.</small>
+                        <small *ngIf="!!mobileNumberOfIssuerEmp.errors?.pattern">Please enter appropriate Mobile number.</small>
+                      </div>
+                    </ion-col>
+                    <ion-col style="width: 15px">
+                      <ion-item>
+                        <ion-input type="tel" maxlength="20" formControlName="documentRefNumberEmp"
+                          [class.is-invalid]="documentRefNumberEmp.invalid && documentRefNumberEmp.touched"
+                          id='employerWorkDetails-{{i}}-documentRefNumberEmp' clearInput></ion-input>
+                      </ion-item>
+                      <div class="text-danger" *ngIf="documentRefNumberEmp.invalid && documentRefNumberEmp.touched">
+                        <small *ngIf="documentRefNumberEmp.errors?.required">Please enter Document Ref. number.</small>
+                        <small *ngIf="documentRefNumberEmp.errors?.maxlength">You have exceeded max length.</small>
+                      </div>
+                    </ion-col>
+                    <ion-col style="width: 15px">
+                      <ion-item>
+                        <ion-icon name="calendar"></ion-icon>
+                        <ion-datetime [readonly]="appointmentDateEmp.value===null || dispatchDateEmp.value ===null"
+                          displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" id='employerWorkDetails-{{i}}-fromDateEmp'
+                          (ionChange)="calculateDayForWorkDetails(i)" formControlName="fromDateEmp" [min]="minFDate(i)"
+                          [max]="maxFDate(i)"></ion-datetime>
+                      </ion-item>
+                      <div class="text-danger" *ngIf="fromDateEmp.invalid && fromDateEmp.touched">
+                        <small *ngIf="!!fromDateEmp.errors?.required">Please enter an appropriate start date</small>
+                      </div>
+                    </ion-col>
+                    <ion-col style="width: 15px">
+                      <ion-item>
+                        <ion-icon name="calendar"></ion-icon>
+                        <ion-datetime [readonly]="appointmentDateEmp.value===null || dispatchDateEmp.value ===null"
+                          displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" id='employerWorkDetails-{{i}}-toDateEmp'
+                          (ionChange)="calculateDayForWorkDetails(i)" formControlName="toDateEmp" [min]="minTDate(i)"
+                          [max]="maxTDate(i)"></ion-datetime>
+                      </ion-item>
+                      <div class="text-danger" *ngIf="toDateEmp.invalid && toDateEmp.touched">
+                        <small *ngIf="!!toDateEmp.errors?.required">Please enter an appropriate end date.</small>
+                      </div>
+                    </ion-col>
+                    <ion-col style="width: 15px">
+                      <ion-fab style="margin-right:62px;" horizontal="end">
+                        <ion-fab-button style="height: 45px;width: 45px;" (click)="deleteWorkerDetail(i)">
+                          <ion-icon name="close"></ion-icon>
+                        </ion-fab-button>
+                      </ion-fab>
+                    </ion-col>
+                  </ion-row>
+                </ng-container>
+              </ion-grid>
+            </div>
+            <ion-item>
+              Working Days {{workingDay}}
+            </ion-item>
+            <ion-item *ngIf="workingDayFlag && toDateEmp.touched" style="color:red;">
+              Working days are less than 90
+            </ion-item>
+            <ion-item margin-bottom>
+              <ion-button (click)="addMoreWorkerDetails()">Add More </ion-button>
+            </ion-item>
+          </ion-list>
+        </form>
+
+        <ion-item lines="none">
+          <ion-label text-wrap floating>90 Days Work Certificate<span style="color: Red">*</span></ion-label>
+        </ion-item>
+        <ion-item>
+          <input id='workCertificate' formControlName="workCertificate" type="file" accept="application/pdf"
+            (change)="uploadFile($event)">
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label text-wrap floating>Yellow Book<span style="color: Red">*</span></ion-label>
+        </ion-item>
+        <ion-item>
+          <input id='yellowBook' formControlName="yellowBook" type="file" accept="application/pdf"
+            (change)="uploadFile($event)">
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label text-wrap floating>Self Declaration Certificate<span style="color: Red">*</span></ion-label>
+        </ion-item>
+        <ion-item>
+          <input id='selfDeclarationFile' formControlName="selfDeclarationFile" type="file" accept="application/pdf"
+            (change)="uploadFile($event)">
+        </ion-item>
+        <ion-item>
+          <ion-checkbox  formControlName="verifyDocumentCheck" slot="start" checked="false"></ion-checkbox> 
+          <ion-label>Documents Verified / कागदपत्र पडताळले</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox formControlName="selfDeclaration" slot="start" checked="false"></ion-checkbox>
+          <ion-label text-wrap>I hereby declare that the information provided in above form is true & correct to the best of my knowledge and belief
+          and nothing has been falsely stated. In case any of the above information is found to be false or untrue or misleading
+          or misrepresenting, I am aware that I may be held liable for it.
+        <br>
+      मी याद्वारे असे जाहीर करतो / करते की, वरील सर्व माहिती माझी व्यक्तिगत माहिती व समजूतीनुसार खरी आहे. दिलेली माहिती खोटी
+      असल्याचे आढळून आल्यास, भारतीय दंड किंवा संबंधित कायद्यानुसार माझ्यावर खटला भरला जाईल व त्यानुसार मी शिक्षेस पात्र राहीन
+      याची मला पूर्ण जाणीव आहे.</ion-label>
+        </ion-item>
+        <ion-button mode="ios" expand="block" (click)="save()">Save</ion-button>
+
+    </ion-list>
+  </form>
+  
+</ion-content>

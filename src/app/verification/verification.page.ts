@@ -75,7 +75,7 @@ export class VerificationPage implements OnInit {
         const aadharNo = this.verificationForm.get('aadharNo').value;
         const loading = this.loadingController.create({
           message: 'Please Wait',
-          duration: 500,
+          duration:500,
           spinner: "crescent"
         }).then((res)=>{
           res.present();
@@ -118,6 +118,7 @@ export class VerificationPage implements OnInit {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
+      const mobileNo = this.verificationForm.get('mobileNo').value;
       const loading = this.loadingController.create({
         message: 'Please Wait',
         duration: 500,
@@ -125,7 +126,7 @@ export class VerificationPage implements OnInit {
       }).then((res)=>{
         res.present();
       });
-      this.mobileVerification.validateOTP(otp).subscribe(
+      this.mobileVerification.validateOTP(mobileNo,otp).subscribe(
         (res: any) => {
           if (res.message === 'OTP Verified') {
             // otp verified

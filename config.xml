@@ -94,12 +94,19 @@
         <splash height="2436" src="resources/ios/splash/Default-2436h.png" width="1125" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
-    <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
-    <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
-    <plugin name="cordova-plugin-device" spec="2.0.2" />
-    <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
+    <allow-navigation href="http://localhost:8100" sessionid="f16a580e" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="cordova-plugin-device" spec="~2.0.2" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <plugin name="cordova-plugin-camera" spec="^4.0.3" />
-    <allow-navigation href="http://localhost:8100" sessionid="f16a580e" />
+    <plugin name="cordova-plugin-camera" spec="^4.1.0" />
+    <plugin name="cordova-plugin-file" spec="~6.0.2" />
+    <plugin name="cordova-sqlite-storage" spec="^3.2.1" />
+    <plugin name="cordova-plugin-network-information" spec="~2.0.2" />
+    <plugin name="cordova-plugin-dialogs" spec="~2.0.2" />
+    <plugin name="cordova-plugin-advanced-http" spec="~2.1.1" />
+    <plugin name="cordova-plugin-x-toast" spec="~2.7.2" />
+    <plugin name="cordova-plugin-filechooser" spec="~1.2.0" />
 </widget>

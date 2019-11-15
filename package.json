@@ -32,6 +32,7 @@
     "@ionic-native/toast": "^5.14.0",
     "@ionic/angular": "^4.7.1",
     "@ionic/storage": "^2.2.0",
+    "@sanskrit-coders/sanscript": "^1.0.2",
     "bootstrap": "^4.3.1",
     "cordova-android": "^8.0.0",
     "cordova-ios": "^5.0.1",
@@ -44,6 +45,7 @@
     "cordova-plugin-x-toast": "^2.7.2",
     "cordova-sqlite-storage": "^3.2.1",
     "core-js": "^2.5.4",
+    "fs": "0.0.1-security",
     "rxjs": "~6.5.1",
     "rxjs-compat": "^6.5.2",
     "tslib": "^1.9.0",
@@ -102,11 +104,12 @@
         "OKHTTP_VERSION": "3.10.0"
       },
       "cordova-plugin-x-toast": {},
-      "cordova-plugin-filechooser": {}
+      "cordova-plugin-filechooser": {},
+      "cordova-sqlite-storage": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

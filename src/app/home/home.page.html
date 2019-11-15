@@ -21,7 +21,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Password</ion-label>
-          <ion-input type="password" formControlName="password" clearInput></ion-input>
+          <ion-input [type]="passwordType" formControlName="password" clearInput></ion-input><ion-icon style="margin-top:21px" mode="ios" slot="end" [name]="passwordIcon" (click)="showPassword()"></ion-icon>
         </ion-item>
         <ion-item *ngIf="wrongUser"> 
           <ion-label style="color: Red" text-wrap >Please enter a valid username and password.</ion-label>

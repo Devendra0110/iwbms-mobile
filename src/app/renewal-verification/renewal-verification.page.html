@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Renewal Verification</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        BOCW Registration No. Verification
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="verificationForm">
+        <ion-item>
+          <ion-label position="floating"> BOCW Registration No. </ion-label>
+          <ion-input (ionChange)="clearErrors()" maxlength='14' formControlName="registrationNo" clearInput> </ion-input>
+        </ion-item>
+        <ion-button style="margin-top: 16px;" mode="ios" expand="block"
+          (click)="verify()">Verify</ion-button>
+          <ion-item *ngIf="unregisteredUser">
+            <div style="color:red">
+              <ion-icon style=" position: relative;top: 7px;right: 3px;font-size: 26px;" slot="end" name="alert"></ion-icon>There is no worker registered with {{registrationNo.value}} 
+            </div>
+          </ion-item>
+          <ion-item *ngIf="invalidRegNo">
+            <div style="color:red">
+              <ion-icon  style=" position: relative;top: 7px;right: 3px;font-size: 26px;"slot="end" name="alert"></ion-icon>Invalid Registration No.
+            </div>
+          </ion-item>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

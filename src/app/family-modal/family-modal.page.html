@@ -49,7 +49,7 @@
     <ion-label position="floating">Date of Birth<span style="color: Red">*</span></ion-label>
     <ion-datetime [readonly]="selfFlag" formControlName="dobFamily" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="dobFamily.touched && dobFamily.invalid" (ionChange)="calculateAge($event)"></ion-datetime>
     <div class="text-danger" *ngIf="dobFamily.touched && dobFamily.invalid">
-      <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
+      <small *ngIf="!!dobFamily.errors?.required">Please enter your Date Of Birth.</small>
     </div>
   </ion-item>
   <ion-item>
@@ -59,7 +59,7 @@
   <ion-item>
     <ion-label position="floating">Relation<span style="color: Red">*</span></ion-label>
     <ion-select [disabled]="selfFlag" interface="action-sheet" formControlName="relation" id="relation" [class.is-invalid]="relation.invalid && relation.touched" (ionChange)="handleDropdown($event)">
-      <ion-select-option *ngFor="let familyRelation of familyRelationOptions|keyvalue" value="{{familyRelation.key}}">{{familyRelation.value}}</ion-select-option>
+      <ion-select-option  *ngFor="let familyRelation of familyRelationOptions|keyvalue"  value="{{familyRelation.key}}"><span *ngIf="!(familyRelation.key === '1')">{{familyRelation.value}}</span><span *ngIf="(familyRelation.key === '1')">Self</span></ion-select-option>
     </ion-select>
     <div class="text-danger" *ngIf="relation.touched && relation.invalid">
       <small *ngIf="!!relation.errors?.required">Please choose relation.</small>
@@ -89,7 +89,7 @@
       <small *ngIf="!!aadharNoFamily.errors?.pattern">Please enter appropriate aadhar number.</small>
     </div>
   </ion-item>
-  <ion-item *ngIf="!selfFlag">
+  <ion-item *ngIf="!selfFlag && adultFlag">
     <ion-label>BOCW Registered Worker</ion-label>
     <ion-checkbox mode="ios" formControlName="isRegisteredInBOCW" color="primary" slot="start" (ionChange)="bocwValidatorsChange()" >
     </ion-checkbox>
@@ -105,7 +105,7 @@
   </ion-item>
   <ion-item *ngIf="!selfFlag">
     <ion-label>Nominee</ion-label>
-    <ion-checkbox   mode="ios" formControlName="nominee" color="primary" slot="start" (ionChange)="checkNominee($event)" ></ion-checkbox>
+    <ion-checkbox   mode="ios" formControlName="nominee" color="primary" slot="start"></ion-checkbox>
   </ion-item>
 </ion-list>
 

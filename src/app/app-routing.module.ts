@@ -24,6 +24,8 @@ const routes: Routes = [
   { path: 'verification', loadChildren: './verification/verification.module#VerificationPageModule' },
   { path: 'family-modal', loadChildren: './family-modal/family-modal.module#FamilyModalPageModule' },
   { path: 'employer-modal', loadChildren: './employer-modal/employer-modal.module#EmployerModalPageModule' },
+  { path: 'renewal', loadChildren: './renewal/renewal.module#RenewalPageModule' },
+  { path: 'renewal-verification', loadChildren: './renewal-verification/renewal-verification.module#RenewalVerificationPageModule' },
 ];
 
 @NgModule({

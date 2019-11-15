@@ -10,15 +10,30 @@ import { Storage } from '@ionic/storage';
 export class HttpService {
 
   serverUrl = serverUrl;
-  constructor(private http: HttpClient,
-            private storage:Storage) { }
+  constructor(
+    private http: HttpClient,
+    private storage: Storage
+    ) { }
 
-  saveData(formData, JWTToken:any) {
-    const headers =appendTokenToHeaderObject(
-      new HttpHeaders(),JWTToken
+  saveData(formData, JWTToken: any) {
+    const headers = appendTokenToHeaderObject(
+      new HttpHeaders(), JWTToken
     );
     return this.http.post(`${serverUrl}bocw-registration`, formData, {headers});
   }
+
+  saveRenewalData(renewalDetails: any, JWTToken: any) {
+    let headers;
+    if (renewalDetails.get('modeOfApplication') === 'Online Renewal') {
+      headers = new HttpHeaders();
+    } else {
+      headers = appendTokenToHeaderObject(
+        new HttpHeaders(), JWTToken
+      );
+    }
+    return this.http.post(`${serverUrl}bocw-renewal`, renewalDetails, { headers });
+  }
+
 
   // getAllEntries() {
   //   const headers = appendTokenToHeaderObject(
@@ -27,7 +42,7 @@ export class HttpService {
   //   return this.http.get(`${serverUrl}registration-and-renewal/registration`);
   // }
 
-  getApplicantsDetails(userId,JWTToken) {
+  getApplicantsDetails(userId, JWTToken) {
     const headers = appendTokenToHeaderObject(
       new HttpHeaders(), JWTToken
     );
@@ -77,7 +92,7 @@ export class HttpService {
     return this.http.get(`${serverUrl}masters/issuer-registration-types`);
   }
 
-  getStates(){
+  getStates() {
     return this.http.get(`${serverUrl}masters/states`);
   }
 
@@ -89,11 +104,11 @@ export class HttpService {
     return this.http.get(`${serverUrl}masters/talukas?district_id=${id}`);
   }
 
-  getPostOffices(id: number){
+  getPostOffices(id: number) {
     return this.http.get(`${serverUrl}masters/post-office?taluka_id=${id}`);
   }
 
-  getFamilyRelations(){
+  getFamilyRelations() {
     return this.http.get(`${serverUrl}masters/family-relations`);
   }
 
@@ -101,7 +116,15 @@ export class HttpService {
     return this.http.get(`${serverUrl}masters/education`);
   }
 
-  getDocumentTypes(){
+  getDocumentTypes() {
     return this.http.get(`${serverUrl}masters/document-types`);
+  }
+
+  getIssuers() {
+    return this.http.get(`${serverUrl}masters/issuer`);
+  }
+
+  getTypesOfWorker() {
+    return this.http.get(`${serverUrl}masters/types-of-worker`);
   }
 }

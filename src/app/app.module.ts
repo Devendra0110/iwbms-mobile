@@ -30,6 +30,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { FormControlDirective } from './directives/form-control.directive';
 import { FamilyModalPageModule } from './family-modal/family-modal.module';
 import { EmployerModalPageModule } from './employer-modal/employer-modal.module';
+import { RenewalService } from './services/renewal.service';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { EmployerModalPageModule } from './employer-modal/employer-modal.module'
     TransliterationService,
     ValidationService,
     RegistrationService,
+    RenewalService,
     EventService,
     HttpService,
     UserManagementService,
