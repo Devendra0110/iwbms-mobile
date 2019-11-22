@@ -12,8 +12,8 @@ export class ClaimHealth1Page implements OnInit {
   public formGroup: FormGroup;
 
   constructor(
-    private validationService:ClaimValidationService,
-  ) { 
+    private validationService: ClaimValidationService,
+  ) {
     this.formGroup = new FormGroup({
 
       //english formcontrols
@@ -36,7 +36,7 @@ export class ClaimHealth1Page implements OnInit {
       benefitAmount: new FormControl(''),
       verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
 
-      //marathi Formcontrols
+       // marathi Formcontrols
       nameOfHospital_mr: new FormControl(''),
       nameOfCertificateIssuer_mr: new FormControl(''),
       addressOfDelivery_mr: new FormControl(''),
@@ -46,7 +46,7 @@ export class ClaimHealth1Page implements OnInit {
   ngOnInit() {
   }
 
-    // english getters
+  // english getters
   // get declaration() { return this.formGroup.get('declaration') }
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get aadharNumber() { return this.formGroup.get('aadharNumber'); }

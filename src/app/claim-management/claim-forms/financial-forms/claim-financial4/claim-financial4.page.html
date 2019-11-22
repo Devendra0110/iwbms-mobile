@@ -1,9 +1,61 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
+     
     <ion-title>claimFinancial4</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <form [formGroup]="formGroup">
+        <ion-list>
+            <ion-list-header style="font-size:20px">In Atal Bandhkam Kamgar Awaas Yojna Shahari / Gramin, the
+                construction
+                workers will get Rs.2,00,000 grant.
+                अटल बंधम कामगार आवास योजना शहरी / ग्रामीण मध्ये बांधकाम कामगारांना २,००,००० रुपये अनुदान मिळणार आहे.
+              </ion-list-header>
+              <ion-item>
+                  <ion-label position="floating">change title of this input<span class="text-danger">*</span>
+                  </ion-label>
+                  <ion-select formControlName="placeOfClaim"
+                    [class.is-invalid]="placeOfClaim.invalid && placeOfClaim.touched" id="placeOfClaim">
+                    <ion-select-option></ion-select-option>
+                  </ion-select>
+                  <div class="text-danger" *ngIf="placeOfClaim.invalid && placeOfClaim.touched">
+                    <small *ngIf="placeOfClaim.errors && placeOfClaim.errors['required']">Please select a option.</small>
+                  </div>
+                </ion-item>
+          </ion-list><ion-list>
+              <ion-list-header style="font-size:20px">DOCUMENTS REQUIRED:
+              </ion-list-header>
+              <ion-item lines="none">
+                  <ion-label text-wrap floating>1.
+                      Letter / certified list of competent authority regarding eligibility in the Prime Minister's Housing Scheme
+                      /प्रधानमंत्री आवास योजनेत पात्र असल्याबाबत सक्षम अधिकाऱ्याचे पत्र / प्रमाणित यादी<span style="color: Red">*</span></ion-label>
+                </ion-item>
+                <ion-item>
+                  <input id='pmAwaasCertificate' formControlName="pmAwaasCertificate" type="file" accept="application/pdf">
+                  <div class="text-danger" *ngIf="pmAwaasCertificate.invalid && pmAwaasCertificate.touched">
+                    <small *ngIf="pmAwaasCertificate.errors && pmAwaasCertificate.errors['required']">Please upload required
+                      document.</small>
+                  </div>
+                </ion-item>
 
+                <ion-item lines="none">
+                    <ion-label text-wrap floating>2.  Self- declaration as to does not have house on the name of self or wife./ पती किंवा पत्नीच्या नावे घर नसल्याचे शपथपत्र
+                        नाव<span style="color: Red">*</span></ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <input id='selfDeclaration' formControlName="selfDeclaration" type="file" accept="application/pdf">
+                    <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
+                      <small *ngIf="selfDeclaration.errors && selfDeclaration.errors['required']">Please upload required
+                        document.</small>
+                    </div>
+                  </ion-item>    <ion-item>
+                      <ion-checkbox checked="false" color="dark" checked slot="start"></ion-checkbox>
+                      <ion-label>Documents Verified</ion-label>
+                    </ion-item>
+                  <ion-button mode="ios" expand="block" >Save</ion-button>
+              
+              </ion-list>
+          </form>
 </ion-content>

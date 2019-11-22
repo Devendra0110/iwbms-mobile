@@ -1,9 +1,143 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>claimFinancial3</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="formGroup">
+    <ion-list>
+      <ion-list-header style="font-size:20px">reimbursement /Financial assistance on the interest amounting upto Rs.6
+        lakhs or discount
+        of Rs.2 lakhs
+        on the loan taken from a bank for purchasing or contstructing a house.<br>
+        घरखरेदी किंवा घरबांधणीकरता बँकेकडून घेतलेल्या गृहकर्जावरील रू.६ लक्ष पर्यतच्या व्याजाची रक्कम अथवा रू.२ लक्ष
+        अनुदान.
+      </ion-list-header>
+      <ion-item>
+        <ion-label position="floating">Amount of Loan / कर्जाची रक्कम<span class="text-danger">*</span></ion-label>
+        <ion-input type="number" [class.is-invalid]="amtOfLoan.invalid && amtOfLoan.touched"
+          formControlName="amtOfLoan">
+        </ion-input>
+        <div class="text-danger" *ngIf="amtOfLoan.invalid && amtOfLoan.touched">
+          <small *ngIf="amtOfLoan.errors && amtOfLoan.errors['required']">Please enter Amount of Loan.</small>
+          <small *ngIf="amtOfLoan.errors && amtOfLoan.errors['maxlength']">Ypou Have Reached Your Maximum.</small>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Rate of Interest / व्याज दर<span class="text-danger">*</span></ion-label>
+        <ion-input type="number" [class.is-invalid]="amtOfLoan.invalid && amtOfLoan.touched"
+          formControlName="amtOfLoan">
+        </ion-input>
+        <div class="text-danger" *ngIf="amtOfLoan.invalid && amtOfLoan.touched">
+          <small *ngIf="interestRate.errors && interestRate.errors['required']">Please enter Rate of Interest.</small>
+          <small *ngIf="interestRate.errors && interestRate.errors['maxlength']">Ypou Have Reached Your Maximum.</small>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Bank Name / बँकेचे नाव<span class="text-danger">*</span></ion-label>
+        <ion-input [class.is-invalid]="bankNameBank.invalid && bankNameBank.touched" formControlName="bankNameBank"
+          id="bankNameBank" clearInput></ion-input>
+        <div class="text-danger" *ngIf="bankNameBank.invalid && bankNameBank.touched">
+          <small *ngIf="bankNameBank.errors && bankNameBank.errors['required']">Please enter Bank Name.</small>
+          <small *ngIf="bankNameBank.errors && bankNameBank.errors['maxlength']">You Have Reached Your
+            Maximum.</small>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Bank Branch / बँक शाखा<span class="text-danger">*</span></ion-label>
+        <ion-input [class.is-invalid]="bankBranchBank.invalid && bankBranchBank.touched"
+          formControlName="bankBranchBank" id="bankBranchBank" clearInput></ion-input>
+        <div class="text-danger" *ngIf="bankBranchBank.invalid && bankBranchBank.touched">
+          <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['required']">Please enter Bank Address.</small>
+          <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['maxlength']">You Have Reached Your
+            Maximum.</small>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Loan Sanction Date / कर्जाची मंजूर तारीख<span class="text-danger">*</span>
+        </ion-label>
+        <ion-datetime [class.is-invalid]="loanDate.invalid && loanDate.touched" formControlName="loanDate">
+        </ion-datetime>
+        <div class="text-danger" *ngIf="loanDate.invalid && loanDate.touched">
+          <small *ngIf="loanDate.invalid && loanDate.touched">Please enter Date.</small>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Loan Period (months) / कर्जाचा कालावधी (महिने)<span class="text-danger">*</span>
+        </ion-label>
+        <ion-input type="number" [class.is-invalid]="loanPeriod.invalid && loanPeriod.touched"
+          formControlName="loanPeriod">
+        </ion-input>
+        <div class="text-danger" *ngIf="loanPeriod.invalid && loanPeriod.touched">
+          <small *ngIf="loanPeriod.errors && loanPeriod.errors['required']">Please enter Loan Period.</small>
 
+        </div>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header style="font-size:20px">DOCUMENTS REQUIRED:
+      </ion-list-header>
+
+      <ion-item lines="none">
+        <ion-label text-wrap floating>1. Loan document from nationalized bank / राष्ट्रीयकृत बँकेत कर्ज घेतल्याचा
+            पुरावा<span style="color: Red">*</span></ion-label>
+      </ion-item>
+      <ion-item>
+        <input id='proofOfLoan' formControlName="proofOfLoan" type="file" accept="application/pdf">
+        <div class="text-danger" *ngIf="proofOfLoan.invalid && proofOfLoan.touched">
+          <small *ngIf="proofOfLoan.errors && proofOfLoan.errors['required']">Please upload required
+            document.</small>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label text-wrap floating>2. Proof of having a house registered on both husband's and wife's name(sales deed certificate) <br>
+          पती आणि पत्नीच्या नावावर घर नोंदविल्याचा पुरावा<span style="color: Red">*</span></ion-label>
+      </ion-item>
+      <ion-item>
+        <input id='proofOfHouse' formControlName="proofOfHouse" type="file" accept="application/pdf">
+        <div class="text-danger" *ngIf="proofOfHouse.invalid && proofOfHouse.touched">
+          <small *ngIf="proofOfHouse.errors && proofOfHouse.errors['required']">Please upload required
+            document.</small>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label text-wrap floating>3.  Self- declaration as to does not have house on the name of self or wife./ पती किंवा पत्नीच्या नावे घर नसल्याचे शपथपत्र
+            नाव<span style="color: Red">*</span></ion-label>
+      </ion-item>
+      <ion-item>
+        <input id='proofOfNoHouse' formControlName="proofOfNoHouse" type="file" accept="application/pdf">
+        <div class="text-danger" *ngIf="proofOfNoHouse.invalid && proofOfNoHouse.touched">
+          <small *ngIf="proofOfNoHouse.errors && proofOfNoHouse.errors['required']">Please upload required
+            document.</small>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label text-wrap floating>4.Interest due certificate for Rs. 6 lacs from nationalised bank.<span style="color: Red">*</span></ion-label>
+      </ion-item>
+      <ion-item>
+        <input id='interestCertificate' formControlName="interestCertificate" type="file" accept="application/pdf">
+        <div class="text-danger" *ngIf="interestCertificate.invalid && interestCertificate.touched">
+          <small *ngIf="interestCertificate.errors && interestCertificate.errors['required']">Please upload required
+            document.</small>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label text-wrap floating>5. Self declaration/ हमीपत्र<span style="color: Red">*</span></ion-label>
+      </ion-item>
+      <ion-item>
+        <input id='selfDeclaration' formControlName="selfDeclaration" type="file" accept="application/pdf">
+        <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
+          <small *ngIf="selfDeclaration.errors && selfDeclaration.errors['required']">Please upload required
+            document.</small>
+        </div>
+      </ion-item>
+      <ion-item>
+          <ion-checkbox checked="false" color="dark" checked slot="start"></ion-checkbox>
+          <ion-label>Documents Verified</ion-label>
+        </ion-item>
+      <ion-button mode="ios" expand="block" >Save</ion-button>
+    </ion-list>
+  </form>
 </ion-content>
