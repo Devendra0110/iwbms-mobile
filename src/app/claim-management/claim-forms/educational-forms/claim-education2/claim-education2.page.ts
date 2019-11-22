@@ -2,7 +2,6 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { ClaimValidationService } from './../../../../services/claim-validation.service';
-import { ValidationService } from './../../../../services/validation.service';
 
 @Component({
   selector: 'app-claim-education2',
