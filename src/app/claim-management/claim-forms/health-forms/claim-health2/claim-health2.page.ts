@@ -67,5 +67,7 @@ export class ClaimHealth2Page implements OnInit {
    get nameOfDoctor_mr() { return this.formGroup.get('nameOfDoctor_mr'); }
    get locationOfHospital_mr() { return this.formGroup.get('locationOfHospital_mr'); }
  
-
+  save(){
+    
+  }
 }
