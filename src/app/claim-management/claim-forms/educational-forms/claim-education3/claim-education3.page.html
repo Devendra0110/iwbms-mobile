@@ -6,13 +6,12 @@
 
 <ion-content>
   <form [formGroup]="formGroup">
-    <ion-list-header style="font-size:20px">Educational Assistance of Rs.2500/- to the first two children of
-      the registered worker studying in
-      1st to 7th std. and
-      Rs.5000/- for the children studying in 8th std. to 10th std.<br>
-      नोंदणीकृत कामगाराच्या पहिल्या दोन पाल्यांना १ ली ते ७ वी साठी प्रतिवर्षी रू.२५००/- किंवा इ.८ वी ते १० वी साठी
-      प्रतिवर्षी रू.५०००/-.
+    <ion-list-header style="font-size:20px">Educational assistance of Rs.10,000/- per educational year to the
+      children of the registered workers studying in 11th and 12th standard.
+      <br>नोंदणीकृत कामगाराच्या पहिल्या दोन पाल्यांना इयत्ता ११ वी व १२ वी च्या शिक्षणासाठी प्रति शैक्षणिक वर्षी
+      रू.१०,०००/-.
     </ion-list-header>
+    
     <ion-item>
       <ion-label position="floating">Name of Child / मुलाचे/मुलीचे नाव<span class="text-danger">*</span></ion-label>
       <ion-select formControlName="childrenDetail" id="childrenDetail"
@@ -151,11 +150,12 @@
 
     <ion-item>
       <ion-label position="floating">Date of Admission / प्रवेश तारीख<span class="text-danger">*</span></ion-label>
-      <ion-datetime formControlName="dateOfAdmission" id="dateOfAdmission" 
+      <ion-datetime formControlName="dateOfAdmission" id="dateOfAdmission"
         [class.is-invalid]="dateOfAdmission.invalid && dateOfAdmission.touched">
       </ion-datetime>
       <div class="text-danger" *ngIf="dateOfAdmission.invalid && dateOfAdmission.touched">
-        <small *ngIf="dateOfAdmission.errors && dateOfAdmission.errors['required']">Please enter your date of admission.</small>
+        <small *ngIf="dateOfAdmission.errors && dateOfAdmission.errors['required']">Please enter your date of
+          admission.</small>
       </div>
     </ion-item>
     <br>
