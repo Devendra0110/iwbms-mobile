@@ -23,7 +23,7 @@ export class ClaimEducation1Page implements OnInit {
     school: new FormControl('', this.validationService.createValidatorsArray('school')),
     standard: new FormControl('', this.validationService.createValidatorsArray('standard')),
     placeSchool: new FormControl('', this.validationService.createValidatorsArray('placeSchool')),
-    boardOfEducation: new FormControl('', this.validationService.createValidatorsArray('boardOfEducation')),
+    // boardOfEducation: new FormControl('', this.validationService.createValidatorsArray('boardOfEducation')),
     year: new FormControl('', this.validationService.createValidatorsArray('year')),
     attendanceCertificate: new FormControl('', this.validationService.createValidatorsArray('attendanceCertificate')),
     // schoolIdDoc: new FormControl('', this.validationService.createValidatorsArray('schoolIdDoc')),
@@ -39,7 +39,7 @@ export class ClaimEducation1Page implements OnInit {
     // marathi form controls
     school_mr: new FormControl(''),
     placeSchool_mr: new FormControl(''),
-    boardOfEducation_mr: new FormControl(''),
+    // boardOfEducation_mr: new FormControl(''),
   });
 
 }
@@ -50,7 +50,7 @@ export class ClaimEducation1Page implements OnInit {
   //marathi getters
   get school_mr(): AbstractControl { return this.formGroup.get('school_mr'); }
   get placeSchool_mr(): AbstractControl { return this.formGroup.get('placeSchool_mr'); }
-  get boardOfEducation_mr(): AbstractControl { return this.formGroup.get('boardOfEducation_mr'); }
+  // get boardOfEducation_mr(): AbstractControl { return this.formGroup.get('boardOfEducation_mr'); }
 
   //english getters
   get verifyDocumentCheck() {return this.formGroup.get('verifyDocumentCheck'); }
@@ -60,7 +60,7 @@ export class ClaimEducation1Page implements OnInit {
   get school() { return this.formGroup.get('school'); }
   get standard() { return this.formGroup.get('standard'); }
   get placeSchool() { return this.formGroup.get('placeSchool'); }
-  get boardOfEducation() { return this.formGroup.get('boardOfEducation'); }
+  // get boardOfEducation() { return this.formGroup.get('boardOfEducation'); }
   get year() { return this.formGroup.get('year'); }
   get attendanceCertificate() { return this.formGroup.get('attendanceCertificate'); }
   // get schoolIdDoc() { return this.formGroup.get('schoolIdDoc'); }

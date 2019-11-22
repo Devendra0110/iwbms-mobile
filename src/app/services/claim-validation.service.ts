@@ -576,7 +576,7 @@ export class ClaimValidationService {
 
       case 'boardOfEducation': {
         validatorsArr = [
-          // Validators.required,
+          Validators.required,
           Validators.minLength(3),
           Validators.maxLength(200)
         ];
