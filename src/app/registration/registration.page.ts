@@ -170,15 +170,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.network.onConnect().subscribe(() => { });
 
 
-    this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
-        this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-        this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-      } else {
-        this.router.navigate(['/verification']);
-      }
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   if (this.router.getCurrentNavigation().extras.state) {
+    //     this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
+    //     this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+    //     this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+    //   } else {
+    //     this.router.navigate(['/verification']);
+    //   }
+    // });
 
     // re-route to homepage if not logged-in
     this.storage.get('token').then((val) => {

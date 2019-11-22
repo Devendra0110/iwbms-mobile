@@ -1,0 +1,192 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>WELFARE SCHEMES / कल्याणकारी योजना</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-header *ngIf="selectScheme.value">
+    <!-- {{ selectedCategoryObj.scheme_category }} - {{ selectedSchemeObj.scheme_number}}<br> 
+    {{ selectedSchemeObj.scheme_name_mr }} -->
+  </ion-header>
+  <form [formGroup]="claimMainForm">
+    <ion-list>
+      <ion-list-header color="primary">APPLICANT'S DETAILS / अर्जदार बँक तपशील</ion-list-header>
+      <ion-item >
+        <ion-icon slot="end" name="calendar"></ion-icon>
+        <ion-label position="floating"> Registration Date</ion-label>
+        <ion-datetime readonly formControlName="registrationDatePersonal" id="registrationDatePersonal"
+          displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Registration Number/नोंदणी क्रमांक</ion-label>
+        <ion-input formControlName="registration_no" id="registration_no" [class.is-invalid]="registration_no.invalid && registration_no.touched"></ion-input>
+      </ion-item> 
+      <ion-item>
+        <ion-label position="floating">Aadhar Number / आधार क्रमांक</ion-label>
+        <ion-input [class.is-invalid]="aadharNoPersonal.invalid && aadharNoPersonal.touched" formControlName="aadharNoPersonal" minlength="12" maxlength="12" id="aadharNoPersonal"></ion-input>
+      </ion-item>
+      
+      <ion-img>
+
+      </ion-img>
+    
+      <ion-list>
+      <ion-list-header color="primary">APPLICANT'S PERSONAL DETAILS / अर्जदार तपशील</ion-list-header>
+
+      <ion-item>
+        <ion-label position="floating">First Name / पहिले नाव</ion-label>
+        <ion-input  [class.is-invalid]="firstNamePersonal.invalid && firstNamePersonal.touched" id="firstNamePersonal" (ionChange)="transliterateValue($event)" formControlName="firstNamePersonal" maxlength="120"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="firstNamePersonal_mr.value">
+        <ion-label>{{firstNamePersonal_mr.value}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Middle Name / मधले नाव</ion-label>
+        <ion-input  [class.is-invalid]="middleNamePersonal.invalid && middleNamePersonal.touched" maxlength="120" formControlName="middleNamePersonal" (ionChange)="transliterateValue($event)" id="middleNamePersonal"> </ion-input>
+      </ion-item>
+      <ion-item *ngIf="middleNamePersonal_mr.value">
+        <ion-label>{{middleNamePersonal_mr.value}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Last Name / आडनाव</ion-label>
+        <ion-input  [class.is-invalid]="lastNamePersonal.invalid && lastNamePersonal.touched" maxlength="120" formControlName="lastNamePersonal" (ionChange)="transliterateValue($event)"  id="lastNamePersonal"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="lastNamePersonal_mr.value">
+        <ion-label>{{lastNamePersonal_mr.value}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Mobile Number / मोबाइल नंबर</ion-label>
+        <ion-input  [class.is-invalid]="mobilePersonal.invalid && mobilePersonal.touched" formControlName="mobilePersonal" maxlength="10" class="transliterate" id="mobilePersonal"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Gender<span style="color: Red"> *</span></ion-label>
+        <ion-select formControlName="genderPersonal" [class.is-invalid]="genderPersonal.invalid && genderPersonal.touched"
+          id='personalDetails-genderPersonal' interface="action-sheet">
+          <ion-select-option class="ics" *ngFor="let gender of genderOptions|keyvalue" value="{{ gender.key }}">
+            {{ gender.value }}</ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="genderPersonal.invalid && genderPersonal.touched">
+          <small *ngIf="!!genderPersonal.errors?.required">Please choose your gender.</small>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Marital Status<span style="color: Red"> *</span></ion-label>
+        <ion-select formControlName="maritalStatusPersonal"
+          [class.is-invalid]="maritalStatusPersonal.invalid && maritalStatusPersonal.touched"
+          id='personalDetails-maritalStatusPersonal' interface="action-sheet">
+          <ion-select-option *ngFor="let maritalStatus of maritalStatusOptions|keyvalue" value="{{ maritalStatus.key }}">
+            {{ maritalStatus.value }}</ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="maritalStatusPersonal.invalid && maritalStatusPersonal.touched">
+          <small *ngIf="!!maritalStatusPersonal.errors?.required">Please choose your Marital Status.</small>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon slot="end" name="calendar"></ion-icon>
+        <ion-label position="floating">Date Of Birth<span style="color: Red">*</span> - As Per Aadhar or PAN Card</ion-label>
+        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" 
+          formControlName="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched"
+          (ionChange)="calculateAge()" (ionBlur)="calculateAge()"></ion-datetime>
+        <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">
+          <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Age<span style="color: Red"> *</span></ion-label>
+        <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" readOnly="true" formControlName="agePersonal"
+          [class.is-invalid]="agePersonal.invalid && agePersonal.touched"></ion-input>
+        <div class="text-danger" *ngIf="agePersonal.invalid && agePersonal.touched">
+          <small *ngIf="!!agePersonal.errors?.required">Please enter your Date Of Birth.</small>
+        </div>
+      </ion-item>
+      </ion-list>
+      <ion-list-header color="primary">APPLICANT'S BANK DETAILS / अर्जदार बँक तपशील</ion-list-header>
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">IFSC Code<span style="color: Red">*</span> </ion-label>
+          <ion-input type="text" formControlName="ifscCodeBank" [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched"
+            maxlength="11" minlength="11" autocapitalize="characters" clearInput></ion-input>
+          <ion-button (click)="searchByifscCodeBank()">Search</ion-button>
+          <div class="text-danger" *ngIf="ifscCodeBank.invalid && ifscCodeBank.touched">
+            <small *ngIf="!!ifscCodeBank.errors?.required">Please enter IFSC code.</small>
+            <small *ngIf="!!ifscCodeBank.errors?.pattern">Please enter appropriate IFSC code.</small>
+          </div>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Bank Name<span style="color: Red">*</span></ion-label>
+          <ion-input  formControlName="bankNameBank"
+            [class.is-invalid]="bankNameBank.invalid && bankNameBank.touched"></ion-input>
+          <div class="text-danger" *ngIf="bankNameBank.invalid && bankNameBank.touched">
+            <small *ngIf="!!bankNameBank.errors?.required">Please enter Bank name.</small>
+            <small *ngIf="!!bankNameBank.errors?.maxlength">Please enter appropriate Bank Name.</small>
+          </div>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Bank Branch<span style="color: Red">*</span></ion-label>
+          <ion-input  formControlName="bankBranchBank"
+            [class.is-invalid]="bankBranchBank.invalid && bankBranchBank.touched"></ion-input>
+          <div class="text-danger" *ngIf="bankBranchBank.invalid && bankBranchBank.touched">
+            <small *ngIf="!!bankBranchBank.errors?.required">Please enter Bank Branch.</small>
+            <small *ngIf="!!bankBranchBank.errors?.maxlength">Please enter appropriate Bank Branch.</small>
+          </div>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Bank Address<span style="color: Red">*</span></ion-label>
+          <ion-input  formControlName="bankAddressBank"
+            [class.is-invalid]="bankAddressBank.invalid && bankAddressBank.touched"></ion-input>
+          <div class="text-danger" *ngIf="bankAddressBank.invalid && bankAddressBank.touched">
+            <small *ngIf="!!bankAddressBank.errors?.required">Please enter Bank Address.</small>
+            <small *ngIf="!!bankAddressBank.errors?.maxlength">Please enter appropriate Bank Address.</small>
+          </div>
+        </ion-item>
+        
+        <!-- <ion-item>
+          <ion-label position="floating">MICR Code</ion-label>
+          <ion-input maxlength="9" type="tel" formControlName="micrCode" id='bankDetails-micrCode'
+            [class.is-invalid]="micrCode.invalid && micrCode.touched"></ion-input>
+          <div class="text-danger" *ngIf="micrCode.invalid && micrCode.touched">
+            <small *ngIf="!!micrCode.errors?.pattern">Please enter appropriate MICR code.</small>
+          </div>
+        </ion-item> -->
+        
+        <ion-item>
+          <ion-label position="floating">Account No.<span style="color: Red">*</span></ion-label>
+          <ion-input minlength="9" maxlength="18" type="tel" formControlName="accountNumberBank"
+            [class.is-invalid]="accountNumberBank.invalid && accountNumberBank.touched" id='bankDetails-accountNumberBank'>
+          </ion-input>
+          <div class="text-danger" *ngIf="accountNumberBank.invalid && accountNumberBank.touched">
+            <small *ngIf="!!accountNumberBank.errors?.required">Please enter your Account no.</small>
+            <small *ngIf="!!accountNumberBank.errors?.pattern">Please enter appropriate Account no.</small>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Select Scheme Category / योजना श्रेणी निवडा</ion-label>
+          <ion-select [class.is-invalid]="selectSchemeCategory.invalid && selectSchemeCategory.touched"
+            formControlName="selectSchemeCategory"  id="selectSchemeCategory" interface="action-sheet">
+            <ion-select-option *ngFor="let list1 of schemeArray" [value]='list1'>{{list1.scheme_category}}</ion-select-option>
+          </ion-select>
+          <div class="text-danger" *ngIf="selectSchemeCategory.invalid && selectSchemeCategory.touched">
+            <small *ngIf="selectSchemeCategory.errors && selectSchemeCategory.errors['required']">Please Select Scheme
+              Category.</small>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Select Scheme / योजना निवडा</ion-label>
+          <ion-select  [class.is-invalid]="selectScheme.invalid && selectScheme.touched"
+            formControlName="selectScheme" id="selectScheme" interface="action-sheet">
+            <ion-select-option *ngFor="let each of commonClaimArray" [disabled]="!each.eligibility" class="select-scheme" [value]="each.scheme_number">{{each.scheme_number}}-{{each.scheme_name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </ion-list>
+
+  </form>
+</ion-content>

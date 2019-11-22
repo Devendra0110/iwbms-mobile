@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'employer-modal', loadChildren: './employer-modal/employer-modal.module#EmployerModalPageModule' },
   { path: 'renewal', loadChildren: './renewal/renewal.module#RenewalPageModule' },
   { path: 'renewal-verification', loadChildren: './renewal-verification/renewal-verification.module#RenewalVerificationPageModule' },
+  { path: 'claim-management', loadChildren: './claim-management/claim-management.module#ClaimManagementPageModule' },
 ];
 
 @NgModule({

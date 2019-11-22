@@ -38,13 +38,13 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.styleLightContent();
       this.statusBar.backgroundColorByHexString('#000000');
-      this.authService.authenticationState.subscribe((state) => {
-      if (state) {
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.router.navigate(['/home']);
-      }
-      });
+      // this.authService.authenticationState.subscribe((state) => {
+      // if (state) {
+      //   this.router.navigate(['/dashboard']);
+      // } else {
+      //   this.router.navigate(['/home']);
+      // }
+      // });
     });
   }
 }

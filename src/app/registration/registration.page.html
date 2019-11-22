@@ -1070,7 +1070,7 @@
         <ion-item>
           <ion-label position="floating">Nature of work<span style="color: Red">*</span></ion-label>
           <ion-select formControlName="natureOfWorkEmp" [class.is-invalid]="natureOfWorkEmp.invalid && natureOfWorkEmp.touched" id='employerDetails-natureOfWorkEmp' (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
-            <ion-select-option class="ion-padding-top ion-padding-bottom" text-justify *ngFor="let natureOfWork of natureOfWorkOptions|keyvalue" value="{{ natureOfWork.key }}">{{ natureOfWork.value }}</ion-select-option>
+            <ion-select-option text-wrap class="ion-padding-top ion-padding-bottom" text-justify *ngFor="let natureOfWork of natureOfWorkOptions|keyvalue" value="{{ natureOfWork.key }}">{{ natureOfWork.value }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="!!natureOfWorkEmp.invalid && natureOfWorkEmp.touched">
             <small *ngIf="!!natureOfWorkEmp.errors?.required">Please choose your Nature of work.</small>
