@@ -1,4 +1,7 @@
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+
+import { ClaimValidationService } from 'src/app/services/claim-validation.service';
 
 @Component({
   selector: 'app-claim-education7',
@@ -7,9 +10,74 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClaimEducation7Page implements OnInit {
 
-  constructor() { }
+public formGroup: FormGroup;
+
+  constructor(private validationService: ClaimValidationService) {
+
+    this.formGroup = new FormGroup({
+      // english form controls
+      childrenDetail: new FormControl('', this.validationService.createValidatorsArray('childrenDetail')),
+      institute: new FormControl('', this.validationService.createValidatorsArray('institute')),
+      placeInstitute: new FormControl('', this.validationService.createValidatorsArray('placeInstitute')),
+      certificates: new FormControl('', this.validationService.createValidatorsArray('certificates')),
+      aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),
+      receipt: new FormControl('', this.validationService.createValidatorsArray('receipt')),
+      year: new FormControl('', this.validationService.createValidatorsArray('year')),
+      startDate: new FormControl('', this.validationService.createValidatorsArray('startDate')),
+      endDate: new FormControl('', this.validationService.createValidatorsArray('endDate')),
+      // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
+      selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
+      aadharCardDoc: new FormControl('', this.validationService.createValidatorsArray('aadharCardDoc')),
+      rationCardDoc: new FormControl('', this.validationService.createValidatorsArray('rationCardDoc')),
+      insPhNo: new FormControl('', this.validationService.createValidatorsArray('insPhNo')),
+      insEmail: new FormControl('', this.validationService.createValidatorsArray('insEmail')),
+      age: new FormControl('', this.validationService.createValidatorsArray('age')),
+      courseFee: new FormControl('', this.validationService.createValidatorsArray('courseFee')),
+      regNoInstitute: new FormControl('', this.validationService.createValidatorsArray('regNoInstitute')),
+      regAuthName: new FormControl('', this.validationService.createValidatorsArray('regAuthName')),
+      // bonafideDoc: new FormControl('', this.validationService.createValidatorsArray('bonafideDoc')),
+      benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
+      benefitAmount: new FormControl(''),
+      verifyDocumentCheck :new FormControl('',this.validationService.createValidatorsArray('verifyDocumentCheck')),
+
+      // marathi form controls
+      placeInstitute_mr: new FormControl(''),
+      institute_mr: new FormControl(''),
+      regAuthName_mr: new FormControl('')
+    });
+
+   }
 
   ngOnInit() {
   }
+
+   //marathi getters
+   get institute_mr(): AbstractControl { return this.formGroup.get('institute_mr'); }
+   get placeInstitute_mr(): AbstractControl { return this.formGroup.get('placeInstitute_mr'); }
+   get regAuthName_mr(): AbstractControl { return this.formGroup.get('regAuthName_mr'); }
+ 
+   //english getters
+   get verifyDocumentCheck() {return this.formGroup.get('verifyDocumentCheck'); }
+   get childrenDetail() { return this.formGroup.get('childrenDetail'); }
+   get aadharNumber() { return this.formGroup.get('aadharNumber'); }
+   get year() { return this.formGroup.get('year'); }
+   get institute() { return this.formGroup.get('institute'); }
+   get placeInstitute() { return this.formGroup.get('placeInstitute'); }
+   get certificates() { return this.formGroup.get('certificates'); }
+   get receipt() { return this.formGroup.get('receipt'); }
+   get startDate() { return this.formGroup.get('startDate'); }
+   get endDate() { return this.formGroup.get('endDate'); }
+   get aadharCardDoc() { return this.formGroup.get('aadharCardDoc'); }
+   get age() { return this.formGroup.get('age'); }
+   get courseFee() { return this.formGroup.get('courseFee'); }
+   get regNoInstitute() { return this.formGroup.get('regNoInstitute'); }
+   get insEmail() { return this.formGroup.get('insEmail'); }
+   get insPhNo() { return this.formGroup.get('insPhNo'); }
+   get regAuthName() { return this.formGroup.get('regAuthName'); }
+   // get declaration() { return this.formGroup.get('declaration'); }
+   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
+   get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
+   // get bonafideDoc() { return this.formGroup.get('bonafideDoc'); }
+ 
 
 }
