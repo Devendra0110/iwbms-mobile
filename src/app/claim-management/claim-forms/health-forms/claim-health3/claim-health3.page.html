@@ -1,9 +1,204 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>claimHealth3</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>HEALTH SCHEME NO.3</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="formGroup">
+    <ion-list>
+      <ion-list-header style="font-size:20px">Financial Assistance of Rs. 1,00,000/-to the only
+        girl child of the registered worker whose spouse has done family planning operation after the birth of girl
+        child.(To be
+        fixed in the bank in the name of girl child till she attains 18
+        years of the age).<br><br>
+        पती/पत्नीने एका मुलीच्या जन्मानंतर कुटूंब नियोजनाची शस्त्रक्रिया केल्यास त्या मुलीच्या नावे १८ वर्षापर्यंत
+        रू.१,००,००० मुदत बंद ठेव</ion-list-header>
 
+      <ion-item>
+        <ion-label position="floating"> Name of Hospital / रुग्णालयाचे नाव<span style="color: Red">*</span></ion-label>
+        <ion-input type="text" formControlName="nameOfHospital" id="nameOfHospital"
+          [class.is-invalid]="nameOfHospital.invalid && nameOfHospital.touched" maxlength="120"></ion-input>
+        <div class="text-danger" *ngIf="nameOfHospital.invalid && nameOfHospital.touched">
+          <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['required']">Please enter name of
+            Hospital</small>
+          <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['maxlength']">You have reached your
+            maximum</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="nameOfHospital_mr.value">
+        {{nameOfHospital_mr.value}}
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Address of Hospital / रुग्णालयाचे स्थान <span style="color: Red">*</span>
+        </ion-label>
+        <ion-input type="text" id="locationOfHospital"
+          [class.is-invalid]="locationOfHospital.invalid && locationOfHospital.touched"></ion-input>
+        <div class="text-danger" *ngIf="locationOfHospital.invalid && locationOfHospital.touched">
+          <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['required']">Please enter address of
+            Hospital </small>
+          <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['maxlength']">You have reached your
+            maximum</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="locationOfHospital_mr.value">
+        {{locationOfHospital_mr.value}}
+      </ion-item>
+
+
+
+      <ion-item>
+        <ion-label position="floating">Name of Doctor / डॉक्टरांचे नाव <span style="color: Red">*</span></ion-label>
+        <ion-input type="text" id="nameOfDoctor" [class.is-invalid]="nameOfDoctor.invalid && nameOfDoctor.touched"
+          formControlName="nameOfDoctor" maxlength="120">
+        </ion-input>
+        <div class="text-danger" *ngIf="nameOfDoctor.invalid && nameOfDoctor.touched">
+          <small *ngIf="nameOfDoctor.errors && nameOfDoctor.errors['required']">Please enter Name of Doctor </small>
+          <small *ngIf="nameOfDoctor.errors  && nameOfDoctor.errors['maxlength']">You have reached your maximum</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="nameOfDoctor_mr.value">
+        {{nameOfDoctor_mr.value}}
+      </ion-item>
+
+
+      <ion-item>
+        <ion-icon slot="end" name="calendar"></ion-icon>
+        <ion-label position="floating">Date of Tuboctomy / नसबंदीची तारीख <span style="color: Red">*</span></ion-label>
+        <ion-datetime displayFormat="DD MMMM, YYYY" [class.is-invalid]="dateOfOp.invalid && dateOfOp.touched">
+        </ion-datetime>
+        <div class="text-danger" *ngIf="dateOfOp.errors && dateOfOp.touched">
+          <small>Please enter date of treatment.</small>
+        </div>
+      </ion-item>
+
+
+      <!-- <ion-item>
+              <ion-label position="floating">Name of Daughter / मुलीचे नाव <span style="color: Red">*</span></ion-label>
+              <ion-input type="text" id="nameOfDoctor" [class.is-invalid]="nameOfDoctor.invalid && nameOfDoctor.touched"
+                formControlName="nameOfDoctor" maxlength="120">
+              </ion-input>
+              <div class="text-danger" *ngIf="nameOfDoctor.invalid && nameOfDoctor.touched">
+                <small *ngIf="nameOfDoctor.errors && nameOfDoctor.errors['required']">Please enter Name of Doctor </small>
+                <small *ngIf="nameOfDoctor.errors  && nameOfDoctor.errors['maxlength']">You have reached your maximum</small>
+              </div>
+            </ion-item>
+            <ion-item *ngIf="nameOfDoctor_mr.value">
+              {{nameOfDoctor_mr.value}}
+            </ion-item> -->
+
+      <ion-item>
+        <ion-label position="floating">Aadhar Card of Child / मुलांचे आधार कार्ड <span style="color: Red">*</span>
+        </ion-label>
+        <ion-input type="number" [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" maxlength="12"
+          minlength="12" formControlName="aadharNumber" id="aadharNumber"></ion-input>
+        <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your Aadhar Number.</small>
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['pattern']">Please enter appropriate Aadhar
+            Number.</small>
+        </div>
+      </ion-item>
+
+
+
+      <ion-item>
+        <ion-label position="floating">IFSC Code / आयएफएससी कोड <span style="color: Red">*</span>
+        </ion-label>
+        <ion-input type="text" id="ifscCodeBank" autocapitalize="characters"
+          [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched"></ion-input>
+        <div class="text-danger" *ngIf="ifscCodeBank.invalid && ifscCodeBank.touched">
+          <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['required']">Please enter address of
+            Hospital </small>
+          <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['maxlength']">You have reached your
+            maximum</small>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Bank Name / बँकेचे नाव <span style="color: Red">*</span>
+        </ion-label>
+        <ion-input type="text" id="bankNameBank" [class.is-invalid]="bankNameBank.invalid && bankNameBank.touched">
+        </ion-input>
+        <div class="text-danger" *ngIf="bankNameBank.invalid && bankNameBank.touched">
+          <small *ngIf="bankNameBank.errors && bankNameBank.errors['required']">Please enter address of
+            Hospital </small>
+          <small *ngIf="bankNameBank.errors && bankNameBank.errors['maxlength']">You have reached your
+            maximum</small>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Bank Branch / बँक शाखा<span style="color: Red">*</span>
+        </ion-label>
+        <ion-input type="text" id="bankBranchBank"
+          [class.is-invalid]="bankBranchBank.invalid && bankBranchBank.touched"></ion-input>
+        <div class="text-danger" *ngIf="bankBranchBank.invalid && bankBranchBank.touched">
+          <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['required']">Please enter address of
+            Hospital </small>
+          <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['maxlength']">You have reached your
+            maximum</small>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">>Bank Address / बँकेचा पत्ता<span style="color: Red">*</span>
+        </ion-label>
+        <ion-input type="text" id="bankAddressBank"
+          [class.is-invalid]="bankAddressBank.invalid && bankAddressBank.touched"></ion-input>
+        <div class="text-danger" *ngIf="bankAddressBank.invalid && bankAddressBank.touched">
+          <small *ngIf="bankAddressBank.errors && bankAddressBank.errors['required']">Please enter address of
+            Hospital </small>
+          <small *ngIf="bankAddressBank.errors && bankAddressBank.errors['maxlength']">You have reached your
+            maximum</small>
+        </div>
+      </ion-item>
+      <br>
+      <ion-header><u>DOCUMENTS REQUIRED:-</u></ion-header>
+      <ion-item lines="none">
+        <ion-label text-wrap floating>1. Certificate of family planning given by competent medical authorities
+          / सक्षम वैद्यकीय अधिकाऱ्यांनी दिलेले कुटुंबनियोजन शास्त्रक्रियेबाबतचे प्रमाणपत्र </ion-label>
+      </ion-item>
+      <ion-item>
+        <input id='health3Form3Doc1' formControlName="health3Form3Doc1" type="file" accept="application/pdf">
+        <div class="text-danger" *ngIf="health3Form3Doc1.invalid && health3Form3Doc1.touched">
+          <small> Please Upload Required Document</small>
+        </div>
+      </ion-item>
+
+
+      <ion-item lines="none">
+        <ion-label text-wrap floating>2. Certificate of affirmation, the applicant does not have more than one daughter
+          /
+          अर्जदारास एक कन्या अपत्यापेक्षा जास्त अपत्य नसल्याचा पुरावा - शपथपत्र </ion-label>
+      </ion-item>
+      <ion-item>
+        <input id='health3Form3Doc2' formControlName="health3Form3Doc2" type="file" accept="application/pdf">
+        <div class="text-danger" *ngIf="health3Form3Doc2.invalid && health3Form3Doc2.touched">
+          <small> Please Upload Required Document</small>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label text-wrap floating>3. Aadhar card Document of Selected Child / निवडलेल्या मुलीचे आधार कार्ड कागदपत्र
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <input id='aadharCardDoc' formControlName="aadharCardDoc" type="file" accept="application/pdf">
+        <div class="text-danger" *ngIf="aadharCardDoc.invalid && aadharCardDoc.touched">
+          <small> Please Upload Required Document</small>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label text-wrap floating>4. Self Declaration / हमीपत्र </ion-label>
+      </ion-item>
+      <ion-item>
+        <input id='selfDeclaration' formControlName="selfDeclaration" type="file" accept="application/pdf">
+        <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
+          <small> Please Upload Required Document</small>
+        </div>
+      </ion-item>
+
+      <ion-button mode="ios" expand="block" (click)="save()">Save</ion-button>
+    </ion-list>
+  </form>
 </ion-content>
