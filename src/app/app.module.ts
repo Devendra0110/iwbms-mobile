@@ -31,6 +31,7 @@ import { FormControlDirective } from './directives/form-control.directive';
 import { FamilyModalPageModule } from './family-modal/family-modal.module';
 import { EmployerModalPageModule } from './employer-modal/employer-modal.module';
 import { RenewalService } from './services/renewal.service';
+import { ClaimValidationService } from './services/claim-validation.service';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { RenewalService } from './services/renewal.service';
     UserManagementService,
     AuthGuardService,
     Camera,
+    ClaimValidationService,
 
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

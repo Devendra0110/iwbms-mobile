@@ -1,9 +1,29 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>claimHealth1</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>HEALTH SCHEME NO.1</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="formGroup">
+    <ion-list>
+      <ion-list-header style="font-size:20px">Financial Assistance of Rs. 15,000/- for natural
+        delivery and Rs. 20,000/- for caesarean delivery to the wife of registered male worker and/or
+        to the registered female worker.<br><br>
+        दोन जिवीत अपत्यांपर्यंत नैसर्गिक प्रसूतीसाठी रू.१५,०००/- व शस्त्रक्रियेद्वारे प्रसूतीसाठी रू.२०,०००/</ion-list-header>
 
+        <ion-item>
+          <ion-label position="floating">Child Name / मुलाचे नाव<span class="text-danger">*</span></ion-label>
+          <ion-select formControlName="childrenDetail" [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched" id="childrenDetail" >
+            <ion-select-option></ion-select-option>
+          </ion-select>
+          <div class="text-danger" *ngIf="childrenDetail.invalid && childrenDetail.touched">
+            <small *ngIf="childrenDetail.errors && childrenDetail.errors['required']">Please select a child.</small>
+          </div>
+        </ion-item>
+
+        
+
+    </ion-list>
+  </form>
 </ion-content>
