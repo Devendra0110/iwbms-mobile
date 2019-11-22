@@ -58,15 +58,17 @@
       </ion-item>
 
       <ion-item>
-        <ion-icon slot="end" name="calendar"></ion-icon>
-        <ion-label position="floating">Date of Treatment / उपचाराची तारीख <span style="color: Red">*</span></ion-label>
-        <ion-datetime displayFormat="DD MMMM, YYYY" [class.is-invalid]="dateOfOp.invalid && dateOfOp.touched">
-        </ion-datetime>
-        <div class="text-danger" *ngIf="dateOfOp.errors && dateOfOp.touched">
-          <small>Please enter date of treatment.</small>
-        </div>
-      </ion-item>
-
+          <ion-icon slot="end" name="calendar"></ion-icon>
+          <ion-label position="floating">Date of Treatment / उपचाराची तारीख <span
+              style="color: Red">*</span></ion-label>
+          <ion-datetime displayFormat="DD MMMM, YYYY" formControlName="dateOfOp" id="dateOfOp"
+            [class.is-invalid]="dateOfOp.invalid && dateOfOp.touched">
+          </ion-datetime>
+          <div class="text-danger" *ngIf="dateOfOp.errors && dateOfOp.touched">
+            <small>Please enter appropriate date.</small>
+          </div>
+        </ion-item>
+      
       <ion-item>
         <ion-label position="floating">Name of Doctor / डॉक्टरांचे नाव <span style="color: Red">*</span></ion-label>
         <ion-input type="text" id="nameOfDoctor" [class.is-invalid]="nameOfDoctor.invalid && nameOfDoctor.touched"
@@ -167,6 +169,12 @@
           <small> Please Upload Required Document</small>
         </div>
       </ion-item>
+
+      <ion-item>
+          <ion-checkbox formControlName="verifyDocumentCheck" slot="start" checked="false"></ion-checkbox>
+          <ion-label>Documents Verified / कागदपत्र पडताळले</ion-label>
+        </ion-item>
+        
       <ion-button mode="ios" expand="block" (click)="save()">Save</ion-button>
     </ion-list>
   </form>

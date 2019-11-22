@@ -41,6 +41,7 @@ export class ClaimHealth3Page implements OnInit {
    }
 
   ngOnInit() {
+    console.log(this.locationOfHospital);
   }
 
   //english getters

@@ -53,15 +53,17 @@
       </ion-item>
 
       <ion-item>
-        <ion-icon slot="end" name="calendar"></ion-icon>
-        <ion-label position="floating">Date of Birth / जन्मतारीख <span style="color: Red">*</span></ion-label>
-        <ion-datetime displayFormat="DD MMMM, YYYY"
-          [class.is-invalid]="dateOfDeliveryHealth.invalid && dateOfDeliveryHealth.touched">
-        </ion-datetime>
-        <div class="text-danger" *ngIf="dateOfDeliveryHealth.errors && dateOfDeliveryHealth.touched">
-          <small>Child is born before registration date.</small>
-        </div>
-      </ion-item>
+          <ion-icon slot="end" name="calendar"></ion-icon>
+          <ion-label position="floating">Date of Birth / जन्मतारीख <span
+              style="color: Red">*</span></ion-label>
+          <ion-datetime displayFormat="DD MMMM, YYYY" formControlName="dateOfDeliveryHealth" id="dateOfDeliveryHealth"
+            [class.is-invalid]="dateOfDeliveryHealth.invalid && dateOfDeliveryHealth.touched">
+          </ion-datetime>
+          <div class="text-danger" *ngIf="dateOfDeliveryHealth.errors && dateOfDeliveryHealth.touched">
+            <small>Please enter appropriate date.</small>
+          </div>
+        </ion-item>
+  
 
       <ion-item>
         <ion-label position="floating">Maternity Place / प्रसूतीचे ठिकाण/स्थान <span style="color: Red">*</span>
