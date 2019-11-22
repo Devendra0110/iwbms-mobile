@@ -1,9 +1,152 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>claimHealth2</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>HEALTH SCHEME NO.2</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="formGroup">
+    <ion-list>
+      <ion-list-header style="font-size:20px">Medical Assistance of Rs. 1,00,000/- for the treatment
+        of serious illness for registered worker's and his/her family
+        members.<br>
+        लाभार्थी कामगार व त्यांच्या कुटुंबियांना गंभीर आजाराच्या उपचारार्थ रू.१,००,०००/- (आरोग्यविमा योजना लागू
+        नसल्यासच)</ion-list-header>
 
+      <ion-item>
+        <ion-label position="floating">Select Family Member / कुटुंबातील सदस्य निवडा <span style="color: Red">*</span>
+        </ion-label>
+        <ion-select formControlName="familyDetail" [class.is-invalid]="familyDetail.invalid && familyDetail.touched"
+          id="familyDetail">
+          <ion-select-option>
+          </ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="familyDetail.invalid && familyDetail.touched">
+          <small *ngIf="familyDetail.errors && familyDetail.errors['required']">Please select a Family member.</small>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"> Name of Hospital / रुग्णालयाचे नाव<span style="color: Red">*</span></ion-label>
+        <ion-input type="text" formControlName="nameOfHospital" id="nameOfHospital"
+          [class.is-invalid]="nameOfHospital.invalid && nameOfHospital.touched" maxlength="120"></ion-input>
+          <div class="text-danger" *ngIf="nameOfHospital.invalid && nameOfHospital.touched">
+            <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['required']">Please enter name of
+              Hospital</small>
+            <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['maxlength']">You have reached your
+              maximum</small>
+          </div>
+      </ion-item>    
+        <ion-item *ngIf="nameOfHospital_mr.value">
+          {{nameOfHospital_mr.value}}
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Address of Hospital / रुग्णालयाचे स्थान <span style="color: Red">*</span></ion-label>
+          <ion-input type="text" id="locationOfHospital"
+          [class.is-invalid]="locationOfHospital.invalid && locationOfHospital.touched"></ion-input>
+          <div class="text-danger" *ngIf="locationOfHospital.invalid && locationOfHospital.touched">
+            <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['required']">Please enter address of
+              Hospital </small>
+            <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['maxlength']">You have reached your
+              maximum</small>
+          </div>
+        </ion-item>
+        <ion-item *ngIf="locationOfHospital_mr.value">
+          {{locationOfHospital_mr.value}}
+        </ion-item>
+
+        <ion-item>
+          <ion-icon slot="end" name="calendar"></ion-icon>
+          <ion-label position="floating">Date of Treatment / उपचाराची तारीख <span style="color: Red">*</span></ion-label>
+          <ion-datetime displayFormat="DD MMMM, YYYY"
+            [class.is-invalid]="dateOfOp.invalid && dateOfOp.touched">
+          </ion-datetime>
+          <div class="text-danger" *ngIf="dateOfOp.errors && dateOfOp.touched">
+            <small>Please enter date of treatment.</small>
+          </div>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Name of Doctor / डॉक्टरांचे नाव <span style="color: Red">*</span></ion-label>
+          <ion-input type="text" id="nameOfDoctor"   [class.is-invalid]="nameOfDoctor.invalid && nameOfDoctor.touched" formControlName="nameOfDoctor" maxlength="120">
+          </ion-input>
+          <div class="text-danger" *ngIf="nameOfDoctor.invalid && nameOfDoctor.touched">
+            <small *ngIf="nameOfDoctor.errors && nameOfDoctor.errors['required']">Please enter Name of Doctor </small>
+            <small *ngIf="nameOfDoctor.errors  && nameOfDoctor.errors['maxlength']">You have reached your maximum</small>
+          </div>
+        </ion-item>
+        <ion-item *ngIf="nameOfDoctor_mr.value">
+          {{nameOfDoctor_mr.value}}
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Aadhar Card / आधार कार्ड  <span style="color: Red">*</span></ion-label>
+          <ion-input type="number" [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" maxlength="12" minlength="12" formControlName="aadharNumber" id="aadharNumber"></ion-input>
+          <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your Aadhar Number.</small>
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['pattern']">Please enter appropriate Aadhar
+            Number.</small>
+        </div>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Type of Illness/ आजारपणाचा प्रकार  <span style="color: Red">*</span></ion-label>
+          <ion-select formControlName="typeOfIllness" [class.is-invalid]="typeOfIllness.invalid && typeOfIllness.touched" id="typeOfIllness">
+            <ion-select-option></ion-select-option>
+          </ion-select>
+          <div class="text-danger" *ngIf="typeOfIllness.invalid && typeOfIllness.touched">
+            <small *ngIf="typeOfIllness.errors && typeOfIllness.errors['required']">Please select type of Illness</small>
+          </div>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label position="floating">Bill Amount / बिल रक्कम  <span style="color: Red">*</span></ion-label>
+          <ion-input type="number"  id="billAmount" maxlength="8"
+          [class.is-invalid]="billAmount.invalid && billAmount.touched" formControlName="billAmount"></ion-input>
+          <div class="text-danger" *ngIf="billAmount.invalid && billAmount.touched">
+              <small *ngIf="billAmount.errors && billAmount.errors['required']">Please enter your amount.</small>
+            </div>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Benefit Amount / मोबदला रक्कम   <span style="color: Red">*</span></ion-label>
+            <ion-input type="number"  id="benefitAmount" 
+            [class.is-invalid]="benefitAmount.invalid && benefitAmount.touched" formControlName="benefitAmount"></ion-input>
+            <div class="text-danger" *ngIf="benefitAmount.invalid && benefitAmount.touched">
+                <small *ngIf="benefitAmount.errors && benefitAmount.errors['required']">Please enter your amount.</small>
+              </div>
+          </ion-item>
+          <br>
+
+          <ion-header><u>DOCUMENTS REQUIRED:-</u></ion-header>
+          <ion-item lines="none">
+            <ion-label text-wrap floating>1. Certificate issued by Civil Surgeon about illness / सक्षम वैद्यकीय
+                अधिका-यांनी आजार असल्याबाबत दिलेले प्रमाणपत्र </ion-label>
+          </ion-item>
+          <ion-item>
+              <input id='health2Form2Doc1' formControlName="health2Form2Doc1" type="file" accept="application/pdf">
+              <div class="text-danger" *ngIf="health2Form2Doc1.invalid && health2Form2Doc1.touched">
+                <small> Please Upload Required Document</small>
+              </div>
+            </ion-item>
+
+  
+
+
+
+
+
+
+
+
+
+
+    </ion-list>
+
+
+
+
+  </form>
 </ion-content>

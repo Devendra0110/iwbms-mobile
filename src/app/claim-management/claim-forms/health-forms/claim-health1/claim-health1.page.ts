@@ -15,6 +15,7 @@ export class ClaimHealth1Page implements OnInit {
     private validationService:ClaimValidationService,
   ) { 
     this.formGroup = new FormGroup({
+
       //english formcontrols
       aadharNumber: new FormControl('', [Validators.maxLength(12), Validators.minLength(12), Validators.pattern('^[0-9]*\.?[0-9]{0,2}$')]),
       childrenDetail: new FormControl('', this.validationService.createValidatorsArray('childrenDetail')),
@@ -68,5 +69,8 @@ export class ClaimHealth1Page implements OnInit {
   get nameOfCertificateIssuer_mr() { return this.formGroup.get('nameOfCertificateIssuer_mr'); }
   get addressOfDelivery_mr() { return this.formGroup.get('addressOfDelivery_mr'); }
 
+  save(){
+    
+  }
 
 }
