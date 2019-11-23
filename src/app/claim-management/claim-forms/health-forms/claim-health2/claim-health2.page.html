@@ -44,7 +44,7 @@
       <ion-item>
         <ion-label position="floating">Address of Hospital / रुग्णालयाचे स्थान <span style="color: Red">*</span>
         </ion-label>
-        <ion-input type="text" id="locationOfHospital"
+        <ion-input type="text" formControlName="locationOfHospital" id="locationOfHospital"
           [class.is-invalid]="locationOfHospital.invalid && locationOfHospital.touched"></ion-input>
         <div class="text-danger" *ngIf="locationOfHospital.invalid && locationOfHospital.touched">
           <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['required']">Please enter address of

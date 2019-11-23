@@ -10,6 +10,7 @@ import { ClaimValidationService } from 'src/app/services/claim-validation.servic
 export class ClaimHealth1Page implements OnInit {
 
   public formGroup: FormGroup;
+  public schemeDetails:any;
 
   constructor(
     private validationService: ClaimValidationService,
@@ -17,7 +18,7 @@ export class ClaimHealth1Page implements OnInit {
     this.formGroup = new FormGroup({
 
       //english formcontrols
-      aadharNumber: new FormControl('', [Validators.maxLength(12), Validators.minLength(12), Validators.pattern('^[0-9]*\.?[0-9]{0,2}$')]),
+      aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),
       childrenDetail: new FormControl('', this.validationService.createValidatorsArray('childrenDetail')),
       genderPersonal: new FormControl('', this.validationService.createValidatorsArray('genderPersonal')),
       dateOfDeliveryHealth: new FormControl('', this.validationService.createValidatorsArray('dateOfDeliveryHealth')),
@@ -44,6 +45,22 @@ export class ClaimHealth1Page implements OnInit {
   }
 
   ngOnInit() {
+
+    // this.typeOfDelivery.valueChanges.subscribe(value => {
+    //   const benefitAmount = JSON.parse(this.schemeDetails.benefit_amount);
+    //   if (value.trim === "Normal Delivery / नैसर्गिक प्रसूती".trim && this.schemeDetails.benefit_type === 'cash') {
+    //     this.benefitAmount.patchValue(benefitAmount[0].natural);
+    //   } else if (value.trim === "Caesarean Delivery / शस्त्रक्रियाद्वारे प्रसूती".trim && this.schemeDetails.benefit_type === 'cash') {
+    //     this.benefitAmount.patchValue(benefitAmount[0].caesarean);
+    //   }
+    // });
+    // this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    // this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
+    //   if (eachFamily.category === 'children') {
+    //     return eachFamily;
+    //   }
+    // });
+
   }
 
   // english getters

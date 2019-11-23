@@ -25,18 +25,14 @@
           <small *ngIf="childrenDetail.errors && childrenDetail.errors['required']">Please select a child.</small>
         </div>
       </ion-item>
-
       <ion-item>
-        <ion-label position="floating">Aadhar Card Number / आधार कार्ड क्रमांक<span style="color: Red">*</span>
-        </ion-label>
-        <ion-input type="number" id="aadharNumber" minlength="12" maxlength="12"
-          [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" formControlName="aadharNumber" clearInput>
-        </ion-input>
+        <ion-label position="floating">Aadhar Card Number / आधार कार्ड क्रमांक<span style="color: Red">*</span></ion-label>
+        <ion-input type="number" [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" maxlength="12"
+          minlength="12" formControlName="aadharNumber" id="aadharNumber"></ion-input>
         <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
-          <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your aadhar card number.</small>
-          <small *ngIf="aadharNumber.errors && aadharNumber.errors['maxlength']">You have reached your maximum.</small>
-          <small *ngIf="aadharNumber.errors && aadharNumber.errors['minlength']">Please enter appropriate aadhar card
-            number.</small>
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your Aadhar Number.</small>
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['pattern']">Please enter appropriate Aadhar
+            Number.</small>
         </div>
       </ion-item>
 
