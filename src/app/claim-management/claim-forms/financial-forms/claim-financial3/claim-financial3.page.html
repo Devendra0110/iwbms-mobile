@@ -7,13 +7,13 @@
 <ion-content>
   <form [formGroup]="formGroup">
     <ion-list>
-      <ion-list-header style="font-size:20px">reimbursement /Financial assistance on the interest amounting upto Rs.6
+      <ion-header class="ml-2" style="font-size:18px">reimbursement /Financial assistance on the interest amounting upto Rs.6
         lakhs or discount
         of Rs.2 lakhs
         on the loan taken from a bank for purchasing or contstructing a house.<br>
         घरखरेदी किंवा घरबांधणीकरता बँकेकडून घेतलेल्या गृहकर्जावरील रू.६ लक्ष पर्यतच्या व्याजाची रक्कम अथवा रू.२ लक्ष
         अनुदान.
-      </ion-list-header>
+      </ion-header>
       <ion-item>
         <ion-label position="floating">Amount of Loan / कर्जाची रक्कम<span class="text-danger">*</span></ion-label>
         <ion-input type="number" [class.is-invalid]="amtOfLoan.invalid && amtOfLoan.touched"
@@ -77,8 +77,8 @@
     </ion-list>
 
     <ion-list>
-      <ion-list-header style="font-size:20px">DOCUMENTS REQUIRED:
-      </ion-list-header>
+      <ion-header class="ml-2" style="font-size:18px"><b><u>DOCUMENTS REQUIRED:</u></b>
+      </ion-header>
 
       <ion-item lines="none">
         <ion-label text-wrap floating>1. Loan document from nationalized bank / राष्ट्रीयकृत बँकेत कर्ज घेतल्याचा

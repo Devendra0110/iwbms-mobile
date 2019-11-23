@@ -1,4 +1,5 @@
 <ion-header>
+<<<<<<< Updated upstream
   <ion-toolbar color="primary">
     <ion-title>EDUCATIONAL SCHEME NO.7</ion-title>
   </ion-toolbar>
@@ -124,6 +125,169 @@
       <div class="text-danger" *ngIf="insEmail.invalid && insEmail.touched">
         <small *ngIf="insEmail.errors && insEmail.errors['required']">Please enter your institute's email id.</small>
         <small *ngIf="insEmail.errors && insEmail.errors['maxlength']">You have reached your maximum.</small>
+=======
+    <ion-toolbar color="primary">
+      <ion-title>EDUCATIONAL SCHEME NO.7</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <form [formGroup]="formGroup">
+      <ion-header style="font-size:18px">Reimbursement of the MS-CIT course fees to two children of
+          registered worker.<br>नोंदणीकृत कामगाराच्या पहिल्या दोन पाल्यांना संगणकाचे शिक्षण MSCIT करिता शुल्काची
+          प्रतिपूर्ती.
+      </ion-header>
+  
+      <ion-item>
+        <ion-label position="floating">Name / नाव<span class="text-danger">*</span></ion-label>
+        <ion-select formControlName="childrenDetail" id="childrenDetail"
+          [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched">
+          <ion-select-option>
+          </ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="childrenDetail.invalid && childrenDetail.touched">
+          <small *ngIf="childrenDetail.errors && childrenDetail.errors['required']">Please select a family member.</small>
+        </div>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Aadhar Card Number / आधार कार्ड क्रमांक <span class="text-danger">*</span>
+        </ion-label>
+        <ion-input type="number" formControlName="aadharNumber" id="aadharNumber" minlength="12" maxlength="12"
+          [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" clearInput>
+        </ion-input>
+        <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your aadhar card
+            number.</small>
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['maxlength']">Please enter appropriate aadhar card
+            number.</small>
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['minlength']">Please enter appropriate aadhar card
+            number.</small>
+        </div>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Age / वय <span class="text-danger">*</span></ion-label>
+        <ion-input type="number" formControlName="age" id="age" minlength="2" maxlength="2"
+          [class.is-invalid]="age.invalid && age.touched" clearInput>
+        </ion-input>
+        <div class="text-danger" *ngIf="age.invalid && age.touched">
+          <small *ngIf="age.errors && age.errors['required']">Please enter your age.</small>
+        </div>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Institute Name /<br> संस्थेचे नाव<span class="text-danger">*</span>
+        </ion-label>
+        <ion-input formControlName="institute" id="institute" maxlength="100" clearInput
+          [class.is-invalid]="institute.invalid && institute.touched">
+        </ion-input>
+        <div class="text-danger" *ngIf="institute.invalid && institute.touched">
+          <small *ngIf="institute.errors && institute.errors['required']">Please enter your institute's name.</small>
+          <small *ngIf="institute.errors && institute.errors['maxlength']">You have reached your maximum.</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="institute_mr.value">
+        <ion-label>{{institute_mr.value}}</ion-label>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Address of Institute /<br> संस्थेचा पत्ता<span class="text-danger">*</span>
+        </ion-label>
+        <ion-input formControlName="placeInstitute" id="placeInstitute" minlength="10" maxlength="240"
+          [class.is-invalid]="placeInstitute.invalid && placeInstitute.touched" clearInput>
+        </ion-input>
+        <div class="text-danger" *ngIf="placeInstitute.invalid && placeInstitute.touched">
+          <small *ngIf="placeInstitute.errors && placeInstitute.errors['required']">Please enter your institute's
+            address.</small>
+          <small *ngIf="placeInstitute.errors && placeInstitute.errors['maxlength']">You have reached your maximum.</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="placeInstitute_mr.value">
+        <ion-label>{{placeInstitute_mr.value}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+          <ion-label position="floating">Registration Number of Institute/<br> ससंस्थेचा नोंदणी क्रमांक<span class="text-danger">*</span>
+          </ion-label>
+          <ion-input formControlName="regNoInstitute" id="regNoInstitute" maxlength="100" clearInput
+            [class.is-invalid]="regNoInstitute.invalid && regNoInstitute.touched">
+          </ion-input>
+          <div class="text-danger" *ngIf="regNoInstitute.invalid && regNoInstitute.touched">
+            <small *ngIf="regNoInstitute.errors && regNoInstitute.errors['required']">Please enter your registration number of institute.</small>
+            <small *ngIf="regNoInstitute.errors && regNoInstitute.errors['maxlength']">You have reached your maximum.</small>
+          </div>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Registration Authority Name/<br> नोंदणी प्राधिकरणाचे नाव<span class="text-danger">*</span>
+            </ion-label>
+            <ion-input formControlName="regAuthName" id="regAuthName" maxlength="100" clearInput
+              [class.is-invalid]="regAuthName.invalid && regAuthName.touched">
+            </ion-input>
+            <div class="text-danger" *ngIf="regAuthName.invalid && regAuthName.touched">
+              <small *ngIf="regAuthName.errors && regAuthName.errors['required']">Please enter your registration authority's name.</small>
+              <small *ngIf="regAuthName.errors && regAuthName.errors['maxlength']">You have reached your maximum.</small>
+            </div>
+          </ion-item>
+          <ion-item *ngIf="regAuthName_mr.value">
+            <ion-label>{{regAuthName_mr.value}}</ion-label>
+          </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Institute Email ID /<br> संस्थेचे इमेल आयदी <span
+            class="text-danger">*</span>
+        </ion-label>
+        <ion-input type="email" formControlName="insEmail" id="insEmail" maxlength="100"
+          [class.is-invalid]="insEmail.invalid && insEmail.touched" clearInput>
+        </ion-input>
+        <div class="text-danger" *ngIf="insEmail.invalid && insEmail.touched">
+          <small *ngIf="insEmail.errors && insEmail.errors['required']">Please enter your institute's email id.</small>
+          <small *ngIf="insEmail.errors && insEmail.errors['maxlength']">You have reached your maximum.</small>
+        </div>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Institute Phone Number /<br> संस्थेचा फोन नंबर <span
+            class="text-danger">*</span>
+        </ion-label>
+        <ion-input type="number" formControlName="insPhNo" id="insPhNo" maxlength="100"
+          [class.is-invalid]="insPhNo.invalid && insPhNo.touched" clearInput>
+        </ion-input>
+        <div class="text-danger" *ngIf="insPhNo.invalid && insPhNo.touched">
+          <small *ngIf="insPhNo.errors && insPhNo.errors['required']">Please enter your institute's phone number.</small>
+          <small *ngIf="insPhNo.errors && insPhNo.errors['maxlength']">You have reached your maximum.</small>
+          <small *ngIf="insPhNo.errors && insPhNo.errors['maxlength']">Enter appropriate phone number.</small>
+        </div>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Passing Year / उत्तीर्ण झाल्याचे वर्ष<span class="text-danger">*</span></ion-label>
+        <ion-datetime formControlName="year" id="year"
+          [class.is-invalid]="year.invalid && year.touched">
+        </ion-datetime>
+        <div class="text-danger" *ngIf="year.invalid && year.touched">
+          <small *ngIf="year.errors && year.errors['required']">Please enter your passing year.</small>
+        </div>
+      </ion-item>
+      <br>
+  
+      <ion-item>
+        <ion-label style="font-size:15px">DOCUMENTS REQUIRED:-</ion-label><br>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>1. Passing certificate / marksheet of the previous academic year /<br> मागील शैक्षणिक वर्षात
+          उत्तीर्ण झाल्याचे प्रमाणपत्र / गुणपत्रिका</ion-label>
+      </ion-item>
+      <ion-item>
+        <input formControlName="certificates" id="certificates" type="file" accept="application/pdf"
+          [class.is-invalid]="certificates.invalid && certificates.touched">
+      </ion-item>
+      <div class="text-danger" *ngIf="certificates.invalid && certificates.touched">
+        <small *ngIf="certificates.errors && certificates.errors['required']">Please upload required
+          document.</small>
+>>>>>>> Stashed changes
       </div>
     </ion-item>
 
