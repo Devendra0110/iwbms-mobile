@@ -7,10 +7,10 @@
 <ion-content>
   <form [formGroup]="formGroup">
     <ion-list>
-      <ion-list-header style="font-size:20px">Financial Assistance of Rs. 2,00,000/- to the registered worker in case of
+      <ion-header style="font-size:18px" class="ml-2">Financial Assistance of Rs. 2,00,000/- to the registered worker in case of
         75% or more permanent disability.
         <br><br>
-        ७५% अपंगत्व आल्यास रू.२,००,०००/</ion-list-header>
+        ७५% अपंगत्व आल्यास रू.२,००,०००/</ion-header>
 
       <ion-item>
         <ion-label position="floating">Name Of Civil Surgeon / वैद्यकीय अधिकाऱ्याचे नाव<span style="color: Red">*</span>
@@ -73,7 +73,7 @@
         {{typeOfDisability_mr.value}}
       </ion-item>
       <br>
-      <ion-header><u>DOCUMENTS REQUIRED:-</u></ion-header>
+      <ion-header class="ml-2"><b><u>DOCUMENTS REQUIRED:-</u></b></ion-header>
       <ion-item lines="none">
         <ion-label text-wrap floating>1. Certificate from a Civil Surgeon / board with 75% disability. <br> ७५% अपंगत्व
           असल्याचे सक्षम वैद्यकीय अधिकारी/मंडळाचे प्रमाणपत्र </ion-label>
