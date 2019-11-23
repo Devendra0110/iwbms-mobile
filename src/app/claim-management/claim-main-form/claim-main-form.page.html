@@ -12,6 +12,7 @@
   <form [formGroup]="claimMainForm">
     <ion-list>
       <ion-header color="primary">APPLICANT'S DETAILS / अर्जदार बँक तपशील</ion-header>
+      <img *ngIf="uploadedImageUrl" alt="Photo" [src]="uploadedImageUrl" width="275px" height="275px">
       <ion-item >
         <ion-icon slot="end" name="calendar"></ion-icon>
         <ion-label position="floating"> Registration Date</ion-label>
@@ -180,12 +181,19 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Select Scheme / योजना निवडा</ion-label>
-          <ion-select  [class.is-invalid]="selectScheme.invalid && selectScheme.touched"
-            formControlName="selectScheme" id="selectScheme" interface="action-sheet">
-            <ion-select-option *ngFor="let each of commonClaimArray" [disabled]="!each.eligibility" class="select-scheme" [value]="each.scheme_number">{{each.scheme_number}}-{{each.scheme_name}}</ion-select-option>
+          <ion-select text-wrap [class.is-invalid]="selectScheme.invalid && selectScheme.touched"
+            formControlName="selectScheme" id="selectScheme" >
+            <ion-select-option *ngFor="let each of commonClaimArray" class="select-scheme" [value]="each.scheme_number">{{each.scheme_number}}-{{each.scheme_name}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>
+      <ion-list  *ngIf="selectScheme.value">
+        <ion-item *ngIf="selectScheme.value === 'S01'"> 
+          <app-claim-social1 [filledFormData]="claimData" [user]="formUserInfo"   [familyDetailsArray]="familyDetailsArray" ></app-claim-social1>
+        </ion-item>
+
+      </ion-list>
+
     </ion-list>
 
   </form>

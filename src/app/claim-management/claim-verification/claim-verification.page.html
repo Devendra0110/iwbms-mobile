@@ -17,6 +17,19 @@
           <ion-label position="floating"> BOCW Registration No.</ion-label>
           <ion-input (ionChange)="clearErrors()" maxlength='14' formControlName="registrationNo" clearInput>
           </ion-input>
+          <div class="text-danger" *ngIf="registrationNo.invalid && registrationNo.touched">
+            <small *ngIf="!!registrationNo.errors?.required">Please enter your BOCW Registration No.</small>
+            <small *ngIf="!!registrationNo.errors?.pattern">Please enter appropriate registration number.</small>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Mobile Number / दूरध्वनी क्रमांक</ion-label>
+          <ion-input (ionChange)="clearErrors()" type="tel" maxlength='10' id="mobileNo" formControlName="mobileNo" clearInput>
+          </ion-input>
+          <div class="text-danger" *ngIf="mobileNo.invalid && mobileNo.touched">
+            <small *ngIf="!!mobileNo.errors?.required">Please enter your Mobile No.</small>
+            <small *ngIf="!!mobileNo.errors?.pattern">Please enter appropriate Mobile Number.</small>
+          </div>
         </ion-item>
         <ion-button style="margin-top: 16px;" mode="ios" expand="block" (click)="verify()">Verify</ion-button>
         <ion-item *ngIf="unregisteredUser">

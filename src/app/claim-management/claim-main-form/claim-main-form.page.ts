@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import * as _ from 'lodash';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,7 +12,9 @@ import { TransliterationService } from '../../services/transliteration.service';
 import { HttpService } from '../../services/http.service';
 import { ClaimService } from '../../services/claim.service';
 import { UserInfo, SchemeID } from '../../../assets/common.interface';
+import { serverUrl } from '../../../assets/config'
 import { Observable } from 'rxjs';
+import { UserManagementService } from 'src/app/services/user-management.service';
 
 @Component({
   selector: 'app-claim-main-form',
@@ -21,6 +24,7 @@ import { Observable } from 'rxjs';
 export class ClaimMainFormPage implements OnInit {
 
   public JWTToken: any;
+  public BocwID:any;
   public message: string;
   public open: boolean;
   public endDateFordobPersonal: any;
@@ -70,6 +74,7 @@ export class ClaimMainFormPage implements OnInit {
 
   constructor(
     private validationService: ValidationService,
+    private userManagementService:UserManagementService,
     private transliterate: TransliterationService,
     private claimHttpService: ClaimService,
     private httpService: HttpService,
@@ -84,13 +89,20 @@ export class ClaimMainFormPage implements OnInit {
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
 
-    // re-route to homepage if not logged-in
-    // this.storage.get('token').then((val) => {
-    //   if (val === null)
-    //     this.router.navigate(['/home']);
-    //   else
-    //     this.JWTToken = val;
-    // });
+
+    this.route.queryParams.subscribe(params=>{
+      if (this.router.getCurrentNavigation().extras.state) {
+        const userData = this.router.getCurrentNavigation().extras.state
+        this.claimMainForm.patchValue(userData)
+        this.BocwID = userData.bocw_id;
+        this.JWTToken = userData.JWTToken;
+        this.calculateAge();
+      } else {
+        this.router.navigate(['claim-management/claim-verification']);
+      }
+    })
+
+    this.formUserInfo = {};
 
     // fetch the list of gender from database
     this.httpService.getGenders().subscribe((genderArrObj: any) => {
@@ -186,8 +198,33 @@ export class ClaimMainFormPage implements OnInit {
     this.selectScheme.valueChanges.subscribe(value => {
       this.onSelectSchemeChange(value);
     });
-    this.getClaimDetails();
+    this.setInputDetails();
   }
+
+    setInputDetails(){
+      try{
+        const allFormControls = this.claimMainForm.controls;
+        this.getClaimDetails();
+        this.getClaimEligibility(this.registration_no.value);
+        this.userManagementService.getUserById(this.registration_no.value, this.JWTToken).subscribe(userInfo => {
+          this.applicantRegistrationDetails = userInfo[0];
+          this.familyDetailsArray = userInfo[0].family_details;
+          const requiredUserInfo: Array<string> = Object.keys(allFormControls);
+          this.formUserInfo = _.pick(userInfo[0], requiredUserInfo);
+          this.formUserInfo['bocw_id'] = userInfo[0]['bocw_id'];
+          // Object.assign(this.formUserInfo, this.convertIntoJSDate(_.pick(userInfo[0], ['dobPersonal', 'registrationDatePersonal'])));
+          this.claimMainForm.patchValue(this.formUserInfo);
+          this.uploadedImageUrl = `${serverUrl}bocw-registration/getfile/${userInfo[0].applicantPhotoFile}?x-access-token=${this.JWTToken}`;
+          console.log(this.uploadedImageUrl);
+          this.calculateAge();
+        }, error => {
+          console.log(error);
+        });
+      } catch(error){
+        console.log(error)
+      }
+
+    }
 
   getClaimDetails() {
     this.claimHttpService.getSchemeCat(this.JWTToken).subscribe((data: any) => {
@@ -243,7 +280,7 @@ export class ClaimMainFormPage implements OnInit {
     this.claimMainForm.get('dobPersonal').patchValue(dob, { emitEvent: false });
     const age = moment().diff(dob, 'years');
     if (age > 17 && age < 61) {
-      this.claimMainForm.get('age').setValue(age);
+      this.claimMainForm.get('agePersonal').setValue(age);
     } else {
       this.dialogs.alert('Applicant age should be greater than 18 and less than 60 ');
       alert('Applicant age should be greater than 18 and less than 60 ');
@@ -251,6 +288,7 @@ export class ClaimMainFormPage implements OnInit {
       this.claimMainForm.get('dobPersonal').setValue('');
     }
   }
+
 
   getFileDetails(event) {
     // for (let i = 0; i < event.target.files.length; i++) {

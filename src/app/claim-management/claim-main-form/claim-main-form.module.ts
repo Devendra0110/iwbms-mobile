@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
+import { ClaimSocial1Page } from '../claim-forms/social-forms/claim-social1/claim-social1.page';
 import { ClaimMainFormPage } from './claim-main-form.page';
 
 const routes: Routes = [
@@ -22,6 +23,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ClaimMainFormPage]
+  declarations: [ClaimSocial1Page, ClaimMainFormPage],
 })
 export class ClaimMainFormPageModule {}

@@ -35,7 +35,8 @@ export class ClaimVerificationPage implements OnInit {
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
     this.claimVerificationForm = new FormGroup({
-      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^(MH)\\d{12}$')])
+      registrationNo: new FormControl('MH111050000001', [Validators.required, Validators.pattern('^(MH)\\d{12}$')]),
+      mobileNo: new FormControl('7340121356',this.validationService.createValidatorsArray('mobile'))
     });
 
     this.storage.get('token').then((val) => {
@@ -60,6 +61,10 @@ export class ClaimVerificationPage implements OnInit {
   }
 
   verify() {
+    const tokenObj ={
+      registrationNo:this.registrationNo.value,
+      mobileNo:this.mobileNo.value
+    }
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
@@ -71,16 +76,17 @@ export class ClaimVerificationPage implements OnInit {
         }).then((res) => {
           res.present();
         });
-        this.claimService.checkRegistrationAndRenewalValidity(this.registrationNo.value, this.JWTToken).subscribe(
+        this.claimService.checkRegistrationAndRenewalValidity(tokenObj, this.JWTToken).subscribe(
           (res: any) => {
             if (res.subscription === 'active') {
               console.log(res.firstNamePersonal + ' ' + res.lastNamePersonal);
+              res['JWTToken']=this.JWTToken;
+              delete res.agePersonal
+              console.log(res);
               const userObject: NavigationExtras = {
-                state: {
-                  userData: res,
-                }
+                state: res
               }
-              this.router.navigate(['/claim-main-form'], userObject);
+              this.router.navigate(['/claim-management/claim-main-form'], userObject);
             } else {
               this.dialogs.alert('Worker is not eligible.')
               this.ineligible = true
@@ -100,6 +106,7 @@ export class ClaimVerificationPage implements OnInit {
     }
   }
   get registrationNo() { return this.claimVerificationForm.get('registrationNo'); }
+  get mobileNo() { return this.claimVerificationForm.get('mobileNo'); }
 
 
 }
