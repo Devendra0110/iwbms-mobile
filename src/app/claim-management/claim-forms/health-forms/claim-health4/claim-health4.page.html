@@ -15,7 +15,7 @@
       <ion-item>
         <ion-label position="floating">Name Of Civil Surgeon / वैद्यकीय अधिकाऱ्याचे नाव<span style="color: Red">*</span>
         </ion-label>
-        <ion-input type="text" formControlName="nameOfMed" id="nameOfMed"
+        <ion-input (ionBlur)="transliterateValue($event)" type="text" formControlName="nameOfMed" id="nameOfMed"
           [class.is-invalid]="nameOfMed.invalid && nameOfMed.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="nameOfMed.invalid && nameOfMed.touched">
           <small *ngIf="nameOfMed.errors && nameOfMed.errors['required']">Please enter name of
@@ -31,7 +31,7 @@
       <ion-item>
         <ion-label position="floating">Address of Hospital / रुग्णालयाचे स्थान <span style="color: Red">*</span>
         </ion-label>
-        <ion-input type="text" formControlName="locationOfHospital" id="locationOfHospital"
+        <ion-input (ionBlur)="transliterateValue($event)" type="text" formControlName="locationOfHospital" id="locationOfHospital"
           [class.is-invalid]="locationOfHospital.invalid && locationOfHospital.touched"></ion-input>
         <div class="text-danger" *ngIf="locationOfHospital.invalid && locationOfHospital.touched">
           <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['required']">Please enter address of
@@ -60,7 +60,7 @@
       <ion-item>
         <ion-label position="floating"> Type of Disability / अपंगत्वाचा प्रकार <span style="color: Red">*</span>
         </ion-label>
-        <ion-input type="text" formControlName="typeOfDisability" id="typeOfDisability"
+        <ion-input (ionBlur)="transliterateValue($event)" type="text" formControlName="typeOfDisability" id="typeOfDisability"
           [class.is-invalid]="typeOfDisability.invalid && typeOfDisability.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="typeOfDisability.invalid && typeOfDisability.touched">
           <small *ngIf="typeOfDisability.errors && typeOfDisability.errors['required']">Please enter name of

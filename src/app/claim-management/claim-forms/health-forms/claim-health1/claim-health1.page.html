@@ -17,8 +17,9 @@
         <ion-label position="floating">Child Name / मुलाचे नाव<span class="text-danger">*</span></ion-label>
         <ion-select formControlName="childrenDetail"
           [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched" id="childrenDetail">
-          <ion-select-option>
-
+          <ion-select-option *ngFor="let childObject of childArray; let childArrayIndex = index" [disabled]="childArrayIndex > 1"
+            [value]="childObject['family_detail_id']">{{childObject['firstNameFamily']}} {{childObject['surname']}} /
+            {{childObject['firstNameFamily_mr']}} {{childObject['surname_mr']}}>
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="childrenDetail.invalid && childrenDetail.touched">
@@ -40,7 +41,8 @@
         <ion-label position="floating">Gender / लिंग<span style="color: Red">*</span></ion-label>
         <ion-select formControlName="genderPersonal" id="genderPersonal"
           [class.is-invalid]="genderPersonal.invalid && genderPersonal.touched">
-          <ion-select-option>
+          <ion-select-option  *ngFor="let genderObject of genderPersonalArray" [value]="genderObject['gender_id']">
+            {{genderObject['gender']}} / {{genderObject['gender_mr']}}>
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="genderPersonal.invalid && genderPersonal.touched">
@@ -52,7 +54,7 @@
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Date of Birth / जन्मतारीख <span
               style="color: Red">*</span></ion-label>
-          <ion-datetime displayFormat="DD MMMM, YYYY" formControlName="dateOfDeliveryHealth" id="dateOfDeliveryHealth"
+          <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMMM, YYYY" formControlName="dateOfDeliveryHealth" id="dateOfDeliveryHealth"
             [class.is-invalid]="dateOfDeliveryHealth.invalid && dateOfDeliveryHealth.touched">
           </ion-datetime>
           <div class="text-danger" *ngIf="dateOfDeliveryHealth.errors && dateOfDeliveryHealth.touched">
@@ -77,7 +79,7 @@
 
       <ion-item>
         <ion-label position="floating">Name of Hospital / रुग्णालयाचे नाव<span style="color: Red">*</span></ion-label>
-        <ion-input clearInput type="text" formControlName="nameOfHospital" id="nameOfHospital"
+        <ion-input (ionBlur)="transliterateValue($event)" clearInput type="text" formControlName="nameOfHospital" id="nameOfHospital"
           [class.is-invalid]="nameOfHospital.invalid && nameOfHospital.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="nameOfHospital.invalid && nameOfHospital.touched">
           <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['required']">Please enter name of
@@ -95,7 +97,7 @@
       <ion-item>
         <ion-label position="floating">Address of Delivery / प्रसूतीचा पत्ता<span style="color: Red">*</span>
         </ion-label>
-        <ion-input type="text" formControlName="addressOfDelivery" id="addressOfDelivery"
+        <ion-input (ionBlur)="transliterateValue($event)" type="text" formControlName="addressOfDelivery" id="addressOfDelivery"
           [class.is-invalid]="addressOfDelivery.invalid && addressOfDelivery.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="addressOfDelivery.invalid && addressOfDelivery.touched">
           <small *ngIf="addressOfDelivery.errors &&addressOfDelivery.errors['required']">Please enter Address of
@@ -115,7 +117,7 @@
         </ion-label>
         <ion-select formControlName="typeOfDelivery"
           [class.is-invalid]="typeOfDelivery.invalid && typeOfDelivery.touched" id="typeOfDelivery">
-          <ion-select></ion-select>
+          <ion-select-option *ngFor="let list of Delivery" [value]="list.type">{{list.type}}></ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="typeOfDelivery.invalid && typeOfDelivery.touched">
           <small *ngIf="typeOfDelivery.errors && typeOfDelivery.errors['required']">Please select method of
@@ -146,7 +148,7 @@
         <ion-select formControlName="birthCertificateIssuedBy"
           [class.is-invalid]="birthCertificateIssuedBy.invalid && birthCertificateIssuedBy.touched"
           id="birthCertificateIssuedBy">
-          <ion-select-option>
+          <ion-select-option *ngFor="let list of issuedBy" [value]="list.type">{{ list.type }}>
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="birthCertificateIssuedBy.invalid && birthCertificateIssuedBy.touched">
@@ -158,7 +160,7 @@
       <ion-item>
         <ion-label position="floating">Name Of Birth Certificate Issuer Authority / जन्म प्रमाणपत्र जारी करणार्‍याचे
           नाव<span style="color: Red">*</span></ion-label>
-        <ion-input formControlName="nameOfCertificateIssuer" id="nameOfCertificateIssuer"
+        <ion-input (ionBlur)="transliterateValue($event)" formControlName="nameOfCertificateIssuer" id="nameOfCertificateIssuer"
           [class.is-invalid]="nameOfCertificateIssuer.invalid && nameOfCertificateIssuer.touched" maxlength="120">
         </ion-input>
         <div class="text-danger" *ngIf="nameOfCertificateIssuer.invalid && nameOfCertificateIssuer.touched">
