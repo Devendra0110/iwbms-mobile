@@ -1,45 +1,67 @@
+import { Storage } from '@ionic/storage';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
+import { Toast } from '@ionic-native/toast/ngx';
+import { Router } from '@angular/router';
+import { TransliterationService } from './../../../../services/transliteration.service';
+import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormControlDirective, FormGroup, Validators } from '@angular/forms';
 import { ClaimValidationService } from 'src/app/services/claim-validation.service';
+import { ClaimService } from 'src/app/services/claim.service';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-claim-financial3',
   templateUrl: './claim-financial3.page.html',
   styleUrls: ['./claim-financial3.page.scss'],
 })
-export class ClaimFinancial3Page implements OnInit {
+export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
+  public maxTodaysDate : string;
 
-  constructor(private validationService: ClaimValidationService) {
-  this.formGroup = new FormGroup({
-    // english
-    bankNameBank: new FormControl('', this.validationService.createValidatorsArray('bankNameBank')),
-    bankBranchBank: new FormControl('', this.validationService.createValidatorsArray('bankBranchBank')),
-    amtOfLoan: new FormControl('', this.validationService.createValidatorsArray('amtOfLoan')),
-    // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
-    loanDate: new FormControl('', this.validationService.createValidatorsArray('loanDate')),
-    loanPeriod: new FormControl('', this.validationService.createValidatorsArray('loanPeriod')),
-    verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+  constructor(
+    private validationService: ClaimValidationService,
+    protected transliterate: TransliterationService,
+    protected httpService: HttpService,
+    protected claimService: ClaimService,
+    protected router: Router,
+    protected storage: Storage,
+    protected toast: Toast,
+    private dialogs: Dialogs, ) {
+    super(transliterate, httpService, claimService, router, storage, toast);
+
+    this.formGroup = new FormGroup({
+      // english
+      bankNameBank: new FormControl('', this.validationService.createValidatorsArray('bankNameBank')),
+      bankBranchBank: new FormControl('', this.validationService.createValidatorsArray('bankBranchBank')),
+      amtOfLoan: new FormControl('', this.validationService.createValidatorsArray('amtOfLoan')),
+      // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
+      loanDate: new FormControl('', this.validationService.createValidatorsArray('loanDate')),
+      loanPeriod: new FormControl('', this.validationService.createValidatorsArray('loanPeriod')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
 
 
-    //fileuploaders
-    proofOfLoan: new FormControl('', this.validationService.createValidatorsArray('proofOfLoan')),
-    proofOfNoHouse: new FormControl('', this.validationService.createValidatorsArray('proofOfNoHouse')),
-    proofOfHouse: new FormControl('', this.validationService.createValidatorsArray('proofOfHouse')),
-    selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
-    interestCertificate: new FormControl('', Validators.required),
+      //fileuploaders
+      proofOfLoan: new FormControl('', this.validationService.createValidatorsArray('proofOfLoan')),
+      proofOfNoHouse: new FormControl('', this.validationService.createValidatorsArray('proofOfNoHouse')),
+      proofOfHouse: new FormControl('', this.validationService.createValidatorsArray('proofOfHouse')),
+      selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
+      interestCertificate: new FormControl('', Validators.required),
 
-    // marathi
-    bankNameBank_mr: new FormControl('', this.validationService.createValidatorsArray('bankNameBank_mr')),
-    bankBranchBank_mr: new FormControl('', this.validationService.createValidatorsArray('bankBranchBank_mr')),
-    benefitType: new FormControl('', [Validators.required]),
-    benefitAmount: new FormControl(''),
-    interestRate: new FormControl('', [Validators.required, Validators.maxLength(3)]),
+      // marathi
+      bankNameBank_mr: new FormControl('', this.validationService.createValidatorsArray('bankNameBank_mr')),
+      bankBranchBank_mr: new FormControl('', this.validationService.createValidatorsArray('bankBranchBank_mr')),
+      benefitType: new FormControl('', [Validators.required]),
+      benefitAmount: new FormControl(''),
+      interestRate: new FormControl('', [Validators.required, Validators.maxLength(3)]),
 
-  });
+    });
   }
 
   ngOnInit() {
+
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
+
   }
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get bankNameBank() { return this.formGroup.get('bankNameBank'); }

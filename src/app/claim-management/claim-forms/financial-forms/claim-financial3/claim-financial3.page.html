@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>claimFinancial3</ion-title>
+    <ion-title>FINANCIAL SCHEME NO.3</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,6 +14,8 @@
         घरखरेदी किंवा घरबांधणीकरता बँकेकडून घेतलेल्या गृहकर्जावरील रू.६ लक्ष पर्यतच्या व्याजाची रक्कम अथवा रू.२ लक्ष
         अनुदान.
       </ion-header>
+      <br>
+
       <ion-item>
         <ion-label position="floating">Amount of Loan / कर्जाची रक्कम<span class="text-danger">*</span></ion-label>
         <ion-input type="number" [class.is-invalid]="amtOfLoan.invalid && amtOfLoan.touched"
@@ -55,9 +57,11 @@
         </div>
       </ion-item>
       <ion-item>
+          <ion-icon slot="end" name="calendar"></ion-icon>
+
         <ion-label position="floating">Loan Sanction Date / कर्जाची मंजूर तारीख<span class="text-danger">*</span>
         </ion-label>
-        <ion-datetime [class.is-invalid]="loanDate.invalid && loanDate.touched" formControlName="loanDate">
+        <ion-datetime [class.is-invalid]="loanDate.invalid && loanDate.touched" formControlName="loanDate" [max]='maxTodaysDate'>
         </ion-datetime>
         <div class="text-danger" *ngIf="loanDate.invalid && loanDate.touched">
           <small *ngIf="loanDate.invalid && loanDate.touched">Please enter Date.</small>
@@ -75,6 +79,7 @@
         </div>
       </ion-item>
     </ion-list>
+    <br>
 
     <ion-list>
       <ion-header class="ml-2" style="font-size:18px"><b><u>DOCUMENTS REQUIRED:</u></b>

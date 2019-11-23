@@ -9,6 +9,7 @@ import { ClaimValidationService } from 'src/app/services/claim-validation.servic
 })
 export class ClaimFinancial4Page implements OnInit {
   public formGroup: FormGroup;
+  public maxTodaysDate : string;
 
   constructor(private validationService: ClaimValidationService) {
   this.formGroup = new FormGroup({
@@ -27,6 +28,9 @@ export class ClaimFinancial4Page implements OnInit {
   }
 
   ngOnInit() {
+
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
+
   }
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get pmAwaasCertificate() { return this.formGroup.get('pmAwaasCertificate'); }

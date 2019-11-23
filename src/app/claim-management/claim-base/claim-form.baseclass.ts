@@ -1,4 +1,4 @@
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as sanscript from '@sanskrit-coders/sanscript';
 import * as uuidv4 from 'uuid/v4';
@@ -42,7 +42,7 @@ export abstract class ClaimBasePage {
         protected claimHttpService: ClaimService,
         protected router: Router,
         protected storage: Storage,
-        protected toast:Toast
+        protected toast: Toast
     ) {
         this.todaysDate = {
             year: new Date().getFullYear(),
@@ -105,10 +105,10 @@ export abstract class ClaimBasePage {
     }
 
     getIonDate(date: any): string {
-        if (Number(date[1]) < 10 && Number(date[0]) < 10) return `${Number(date[2])}-0${Number(date[1])}-0${Number(date[0])}`;
-        else if (Number(date[1]) < 10 && Number(date[0]) >= 10) return `${Number(date[2])}-0${Number(date[1])}-${Number(date[0])}`;
-        else if (Number(date[1]) >= 10 && Number(date[0]) < 10) return `${Number(date[2])}-${Number(date[1])}-0${Number(date[0])}`;
-        else return `${Number(date[2])}-${Number(date[1])}-${Number(date[0])}`;
+        if (Number(date[1]) < 10 && Number(date[0]) < 10) { return `${Number(date[2])}-0${Number(date[1])}-0${Number(date[0])}`; }
+        else if (Number(date[1]) < 10 && Number(date[0]) >= 10) { return `${Number(date[2])}-0${Number(date[1])}-${Number(date[0])}`; }
+        else if (Number(date[1]) >= 10 && Number(date[0]) < 10) { return `${Number(date[2])}-${Number(date[1])}-0${Number(date[0])}`; }
+        else { return `${Number(date[2])}-${Number(date[1])}-${Number(date[0])}`; }
     }
 
     transliterateValue(event) {
@@ -162,17 +162,18 @@ export abstract class ClaimBasePage {
         if (inputYear.value >= this.user.registrationDatePersonal.year && inputYear.value <= currentYear) {
             // returns the user input if correct
         } else {
-            this.toast.show('Invalid Year of Admission','1000','bottom').subscribe(()=>{});
+            this.toast.show('Invalid Year of Admission', '1000', 'bottom').subscribe(() => { });
             this.formGroup.get('year').reset();
         }
     }
 
-    public calculateAge(date:string):number{
+    public calculateAge(date: string): number {
         const dob = moment(date).format('YYYY-MM-DD');
         const age = moment().diff(dob, 'years');
         return age;
     }
 
+   
     /**
      * Calculates percentage of mark obtained.
      */
@@ -187,14 +188,14 @@ export abstract class ClaimBasePage {
             else if (totalMarks === 0) {
                 return;
             } else {
-                this.toast.show('Marks obtained cannot be more than total marks','1000','bottom').subscribe(()=>{})
+                this.toast.show('Marks obtained cannot be more than total marks', '1000', 'bottom').subscribe(() => { })
                 this.formGroup.get('percentage').setValue(0);
                 this.formGroup.get('totalMarks').reset();
                 this.formGroup.get('marksObtained').reset();
 
             }
         } else {
-            this.toast.show('Percentage should be more than 50','1000','bottom')
+            this.toast.show('Percentage should be more than 50', '1000', 'bottom')
             this.formGroup.get('percentage').setValue(0);
             this.formGroup.get('totalMarks').reset();
             this.formGroup.get('marksObtained').reset();

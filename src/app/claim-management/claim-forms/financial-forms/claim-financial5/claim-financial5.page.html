@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>claimFinancial5</ion-title>
+    <ion-title>FINANCIAL SCHEME NO.5</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +20,7 @@
 
           <ion-item>
               <ion-label position="floating">Date of Death /मृत्यूची तारीख<span class="text-danger">*</span></ion-label>
-              <ion-datetime [class.is-invalid]="deathDate.invalid && deathDate.touched" formControlName="deathDate">
+              <ion-datetime [class.is-invalid]="deathDate.invalid && deathDate.touched" formControlName="deathDate" [max]='maxTodaysDate'>
               </ion-datetime>
               <div class="text-danger" *ngIf="deathDate.invalid && deathDate.touched">
                 <small *ngIf="deathDate.errors && deathDate.errors['required']">Please select a Date.</small>
@@ -30,7 +30,7 @@
                 <ion-label position="floating">Name & Address of Issuing Authority / <br>कागदपत्र जारी करणार्‍या प्राधिकरणाचा
                   नाव आणि पत्ता<span class="text-danger">*</span></ion-label>
         
-                <ion-input [class.is-invalid]="placeOfDocIssue.invalid && placeOfDocIssue.touched"
+                <ion-input [class.is-invalid]="placeOfDocIssue.invalid && placeOfDocIssue.touched" (ionBlur)="transliterateValue($event)"
                   formControlName="placeOfDocIssue" id="placeOfDocIssue" clearInput></ion-input>
                 <div class="text-danger" *ngIf="placeOfDocIssue.invalid && placeOfDocIssue.touched">
                   <small *ngIf="placeOfDocIssue.errors && placeOfDocIssue.errors['required']">Please enter Place of
@@ -51,13 +51,15 @@
                       No.</small>
                   </div>
                 </ion-item>  <ion-item>
+                    <ion-icon slot="end" name="calendar"></ion-icon>
+
                     <ion-label position="floating">Issued Date of Death Certificate. /<br>मृत्यू प्रमाणपत्र देण्याची तारीख.<span
                         class="text-danger">*</span></ion-label>
                     <ion-datetime id="deathCertificateIssueDate"
-                      [class.is-invalid]="deathCertificateIssueDate.invalid && deathCertificateIssueDate.touched"
+                      [class.is-invalid]="deathCertificateIssueDate.invalid && deathCertificateIssueDate.touched"[max]='maxTodaysDate'
                       formControlName="deathCertificateIssueDate">
                     </ion-datetime>
-                    <div class="text-danger" *ngIf="deathCertificateIssueDate.invalid && deathCertificateIssueDate.touched">
+                    <div class="text-danger" *ngIf="deathCertificateIssueDate.invalid && deathCertificateIssueDate.touched" >
                       <small *ngIf="deathCertificateIssueDate.errors && deathCertificateIssueDate.errors['required']">Please enter
                         Issue Date.</small>
                     </div>
@@ -72,7 +74,7 @@
                   <ion-label position="floating">Full Name / पूर्ण नाव
                     <span class="text-danger">*</span></ion-label>
           
-                  <ion-input [class.is-invalid]="fullName.invalid && fullName.touched" formControlName="fullName" id="fullName"
+                  <ion-input [class.is-invalid]="fullName.invalid && fullName.touched" (ionBlur)="transliterateValue($event)" formControlName="fullName" id="fullName"
                     clearInput></ion-input>
                   <div class="text-danger" *ngIf="fullName.invalid && fullName.touched">
                     <small *ngIf="fullName.errors && fullName.errors['required']">Please enter Full Name.</small>
@@ -82,8 +84,10 @@
                   </ion-item>
           
                 <ion-item>
+                    <ion-icon slot="end" name="calendar"></ion-icon>
+
                   <ion-label position="floating">Date Of Birth / जन्म तारीख<span class="text-danger">*</span></ion-label>
-                  <ion-datetime id="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched"
+                  <ion-datetime id="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched" [max]='maxTodaysDate'
                     formControlName="dobPersonal">
                   </ion-datetime>
                   <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">

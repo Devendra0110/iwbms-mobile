@@ -1,17 +1,36 @@
+import { Storage } from '@ionic/storage';
+import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormControlDirective, FormGroup, Validators } from '@angular/forms';
 import { ClaimValidationService } from 'src/app/services/claim-validation.service';
+import { TransliterationService } from 'src/app/services/transliteration.service';
+import { HttpService } from 'src/app/services/http.service';
+import { ClaimService } from 'src/app/services/claim.service';
+import { Router } from '@angular/router';
+import { Toast } from '@ionic-native/toast/ngx';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
 
 @Component({
   selector: 'app-claim-financial2',
   templateUrl: './claim-financial2.page.html',
   styleUrls: ['./claim-financial2.page.scss'],
 })
-export class ClaimFinancial2Page implements OnInit {
+export class ClaimFinancial2Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
+  public maxTodaysDate : string;
 
 
-  constructor(  private validationService: ClaimValidationService) {
+  constructor(
+    protected validationService: ClaimValidationService,
+    protected transliterate: TransliterationService,
+    protected httpService: HttpService,
+    protected claimService: ClaimService,
+    protected router: Router,
+    protected storage: Storage,
+    protected toast: Toast,
+    private dialogs: Dialogs, ) {
+    super(transliterate, httpService, claimService, router, storage, toast);
+
     this.formGroup = new FormGroup({
 
       //english values
@@ -53,8 +72,11 @@ export class ClaimFinancial2Page implements OnInit {
   }
 
   ngOnInit() {
+
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
+
   }
-  get verifyDocumentCheck() {return this.formGroup.get('verifyDocumentCheck'); }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get deathCertificateIssueDate() { return this.formGroup.get('deathCertificateIssueDate'); }
   get placeOfDocIssue() { return this.formGroup.get('placeOfDocIssue'); }
   get deathCertificateNo() { return this.formGroup.get('deathCertificateNo'); }

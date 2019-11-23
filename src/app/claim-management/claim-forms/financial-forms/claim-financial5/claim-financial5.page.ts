@@ -1,58 +1,80 @@
 import { Component, OnInit } from '@angular/core';
-import { ClaimValidationService } from 'src/app/services/claim-validation.service';
 import { FormControl, FormControlDirective, FormGroup, Validators } from '@angular/forms';
-
+import { ClaimValidationService } from 'src/app/services/claim-validation.service';
+import { TransliterationService } from 'src/app/services/transliteration.service';
+import { HttpService } from 'src/app/services/http.service';
+import { ClaimService } from 'src/app/services/claim.service';
+import { Router } from '@angular/router';
+import { Toast } from '@ionic-native/toast/ngx';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
+import { Storage } from '@ionic/storage';
+import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 @Component({
   selector: 'app-claim-financial5',
   templateUrl: './claim-financial5.page.html',
   styleUrls: ['./claim-financial5.page.scss'],
 })
-export class ClaimFinancial5Page implements OnInit {
+export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
+  public maxTodaysDate : string;
 
-  constructor(private validationService: ClaimValidationService) {  this.formGroup = new FormGroup({
-
-    //english values
-
-    deathCertificateIssueDate: new FormControl('', this.validationService.createValidatorsArray('deathCertificateIssueDate')),
-
-    placeOfDocIssue: new FormControl('', this.validationService.createValidatorsArray('placeOfDocIssue')),
-    deathCertificateNo: new FormControl('', this.validationService.createValidatorsArray('deathCertificateNo')),
-    fullName: new FormControl('', this.validationService.createValidatorsArray('fullName')),
-    dobPersonal: new FormControl('', this.validationService.createValidatorsArray('dobPersonal')),
-    agePersonal: new FormControl('', this.validationService.createValidatorsArray('agePersonal')),
-    relation: new FormControl('', this.validationService.createValidatorsArray('relation')),
-    ifscCodeBank: new FormControl('', this.validationService.createValidatorsArray('ifscCodeBank')),
-    bankNameBank: new FormControl('', this.validationService.createValidatorsArray('bankNameBank')),
-    bankBranchBank: new FormControl('', this.validationService.createValidatorsArray('bankBranchBank')),
-    bankAddressBank: new FormControl('', this.validationService.createValidatorsArray('bankAddressBank')),
-    accountNumberBank: new FormControl('', this.validationService.createValidatorsArray('accountNumberBank')),
-    deathCertificateDoc: new FormControl('', this.validationService.createValidatorsArray('deathCertificateDoc')),
-    // proofOfDeathDoc: new FormControl('', this.validationService.createValidatorsArray('proofOfDeathDoc')),
-    scannedPassbookDoc: new FormControl('', this.validationService.createValidatorsArray('scannedPassbookDoc')),
-    aadharCardDoc: new FormControl('', this.validationService.createValidatorsArray('aadharCardDoc')),
-    // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
-    deathDate: new FormControl('', this.validationService.createValidatorsArray('deathDate')),
-    aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),
-    selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
-    nomineeMobNumber: new FormControl('', this.validationService.createValidatorsArray('nomineeMobNumber')),
-    verifyDocumentCheck :new FormControl('',this.validationService.createValidatorsArray('verifyDocumentCheck')),
+  constructor(
+    protected validationService: ClaimValidationService,
+    protected transliterate: TransliterationService,
+    protected httpService: HttpService,
+    protected claimService: ClaimService,
+    protected router: Router,
+    protected storage: Storage,
+    protected toast: Toast,
+    private dialogs: Dialogs, ) {
+    super(transliterate, httpService, claimService, router, storage, toast);
 
 
+    this.formGroup = new FormGroup({
 
-    //marathi values
-    placeOfDocIssue_mr: new FormControl(''),
-    fullName_mr: new FormControl(''),
-    relation_mr: new FormControl(''),
-    benefitType: new FormControl('', [Validators.required]),
-    benefitAmount: new FormControl(''),
-    nomineeCertificate: new FormControl('')
+      //english values
 
-  }); }
+      deathCertificateIssueDate: new FormControl('', this.validationService.createValidatorsArray('deathCertificateIssueDate')),
+      placeOfDocIssue: new FormControl('', this.validationService.createValidatorsArray('placeOfDocIssue')),
+      deathCertificateNo: new FormControl('', this.validationService.createValidatorsArray('deathCertificateNo')),
+      fullName: new FormControl('', this.validationService.createValidatorsArray('fullName')),
+      dobPersonal: new FormControl('', this.validationService.createValidatorsArray('dobPersonal')),
+      agePersonal: new FormControl('', this.validationService.createValidatorsArray('agePersonal')),
+      relation: new FormControl('', this.validationService.createValidatorsArray('relation')),
+      ifscCodeBank: new FormControl('', this.validationService.createValidatorsArray('ifscCodeBank')),
+      bankNameBank: new FormControl('', this.validationService.createValidatorsArray('bankNameBank')),
+      bankBranchBank: new FormControl('', this.validationService.createValidatorsArray('bankBranchBank')),
+      bankAddressBank: new FormControl('', this.validationService.createValidatorsArray('bankAddressBank')),
+      accountNumberBank: new FormControl('', this.validationService.createValidatorsArray('accountNumberBank')),
+      deathCertificateDoc: new FormControl('', this.validationService.createValidatorsArray('deathCertificateDoc')),
+      // proofOfDeathDoc: new FormControl('', this.validationService.createValidatorsArray('proofOfDeathDoc')),
+      scannedPassbookDoc: new FormControl('', this.validationService.createValidatorsArray('scannedPassbookDoc')),
+      aadharCardDoc: new FormControl('', this.validationService.createValidatorsArray('aadharCardDoc')),
+      // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
+      deathDate: new FormControl('', this.validationService.createValidatorsArray('deathDate')),
+      aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),
+      selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
+      nomineeMobNumber: new FormControl('', this.validationService.createValidatorsArray('nomineeMobNumber')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+
+
+
+      //marathi values
+      placeOfDocIssue_mr: new FormControl(''),
+      fullName_mr: new FormControl(''),
+      relation_mr: new FormControl(''),
+      benefitType: new FormControl('', [Validators.required]),
+      benefitAmount: new FormControl(''),
+      nomineeCertificate: new FormControl('')
+
+    });
+  }
 
   ngOnInit() {
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
+
   }
-  get verifyDocumentCheck() {return this.formGroup.get('verifyDocumentCheck'); }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get deathCertificateIssueDate() { return this.formGroup.get('deathCertificateIssueDate'); }
   get placeOfDocIssue() { return this.formGroup.get('placeOfDocIssue'); }
   get deathCertificateNo() { return this.formGroup.get('deathCertificateNo'); }
