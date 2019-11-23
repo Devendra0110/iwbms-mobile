@@ -6,7 +6,7 @@
 
 <ion-content>
   <form [formGroup]="formGroup">
-    <ion-list-header class="ml-2" style="font-size:20px">Reimbursement of the MS-CIT course fees to two children of
+    <ion-list-header class="p-2" style="font-size:18px">Reimbursement of the MS-CIT course fees to two children of
       registered worker.<br>नोंदणीकृत कामगाराच्या पहिल्या दोन पाल्यांना संगणकाचे शिक्षण MSCIT करिता शुल्काची
       प्रतिपूर्ती.
     </ion-list-header>
@@ -48,10 +48,11 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Institute Name /<br> संस्थेचे नाव<span class="text-danger">*</span>
+      <ion-label position="floating">Institute Name / संस्थेचे नाव<span class="text-danger">*</span>
       </ion-label>
       <ion-input formControlName="institute" id="institute" maxlength="100" clearInput
-        [class.is-invalid]="institute.invalid && institute.touched">
+        [class.is-invalid]="institute.invalid && institute.touched"
+        class="transliterate" (ionBlur)="transliterateValue($event)">
       </ion-input>
       <div class="text-danger" *ngIf="institute.invalid && institute.touched">
         <small *ngIf="institute.errors && institute.errors['required']">Please enter your institute's name.</small>
@@ -63,10 +64,11 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Address of Institute /<br> संस्थेचा पत्ता<span class="text-danger">*</span>
+      <ion-label position="floating">Address of Institute / संस्थेचा पत्ता<span class="text-danger">*</span>
       </ion-label>
       <ion-input formControlName="placeInstitute" id="placeInstitute" minlength="10" maxlength="240"
-        [class.is-invalid]="placeInstitute.invalid && placeInstitute.touched" clearInput>
+        [class.is-invalid]="placeInstitute.invalid && placeInstitute.touched" 
+        class="transliterate" (ionBlur)="transliterateValue($event)" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="placeInstitute.invalid && placeInstitute.touched">
         <small *ngIf="placeInstitute.errors && placeInstitute.errors['required']">Please enter your institute's
@@ -80,7 +82,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Registration Number of Institute/<br> ससंस्थेचा नोंदणी क्रमांक<span
+      <ion-label text-wrap position="floating">Registration Number of Institute /<br> ससंस्थेचा नोंदणी क्रमांक<span
           class="text-danger">*</span>
       </ion-label>
       <ion-input formControlName="regNoInstitute" id="regNoInstitute" maxlength="100" clearInput
@@ -95,11 +97,12 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Registration Authority Name/<br> नोंदणी प्राधिकरणाचे नाव<span
+      <ion-label position="floating">Registration Authority Name /<br> नोंदणी प्राधिकरणाचे नाव<span
           class="text-danger">*</span>
       </ion-label>
       <ion-input formControlName="regAuthName" id="regAuthName" maxlength="100" clearInput
-        [class.is-invalid]="regAuthName.invalid && regAuthName.touched">
+        [class.is-invalid]="regAuthName.invalid && regAuthName.touched" 
+        class="transliterate" (ionBlur)="transliterateValue($event)">
       </ion-input>
       <div class="text-danger" *ngIf="regAuthName.invalid && regAuthName.touched">
         <small *ngIf="regAuthName.errors && regAuthName.errors['required']">Please enter your registration authority's
@@ -112,7 +115,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Institute Email ID /<br> संस्थेचे इमेल आयदी <span class="text-danger">*</span>
+      <ion-label position="floating">Institute Email ID / संस्थेचे इमेल आयदी <span class="text-danger">*</span>
       </ion-label>
       <ion-input type="email" formControlName="insEmail" id="insEmail" maxlength="100"
         [class.is-invalid]="insEmail.invalid && insEmail.touched" clearInput>
@@ -124,7 +127,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Institute Phone Number /<br> संस्थेचा फोन नंबर <span class="text-danger">*</span>
+      <ion-label position="floating">Institute Phone Number / संस्थेचा फोन नंबर <span class="text-danger">*</span>
       </ion-label>
       <ion-input type="number" formControlName="insPhNo" id="insPhNo" maxlength="10" minlength="8"
         [class.is-invalid]="insPhNo.invalid && insPhNo.touched" clearInput>
@@ -158,7 +161,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label style="font-size:15px underlined"><u>Duration of Course:-</u></ion-label><br>
+      <ion-label style="font-size:15px underlined"><u><b>Duration of Course:-</b></u></ion-label><br>
     </ion-item>
 
     <ion-item>
@@ -182,7 +185,7 @@
     <br>
 
     <ion-item>
-      <ion-label style="font-size:15px"><u>DOCUMENTS REQUIRED:-</u></ion-label><br>
+      <ion-label style="font-size:15px"><u><b>DOCUMENTS REQUIRED:-</b></u></ion-label><br>
     </ion-item>
 
     <ion-item>

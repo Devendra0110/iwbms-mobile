@@ -6,7 +6,7 @@
 
 <ion-content>
   <form [formGroup]="formGroup">
-    <ion-header class="ml-2" style="font-size:18px">Educational assistance of Rs. 20,000/- per year to the wife or
+    <ion-header class="p-2" style="font-size:18px">Educational assistance of Rs. 20,000/- per year to the wife or
       two
       children of the registered worker for first, second and third year of degree and also for
       books
@@ -55,8 +55,9 @@
     <ion-item>
       <ion-label position="floating">College Name / महाविद्यालयाचे नाव<span class="text-danger">*</span>
       </ion-label>
-      <ion-input formControlName="college" id="college" minlength="100" maxlength="100" clearInput
-        [class.is-invalid]="college.invalid && college.touched">
+      <ion-input formControlName="college" id="college" minlength="3" maxlength="100" clearInput
+        [class.is-invalid]="college.invalid && college.touched"
+        class="transliterate" (ionBlur)="transliterateValue($event)">
       </ion-input>
       <div class="text-danger" *ngIf="college.invalid && college.touched">
         <small *ngIf="college.errors && college.errors['required']">Please enter your college's name.</small>
@@ -72,7 +73,8 @@
       <ion-label position="floating">Address of College / महाविद्यालयाचा पत्ता<span class="text-danger">*</span>
       </ion-label>
       <ion-input formControlName="placeCollege" id="placeCollege" minlength="10" maxlength="240"
-        [class.is-invalid]="placeCollege.invalid && placeCollege.touched" clearInput>
+        [class.is-invalid]="placeCollege.invalid && placeCollege.touched" 
+        class="transliterate" (ionBlur)="transliterateValue($event)" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="placeCollege.invalid && placeCollege.touched">
         <small *ngIf="placeCollege.errors && placeCollege.errors['required']">Please enter your college's
@@ -88,7 +90,8 @@
       <ion-label position="floating">Name of Degree / पदवीचे नाव<span class="text-danger">*</span>
       </ion-label>
       <ion-input formControlName="degreeName" id="degreeName" maxlength="100" minlength="3"
-        [class.is-invalid]="degreeName.invalid && degreeName.touched">
+        [class.is-invalid]="degreeName.invalid && degreeName.touched"
+        class="transliterate" (ionBlur)="transliterateValue($event)" clearInput>
       </ion-input>
       <ion-select-option></ion-select-option>
       <div class="text-danger" *ngIf="degreeName.invalid && degreeName.touched">
@@ -127,7 +130,7 @@
     <ion-item>
       <ion-label position="floating">College Phone Number / महाविद्यालयाचा फोन नंबर<span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="number" formControlName="insPhNo" id="insPhNo" maxlength="100"
+      <ion-input type="number" formControlName="insPhNo" id="insPhNo" maxlength="10" minlength="8"
         [class.is-invalid]="insPhNo.invalid && insPhNo.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="insPhNo.invalid && insPhNo.touched">
@@ -138,6 +141,7 @@
     </ion-item>
 
     <ion-item>
+        <ion-icon slot="end" name="calendar"></ion-icon>
       <ion-label position="floating">Date of Admission / प्रवेश तारीख<span class="text-danger">*</span></ion-label>
       <ion-datetime formControlName="dateOfAdmission" id="dateOfAdmission"
         [class.is-invalid]="dateOfAdmission.invalid && dateOfAdmission.touched">
@@ -150,7 +154,7 @@
     <br>
 
     <ion-item>
-      <ion-label style="font-size:15px"><u>DOCUMENTS REQUIRED:-</u></ion-label><br>
+      <ion-label style="font-size:15px"><u><b>DOCUMENTS REQUIRED:-</b></u></ion-label><br>
     </ion-item>
 
     <ion-item>

@@ -1,20 +1,40 @@
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
+import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
+import { ClaimService } from './../../../../services/claim.service';
 import { ClaimValidationService } from './../../../../services/claim-validation.service';
+import { HttpService } from './../../../../services/http.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
+import { Toast } from '@ionic-native/toast/ngx';
+import { TransliterationService } from './../../../../services/transliteration.service';
 
 @Component({
   selector: 'app-claim-education4',
   templateUrl: './claim-education4.page.html',
   styleUrls: ['./claim-education4.page.scss'],
 })
-export class ClaimEducation4Page implements OnInit {
+
+export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
 
   public formGroup: FormGroup;
+  public getFile: boolean;
 
-  constructor(private validationService: ClaimValidationService) {
-
-    this.formGroup = new FormGroup({
+  constructor(
+    protected validationService: ClaimValidationService,
+    protected transliterate: TransliterationService,
+    protected httpService: HttpService,
+    protected claimHttpService: ClaimService,
+    protected router: Router,
+    protected storage: Storage,
+    protected toast: Toast
+  ) {
+    super(transliterate, httpService, claimHttpService, router, storage, toast);
+    this.fileOptions = { certificates: '', receipt: '', bookReceipt: '',schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.files = { certificates: '', receipt: '', bookReceipt: '',schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.formGroup = new FormGroup ({
       // english form controls
       familyRelation: new FormControl('', this.validationService.createValidatorsArray('familyRelation')),
       aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),

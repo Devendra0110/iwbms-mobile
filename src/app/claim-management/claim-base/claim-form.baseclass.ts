@@ -2,15 +2,17 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as sanscript from '@sanskrit-coders/sanscript';
 import * as uuidv4 from 'uuid/v4';
-import { Component, Input } from '@angular/core';
+
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+
+import { ClaimService } from 'src/app/services/claim.service';
+import { HttpService } from 'src/app/services/http.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { TransliterationService } from 'src/app/services/transliteration.service';
-import { HttpService } from 'src/app/services/http.service';
-import { ClaimService } from 'src/app/services/claim.service';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
+import { TransliterationService } from 'src/app/services/transliteration.service';
 
 export abstract class ClaimBasePage {
 
@@ -91,9 +93,7 @@ export abstract class ClaimBasePage {
     }
 
     public getEducation() {
-        return this.httpService.getEducation().subscribe((data: any) => {
-            this.getEducationArray = data;
-        })
+        return this.httpService.getEducation()
     }
 
 
@@ -192,7 +192,6 @@ export abstract class ClaimBasePage {
                 this.formGroup.get('percentage').setValue(0);
                 this.formGroup.get('totalMarks').reset();
                 this.formGroup.get('marksObtained').reset();
-
             }
         } else {
             this.toast.show('Percentage should be more than 50', '1000', 'bottom')

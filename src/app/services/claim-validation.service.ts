@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ValidationService } from './validation.service';
 import { Validators } from '@angular/forms';
 
 @Injectable({
@@ -547,6 +548,7 @@ export class ClaimValidationService {
         validatorsArr = [
           Validators.required,
           Validators.pattern('^[0-9]*\.?[0-9]{0,2}$'),
+          Validators.minLength(4),
           Validators.maxLength(4)
         ];
         break;

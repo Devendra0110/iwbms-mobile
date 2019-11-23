@@ -6,7 +6,7 @@
 
 <ion-content>
   <form [formGroup]="formGroup">
-    <ion-header class="ml-2" style="font-size:18px">Educational Assistance of Rs.2500/- to the first two children of
+    <ion-header class="p-2" style="font-size:18px">Educational Assistance of Rs.2500/- to the first two children of
       the registered worker studying in
       1st to 7th std. and
       Rs.5000/- for the children studying in 8th std. to 10th std.<br>
@@ -64,8 +64,8 @@
     <ion-item>
       <ion-label position="floating">School Name / शाळेचे नाव<span class="text-danger">*</span>
       </ion-label>
-      <ion-input formControlName="school" id="school" minlength="100" maxlength="100" clearInput
-        [class.is-invalid]="school.invalid && school.touched">
+      <ion-input formControlName="school" id="school" minlength="3" maxlength="100" clearInput
+      [class.is-invalid]="school.invalid && school.touched" class="transliterate" (ionBlur)="transliterateValue($event)">
       </ion-input>
       <div class="text-danger" *ngIf="school.invalid && school.touched">
         <small *ngIf="school.errors && school.errors['required']">Please enter your school's name.</small>
@@ -81,7 +81,8 @@
       <ion-label position="floating">Address of School / शाळेचा पत्ता<span class="text-danger">*</span>
       </ion-label>
       <ion-input formControlName="placeSchool" id="placeSchool" minlength="10" maxlength="240"
-        [class.is-invalid]="placeSchool.invalid && placeSchool.touched" clearInput>
+        [class.is-invalid]="placeSchool.invalid && placeSchool.touched" 
+        class="transliterate" (ionBlur)="transliterateValue($event)" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="placeSchool.invalid && placeSchool.touched">
         <small *ngIf="placeSchool.errors && placeSchool.errors['required']">Please enter your school's address.</small>

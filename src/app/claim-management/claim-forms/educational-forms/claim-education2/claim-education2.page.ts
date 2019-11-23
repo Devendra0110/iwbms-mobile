@@ -1,20 +1,41 @@
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
+import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
+import { ClaimService } from './../../../../services/claim.service';
 import { ClaimValidationService } from './../../../../services/claim-validation.service';
+import { HttpService } from './../../../../services/http.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
+import { Toast } from '@ionic-native/toast/ngx';
+import { TransliterationService } from './../../../../services/transliteration.service';
 
 @Component({
   selector: 'app-claim-education2',
   templateUrl: './claim-education2.page.html',
   styleUrls: ['./claim-education2.page.scss'],
 })
-export class ClaimEducation2Page implements OnInit {
+
+export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
 
   public formGroup: FormGroup;
+  public getFile: boolean;
 
-  constructor(private validationService: ClaimValidationService) {
-
+  constructor(
+    protected validationService: ClaimValidationService,
+    protected transliterate: TransliterationService,
+    protected httpService: HttpService,
+    protected claimHttpService: ClaimService,
+    protected router: Router,
+    protected storage: Storage,
+    protected toast: Toast
+  ) {
+    super(transliterate, httpService, claimHttpService, router, storage, toast);
+    this.fileOptions = { fileSelect: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.files = { fileSelect: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
     this.formGroup = new FormGroup({
+
       // english form controls
       childrenDetail: new FormControl('', this.validationService.createValidatorsArray('childrenDetail')),
       aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),
@@ -34,10 +55,10 @@ export class ClaimEducation2Page implements OnInit {
       bonafideDoc: new FormControl('', this.validationService.createValidatorsArray('bonafideDoc')),
       schoolIdDoc: new FormControl('', this.validationService.createValidatorsArray('schoolIdDoc')),
       rationCardDoc: new FormControl('', this.validationService.createValidatorsArray('rationCardDoc')),
-      // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
-      verifyDocumentCheck :new FormControl('',this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      verifyDocumentCheck : new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
 
       // marathi form controls
@@ -51,12 +72,12 @@ export class ClaimEducation2Page implements OnInit {
   ngOnInit() {
   }
 
-  //marathi getters
+  // marathi getters
   get school_mr(): AbstractControl { return this.formGroup.get('school_mr'); }
   get placeSchool_mr(): AbstractControl { return this.formGroup.get('placeSchool_mr'); }
   get boardOfEducation_mr(): AbstractControl { return this.formGroup.get('boardOfEducation_mr'); }
 
-  //english getters
+  // english getters
   get verifyDocumentCheck() {return this.formGroup.get('verifyDocumentCheck'); }
   get childrenDetail() { return this.formGroup.get('childrenDetail'); }
   get aadharNumber() { return this.formGroup.get('aadharNumber'); }

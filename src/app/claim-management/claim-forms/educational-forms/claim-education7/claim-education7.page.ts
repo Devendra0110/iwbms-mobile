@@ -3,23 +3,40 @@ import * as moment from 'moment';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
-import { ClaimValidationService } from 'src/app/services/claim-validation.service';
+import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
+import { ClaimService } from './../../../../services/claim.service';
+import { ClaimValidationService } from './../../../../services/claim-validation.service';
+import { HttpService } from './../../../../services/http.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
+import { TransliterationService } from './../../../../services/transliteration.service';
 
 @Component({
   selector: 'app-claim-education7',
   templateUrl: './claim-education7.page.html',
   styleUrls: ['./claim-education7.page.scss'],
 })
-export class ClaimEducation7Page implements OnInit {
 
-public formGroup: FormGroup;
+export class ClaimEducation7Page extends ClaimBasePage implements OnInit {
+
+  public formGroup: FormGroup;
+  public getFile: boolean;
 
   constructor(
-    private validationService: ClaimValidationService,
-    private toast: Toast) {
-
-    this.formGroup = new FormGroup({
+    protected validationService: ClaimValidationService,
+    protected transliterate: TransliterationService,
+    protected httpService: HttpService,
+    protected claimHttpService: ClaimService,
+    protected router: Router,
+    protected storage: Storage,
+    protected toast: Toast
+  ) {
+    super(transliterate, httpService, claimHttpService, router, storage, toast);
+    this.fileOptions = { certificates: '', receipt: '', rationCardDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.files = { certificates: '', receipt: '', rationCardDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.formGroup = new FormGroup ({
       // english form controls
       childrenDetail: new FormControl('', this.validationService.createValidatorsArray('childrenDetail')),
       institute: new FormControl('', this.validationService.createValidatorsArray('institute')),
@@ -30,7 +47,6 @@ public formGroup: FormGroup;
       year: new FormControl('', this.validationService.createValidatorsArray('year')),
       startDate: new FormControl('', this.validationService.createValidatorsArray('startDate')),
       endDate: new FormControl('', this.validationService.createValidatorsArray('endDate')),
-      // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       aadharCardDoc: new FormControl('', this.validationService.createValidatorsArray('aadharCardDoc')),
       rationCardDoc: new FormControl('', this.validationService.createValidatorsArray('rationCardDoc')),
@@ -40,17 +56,17 @@ public formGroup: FormGroup;
       courseFee: new FormControl('', this.validationService.createValidatorsArray('courseFee')),
       regNoInstitute: new FormControl('', this.validationService.createValidatorsArray('regNoInstitute')),
       regAuthName: new FormControl('', this.validationService.createValidatorsArray('regAuthName')),
-      // bonafideDoc: new FormControl('', this.validationService.createValidatorsArray('bonafideDoc')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
       verifyDocumentCheck :new FormControl('',this.validationService.createValidatorsArray('verifyDocumentCheck')),
-
+      // bonafideDoc: new FormControl('', this.validationService.createValidatorsArray('bonafideDoc')),
+      // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
+      
       // marathi form controls
       placeInstitute_mr: new FormControl(''),
       institute_mr: new FormControl(''),
       regAuthName_mr: new FormControl('')
 
-      
     });
 
    }
@@ -81,9 +97,9 @@ public formGroup: FormGroup;
    get insEmail() { return this.formGroup.get('insEmail'); }
    get insPhNo() { return this.formGroup.get('insPhNo'); }
    get regAuthName() { return this.formGroup.get('regAuthName'); }
-   // get declaration() { return this.formGroup.get('declaration'); }
    get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
    get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
+   // get declaration() { return this.formGroup.get('declaration'); }
    // get bonafideDoc() { return this.formGroup.get('bonafideDoc'); }
  
 

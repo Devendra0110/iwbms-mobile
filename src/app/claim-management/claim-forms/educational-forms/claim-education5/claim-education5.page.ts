@@ -1,7 +1,15 @@
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
-import { ClaimValidationService } from 'src/app/services/claim-validation.service';
+import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
+import { ClaimService } from './../../../../services/claim.service';
+import { ClaimValidationService } from './../../../../services/claim-validation.service';
+import { HttpService } from './../../../../services/http.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
+import { Toast } from '@ionic-native/toast/ngx';
+import { TransliterationService } from './../../../../services/transliteration.service';
 
 @Component({
   selector: 'app-claim-education5',
@@ -9,13 +17,24 @@ import { ClaimValidationService } from 'src/app/services/claim-validation.servic
   styleUrls: ['./claim-education5.page.scss'],
 })
 
-export class ClaimEducation5Page implements OnInit {
+export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
 
   public formGroup: FormGroup;
+  public getFile: boolean;
 
-  constructor(private validationService: ClaimValidationService) {
-
-    this.formGroup = new FormGroup({
+  constructor(
+    protected validationService: ClaimValidationService,
+    protected transliterate: TransliterationService,
+    protected httpService: HttpService,
+    protected claimHttpService: ClaimService,
+    protected router: Router,
+    protected storage: Storage,
+    protected toast: Toast
+  ) {
+    super(transliterate, httpService, claimHttpService, router, storage, toast);
+    this.fileOptions = { certificates: '', receipt: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.files = { certificates: '', receipt: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.formGroup = new FormGroup ({
       // english form controls
       familyRelation: new FormControl('', this.validationService.createValidatorsArray('familyRelation')),
       institute: new FormControl('', this.validationService.createValidatorsArray('institute')),
@@ -25,7 +44,6 @@ export class ClaimEducation5Page implements OnInit {
       certificates: new FormControl('', this.validationService.createValidatorsArray('certificates')),
       receipt: new FormControl('', this.validationService.createValidatorsArray('receipt')),
       schoolIdDoc: new FormControl('', this.validationService.createValidatorsArray('schoolIdDoc')),
-      // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       rationCardDoc: new FormControl('', this.validationService.createValidatorsArray('rationCardDoc')),
       standard: new FormControl('', this.validationService.createValidatorsArray('standard')),
@@ -36,12 +54,13 @@ export class ClaimEducation5Page implements OnInit {
       bonafideDoc: new FormControl('', this.validationService.createValidatorsArray('bonafideDoc')),
       insEmail: new FormControl('', this.validationService.createValidatorsArray('insEmail')),
       insPhNo: new FormControl('', this.validationService.createValidatorsArray('insPhNo')),
-      // bookReceipt: new FormControl('', this.validationService.createValidatorsArray('bookReceipt')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
       category: new FormControl('', this.validationService.createValidatorsArray('category')),
       verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
-
+      // bookReceipt: new FormControl('', this.validationService.createValidatorsArray('bookReceipt')),
+      // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
+      
 
       // marathi form controls
       placeInstitute_mr: new FormControl(''),
@@ -78,9 +97,9 @@ export class ClaimEducation5Page implements OnInit {
     get insPhNo() { return this.formGroup.get('insPhNo'); }
     get insEmail() { return this.formGroup.get('insEmail'); }
     get bonafideDoc() { return this.formGroup.get('bonafideDoc'); }
-    // get declaration() { return this.formGroup.get('declaration'); }
     get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
     get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
+    // get declaration() { return this.formGroup.get('declaration'); }
     // get bookReceipt() { return this.formGroup.get('bookReceipt'); }
 
 }
