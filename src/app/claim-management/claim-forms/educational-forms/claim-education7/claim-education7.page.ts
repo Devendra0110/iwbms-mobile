@@ -1,7 +1,10 @@
+import * as moment from 'moment';
+
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { ClaimValidationService } from 'src/app/services/claim-validation.service';
+import { Toast } from '@ionic-native/toast/ngx';
 
 @Component({
   selector: 'app-claim-education7',
@@ -12,7 +15,9 @@ export class ClaimEducation7Page implements OnInit {
 
 public formGroup: FormGroup;
 
-  constructor(private validationService: ClaimValidationService) {
+  constructor(
+    private validationService: ClaimValidationService,
+    private toast: Toast) {
 
     this.formGroup = new FormGroup({
       // english form controls
@@ -44,6 +49,8 @@ public formGroup: FormGroup;
       placeInstitute_mr: new FormControl(''),
       institute_mr: new FormControl(''),
       regAuthName_mr: new FormControl('')
+
+      
     });
 
    }
@@ -79,5 +86,36 @@ public formGroup: FormGroup;
    get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
    // get bonafideDoc() { return this.formGroup.get('bonafideDoc'); }
  
+
+   checkDate(): void {
+    const startDateJson = this.formGroup.get('startDate').value;
+    const endDateJson = this.formGroup.get('endDate').value;
+
+    const startDate = moment(
+      new Date(
+        startDateJson.year,
+        startDateJson.month - 1,
+        startDateJson.day
+      )
+    );
+
+    const endDate = moment(
+      new Date(
+        endDateJson.year,
+        endDateJson.month - 1,
+        endDateJson.day
+      )
+    );
+
+    if (endDate.diff(startDate) < 0) {
+      this.formGroup.controls.endDate.patchValue('');
+      this.toast.show('End Date cannot be smaller than Start Date', '1000', 'bottom').subscribe((toast) => {
+      });
+    }
+    if ((this.startDate == null || this.endDate == null)) {
+      this.toast.show('Enter Valid Date', '1000', 'bottom').subscribe((toast) => {
+      });
+    }
+  }
 
 }
