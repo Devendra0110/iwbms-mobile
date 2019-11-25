@@ -17,8 +17,6 @@ import { Dialogs } from '@ionic-native/dialogs/ngx';
 })
 export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
-  public maxTodaysDate: string;
-  public todaysDate: any;
 
   constructor(private validationService: ClaimValidationService,
     protected transliterate: TransliterationService,
@@ -49,7 +47,6 @@ export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
 
   ngOnInit() {
 
-    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
 
   }
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }

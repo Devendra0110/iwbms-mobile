@@ -35,8 +35,8 @@ export class ClaimVerificationPage implements OnInit {
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
     this.claimVerificationForm = new FormGroup({
-      registrationNo: new FormControl('MH111050000001', [Validators.required, Validators.pattern('^(MH)\\d{12}$')]),
-      mobileNo: new FormControl('7340121356',this.validationService.createValidatorsArray('mobile'))
+      registrationNo: new FormControl('MH020040000006', [Validators.required, Validators.pattern('^(MH)\\d{12}$')]),
+      mobileNo: new FormControl('7387171322',this.validationService.createValidatorsArray('mobile'))
     });
 
     this.storage.get('token').then((val) => {
