@@ -18,7 +18,9 @@
       <ion-label position="floating">Name / नाव<span class="text-danger">*</span></ion-label>
       <ion-select formControlName="familyRelation" id="familyRelation"
         [class.is-invalid]="familyRelation.invalid && familyRelation.touched">
-        <ion-select-option>
+        <ion-select-option *ngFor="let child of childArray; let i = index" [value]="child['firstNameFamily']">
+            {{child['firstNameFamily']}} {{child['surname']}} /
+            {{child['firstNameFamily_mr']}} {{child['surname_mr']}}
         </ion-select-option>
       </ion-select>
       <div class="text-danger" *ngIf="familyRelation.invalid && familyRelation.touched">
@@ -80,7 +82,7 @@
       <ion-select formControlName="yearOfDegree" id="yearOfDegree"
         [class.is-invalid]="yearOfDegree.invalid && yearOfDegree.touched">
       </ion-select>
-      <ion-select-option></ion-select-option>
+      <ion-select-option *ngFor="let list of academicYear" [value]="list.id">{{list.type}}</ion-select-option>
       <div class="text-danger" *ngIf="yearOfDegree.invalid && yearOfDegree.touched">
         <small *ngIf="yearOfDegree.errors && yearOfDegree.errors['required']">Please select your year of degree.</small>
       </div>
@@ -149,7 +151,7 @@
     <ion-item>
         <ion-icon slot="end" name="calendar"></ion-icon>
       <ion-label position="floating">Date of Admission / प्रवेश तारीख<span class="text-danger">*</span></ion-label>
-      <ion-datetime formControlName="dateOfAdmission" id="dateOfAdmission"
+      <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMM, YYYY" formControlName="dateOfAdmission" id="dateOfAdmission"
         [class.is-invalid]="dateOfAdmission.invalid && dateOfAdmission.touched">
       </ion-datetime>
       <div class="text-danger" *ngIf="dateOfAdmission.invalid && dateOfAdmission.touched">

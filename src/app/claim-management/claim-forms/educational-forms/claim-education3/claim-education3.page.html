@@ -140,7 +140,7 @@
     <ion-item>
       <ion-icon slot="end" name="calendar"></ion-icon>
       <ion-label position="floating">Date of Admission / प्रवेश तारीख<span class="text-danger">*</span></ion-label>
-      <ion-datetime formControlName="dateOfAdmission" id="dateOfAdmission"
+      <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMM, YYYY" formControlName="dateOfAdmission" id="dateOfAdmission"
         [class.is-invalid]="dateOfAdmission.invalid && dateOfAdmission.touched">
       </ion-datetime>
       <div class="text-danger" *ngIf="dateOfAdmission.invalid && dateOfAdmission.touched">

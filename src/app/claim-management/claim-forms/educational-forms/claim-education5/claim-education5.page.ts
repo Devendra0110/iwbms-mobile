@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import { ClaimService } from './../../../../services/claim.service';
 import { ClaimValidationService } from './../../../../services/claim-validation.service';
+import { Constants } from './../../../../../assets/constants';
 import { HttpService } from './../../../../services/http.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -21,6 +22,10 @@ export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
 
   public formGroup: FormGroup;
   public getFile: boolean;
+  public academicYear: Object = [];
+  public degree: any;
+  public maxTodaysDate:string;
+  public childArray: Array<string> = [];
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -68,9 +73,13 @@ export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
       institute_mr: new FormControl(''),
     });
 
+    this.academicYear = Constants.ACADEMIC_YEAR;
+    this.degree = Constants.DEGREES;
+
    }
 
   ngOnInit() {
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day,this.todaysDate.month,this.todaysDate.year]);
   }
 
     //marathi getters

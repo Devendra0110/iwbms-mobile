@@ -21,7 +21,8 @@ export class ClaimEducation3Page extends ClaimBasePage implements OnInit {
 
   public formGroup: FormGroup;
   public getFile: boolean;
-
+  public maxTodaysDate:string;
+  
   constructor(
     protected validationService: ClaimValidationService,
     protected transliterate: TransliterationService,
@@ -69,6 +70,7 @@ export class ClaimEducation3Page extends ClaimBasePage implements OnInit {
    }
 
   ngOnInit() {
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day,this.todaysDate.month,this.todaysDate.year]);
   }
 
     // marathi getters
