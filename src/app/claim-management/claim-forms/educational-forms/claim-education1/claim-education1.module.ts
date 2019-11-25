@@ -1,5 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { ClaimEducation1Page } from './claim-education1.page';
 import { CommonModule } from '@angular/common';
@@ -22,6 +22,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule
   ],
-  declarations: [ClaimEducation1Page]
+  declarations: [ClaimEducation1Page],
 })
 export class ClaimEducation1PageModule {}

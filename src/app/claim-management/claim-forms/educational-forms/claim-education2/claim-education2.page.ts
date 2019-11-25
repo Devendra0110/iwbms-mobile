@@ -99,5 +99,27 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
   get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
   // get declaration() { return this.formGroup.get('declaration'); }
 
-
+  public calculatePer() {
+    const marksObtained = Number(this.formGroup.get('marksObtained').value);
+    const totalMarks = Number(this.formGroup.get('totalMarks').value);
+    const percentage = Number(marksObtained / totalMarks) * 100;
+    if (percentage >= 50) {
+        if (totalMarks >= marksObtained) {
+            this.formGroup.get('percentage').setValue(percentage.toPrecision(3));
+        }
+        else if (totalMarks === 0) {
+            return;
+        } else {
+            this.toast.show('Marks obtained cannot be more than total marks', '1000', 'bottom').subscribe(() => { })
+            this.formGroup.get('percentage').setValue(0);
+            this.formGroup.get('totalMarks').reset();
+            this.formGroup.get('marksObtained').reset();
+        }
+    } else {
+        this.toast.show('Percentage should be more than 50', '1000', 'bottom')
+        this.formGroup.get('percentage').setValue(0);
+        this.formGroup.get('totalMarks').reset();
+        this.formGroup.get('marksObtained').reset();
+    }
+}
 }
