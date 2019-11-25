@@ -112,7 +112,7 @@
           <ion-label position="floating">IFSC Code<span style="color: Red">*</span> </ion-label>
           <ion-input type="text" formControlName="ifscCodeBank" [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched"
             maxlength="11" minlength="11" autocapitalize="characters" clearInput></ion-input>
-          <ion-button (click)="searchByifscCodeBank()">Search</ion-button>
+          <!-- <ion-button (click)="searchByifscCodeBank()">Search</ion-button> -->
           <div class="text-danger" *ngIf="ifscCodeBank.invalid && ifscCodeBank.touched">
             <small *ngIf="!!ifscCodeBank.errors?.required">Please enter IFSC code.</small>
             <small *ngIf="!!ifscCodeBank.errors?.pattern">Please enter appropriate IFSC code.</small>

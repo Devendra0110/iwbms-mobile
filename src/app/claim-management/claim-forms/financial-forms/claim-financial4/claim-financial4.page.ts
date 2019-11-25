@@ -29,7 +29,9 @@ export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
 ) {
 
     super(transliterate, httpService, claimService, router, storage, toast);
-
+    this.files = { pmAwaasCertificate: '', selfDeclaration: '' };
+    this.fileOptions = { pmAwaasCertificate: '', selfDeclaration: '' };
+  
     this.formGroup = new FormGroup({
 
       pmAwaasCertificate: new FormControl('', this.validationService.createValidatorsArray('pmAwaasCertificate')),

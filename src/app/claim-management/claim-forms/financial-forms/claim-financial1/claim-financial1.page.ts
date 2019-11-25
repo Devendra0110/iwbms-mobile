@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import * as moment from 'moment';
+import { Constants } from 'src/assets/constants';
 @Component({
   selector: 'app-claim-financial1',
   templateUrl: './claim-financial1.page.html',
@@ -27,7 +28,7 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   public isifscCodeBankCodeFound: boolean;
   public bankDetails: any;
   public sortedArray = [];
-  public maxTodaysDate : string;
+  public maxTodaysDate: string;
   constructor(
     protected validationService: ClaimValidationService,
     protected transliterate: TransliterationService,
@@ -42,6 +43,8 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
 
   ) {
     super(transliterate, httpService, claimService, router, storage, toast);
+    this.files = { deathCertificateDoc: '', proofOfDeathDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' };
+    this.fileOptions = { deathCertificateDoc: '', proofOfDeathDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' };
 
     this.formGroup = new FormGroup({
       deathCertificateIssueDate: new FormControl('', this.validationService.createValidatorsArray('deathCertificateIssueDate')),
@@ -86,6 +89,8 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
       placeOfDeath_mr: new FormControl(''),
       policeStationAdd_mr: new FormControl('')
     });
+    this.issuingAuthorityArray = Constants.ISSUING_AUTHORITY;
+
   }
 
   ngOnInit() {

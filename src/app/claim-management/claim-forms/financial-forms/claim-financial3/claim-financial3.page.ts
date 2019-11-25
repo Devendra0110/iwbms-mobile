@@ -29,7 +29,9 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
     protected toast: Toast,
     private dialogs: Dialogs, ) {
     super(transliterate, httpService, claimService, router, storage, toast);
-
+    this.files = { proofOfLoan: '', proofOfNoHouse: '', proofOfHouse: '', selfDeclaration: '' };
+    this.fileOptions = { proofOfLoan: '', proofOfNoHouse: '', proofOfHouse: '', selfDeclaration: '' };
+   
     this.formGroup = new FormGroup({
       // english
       bankNameBank: new FormControl('', this.validationService.createValidatorsArray('bankNameBank')),

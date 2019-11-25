@@ -24,7 +24,7 @@ import { UserManagementService } from 'src/app/services/user-management.service'
 export class ClaimMainFormPage implements OnInit {
 
   public JWTToken: any;
-  public BocwID:any;
+  public BocwID: any;
   public message: string;
   public open: boolean;
   public endDateFordobPersonal: any;
@@ -74,7 +74,7 @@ export class ClaimMainFormPage implements OnInit {
 
   constructor(
     private validationService: ValidationService,
-    private userManagementService:UserManagementService,
+    private userManagementService: UserManagementService,
     private transliterate: TransliterationService,
     private claimHttpService: ClaimService,
     private httpService: HttpService,
@@ -90,17 +90,17 @@ export class ClaimMainFormPage implements OnInit {
     this.network.onConnect().subscribe(() => { });
 
 
-    this.route.queryParams.subscribe(params=>{
+    this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
-        const userData = this.router.getCurrentNavigation().extras.state
-        this.claimMainForm.patchValue(userData)
+        const userData = this.router.getCurrentNavigation().extras.state;
+        this.claimMainForm.patchValue(userData);
         this.BocwID = userData.bocw_id;
         this.JWTToken = userData.JWTToken;
         this.calculateAge();
       } else {
         this.router.navigate(['claim-management/claim-verification']);
       }
-    })
+    });
 
     this.formUserInfo = {};
 
@@ -130,27 +130,27 @@ export class ClaimMainFormPage implements OnInit {
 
     this.claimMainForm = new FormGroup({
       // english values
-      registration_no: new FormControl('', this.validationService.createValidatorsArray('registration_no')),
-      registrationDatePersonal: new FormControl('', this.validationService.createValidatorsArray('registrationDatePersonal')),
-      renewalDate: new FormControl('', this.validationService.createValidatorsArray('renewalDate')),
-      firstNamePersonal: new FormControl('', this.validationService.createValidatorsArray('firstNamePersonal')),
-      middleNamePersonal: new FormControl('', this.validationService.createValidatorsArray('middleNamePersonal')),
-      lastNamePersonal: new FormControl('', this.validationService.createValidatorsArray('lastNamePersonal')),
-      aadharNoPersonal: new FormControl('', this.validationService.createValidatorsArray('aadharNoPersonal')),
-      mobilePersonal: new FormControl('', this.validationService.createValidatorsArray('mobilePersonal')),
-      genderPersonal: new FormControl('', this.validationService.createValidatorsArray('genderPersonal')),
-      maritalStatusPersonal: new FormControl('', this.validationService.createValidatorsArray('maritalStatusPersonal')),
-      selectScheme: new FormControl('', this.validationService.createValidatorsArray('selectScheme')),
-      selectSchemeCategory: new FormControl('', this.validationService.createValidatorsArray('selectSchemeCategory')),
-      dobPersonal: new FormControl('', this.validationService.createValidatorsArray('dobPersonal')),
-      agePersonal: new FormControl('', this.validationService.createValidatorsArray('agePersonal')),
-      ifscCodeBank: new FormControl('', this.validationService.createValidatorsArray('ifscCodeBank')),
-      bankNameBank: new FormControl('', this.validationService.createValidatorsArray('bankNameBank')),
-      bankBranchBank: new FormControl('', this.validationService.createValidatorsArray('bankBranchBank')),
-      bankAddressBank: new FormControl('', this.validationService.createValidatorsArray('bankAddressBank')),
-      accountNumberBank: new FormControl('', this.validationService.createValidatorsArray('accountNumberBank')),
-      rationCardNumberPersonal: new FormControl('', this.validationService.createValidatorsArray('rationCardNumberPersonal')),
-      rationCardTypePersonal: new FormControl('', this.validationService.createValidatorsArray('rationCardTypePersonal')),
+      registration_no: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('registration_no')),
+      registrationDatePersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('registrationDatePersonal')),
+      renewalDate: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('renewalDate')),
+      firstNamePersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('firstNamePersonal')),
+      middleNamePersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('middleNamePersonal')),
+      lastNamePersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('lastNamePersonal')),
+      aadharNoPersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('aadharNoPersonal')),
+      mobilePersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('mobilePersonal')),
+      genderPersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('genderPersonal')),
+      maritalStatusPersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('maritalStatusPersonal')),
+      selectScheme: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('selectScheme')),
+      selectSchemeCategory: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('selectSchemeCategory')),
+      dobPersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('dobPersonal')),
+      agePersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('agePersonal')),
+      ifscCodeBank: new FormControl({ value: { value: '', disabled: true }, disabled: true }, this.validationService.createValidatorsArray('ifscCodeBank')),
+      bankNameBank: new FormControl({ value: { value: '', disabled: true }, disabled: true }, this.validationService.createValidatorsArray('bankNameBank')),
+      bankBranchBank: new FormControl({ value: { value: '', disabled: true }, disabled: true }, this.validationService.createValidatorsArray('bankBranchBank')),
+      bankAddressBank: new FormControl({ value: { value: '', disabled: true }, disabled: true }, this.validationService.createValidatorsArray('bankAddressBank')),
+      accountNumberBank: new FormControl({ value: { value: '', disabled: true }, disabled: true }, this.validationService.createValidatorsArray('accountNumberBank')),
+      rationCardNumberPersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('rationCardNumberPersonal')),
+      rationCardTypePersonal: new FormControl({ value: '', disabled: true }, this.validationService.createValidatorsArray('rationCardTypePersonal')),
 
       // marathi values
       firstNamePersonal_mr: new FormControl('', this.validationService.createValidatorsArray('firstNamePersonal_mr')),
@@ -201,30 +201,30 @@ export class ClaimMainFormPage implements OnInit {
     this.setInputDetails();
   }
 
-    setInputDetails(){
-      try{
-        const allFormControls = this.claimMainForm.controls;
-        this.getClaimDetails();
-        this.getClaimEligibility(this.registration_no.value);
-        this.userManagementService.getUserById(this.registration_no.value, this.JWTToken).subscribe(userInfo => {
-          this.applicantRegistrationDetails = userInfo[0];
-          this.familyDetailsArray = userInfo[0].family_details;
-          const requiredUserInfo: Array<string> = Object.keys(allFormControls);
-          this.formUserInfo = _.pick(userInfo[0], requiredUserInfo);
-          this.formUserInfo['bocw_id'] = userInfo[0]['bocw_id'];
-          // Object.assign(this.formUserInfo, this.convertIntoJSDate(_.pick(userInfo[0], ['dobPersonal', 'registrationDatePersonal'])));
-          this.claimMainForm.patchValue(this.formUserInfo);
-          this.uploadedImageUrl = `${serverUrl}bocw-registration/getfile/${userInfo[0].applicantPhotoFile}?x-access-token=${this.JWTToken}`;
-          console.log(this.uploadedImageUrl);
-          this.calculateAge();
-        }, error => {
-          console.log(error);
-        });
-      } catch(error){
-        console.log(error)
-      }
-
+  setInputDetails() {
+    try {
+      const allFormControls = this.claimMainForm.controls;
+      this.getClaimDetails();
+      this.getClaimEligibility(this.registration_no.value);
+      this.userManagementService.getUserById(this.registration_no.value, this.JWTToken).subscribe(userInfo => {
+        this.applicantRegistrationDetails = userInfo[0];
+        this.familyDetailsArray = userInfo[0].family_details;
+        const requiredUserInfo: Array<string> = Object.keys(allFormControls);
+        this.formUserInfo = _.pick(userInfo[0], requiredUserInfo);
+        this.formUserInfo['bocw_id'] = userInfo[0]['bocw_id'];
+        // Object.assign(this.formUserInfo, this.convertIntoJSDate(_.pick(userInfo[0], ['dobPersonal', 'registrationDatePersonal'])));
+        this.claimMainForm.patchValue(this.formUserInfo);
+        this.uploadedImageUrl = `${serverUrl}bocw-registration/getfile/${userInfo[0].applicantPhotoFile}?x-access-token=${this.JWTToken}`;
+        console.log(this.uploadedImageUrl);
+        this.calculateAge();
+      }, error => {
+        console.log(error);
+      });
+    } catch (error) {
+      console.log(error)
     }
+
+  }
 
   getClaimDetails() {
     this.claimHttpService.getSchemeCat(this.JWTToken).subscribe((data: any) => {

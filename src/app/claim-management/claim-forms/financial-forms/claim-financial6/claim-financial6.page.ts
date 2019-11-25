@@ -30,6 +30,8 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
 
 
     super(transliterate, httpService, claimService, router, storage, toast);
+    this.files = { deathCertificateDoc: '', marriageCertificateDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', selfDeclaration: '' };
+    this.fileOptions = { deathCertificateDoc: '', marriageCertificateDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', selfDeclaration: '' };
 
     this.formGroup = new FormGroup({
       //english values
