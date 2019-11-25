@@ -35,6 +35,8 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
 
   ) {
     super(transliterate,httpService,claimService,router,storage,toast);
+    this.fileOptions = { health4Form4Doc1: '', selfDeclaration: '', };
+    this.files = { health4Form4Doc1: '', selfDeclaration: '', };
 
     this.formGroup = new FormGroup({
       nameOfMed: new FormControl('', this.validationService.createValidatorsArray('nameOfMed')),
@@ -72,8 +74,6 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
   get locationOfHospital() { return this.formGroup.get('locationOfHospital'); }
   get date() { return this.formGroup.get('date'); }
   get health4Form4Doc1() { return this.formGroup.get('health4Form4Doc1'); }
-  get health4Form4Doc2() { return this.formGroup.get('health4Form4Doc2'); }
-  // get declaration() { return this.formGroup.get('declaration') }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
 
   get typeOfDisability_mr() { return this.formGroup.get('typeOfDisability_mr'); }

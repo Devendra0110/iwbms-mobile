@@ -45,6 +45,9 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
   ) {
     super(transliterate, httpService, claimService, router, storage, toast);
     this.issuedBy = Constants.TYPE_OF_ISSUER;
+    this.fileOptions = { health1Form1Doc1: '', rationCardDoc: '', selfDeclaration: '' };
+    this.files = { health1Form1Doc1: '', rationCardDoc: '', selfDeclaration: '' };
+
 
 
     this.formGroup = new FormGroup({

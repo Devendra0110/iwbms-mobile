@@ -33,6 +33,8 @@ export class ClaimHealth5Page extends ClaimBasePage implements OnInit {
 
   ) {
     super(transliterate,httpService,claimService,router,storage,toast);
+    this.fileOptions = {selfDeclaration: '',};
+    this.files = {selfDeclaration: '',};
 
     this.formGroup = new FormGroup({
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),

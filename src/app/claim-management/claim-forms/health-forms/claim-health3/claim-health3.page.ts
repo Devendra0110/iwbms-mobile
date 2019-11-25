@@ -33,6 +33,8 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
     private dialogs:Dialogs,
   ) {
     super(transliterate,httpService,claimService,router,storage,toast);
+    this.fileOptions = { health3Form3Doc1: '', health3Form3Doc2: '', aadharCardDoc: '', selfDeclaration: '' };
+    this.files = { health3Form3Doc1: '', health3Form3Doc2: '', aadharCardDoc: '', selfDeclaration: '' };
 
     this.formGroup = new FormGroup({
       aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),

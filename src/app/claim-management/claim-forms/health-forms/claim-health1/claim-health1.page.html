@@ -117,7 +117,7 @@
         </ion-label>
         <ion-select formControlName="typeOfDelivery"
           [class.is-invalid]="typeOfDelivery.invalid && typeOfDelivery.touched" id="typeOfDelivery">
-          <ion-select-option *ngFor="let list of Delivery" [value]="list.type">{{list.type}}></ion-select-option>
+          <ion-select-option *ngFor="let list of Delivery" [value]="list.type">{{list.type}} </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="typeOfDelivery.invalid && typeOfDelivery.touched">
           <small *ngIf="typeOfDelivery.errors && typeOfDelivery.errors['required']">Please select method of
@@ -148,7 +148,7 @@
         <ion-select formControlName="birthCertificateIssuedBy"
           [class.is-invalid]="birthCertificateIssuedBy.invalid && birthCertificateIssuedBy.touched"
           id="birthCertificateIssuedBy">
-          <ion-select-option *ngFor="let list of issuedBy" [value]="list.type">{{ list.type }}>
+          <ion-select-option *ngFor="let list of issuedBy" [value]="list.type">{{ list.type }}
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="birthCertificateIssuedBy.invalid && birthCertificateIssuedBy.touched">
@@ -187,7 +187,7 @@
         </ion-label>
       </ion-item>
       <ion-item>
-        <input id='health1Form1Doc1' formControlName="health1Form1Doc1" type="file" accept="application/pdf">
+        <input id='health1Form1Doc1' (change)="getFileDetails($event)" formControlName="health1Form1Doc1" type="file" accept="application/pdf">
         <div class="text-danger" *ngIf="health1Form1Doc1.invalid && health1Form1Doc1.touched">
           <small> Please Upload Required Document</small>
         </div>
@@ -197,7 +197,7 @@
         <ion-label text-wrap floating>2. Ration card / रेशन कार्ड</ion-label>
       </ion-item>
       <ion-item>
-        <input type="file" name="upload" accept="application/pdf" formControlName="rationCardDoc">
+        <input type="file" (change)="getFileDetails($event)" name="upload" accept="application/pdf" formControlName="rationCardDoc">
         <div class="text-danger" *ngIf="rationCardDoc.invalid && rationCardDoc.touched">
           <small>Please upload required document.</small>
         </div>
@@ -207,7 +207,7 @@
         <ion-label text-wrap floating>3. Self Declaration / हमीपत्र</ion-label>
       </ion-item>
       <ion-item>
-        <input type="file" formControlName="selfDeclaration" id="selfDeclaration" accept="application/pdf">
+        <input type="file" (change)="getFileDetails($event)" formControlName="selfDeclaration" id="selfDeclaration" accept="application/pdf">
         <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
           <small> Please Upload Required Document</small>
         </div>

@@ -38,6 +38,8 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
 
   ) {
     super(transliterate,httpService,claimService,router,storage,toast);
+    this.fileOptions = { health2Form2Doc1: '', health2Form2Doc2: '', aadharCardDoc: '', selfDeclaration: '' };
+    this.files = { health2Form2Doc1: '', health2Form2Doc2: '', aadharCardDoc: '', selfDeclaration: '' };
 
     this.formGroup = new FormGroup({
       billAmount: new FormControl('', this.validationService.createValidatorsArray('billAmount')),
