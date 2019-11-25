@@ -61,7 +61,7 @@
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Date of Treatment / उपचाराची तारीख <span
               style="color: Red">*</span></ion-label>
-          <ion-datetime displayFormat="DD MMMM, YYYY" formControlName="dateOfOp" id="dateOfOp"
+          <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMMM, YYYY" formControlName="dateOfOp" id="dateOfOp"
             [class.is-invalid]="dateOfOp.invalid && dateOfOp.touched">
           </ion-datetime>
           <div class="text-danger" *ngIf="dateOfOp.errors && dateOfOp.touched">

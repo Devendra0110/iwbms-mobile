@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
+import { Constants } from 'src/assets/constants';
 
 
 @Component({
@@ -18,6 +19,8 @@ import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.ba
 })
 export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
    public formGroup: FormGroup;
+   public Delivery: Object = [];
+   public maxTodaysDate: string;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -54,11 +57,18 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
       bankAddressBank: new FormControl('', this.validationService.createValidatorsArray('bankAddressBank')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
-    });
+    }); this.todaysDate = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate()
+    };
+    this.Delivery = Constants.DELIVERY_TYPE;
+    console.log(this.Delivery);
    }
 
   ngOnInit() {
-    console.log(this.locationOfHospital);
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
+
   }
 
   //english getters

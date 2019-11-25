@@ -49,7 +49,7 @@
         <ion-icon slot="end" name="calendar"></ion-icon>
         <ion-label position="floating">Date of Certification of disability / अपंगत्वाच्या प्रमाणपत्राची तारीख <span
             style="color: Red">*</span></ion-label>
-        <ion-datetime displayFormat="DD MMMM, YYYY" formControlName="date" id="date"
+        <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMMM, YYYY" formControlName="date" id="date"
           [class.is-invalid]="date.invalid && date.touched">
         </ion-datetime>
         <div class="text-danger" *ngIf="date.errors && date.touched">

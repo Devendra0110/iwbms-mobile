@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
+import { Constants } from 'src/assets/constants';
 
 
 @Component({
@@ -19,6 +20,8 @@ import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.ba
 export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
 
    public formGroup: FormGroup;
+   public Delivery: Object = [];
+   public maxTodaysDate: string;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -48,12 +51,19 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
       locationOfHospital_mr: new FormControl(''),
       typeOfDisability_mr: new FormControl(''),
       nameOfMed_mr: new FormControl(''),
-    });
-
+    }); 
+    this.todaysDate = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate()
+    };
+    this.Delivery = Constants.DELIVERY_TYPE;
+    console.log(this.Delivery);
    }
 
   ngOnInit() {
-    
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
+
   }
 
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
