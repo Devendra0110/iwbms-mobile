@@ -176,7 +176,7 @@ export abstract class ClaimBasePage {
 
 
     public checkDateOfDeliveryHealth() {
-        //date check
+        // date check
         if (this.formGroup.get('dateOfDeliveryHealth').touched && this.formGroup.get('dateOfDeliveryHealth').invalid) {
             this.formGroup.get('dateOfDeliveryHealth').reset();
         }
@@ -184,7 +184,7 @@ export abstract class ClaimBasePage {
 
 
     public checkDateOfTreatmentHealth() {
-        //date check
+        // date check
         if (this.formGroup.get('dateOfTreatment').touched && this.formGroup.get('dateOfTreatment').invalid) {
             this.formGroup.get('dateOfTreatment').reset();
         }

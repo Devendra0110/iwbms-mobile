@@ -203,12 +203,13 @@
       </ion-list>
       <ion-list *ngIf="selectScheme.value">
         <!-- SOCIAL -->
+        <!--
         <ion-item *ngIf="selectScheme.value === 'S01'">
           <app-claim-social1 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-social1>
         </ion-item>
 
-        <ion-item *ngIf="selectScheme.value === 'S02'">
+           <ion-item *ngIf="selectScheme.value === 'S02'">
           <app-claim-social2 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-social2>
         </ion-item>
@@ -246,10 +247,10 @@
         <ion-item *ngIf="selectScheme.value === 'S09'">
           <app-claim-social9 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-social9>
-        </ion-item>
+        </ion-item> -->
 
         <!-- EDUCATION -->
-        <ion-item *ngIf="selectScheme.value === 'E01'">
+        <!-- <ion-item *ngIf="selectScheme.value === 'E01'">
           <app-claim-education1 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-education1>
         </ion-item>
@@ -282,10 +283,10 @@
         <ion-item *ngIf="selectScheme.value === 'E07'">
           <app-claim-education7 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-education7>
-        </ion-item>
+        </ion-item> -->
 
         <!-- FINANCIAL -->
-        <ion-item *ngIf="selectScheme.value === 'F01'">
+        <!-- <ion-item *ngIf="selectScheme.value === 'F01'">
           <app-claim-financial1 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-financial1>
         </ion-item>
@@ -313,7 +314,7 @@
         <ion-item *ngIf="selectScheme.value === 'F06'">
           <app-claim-financial6 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-financial6>
-        </ion-item>
+        </ion-item> -->
 
         <!-- HEALTH -->
         <ion-item *ngIf="selectScheme.value === 'H01'">
@@ -321,7 +322,7 @@
             [familyDetailsArray]="familyDetailsArray"></app-claim-health1>
         </ion-item>
 
-        <ion-item *ngIf="selectScheme.value === 'H02'">
+        <!-- <ion-item *ngIf="selectScheme.value === 'H02'">
           <app-claim-health2 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-health2>
         </ion-item>
@@ -339,7 +340,7 @@
         <ion-item *ngIf="selectScheme.value === 'H05'">
           <app-claim-health5 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-health5>
-        </ion-item>
+        </ion-item> -->
 
       </ion-list>
 

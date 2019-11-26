@@ -86,53 +86,53 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
 
   ngOnInit() {
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
-    // this.typeOfDelivery.valueChanges.subscribe(value => {
-    //   const benefitAmount = JSON.parse(this.schemeDetails.benefit_amount);
-    //   if (value.trim === "Normal Delivery / नैसर्गिक प्रसूती".trim && this.schemeDetails.benefit_type === 'cash') {
-    //     this.benefitAmount.patchValue(benefitAmount[0].natural);
-    //   } else if (value.trim === "Caesarean Delivery / शस्त्रक्रियाद्वारे प्रसूती".trim && this.schemeDetails.benefit_type === 'cash') {
-    //     this.benefitAmount.patchValue(benefitAmount[0].caesarean);
-    //   }
-    // });
-    // this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
-    // this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
-    //   if (eachFamily.category === 'children') {
-    //     return eachFamily;
-    //   }
-    // });
-    // this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
-    // console.log(this.childArray);
-    // this.childrenDetail.valueChanges.subscribe((childId) => {
-    //   // patch birth year
-    //   this.childDetail = this.childArray.find((child: any) => child.family_detail_id === Number(childId));
-    //   this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
-    //   if (typeof this.childDetail.dobFamily === 'string') {
-    //     this.childDetail.dobFamily = moment(this.childDetail.dobFamily).format('DD/MM/YYYY').split('/');
-    //     this.childDetail.dobFamily = {
-    //       year: Number(this.childDetail.dobFamily[2]),
-    //       month: Number(this.childDetail.dobFamily[1]),
-    //       day: Number(this.childDetail.dobFamily[0])
-    //     };
-    //   }
+    this.typeOfDelivery.valueChanges.subscribe(value => {
+      const benefitAmount = JSON.parse(this.schemeDetails.benefit_amount);
+      if (value.trim === "Normal Delivery / नैसर्गिक प्रसूती".trim && this.schemeDetails.benefit_type === 'cash') {
+        this.benefitAmount.patchValue(benefitAmount[0].natural);
+      } else if (value.trim === "Caesarean Delivery / शस्त्रक्रियाद्वारे प्रसूती".trim && this.schemeDetails.benefit_type === 'cash') {
+        this.benefitAmount.patchValue(benefitAmount[0].caesarean);
+      }
+    });
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
+      if (eachFamily.category === 'children') {
+        return eachFamily;
+      }
+    });
+    this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
+    console.log(this.childArray);
+    this.childrenDetail.valueChanges.subscribe((childId) => {
+      // patch birth year
+      this.childDetail = this.childArray.find((child: any) => child.family_detail_id === Number(childId));
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
+      if (typeof this.childDetail.dobFamily === 'string') {
+        this.childDetail.dobFamily = moment(this.childDetail.dobFamily).format('DD/MM/YYYY').split('/');
+        this.childDetail.dobFamily = {
+          year: Number(this.childDetail.dobFamily[2]),
+          month: Number(this.childDetail.dobFamily[1]),
+          day: Number(this.childDetail.dobFamily[0])
+        };
+      }
 
-    //   // if select hospital then name should be enable .
-    //   this.dateOfDeliveryHealth.patchValue(this.childDetail.dobFamily)
-    //   const childYear = moment(this.childDetail.dobFamily);
-    //   // const childAge = moment().diff(childYear, 'days');
-    //   // assign male/femalne
-    //   this.genderPersonal.patchValue(this.childDetail.relation === '11' ? 3 : 1)
-    //   this.genderPersonal.disable();
+      // if select hospital then name should be enable .
+      this.dateOfDeliveryHealth.patchValue(this.childDetail.dobFamily)
+      const childYear = moment(this.childDetail.dobFamily);
+      // const childAge = moment().diff(childYear, 'days');
+      // assign male/femalne
+      this.genderPersonal.patchValue(this.childDetail.relation === '11' ? 3 : 1)
+      this.genderPersonal.disable();
 
-    // })
+    })
 
-    // this.selectMaternityPlace.valueChanges.subscribe((value) => {
-    //   if (value === 'Hospital/रुग्णालय')
-    //     this.nameOfHospital.enable();
-    //   else {
-    //     this.nameOfHospital.disable();
+    this.selectMaternityPlace.valueChanges.subscribe((value) => {
+      if (value === 'Hospital/रुग्णालय')
+        this.nameOfHospital.enable();
+      else {
+        this.nameOfHospital.disable();
 
-    //   }
-    // })
+      }
+    })
   }
 
   // english getters
