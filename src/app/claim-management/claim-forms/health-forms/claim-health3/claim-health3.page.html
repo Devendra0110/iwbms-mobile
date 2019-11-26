@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content> -->
   <form [formGroup]="formGroup">
     <ion-list>
       <ion-header style="font-size:18px" class="ml-2">Financial Assistance of Rs. 1,00,000/-to the only
@@ -66,7 +66,7 @@
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Date of Tuboctomy / नसबंदीची तारीख <span
               style="color: Red">*</span></ion-label>
-          <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMMM, YYYY" formControlName="dateOfOp" id="dateOfOp"
+          <ion-datetime [max]="maxTodaysDate" [min]="minTreatmentDate"  displayFormat="DD MMMM, YYYY" formControlName="dateOfOp" id="dateOfOp"
             [class.is-invalid]="dateOfOp.invalid && dateOfOp.touched">
           </ion-datetime>
           <div class="text-danger" *ngIf="dateOfOp.errors && dateOfOp.touched">
@@ -80,7 +80,10 @@
         <ion-select formControlName="childrenDetail"
           [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched" 
           id="childrenDetail">
-          <ion-select-option></ion-select-option>
+          <ion-select-option *ngFor="let childObject of familyArray; let i = index" [disabled]="i > '0'"
+              [value]="childObject['family_detail_id']">
+              {{childObject['firstNameFamily']}} {{childObject['surname']}} / {{childObject['firstNameFamily_mr']}}
+              {{childObject['surname_mr']}}</ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="childrenDetail.invalid && childrenDetail.touched">
           <small *ngIf="childrenDetail.errors && childrenDetail.errors['required']">Please select your Child.</small>
@@ -98,8 +101,6 @@
             Number.</small>
         </div>
       </ion-item>
-
-
 
       <ion-item>
         <ion-label position="floating">IFSC Code / आयएफएससी कोड <span style="color: Red">*</span>
@@ -201,4 +202,4 @@
       <ion-button mode="ios" expand="block" (click)="save()">Save</ion-button>
     </ion-list>
   </form>
-</ion-content>
+<!-- </ion-content> -->

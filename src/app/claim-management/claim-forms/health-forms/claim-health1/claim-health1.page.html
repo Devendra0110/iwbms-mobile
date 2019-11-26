@@ -16,9 +16,9 @@
         <ion-label position="floating">Child Name / मुलाचे नाव<span class="text-danger">*</span></ion-label>
         <ion-select formControlName="childrenDetail"
           [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched" id="childrenDetail">
-          <ion-select-option *ngFor="let childObject of childArray; let childArrayIndex = index" [disabled]="childArrayIndex > 1"
+          <ion-select-option *ngFor="let childObject of childArray; let childArrayIndex = index" [disabled]="childArrayIndex > '1'"
             [value]="childObject['family_detail_id']">{{childObject['firstNameFamily']}} {{childObject['surname']}} /
-            {{childObject['firstNameFamily_mr']}} {{childObject['surname_mr']}}>
+            {{childObject['firstNameFamily_mr']}} {{childObject['surname_mr']}}
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="childrenDetail.invalid && childrenDetail.touched">
@@ -41,7 +41,7 @@
         <ion-select formControlName="genderPersonal" id="genderPersonal"
           [class.is-invalid]="genderPersonal.invalid && genderPersonal.touched">
           <ion-select-option  *ngFor="let genderObject of genderPersonalArray" [value]="genderObject['gender_id']">
-            {{genderObject['gender']}} / {{genderObject['gender_mr']}}>
+            {{genderObject['gender']}} / {{genderObject['gender_mr']}}
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="genderPersonal.invalid && genderPersonal.touched">

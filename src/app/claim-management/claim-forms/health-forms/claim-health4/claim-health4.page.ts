@@ -10,6 +10,7 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import { Constants } from 'src/assets/constants';
+import * as moment from 'moment';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
    public formGroup: FormGroup;
    public Delivery: Object = [];
    public maxTodaysDate: string;
+   public minTreatmentDate: string;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -64,6 +66,8 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
 
   ngOnInit() {
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
+    this.minTreatmentDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD')
+
 
   }
 

@@ -777,7 +777,7 @@ export class ClaimValidationService {
       case 'billAmount': {
         validatorsArr = [
           Validators.required,
-          Validators.maxLength(6),
+          Validators.maxLength(8),
           Validators.pattern('^[0-9]*\.?[0-9]{0,2}$')
         ];
         break;

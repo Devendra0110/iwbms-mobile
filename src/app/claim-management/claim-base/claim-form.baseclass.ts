@@ -67,6 +67,19 @@ export abstract class ClaimBasePage {
     get benefitType() { return this.formGroup.get('benefitType'); }
     get benefitAmount() { return this.formGroup.get('benefitAmount'); }
 
+    async getSchemeDetails() {
+        return new Promise((resolve, reject) => {
+            if (this.user) {
+                this.claimHttpService.getSchemeDetailsBySchemeNumber(this.user.schemeID, this.JWTToken).subscribe((schemeDetails: any) => {
+                    this.schemeDetails = schemeDetails[0];
+                    resolve(schemeDetails[0]);
+                }, (error: any) => {
+                    reject(error);
+                });
+            }
+        });
+    }
+
     public async assignBenefits(patchAmount: boolean) {
         try {
             const test: any = await this.getSchemeDetails();
@@ -235,17 +248,5 @@ export abstract class ClaimBasePage {
     }
 
 
-    async getSchemeDetails() {
-        return new Promise((resolve, reject) => {
-            if (this.user) {
-                this.claimHttpService.getSchemeDetailsBySchemeNumber(this.user.schemeID, this.JWTToken).subscribe((schemeDetails: any) => {
-                    this.schemeDetails = schemeDetails[0];
-                    resolve(schemeDetails[0]);
-                }, (error: any) => {
-                    reject(error);
-                });
-            }
-        });
-    }
-
+   
 }

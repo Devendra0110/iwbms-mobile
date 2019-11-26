@@ -22,6 +22,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ClaimHealth5Page]
+  declarations: []
 })
 export class ClaimHealth5PageModule {}

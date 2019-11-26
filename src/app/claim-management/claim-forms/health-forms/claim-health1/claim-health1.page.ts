@@ -85,6 +85,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
+    this.getGenderPersonal();
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
     this.typeOfDelivery.valueChanges.subscribe(value => {
       const benefitAmount = JSON.parse(this.schemeDetails.benefit_amount);
@@ -100,6 +101,20 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
         return eachFamily;
       }
     });
+
+    // this.dateOfDeliveryHealth.valueChanges.subscribe((value) => {
+    //   if (this.dateOfDeliveryHealth.errors) {
+    //     Swal.fire({
+    //       type: 'warning',
+    //       text: 'Child is born before registration date.'
+    //     });
+    //     this.childAgeFlag = true;
+    //   }
+    //   else {
+    //     this.childAgeFlag = false;
+    //   }
+    // })
+
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
     console.log(this.childArray);
     this.childrenDetail.valueChanges.subscribe((childId) => {
@@ -107,6 +122,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
       this.childDetail = this.childArray.find((child: any) => child.family_detail_id === Number(childId));
       this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
       if (typeof this.childDetail.dobFamily === 'string') {
+        
         this.childDetail.dobFamily = moment(this.childDetail.dobFamily).format('DD/MM/YYYY').split('/');
         this.childDetail.dobFamily = {
           year: Number(this.childDetail.dobFamily[2]),
@@ -114,22 +130,45 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
           day: Number(this.childDetail.dobFamily[0])
         };
       }
-
-      // if select hospital then name should be enable .
       this.dateOfDeliveryHealth.patchValue(this.childDetail.dobFamily)
+      //swal fire for child less than a year
       const childYear = moment(this.childDetail.dobFamily);
       // const childAge = moment().diff(childYear, 'days');
-      // assign male/femalne
+      //assign male/femalne
       this.genderPersonal.patchValue(this.childDetail.relation === '11' ? 3 : 1)
       this.genderPersonal.disable();
-
     })
 
+    // if (this.filledFormData) {
+    //   this.fileOptions = {
+    //     health1Form1Doc1: this.filledFormData.documents.health1Form1Doc1,
+    //     // selfDeclaration: this.filledFormData.documents.selfDeclaration
+    //   };
+    //   this.viewAttachedDocuments();
+    //   this.filledFormData.dateOfDeliveryHealth = typeof this.filledFormData.dateOfDeliveryHealth === 'string' ? this.convertDateToNGBDateFormat(this.filledFormData.dateOfDeliveryHealth) : this.filledFormData.dateOfDeliveryHealth;
+    //   this.formGroup.patchValue(this.filledFormData, { emitEvent: false });
+    //   this.formGroup.get('health1Form1Doc1').clearValidators();
+    //   this.formGroup.get('rationCardDoc').clearValidators();
+    //   this.formGroup.get('selfDeclaration').clearValidators();
+    //   this.formGroup.disable();
+    //   this.editFormFlagObservable.subscribe(value => {
+    //     if (value) {
+    //       this.formGroup.enable();
+    //       this.aadharNumber.disable();
+    //       this.childrenDetail.disable();
+    //       this.genderPersonal.disable();
+    //       this.dateOfDeliveryHealth.disable();
+    //       this.selectMaternityPlace.disable();
+    //       this.typeOfDelivery.disable();
+    //     }
+    //     else this.formGroup.disable();
+    //   });
+    // }
     this.selectMaternityPlace.valueChanges.subscribe((value) => {
       if (value === 'Hospital/रुग्णालय')
-        this.nameOfHospital.enable();
+        this.nameOfHospital.enable()
       else {
-        this.nameOfHospital.disable();
+        this.nameOfHospital.disable()
 
       }
     })

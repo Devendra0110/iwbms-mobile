@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content> -->
   <form [formGroup]="formGroup">
     <ion-list>
       <ion-header style="font-size:18px" class="ml-2">Medical Assistance of Rs. 1,00,000/- for the treatment
@@ -18,7 +18,9 @@
         </ion-label>
         <ion-select formControlName="familyDetail" [class.is-invalid]="familyDetail.invalid && familyDetail.touched"
           id="familyDetail">
-          <ion-select-option>
+          <ion-select-option  *ngFor="let childObject of familyArray; let i = index" [value]="childObject['family_detail_id']">
+              {{childObject['firstNameFamily']}} {{childObject['surname']}} / {{childObject['firstNameFamily_mr']}}
+              {{childObject['surname_mr']}}
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="familyDetail.invalid && familyDetail.touched">
@@ -61,7 +63,7 @@
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Date of Treatment / उपचाराची तारीख <span
               style="color: Red">*</span></ion-label>
-          <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMMM, YYYY" formControlName="dateOfOp" id="dateOfOp"
+          <ion-datetime [max]="maxTodaysDate" [min]="minTreatmentDate" displayFormat="DD MMMM, YYYY" formControlName="dateOfOp" id="dateOfOp"
             [class.is-invalid]="dateOfOp.invalid && dateOfOp.touched">
           </ion-datetime>
           <div class="text-danger" *ngIf="dateOfOp.errors && dateOfOp.touched">
@@ -98,7 +100,7 @@
         <ion-label position="floating">Type of Illness/ आजारपणाचा प्रकार <span style="color: Red">*</span></ion-label>
         <ion-select formControlName="typeOfIllness" [class.is-invalid]="typeOfIllness.invalid && typeOfIllness.touched"
           id="typeOfIllness">
-          <ion-select-option></ion-select-option>
+          <ion-select-option *ngFor="let list of illness" [value]="list.type">{{ list.type }}</ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="typeOfIllness.invalid && typeOfIllness.touched">
           <small *ngIf="typeOfIllness.errors && typeOfIllness.errors['required']">Please select type of Illness</small>
@@ -112,6 +114,7 @@
           [class.is-invalid]="billAmount.invalid && billAmount.touched" formControlName="billAmount"></ion-input>
         <div class="text-danger" *ngIf="billAmount.invalid && billAmount.touched">
           <small *ngIf="billAmount.errors && billAmount.errors['required']">Please enter your amount.</small>
+          <small *ngIf="billAmount.errors && billAmount.errors['pattern']">Please enter appropriate amount.</small>
         </div>
       </ion-item>
 
@@ -178,4 +181,4 @@
       <ion-button mode="ios" expand="block" (click)="save()">Save</ion-button>
     </ion-list>
   </form>
-</ion-content>
+<!-- </ion-content> -->

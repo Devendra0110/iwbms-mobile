@@ -77,10 +77,10 @@ const routes: Routes = [
     // ClaimFinancial6Page,
 
     ClaimHealth1Page,
-    // ClaimHealth2Page,
-    // ClaimHealth3Page,
-    // ClaimHealth4Page,
-    // ClaimHealth5Page,
+    ClaimHealth2Page,
+    ClaimHealth3Page,
+    ClaimHealth4Page,
+    ClaimHealth5Page,
 
   ],
 })

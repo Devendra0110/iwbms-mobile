@@ -10,6 +10,8 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import { Constants } from 'src/assets/constants';
+import * as moment from 'moment';
+import * as _ from 'lodash';
 
 
 @Component({
@@ -18,21 +20,34 @@ import { Constants } from 'src/assets/constants';
   styleUrls: ['./claim-health3.page.scss'],
 })
 export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
-   public formGroup: FormGroup;
-   public Delivery: Object = [];
-   public maxTodaysDate: string;
+  public formGroup: FormGroup;
+  public Delivery: Object = [];
+  public maxTodaysDate: string;
+  public minTreatmentDate: string;
+  public familyArray: Array<string> = [];
+  public ifIfscCodeBank: boolean;
+
+
+  bankDetails: any = {
+    BANK: '',
+    BRANCH: '',
+    ADDRESS: ''
+  };
+
+
 
   constructor(
     protected validationService: ClaimValidationService,
     protected transliterate: TransliterationService,
     protected httpService: HttpService,
     protected claimService: ClaimService,
-    protected router:Router,
-    protected storage:Storage,
-    protected toast:Toast,
-    private dialogs:Dialogs,
+    protected router: Router,
+    protected storage: Storage,
+    protected toast: Toast,
+    private dialogs: Dialogs,
   ) {
-    super(transliterate,httpService,claimService,router,storage,toast);
+    super(transliterate, httpService, claimService, router, storage, toast);
+    this.familyArray = [];
     this.fileOptions = { health3Form3Doc1: '', health3Form3Doc2: '', aadharCardDoc: '', selfDeclaration: '' };
     this.files = { health3Form3Doc1: '', health3Form3Doc2: '', aadharCardDoc: '', selfDeclaration: '' };
 
@@ -66,10 +81,23 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
     };
     this.Delivery = Constants.DELIVERY_TYPE;
     console.log(this.Delivery);
-   }
+  }
 
   ngOnInit() {
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
+    this.minTreatmentDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD')
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.familyArray = this.familyDetailsArray.filter((eachFamily: any) => {
+      if (eachFamily.relation === '11') {
+        return eachFamily;
+      }
+    });
+    this.familyArray = _.reverse(_.sortBy(this.familyArray, 'ageFamily'));
+    this.childrenDetail.valueChanges.subscribe((FamilyMemberId) => {
+      const FamilyMemberDetail: any = this.familyArray.find((eachFamily: any) => eachFamily.family_detail_id === Number(FamilyMemberId));
+      this.aadharNumber.patchValue(FamilyMemberDetail.aadharNoFamily);
+    })
+
 
   }
 
@@ -95,8 +123,34 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
   get nameOfDoctor_mr() { return this.formGroup.get('nameOfDoctor_mr'); }
   get locationOfHospital_mr() { return this.formGroup.get('locationOfHospital_mr'); }
 
-  save(){
-    
+
+
+  searchByifscCodeBank() {
+    this.bankDetails = {
+      BANK: '',
+      BRANCH: '',
+      ADDRESS: ''
+    };
+    this.claimHttpService.callIfscCodeApi(this.ifscCodeBank.value).subscribe(bankDetails => {
+      if (bankDetails) {
+        this.ifIfscCodeBank = true;
+        this.formGroup.get('bankNameBank').patchValue(bankDetails['BANK']);
+        this.formGroup.get('bankBranchBank').patchValue(bankDetails['BRANCH']);
+        this.formGroup.get('bankAddressBank').patchValue(bankDetails['ADDRESS']);
+      }
+    },
+      error1 => {
+        alert('IFSC Code Not Found.Please fill bank details manually');
+        this.bankDetails = {
+          BANK: '',
+          BRANCH: '',
+          ADDRESS: ''
+        };
+        this.ifIfscCodeBank = false;
+      });
   }
 
+  save() {
+
+  }
 }
