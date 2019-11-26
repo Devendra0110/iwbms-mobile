@@ -196,7 +196,7 @@
           <ion-label position="floating">Select Scheme / योजना निवडा</ion-label>
           <ion-select text-wrap [class.is-invalid]="selectScheme.invalid && selectScheme.touched"
             formControlName="selectScheme" id="selectScheme">
-            <ion-select-option *ngFor="let each of commonClaimArray" class="select-scheme" [value]="each.scheme_number">
+            <ion-select-option *ngFor="let each of commonClaimArray" [disabled]="!each.eligibility" class="select-scheme" [value]="each.scheme_number">
               {{each.scheme_number}}-{{each.scheme_name}}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -322,7 +322,7 @@
             [familyDetailsArray]="familyDetailsArray"></app-claim-health1>
         </ion-item>
 
-        <!-- <ion-item *ngIf="selectScheme.value === 'H02'">
+        <ion-item *ngIf="selectScheme.value === 'H02'">
           <app-claim-health2 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-health2>
         </ion-item>
@@ -340,7 +340,7 @@
         <ion-item *ngIf="selectScheme.value === 'H05'">
           <app-claim-health5 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-health5>
-        </ion-item> -->
+        </ion-item>
 
       </ion-list>
 
