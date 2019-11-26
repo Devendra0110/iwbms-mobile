@@ -124,6 +124,12 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
   get locationOfHospital_mr() { return this.formGroup.get('locationOfHospital_mr'); }
 
 
+  capitaliseifscCodeBank() {
+    let value = this.ifscCodeBank.value;
+    value = value.toString().toUpperCase();
+    this.ifscCodeBank.setValue(value);
+  }
+
 
   searchByifscCodeBank() {
     this.bankDetails = {
