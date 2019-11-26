@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content> -->
     <form [formGroup]="formGroup">
         <ion-list>
             <ion-header class="ml-2" style="font-size:18px">Funeral Benefit of Rs. 10,000/- (Ten Thousand) to the nominated
@@ -140,7 +140,7 @@
         
               <ion-item>
                 <ion-label position="floating">IFSC Code / आयएफएससी कोड<span class="text-danger">*</span></ion-label>
-                <ion-input [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched" formControlName="ifscCodeBank"
+                <ion-input [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched" formControlName="ifscCodeBank" (keyup)="capitaliseifscCodeBank()" (change)="searchByifscCodeBankCode()"
                   id="ifscCodeBank" clearInput></ion-input>
                 <div class="text-danger" *ngIf="ifscCodeBank.invalid && ifscCodeBank.touched">
                   <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['required']">Please enter IFSC Code.</small>
@@ -257,4 +257,4 @@
   
           </ion-list>
       </form>
-</ion-content>
+<!-- </ion-content> -->

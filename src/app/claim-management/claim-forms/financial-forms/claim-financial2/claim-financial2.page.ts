@@ -1,3 +1,4 @@
+import { Constants } from './../../../../../assets/constants';
 import { Storage } from '@ionic/storage';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import { Component, OnInit } from '@angular/core';
@@ -9,6 +10,7 @@ import { ClaimService } from 'src/app/services/claim.service';
 import { Router } from '@angular/router';
 import { Toast } from '@ionic-native/toast/ngx';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-claim-financial2',
@@ -18,6 +20,9 @@ import { Dialogs } from '@ionic-native/dialogs/ngx';
 export class ClaimFinancial2Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
   public maxTodaysDate : string;
+  public issuingAuthorityArray = [];
+  public bankDetails: any;
+  public isifscCodeBankCodeFound: boolean;
 
 
   constructor(
@@ -32,6 +37,7 @@ export class ClaimFinancial2Page extends ClaimBasePage implements OnInit {
     super(transliterate, httpService, claimService, router, storage, toast);
     this.files = { deathCertificateDoc: '',  scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate:'',selfDeclaration:'' };
     this.fileOptions = { deathCertificateDoc: '',  scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate:'',selfDeclaration:'' };
+    this.issuingAuthorityArray = Constants.ISSUING_AUTHORITY;
 
     this.formGroup = new FormGroup({
 
@@ -75,6 +81,12 @@ export class ClaimFinancial2Page extends ClaimBasePage implements OnInit {
 
   ngOnInit() {
 
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.sortedArray = this.familyDetailsArray.filter(data => {
+      return data.nominee === "yes" || data.nominee === "Yes"
+    })
+
+    this.patchNominee()
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
 
   }
@@ -108,4 +120,53 @@ export class ClaimFinancial2Page extends ClaimBasePage implements OnInit {
   get fullName_mr() { return this.formGroup.get('fullName_mr'); }
   get relation_mr() { return this.formGroup.get('relation_mr'); }
 
+
+
+  capitaliseifscCodeBank() {
+   
+    let value = this.ifscCodeBank.value;
+    value = value.toString().toUpperCase();
+    this.ifscCodeBank.setValue(value);
+  }
+  searchByifscCodeBankCode() {
+    this.bankDetails = {
+      BANK: '',
+      BRANCH: '',
+      Address: ''
+    };
+    this.validationService.callifscCodeBankApi(this.ifscCodeBank.value).subscribe(bankDetails => {
+      if (!!bankDetails) {
+        this.isifscCodeBankCodeFound = true;
+        this.bankDetails = bankDetails;
+        this.formGroup.get('bankNameBank').patchValue(bankDetails['BANK']);
+        this.formGroup.get('bankBranchBank').patchValue(bankDetails['BRANCH']);
+        this.formGroup.get('bankAddressBank').patchValue(bankDetails['ADDRESS']);
+      }
+    },
+    
+      error => {
+        this.toast.show('IFSC code not found', '1000', 'bottom');
+        this.bankDetails = {
+          BANK: '',
+          BRANCH: '',
+          Address: ''
+        };
+        this.isifscCodeBankCodeFound = false;
+      });
+
+  }
+  private patchNominee() {
+    const fullNameNominee_mr = `${this.sortedArray[0].firstNameFamily_mr} ${this.sortedArray[0].fatherOrHusbandName_mr} ${this.sortedArray[0].surname_mr}`;
+    const nomineeBirthDateArray = moment(this.sortedArray[0].dobFamily).format('YYYY-MM-DD');
+    const fullNameNominee = `${this.sortedArray[0].firstNameFamily} ${this.sortedArray[0].fatherOrHusbandName} ${this.sortedArray[0].surname}`
+    
+    //patch values
+    this.formGroup.get('fullName').patchValue(fullNameNominee);
+    this.formGroup.get('fullName_mr').patchValue(fullNameNominee_mr);
+    this.formGroup.get('dobPersonal').patchValue(nomineeBirthDateArray);
+    this.formGroup.get('agePersonal').patchValue(this.calculateAge(nomineeBirthDateArray))
+    this.formGroup.get('relation').patchValue(this.sortedArray[0]['category']);
+    this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
+    this.agePersonal.disable()
+  }
 }

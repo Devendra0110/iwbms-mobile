@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content> -->
   <form [formGroup]="formGroup">
     <ion-list>
       <ion-header class="ml-2" style="font-size:18px">Financial Assistance of Rs. 24,000/- per year up to 5 years to the widow or widower in case of death of
@@ -100,9 +100,9 @@
       </ion-item>
       <ion-item>
           <ion-label position="floating">Age / वय<span class="text-danger">*</span></ion-label>
-          <ion-datetime id="agePersonal" disabled [class.is-invalid]="agePersonal.invalid && agePersonal.touched"
+          <ion-input id="agePersonal" disabled [class.is-invalid]="agePersonal.invalid && agePersonal.touched"
             formControlName="agePersonal">
-          </ion-datetime>
+          </ion-input>
   
         </ion-item>
         <ion-item>
@@ -145,7 +145,7 @@
 
       <ion-item>
         <ion-label position="floating">IFSC Code / आयएफएससी कोड<span class="text-danger">*</span></ion-label>
-        <ion-input [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched" formControlName="ifscCodeBank"
+        <ion-input [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched" (keyup)="capitaliseifscCodeBank()" (change)="searchByifscCodeBankCode()" formControlName="ifscCodeBank"
           id="ifscCodeBank" clearInput></ion-input>
         <div class="text-danger" *ngIf="ifscCodeBank.invalid && ifscCodeBank.touched">
           <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['required']">Please enter IFSC Code.</small>
@@ -330,4 +330,4 @@
 
     </ion-list>
 </form>
-</ion-content>
+<!-- </ion-content> -->

@@ -17,6 +17,8 @@ import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.ba
 export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
   public maxTodaysDate : string;
+  public isifscCodeBankCodeFound: boolean;
+  public bankDetails: any;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -108,4 +110,39 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
   get bankAddressBank_mr() { return this.formGroup.get('bankAddressBank_mr'); }
   get bankBranchBank_mr() { return this.formGroup.get('bankBranchBank_mr'); }
 
+
+
+  searchByifscCodeBankCode() {
+    this.bankDetails = {
+      BANK: '',
+      BRANCH: '',
+      Address: ''
+    };
+    this.validationService.callifscCodeBankApi(this.ifscCodeBank.value).subscribe(bankDetails => {
+      if (!!bankDetails) {
+        this.isifscCodeBankCodeFound = true;
+        this.bankDetails = bankDetails;
+        this.formGroup.get('bankNameBank').patchValue(bankDetails['BANK']);
+        this.formGroup.get('bankBranchBank').patchValue(bankDetails['BRANCH']);
+        this.formGroup.get('bankAddressBank').patchValue(bankDetails['ADDRESS']);
+      }
+    },
+    
+      error => {
+        this.toast.show('IFSC code not found', '1000', 'bottom');
+        this.bankDetails = {
+          BANK: '',
+          BRANCH: '',
+          Address: ''
+        };
+        this.isifscCodeBankCodeFound = false;
+      });
+
+  }
+  capitaliseifscCodeBank() {
+   
+    let value = this.ifscCodeBank.value;
+    value = value.toString().toUpperCase();
+    this.ifscCodeBank.setValue(value);
+  }
 }

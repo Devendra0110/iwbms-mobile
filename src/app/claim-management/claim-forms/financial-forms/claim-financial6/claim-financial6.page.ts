@@ -9,6 +9,7 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { Storage } from '@ionic/storage';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
+import * as moment from 'moment';
 @Component({
   selector: 'app-claim-financial6',
   templateUrl: './claim-financial6.page.html',
@@ -17,7 +18,8 @@ import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.ba
 export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
   public maxTodaysDate : string;
-
+  public isifscCodeBankCodeFound: boolean;
+  public bankDetails: any;
   constructor(
     private validationService: ClaimValidationService,
     protected transliterate: TransliterationService,
@@ -70,6 +72,12 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
+
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.sortedArray = this.familyDetailsArray.filter(data => {
+      return data.category === "spouse"
+    })
+    this.patchNominee()
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
 
   }
@@ -101,4 +109,55 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
   get fullName_mr() { return this.formGroup.get('fullName_mr'); }
   get relation_mr() { return this.formGroup.get('relation_mr'); }
   get placeOfDocIssue_mr() { return this.formGroup.get('placeOfDocIssue_mr'); }
+
+
+
+  searchByifscCodeBankCode() {
+    this.bankDetails = {
+      BANK: '',
+      BRANCH: '',
+      Address: ''
+    };
+    this.validationService.callifscCodeBankApi(this.ifscCodeBank.value).subscribe(bankDetails => {
+      if (!!bankDetails) {
+        this.isifscCodeBankCodeFound = true;
+        this.bankDetails = bankDetails;
+        this.formGroup.get('bankNameBank').patchValue(bankDetails['BANK']);
+        this.formGroup.get('bankBranchBank').patchValue(bankDetails['BRANCH']);
+        this.formGroup.get('bankAddressBank').patchValue(bankDetails['ADDRESS']);
+      }
+    },
+    
+      error => {
+        this.toast.show('IFSC code not found', '1000', 'bottom');
+        this.bankDetails = {
+          BANK: '',
+          BRANCH: '',
+          Address: ''
+        };
+        this.isifscCodeBankCodeFound = false;
+      });
+
+  }
+  capitaliseifscCodeBank() {
+   
+    let value = this.ifscCodeBank.value;
+    value = value.toString().toUpperCase();
+    this.ifscCodeBank.setValue(value);
+  }
+
+  private patchNominee() {
+    const fullNameNominee_mr = `${this.sortedArray[0].firstNameFamily_mr} ${this.sortedArray[0].fatherOrHusbandName_mr} ${this.sortedArray[0].surname_mr}`;
+    const nomineeBirthDateArray = moment(this.sortedArray[0].dobFamily).format('YYYY-MM-DD');
+    const fullNameNominee = `${this.sortedArray[0].firstNameFamily} ${this.sortedArray[0].fatherOrHusbandName} ${this.sortedArray[0].surname}`
+    
+    //patch values
+    this.formGroup.get('fullName').patchValue(fullNameNominee);
+    this.formGroup.get('fullName_mr').patchValue(fullNameNominee_mr);
+    this.formGroup.get('dobPersonal').patchValue(nomineeBirthDateArray);
+    this.formGroup.get('agePersonal').patchValue(this.calculateAge(nomineeBirthDateArray))
+    this.formGroup.get('relation').patchValue(this.sortedArray[0]['category']);
+    this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
+    this.agePersonal.disable()
+  }
 }

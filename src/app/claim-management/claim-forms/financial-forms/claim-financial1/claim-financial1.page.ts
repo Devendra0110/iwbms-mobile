@@ -11,6 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import * as moment from 'moment';
 import { Constants } from 'src/assets/constants';
+
 @Component({
   selector: 'app-claim-financial1',
   templateUrl: './claim-financial1.page.html',
@@ -43,8 +44,8 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
 
   ) {
     super(transliterate, httpService, claimService, router, storage, toast);
-    this.files = { deathCertificateDoc: '', proofOfDeathDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' };
-    this.fileOptions = { deathCertificateDoc: '', proofOfDeathDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' };
+    this.files = { deathCertificateDoc: '', firCertificate: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' };
+    this.fileOptions = { deathCertificateDoc: '', firCertificate: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' };
 
     this.formGroup = new FormGroup({
       deathCertificateIssueDate: new FormControl('', this.validationService.createValidatorsArray('deathCertificateIssueDate')),
@@ -53,7 +54,7 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
       deathDate: new FormControl('', this.validationService.createValidatorsArray('deathDate')),
       fullName: new FormControl('', this.validationService.createValidatorsArray('fullName')),
       dobPersonal: new FormControl('', this.validationService.createValidatorsArray('dobPersonal')),
-      agePersonal: new FormControl('', this.validationService.createValidatorsArray('agePersonal')),
+      agePersonal: new FormControl ('', this.validationService.createValidatorsArray('agePersonal')),
       relation: new FormControl('', this.validationService.createValidatorsArray('relation')),
       aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),
       ifscCodeBank: new FormControl('', this.validationService.createValidatorsArray('ifscCodeBank')),
@@ -71,7 +72,7 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
       issuingAuthority: new FormControl('', this.validationService.createValidatorsArray('issuingAuthority')),
       // document validations
       deathCertificateDoc: new FormControl('', this.validationService.createValidatorsArray('deathCertificateDoc')),
-      proofOfDeathDoc: new FormControl('', this.validationService.createValidatorsArray('proofOfDeathDoc')),
+      firCertificate: new FormControl('', this.validationService.createValidatorsArray('firCertificate')),
       scannedPassbookDoc: new FormControl('', this.validationService.createValidatorsArray('scannedPassbookDoc')),
       aadharCardDoc: new FormControl('', this.validationService.createValidatorsArray('aadharCardDoc')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
@@ -80,7 +81,7 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
       policeStationAdd: new FormControl('', this.validationService.createValidatorsArray('policeStationAdd')),
 
 
-      //marathi values
+      // marathi values
 
       placeOfDocIssue_mr: new FormControl(''),
       fullName_mr: new FormControl(''),
@@ -94,7 +95,15 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
-    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.sortedArray = this.familyDetailsArray.filter(data => {
+      return data.nominee === "yes" || data.nominee === "Yes"
+    })
+
+    this.patchNominee()
+    console.log(this.sortedArray)
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
+    this.getNatureOfWorkEmp();
 
   }
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
@@ -113,7 +122,7 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   get bankBranchBank() { return this.formGroup.get('bankBranchBank'); }
   get accountNumberBank() { return this.formGroup.get('accountNumberBank'); }
   get deathCertificateDoc() { return this.formGroup.get('deathCertificateDoc') }
-  get proofOfDeathDoc() { return this.formGroup.get('proofOfDeathDoc') }
+  get firCertificate() { return this.formGroup.get('firCertificate') }
   get scannedPassbookDoc() { return this.formGroup.get('scannedPassbookDoc') }
   get aadharCardDoc() { return this.formGroup.get('aadharCardDoc') }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration') }
@@ -162,5 +171,61 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   // this.formGroup.get('relation').patchValue(this.sortedArray[0]['category']);
   // this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
   // this.calculateAge(this.dobPersonal.value);
+  private patchNominee() {
+    const fullNameNominee_mr = `${this.sortedArray[0].firstNameFamily_mr} ${this.sortedArray[0].fatherOrHusbandName_mr} ${this.sortedArray[0].surname_mr}`;
+    const nomineeBirthDateArray = moment(this.sortedArray[0].dobFamily).format('YYYY-MM-DD');
+    const fullNameNominee = `${this.sortedArray[0].firstNameFamily} ${this.sortedArray[0].fatherOrHusbandName} ${this.sortedArray[0].surname}`
+    
+    //patch values
+    this.formGroup.get('fullName').patchValue(fullNameNominee);
+    this.formGroup.get('fullName_mr').patchValue(fullNameNominee_mr);
+    this.formGroup.get('dobPersonal').patchValue(nomineeBirthDateArray);
+    this.formGroup.get('agePersonal').patchValue(this.calculateAge(nomineeBirthDateArray))
+    this.formGroup.get('relation').patchValue(this.sortedArray[0]['category']);
+    this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
+    this.agePersonal.disable()
+  }
+
+ 
+  searchByifscCodeBankCode() {
+    this.bankDetails = {
+      BANK: '',
+      BRANCH: '',
+      Address: ''
+    };
+    this.validationService.callifscCodeBankApi(this.ifscCodeBank.value).subscribe(bankDetails => {
+      if (!!bankDetails) {
+        this.isifscCodeBankCodeFound = true;
+        this.bankDetails = bankDetails;
+        this.formGroup.get('bankNameBank').patchValue(bankDetails['BANK']);
+        this.formGroup.get('bankBranchBank').patchValue(bankDetails['BRANCH']);
+        this.formGroup.get('bankAddressBank').patchValue(bankDetails['ADDRESS']);
+      }
+    },
+    
+      error => {
+        this.toast.show('IFSC code not found', '1000', 'bottom');
+        this.bankDetails = {
+          BANK: '',
+          BRANCH: '',
+          Address: ''
+        };
+        this.isifscCodeBankCodeFound = false;
+      });
+
+  }
+  capitaliseifscCodeBank() {
+   
+    let value = this.ifscCodeBank.value;
+    value = value.toString().toUpperCase();
+    this.ifscCodeBank.setValue(value);
+  }
+  public getNatureOfWorkEmp(): void {
+    this.httpService.getTypesOfWorker().subscribe((data: any) => {
+      this.natureOfWorkEmpArray = data;
+      console.log(data);
+    });
+  }
+
 }
 

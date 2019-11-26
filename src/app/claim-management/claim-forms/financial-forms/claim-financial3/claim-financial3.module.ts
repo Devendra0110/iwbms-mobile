@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ClaimFinancial3Page]
+  declarations: []
 })
 export class ClaimFinancial3PageModule {}

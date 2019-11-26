@@ -69,12 +69,12 @@ const routes: Routes = [
     // ClaimSocial8Page,
     // ClaimSocial9Page,
 
-    // ClaimFinancial1Page,
-    // ClaimFinancial2Page,
-    // ClaimFinancial3Page,
-    // ClaimFinancial4Page,
-    // ClaimFinancial5Page,
-    // ClaimFinancial6Page,
+    ClaimFinancial1Page,
+    ClaimFinancial2Page,
+    ClaimFinancial3Page,
+    ClaimFinancial4Page,
+    ClaimFinancial5Page,
+    ClaimFinancial6Page,
 
     ClaimHealth1Page,
     // ClaimHealth2Page,
