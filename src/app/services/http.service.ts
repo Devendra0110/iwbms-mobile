@@ -80,8 +80,12 @@ export class HttpService {
     return this.http.get(`${serverUrl}masters/categories`);
   }
 
-  getNatureOfWork() {
+  getTypeOfWork(){
     return this.http.get(`${serverUrl}masters/types-of-worker`);
+  }
+
+  getNatureOfWork() {
+    return this.http.get(`${serverUrl}masters/nature-of-work`);
   }
 
   getIssuerTypes() {

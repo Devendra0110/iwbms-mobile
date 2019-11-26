@@ -10,7 +10,7 @@
       <ion-item>
         <ion-label position="floating">Type of Issuer / जारी करणार्‍याचा प्रकार<span style="color: Red">*</span></ion-label>
         <ion-select [class.is-invalid]="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched" interface="action-sheet"
-          formControlName="typeOfEmployerEmp" id='typeOfEmployerEmp' (ionChange)="handleDropdown($event)">
+          formControlName="typeOfEmployerEmp" id='typeOfEmployerEmp'>
           <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptions|keyvalue" value="{{ typeOfIssuer.key }}">{{ typeOfIssuer.value }}</ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched">
@@ -31,21 +31,7 @@
         <ion-item *ngIf="fullNameOfIssuerEmp_mr.value">
           <ion-label>{{fullNameOfIssuerEmp_mr.value}}</ion-label>
         </ion-item>
-      <ion-item>
-        <ion-label position="floating">Issuer Reg. No. / जारीकर्ता नोंदणी प्रकार</ion-label>
-        <ion-input type="tel" maxlength="12" formControlName="registrationNumberEmp" id='registrationNumberEmp' clearInput></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Registration Type / नोंदणी प्रकार<span style="color: Red">*</span></ion-label>
-        <ion-select formControlName="registrationTypeEmp" [class.is-invalid]="registrationTypeEmp.invalid && registrationTypeEmp.touched" interface="action-sheet"
-          id='registrationTypeEmp' (ionChange)="handleDropdown($event)">
-          <ion-select-option *ngFor="let registrationType of registrationTypeOptions|keyvalue"
-            value="{{ registrationType.key }}"> {{ registrationType.value }}</ion-select-option>
-        </ion-select>
-        <div class="text-danger" *ngIf="registrationTypeEmp.invalid && registrationTypeEmp.touched">
-          <small *ngIf="!!registrationTypeEmp.errors?.required">Please choose registration type.</small>
-        </div>
-      </ion-item>
+      
       <ion-item>
         <ion-label position="floating">Mobile number / भ्रमणध्वनी क्रमांक<span style="color: Red">*</span></ion-label>
         <ion-input type="tel" maxlength="10" minlength="10" formControlName="mobileNumberOfIssuerEmp"
@@ -56,16 +42,7 @@
           <small *ngIf="!!mobileNumberOfIssuerEmp.errors?.pattern">Please enter appropriate Mobile number.</small>
         </div>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">Document Ref.No / दस्तऐवज संदर्भ क्रमांक</ion-label>
-        <ion-input type="tel" maxlength="20" formControlName="documentRefNumberEmp"
-          [class.is-invalid]="documentRefNumberEmp.invalid && documentRefNumberEmp.touched"
-          id='documentRefNumberEmp' clearInput></ion-input>
-        <div class="text-danger" *ngIf="documentRefNumberEmp.invalid && documentRefNumberEmp.touched">
-          <small *ngIf="!!documentRefNumberEmp.errors?.required">Please enter Dispatch number.</small>
-          <small *ngIf="!!documentRefNumberEmp.errors?.maxlength">You have exceeded max length.</small>
-        </div>
-      </ion-item>
+      
       <ion-item>
         <ion-icon slot="end" name="calendar"></ion-icon>
         <ion-label position="floating">From Date / या तारखेपासून<span style="color: Red">*</span></ion-label>

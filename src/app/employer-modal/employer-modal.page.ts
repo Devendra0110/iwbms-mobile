@@ -46,26 +46,16 @@ export class EmployerModalPage implements OnInit {
         this.typeOfIssuerOptionsMarathi[Number(i.id)] = i.type_of_issuer_mr;
       }
     }, err => console.log(err));
-    // fetch the list of issuer type registration from database
-    this.httpService.getIssuerRegistrationTypes().subscribe((issuerRegistrationTypesArrObj: any) => {
-      for (const i of issuerRegistrationTypesArrObj) {
-        this.registrationTypeOptions[Number(i.id)] = i.registration_type;
-        this.registrationTypeOptionsMarathi[Number(i.id)] = i.registration_type_mr;
-      }
-    }, err => console.log(err));
+   
 
     this.employerWorkDetailsFormFroup = new FormGroup({
       typeOfEmployerEmp: new FormControl('', [Validators.required]),
       fullNameOfIssuerEmp: new FormControl('', [Validators.required, Validators.pattern('[a-zA-z\\s]{8,50}')]),
-      registrationNumberEmp: new FormControl('', [Validators.pattern('^[0-9]{5,12}$')]),
-      registrationTypeEmp: new FormControl('', [Validators.required]),
       mobileNumberOfIssuerEmp: new FormControl('', [Validators.required, Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
-      documentRefNumberEmp: new FormControl('', [Validators.maxLength(20)]),
       fromDateEmp: new FormControl(null, [Validators.required]),
       toDateEmp: new FormControl(null, [Validators.required]),
       typeOfEmployerEmp_mr: new FormControl(''),
       fullNameOfIssuerEmp_mr: new FormControl(''),
-      registrationTypeEmp_mr: new FormControl(''),
       workingDays: new FormControl('')
     });
   }

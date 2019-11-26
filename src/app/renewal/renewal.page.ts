@@ -36,6 +36,8 @@ export class RenewalPage implements OnInit {
   public selectedRenewalData: any;
   public districts: any[] = [];
   public talukas: any[] = [];
+  public talukasIssuerEmp: any[] = [];
+  public talukasIssuerGram: any[] = [];
   public natureOfWorkEmpArray: any[];
   public issuers: any[];
   public issuersRegistrationTypes: any[];
@@ -44,6 +46,8 @@ export class RenewalPage implements OnInit {
   public appointmentDate: any;
   public minFromDate: string;
   public maxToDate: string;
+  public typeOfWorkOptions: string[] = [];
+  public typeOfWorkOptionsMarathi: string[] = [];
   public natureOfWorkOptions: string[] = [];
   public natureOfWorkOptionsMarathi: string[] = [];
   public typeOfIssuerOptions: string[] = [];
@@ -124,7 +128,24 @@ export class RenewalPage implements OnInit {
       talukaEmp_mr: new FormControl(''),
       districtEmp_mr: new FormControl(''),
       natureOfWorkEmp_mr: new FormControl(''),
-      recaptcha: new FormControl(''),
+      typeOfIssuer: new FormControl('', [Validators.required]),
+      typeOfIssuer_mr: new FormControl(''),
+      registeredWith: new FormControl(''),
+      registrationNoOfIssuer: new FormControl(''),
+      dispatchNo: new FormControl(''),
+      dispatchDate: new FormControl(''),
+      nameOfEmployer: new FormControl(''),
+      nameOfEmployer_mr: new FormControl(''),
+      districtOfEmployer: new FormControl(''),
+      districtOfEmployer_mr: new FormControl(''),
+      talukaOfEmployer: new FormControl(''),
+      talukaOfEmployer_mr: new FormControl(''),
+      nameOfGramPanchayat: new FormControl(''),
+      nameOfGramPanchayat_mr: new FormControl(''),
+      districtOfGramPanchayat: new FormControl(''),
+      districtOfGramPanchayat_mr: new FormControl(''),
+      talukaOfGramPanchayat: new FormControl(''),
+      talukaOfGramPanchayat_mr: new FormControl(''),
       selfDeclaration: new FormControl(''),
       verifyDocumentCheck: new FormControl('', [Validators.required]),
       typeOfWorkEmp: new FormControl('', [Validators.required]),
@@ -142,12 +163,17 @@ export class RenewalPage implements OnInit {
     };
 
     this.maxAppointmentDispatchDate = this.changeToIonDateTime(0, 'year');
-
+    this.httpService.getTypeOfWork().subscribe((typeOfWorkArrObj: any) => {
+      for (const i of typeOfWorkArrObj) {
+        this.typeOfWorkOptions[Number(i.type_of_worker_id)] = i.type_of_worker_title;
+        this.typeOfWorkOptionsMarathi[Number(i.type_of_worker_id)] = i.type_of_worker_title_mr;
+      }
+    }, err => console.log(err));
     // fetch the list of Nature of Work from database
     this.httpService.getNatureOfWork().subscribe((natureOfWorkArrObj: any) => {
       for (const i of natureOfWorkArrObj) {
-        this.natureOfWorkOptions[Number(i.type_of_worker_id)] = i.type_of_worker_title;
-        this.natureOfWorkOptionsMarathi[Number(i.type_of_worker_id)] = i.type_of_worker_title_mr;
+        this.natureOfWorkOptions[Number(i.id)] = i.nature_of_work;
+        this.natureOfWorkOptionsMarathi[Number(i.id)] = i.nature_of_work_mr;
       }
     }, err => console.log(err));
 
@@ -180,6 +206,45 @@ export class RenewalPage implements OnInit {
       this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
         for (const i of talukaArrObj) {
           this.talukas[i.taluka_name] = i.taluka_id;
+        }
+      }, err => console.log(err));
+    });
+
+
+    this.typeOfIssuer.valueChanges.subscribe((typeOfIssuerId) => {
+      if (typeOfIssuerId === '2') {
+        this.registeredWith.reset();
+        this.registrationNoOfIssuer.reset();
+        this.nameOfEmployer.reset();
+        this.nameOfEmployer_mr.reset();
+        this.talukaOfEmployer.reset();
+        this.talukaOfEmployer_mr.reset()
+        this.districtOfEmployer.reset();
+        this.districtOfEmployer_mr.reset();
+      } else {
+        this.nameOfGramPanchayat.reset();
+        this.nameOfGramPanchayat_mr.reset();
+        this.talukaOfGramPanchayat.reset();
+        this.talukaOfGramPanchayat_mr.reset();
+        this.districtOfGramPanchayat.reset();
+        this.districtOfGramPanchayat_mr.reset();
+      }
+    })
+
+    this.districtOfEmployer.valueChanges.subscribe(value => {
+      this.talukasIssuerEmp = [];
+      this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
+        for (const i of talukaArrObj) {
+          this.talukasIssuerEmp[i.taluka_name] = i.taluka_id;
+        }
+      }, err => console.log(err));
+    });
+
+    this.districtOfGramPanchayat.valueChanges.subscribe(value => {
+      this.talukasIssuerGram = [];
+      this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
+        for (const i of talukaArrObj) {
+          this.talukasIssuerGram[i.taluka_name] = i.taluka_id;
         }
       }, err => console.log(err));
     });
@@ -244,15 +309,11 @@ export class RenewalPage implements OnInit {
     return new FormGroup({
       typeOfEmployerEmp: new FormControl('', [Validators.required]),
       fullNameOfIssuerEmp: new FormControl('', [Validators.required, Validators.pattern('[a-zA-z\\s]{8,50}')]),
-      registrationNumberEmp: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{5,12}$')]),
-      registrationTypeEmp: new FormControl('', Validators.required),
       mobileNumberOfIssuerEmp: new FormControl('', [Validators.required, Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
-      documentRefNumberEmp: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       fromDateEmp: new FormControl(null, Validators.required),
       toDateEmp: new FormControl(null, Validators.required),
       typeOfEmployerEmp_mr: new FormControl(''),
       fullNameOfIssuerEmp_mr: new FormControl(''),
-      registrationTypeEmp_mr: new FormControl(''),
       workingDays: new FormControl('')
     });
   }
@@ -549,16 +610,7 @@ export class RenewalPage implements OnInit {
   get appointmentDateEmp() { return this.renewalFormGroup.get('appointmentDateEmp'); }
   get remunerationPerDayEmp() { return this.renewalFormGroup.get('remunerationPerDayEmp'); }
   get natureOfWorkEmp() { return this.renewalFormGroup.get('natureOfWorkEmp'); }
-  get typeOfEmployerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp'); }
-  get fullNameOfIssuerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp'); }
-  get registrationNumberEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('registrationNumberEmp'); }
-  get registrationTypeEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('registrationTypeEmp'); }
-  get mobileNumberOfIssuerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('mobileNumberOfIssuerEmp'); }
-  get documentRefNumberEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('documentRefNumberEmp'); }
-  get toDateEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('toDateEmp'); }
-  get fromDateEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('fromDateEmp'); }
   get dispatchDateEmp() { return this.renewalFormGroup.get('dispatchDateEmp'); }
-  get typeOfWorkerEmp() { return this.renewalFormGroup.get('typeOfWorkerEmp'); }
   get MNREGACardNumberEmp() { return this.renewalFormGroup.get('MNREGACardNumberEmp'); }
   get contractorNameEmp_mr() { return this.renewalFormGroup.get('contractorNameEmp_mr'); }
   get contractorCompanyNameEmp_mr() { return this.renewalFormGroup.get('contractorCompanyNameEmp_mr'); }
@@ -567,10 +619,84 @@ export class RenewalPage implements OnInit {
   get talukaEmp_mr() { return this.renewalFormGroup.get('talukaEmp_mr'); }
   get districtEmp_mr() { return this.renewalFormGroup.get('districtEmp_mr'); }
   get natureOfWorkEmp_mr() { return this.renewalFormGroup.get('natureOfWorkEmp_mr'); }
-  get typeOfEmployerEmp_mr() { return this.renewalFormGroup.get('typeOfEmployerEmp_mr'); }
-  get fullNameOfIssuerEmp_mr() { return this.renewalFormGroup.get('fullNameOfIssuerEmp_mr'); }
-  get registrationTypeEmp_mr() { return this.renewalFormGroup.get('registrationTypeEmp_mr'); }
-  get typeOfWorkerEmp_mr() { return this.renewalFormGroup.get('typeOfWorkerEmp_mr'); }
+  get typeOfIssuer() { return this.renewalFormGroup.get('typeOfIssuer'); }
+  get typeOfIssuer_mr() { return this.renewalFormGroup.get('typeOfIssuer_mr'); }
+
+  get registeredWith() {
+    return this.renewalFormGroup.get('registeredWith');
+  }
+
+  get registrationNoOfIssuer() {
+    return this.renewalFormGroup.get('registrationNoOfIssuer');
+  }
+
+  get dispatchNo() {
+    return this.renewalFormGroup.get('dispatchNo');
+  }
+
+  get dispatchDate() {
+    return this.renewalFormGroup.get('dispatchDate');
+  }
+
+  get nameOfEmployer() {
+    return this.renewalFormGroup.get('nameOfEmployer');
+  }
+
+  get nameOfEmployer_mr() {
+    return this.renewalFormGroup.get('nameOfEmployer_mr');
+  }
+
+  get districtOfEmployer() {
+    return this.renewalFormGroup.get('districtOfEmployer');
+  }
+
+  get districtOfEmployer_mr() {
+    return this.renewalFormGroup.get('districtOfEmployer_mr');
+  }
+
+  get talukaOfEmployer() {
+    return this.renewalFormGroup.get('talukaOfEmployer');
+  }
+
+  get talukaOfEmployer_mr() {
+    return this.renewalFormGroup.get('talukaOfEmployer_mr');
+  }
+
+  get nameOfGramPanchayat() {
+    return this.renewalFormGroup.get('nameOfGramPanchayat');
+  }
+
+  get nameOfGramPanchayat_mr() {
+    return this.renewalFormGroup.get('nameOfGramPanchayat_mr');
+  }
+
+  get districtOfGramPanchayat() {
+    return this.renewalFormGroup.get('districtOfGramPanchayat');
+  }
+
+  get districtOfGramPanchayat_mr() {
+    return this.renewalFormGroup.get('districtOfGramPanchayat_mr');
+  }
+
+  get talukaOfGramPanchayat() {
+    return this.renewalFormGroup.get('talukaOfGramPanchayat');
+  }
+
+  get talukaOfGramPanchayat_mr() {
+    return this.renewalFormGroup.get('talukaOfGramPanchayat_mr');
+  }
+
+  
+
+  get typeOfEmployerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp'); }
+  get fullNameOfIssuerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp'); }
+  get mobileNumberOfIssuerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('mobileNumberOfIssuerEmp'); }
+  get toDateEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('toDateEmp'); }
+  get fromDateEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('fromDateEmp'); }
+  get typeOfEmployerEmp_mr() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp_mr'); }
+  get fullNameOfIssuerEmp_mr() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp_mr'); }
+
+
   get workCertificate() { return this.renewalFormGroup.get('workCertificate'); }
   get verifyDocumentCheck() { return this.renewalFormGroup.get('verifyDocumentCheck'); }
   get typeOfWorkEmp() { return this.renewalFormGroup.get('typeOfWorkEmp'); }

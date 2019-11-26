@@ -69,6 +69,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public postOfficeArrayPer: any[] = [];
   public pincodeArrayPer: any[] = [];
   public talukasEmp: any[] = [];
+  public talukasIssuerEmp:any[] = [];
+  public talukasIssuerGram:any[]=[];
 
   public genderOptions: string[] = [];
   public genderOptionsMarathi: string[] = [];
@@ -84,6 +86,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public familyRelationOptionsMarathi: string[] = [];
   public educationOptions: string[] = [];
   public educationOptionsMarathi: string[] = [];
+  public typeOfWorkOptions: string[] = [];
+  public typeOfWorkOptionsMarathi: string[] = [];
   public natureOfWorkOptions: string[] = [];
   public natureOfWorkOptionsMarathi: string[] = [];
   public Days90HeaderOptions: string[] = [];
@@ -170,15 +174,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.network.onConnect().subscribe(() => { });
 
 
-    // this.route.queryParams.subscribe(params => {
-    //   if (this.router.getCurrentNavigation().extras.state) {
-    //     this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
-    //     this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-    //     this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-    //   } else {
-    //     this.router.navigate(['/verification']);
-    //   }
-    // });
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
+        this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+        this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+      } else {
+        this.router.navigate(['/verification']);
+      }
+    });
 
     // re-route to homepage if not logged-in
     this.storage.get('token').then((val) => {
@@ -239,10 +243,17 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
 
     // fetch the list of Nature of Work from database
+    this.httpService.getTypeOfWork().subscribe((typeOfWorkArrObj: any) => {
+      for (const i of typeOfWorkArrObj) {
+        this.typeOfWorkOptions[Number(i.type_of_worker_id)] = i.type_of_worker_title;
+        this.typeOfWorkOptionsMarathi[Number(i.type_of_worker_id)] = i.type_of_worker_title_mr;
+      }
+    }, err => console.log(err));
+    // fetch the list of Nature of Work from database
     this.httpService.getNatureOfWork().subscribe((natureOfWorkArrObj: any) => {
       for (const i of natureOfWorkArrObj) {
-        this.natureOfWorkOptions[Number(i.type_of_worker_id)] = i.type_of_worker_title;
-        this.natureOfWorkOptionsMarathi[Number(i.type_of_worker_id)] = i.type_of_worker_title_mr;
+        this.natureOfWorkOptions[Number(i.id)] = i.nature_of_work;
+        this.natureOfWorkOptionsMarathi[Number(i.id)] = i.nature_of_work_mr;
       }
     }, err => console.log(err));
 
@@ -443,16 +454,27 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
     // // permanent address
     this.statePer.valueChanges.subscribe(value => {
+      const rationCardNoControl = this.registrationFormGroup.get('personalDetails').get('rationCardNumberPersonal');
+      const rationCardTypeControl = this.registrationFormGroup.get('personalDetails').get('rationCardTypePersonal');
 
       if (value === 'MAHARASHTRA' || value === '21' || value === 21) {
         this.statePer.patchValue(21, { emitEvent: false });
         this.elseStateFlag = false;
         this.migrant.patchValue(false);
         this.migrant_mr.patchValue(false);
+        rationCardNoControl.setErrors({ required: true, minlength: true });
+        rationCardNoControl.setValidators([Validators.required, Validators.minLength(8)]);
+        rationCardTypeControl.setErrors({ required: true });
+        rationCardTypeControl.setValidators([Validators.required]);
       } else {
         this.elseStateFlag = true;
         this.migrant.patchValue(true);
         this.migrant_mr.patchValue(true);
+        rationCardNoControl.setErrors(null);
+        rationCardNoControl.setValidators([]);
+  
+        rationCardTypeControl.setErrors(null);
+        rationCardTypeControl.setValidators([]);
       }
     });
 
@@ -518,6 +540,44 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
         for (const i of talukaArrObj) {
           this.talukasEmp[i.taluka_name] = i.taluka_id;
+        }
+      }, err => console.log(err));
+    });
+
+    this.typeOfIssuer.valueChanges.subscribe((typeOfIssuerId)=>{
+      if(typeOfIssuerId==='2'){
+        this.registeredWith.reset();
+        this.registrationNoOfIssuer.reset();
+        this.nameOfEmployer.reset();
+        this.nameOfEmployer_mr.reset();
+        this.talukaOfEmployer.reset();
+        this.talukaOfEmployer_mr.reset()
+        this.districtOfEmployer.reset();
+        this.districtOfEmployer_mr.reset();
+      } else {
+        this.nameOfGramPanchayat.reset();
+        this.nameOfGramPanchayat_mr.reset();
+        this.talukaOfGramPanchayat.reset();
+        this.talukaOfGramPanchayat_mr.reset();
+        this.districtOfGramPanchayat.reset();
+        this.districtOfGramPanchayat_mr.reset();
+      }
+    })
+
+    this.districtOfEmployer.valueChanges.subscribe(value => {
+      this.talukasIssuerEmp = [];
+      this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
+        for (const i of talukaArrObj) {
+          this.talukasIssuerEmp[i.taluka_name] = i.taluka_id;
+        }
+      }, err => console.log(err));
+    });
+
+    this.districtOfGramPanchayat.valueChanges.subscribe(value => {
+      this.talukasIssuerGram = [];
+      this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
+        for (const i of talukaArrObj) {
+          this.talukasIssuerGram[i.taluka_name] = i.taluka_id;
         }
       }, err => console.log(err));
     });
@@ -1148,7 +1208,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           (res: any) => {
             this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
             alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
-            this.router.navigate(['/dashboard']);
+            // this.router.navigate(['/dashboard']);
           },
           (err: any) => console.error(err)
         );
@@ -1277,7 +1337,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       dispatchDateEmp: new FormControl(null),
       remunerationPerDayEmp: new FormControl('', [Validators.required,Validators.maxLength(8)]),
       natureOfWorkEmp: new FormControl('', [Validators.required]),
-
       migrant: new FormControl(''),
       migrant_mr: new FormControl(''),
       MNREGACardNumberEmp: new FormControl(''),
@@ -1290,6 +1349,24 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       talukaEmp_mr: new FormControl(''),
       districtEmp_mr: new FormControl(''),
       natureOfWorkEmp_mr: new FormControl(''),
+      typeOfIssuer: new FormControl('', [Validators.required]),
+      typeOfIssuer_mr: new FormControl(''),
+      registeredWith: new FormControl(''),
+      registrationNoOfIssuer: new FormControl(''),
+      dispatchNo: new FormControl(''),
+      dispatchDate: new FormControl(''),
+      nameOfEmployer: new FormControl(''),
+      nameOfEmployer_mr: new FormControl(''),
+      districtOfEmployer: new FormControl(''),
+      districtOfEmployer_mr: new FormControl(''),
+      talukaOfEmployer: new FormControl(''),
+      talukaOfEmployer_mr: new FormControl(''),
+      nameOfGramPanchayat: new FormControl(''),
+      nameOfGramPanchayat_mr: new FormControl(''),
+      districtOfGramPanchayat: new FormControl(''),
+      districtOfGramPanchayat_mr: new FormControl(''),
+      talukaOfGramPanchayat: new FormControl(''),
+      talukaOfGramPanchayat_mr: new FormControl(''),
     });
   }
 
@@ -1297,15 +1374,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       typeOfEmployerEmp: new FormControl('', [Validators.required]),
       fullNameOfIssuerEmp: new FormControl('', [Validators.required, Validators.pattern('[a-zA-z\\s]{8,50}')]),
-      registrationNumberEmp: new FormControl('', [Validators.pattern('^[0-9]{5,12}$')]),
-      registrationTypeEmp: new FormControl('', [Validators.required]),
       mobileNumberOfIssuerEmp: new FormControl('', [Validators.required, Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
-      documentRefNumberEmp: new FormControl('', [Validators.maxLength(20)]),
       fromDateEmp: new FormControl(null, [Validators.required]),
       toDateEmp: new FormControl(null, [Validators.required]),
       typeOfEmployerEmp_mr: new FormControl(''),
       fullNameOfIssuerEmp_mr: new FormControl(''),
-      registrationTypeEmp_mr: new FormControl(''),
       workingDays: new FormControl('')
     });
   }
@@ -1434,35 +1507,91 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get dispatchDateEmp() { return this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp'); }
   get remunerationPerDayEmp() { return this.registrationFormGroup.get('employerDetails').get('remunerationPerDayEmp'); }
   get natureOfWorkEmp() { return this.registrationFormGroup.get('employerDetails').get('natureOfWorkEmp'); }
-  // get typeOfEmployerEmp() { return this.registrationFormGroup.get('employerDetails').get('typeOfEmployerEmp'); }
-  // get fullNameOfIssuerEmp() { return this.registrationFormGroup.get('employerDetails').get('fullNameOfIssuerEmp'); }
-  // get registrationNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('registrationNumberEmp'); }
-  // get registrationTypeEmp() { return this.registrationFormGroup.get('employerDetails').get('registrationTypeEmp'); }
-  // get mobileNumberOfIssuerEmp() { return this.registrationFormGroup.get('employerDetails').get('mobileNumberOfIssuerEmp'); }
-  // get documentRefNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('documentRefNumberEmp'); }
+  get typeOfIssuer() { return this.registrationFormGroup.get('employerDetails').get('typeOfIssuer'); }
+  get typeOfIssuer_mr() { return this.registrationFormGroup.get('employerDetails').get('typeOfIssuer_mr'); }
+
+  get registeredWith() {
+    return this.registrationFormGroup.get('employerDetails').get('registeredWith');
+  }
+
+  get registrationNoOfIssuer() {
+    return this.registrationFormGroup.get('employerDetails').get('registrationNoOfIssuer');
+  }
+
+  get dispatchNo() {
+    return this.registrationFormGroup.get('employerDetails').get('dispatchNo');
+  }
+
+  get dispatchDate() {
+    return this.registrationFormGroup.get('employerDetails').get('dispatchDate');
+  }
+
+  get nameOfEmployer() {
+    return this.registrationFormGroup.get('employerDetails').get('nameOfEmployer');
+  }
+
+  get nameOfEmployer_mr() {
+    return this.registrationFormGroup.get('employerDetails').get('nameOfEmployer_mr');
+  }
+
+  get districtOfEmployer() {
+    return this.registrationFormGroup.get('employerDetails').get('districtOfEmployer');
+  }
+
+  get districtOfEmployer_mr() {
+    return this.registrationFormGroup.get('employerDetails').get('districtOfEmployer_mr');
+  }
+
+  get talukaOfEmployer() {
+    return this.registrationFormGroup.get('employerDetails').get('talukaOfEmployer');
+  }
+
+  get talukaOfEmployer_mr() {
+    return this.registrationFormGroup.get('employerDetails').get('talukaOfEmployer_mr');
+  }
+
+  get nameOfGramPanchayat() {
+    return this.registrationFormGroup.get('employerDetails').get('nameOfGramPanchayat');
+  }
+
+  get nameOfGramPanchayat_mr() {
+    return this.registrationFormGroup.get('employerDetails').get('nameOfGramPanchayat_mr');
+  }
+
+  get districtOfGramPanchayat() {
+    return this.registrationFormGroup.get('employerDetails').get('districtOfGramPanchayat');
+  }
+
+  get districtOfGramPanchayat_mr() {
+    return this.registrationFormGroup.get('employerDetails').get('districtOfGramPanchayat_mr');
+  }
+
+  get talukaOfGramPanchayat() {
+    return this.registrationFormGroup.get('employerDetails').get('talukaOfGramPanchayat');
+  }
+
+  get talukaOfGramPanchayat_mr() {
+    return this.registrationFormGroup.get('employerDetails').get('talukaOfGramPanchayat_mr');
+  }
 
   get typeOfEmployerEmp() {
     return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp');
+  }
+
+  get typeOfEmployerEmp_mr() { 
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp_mr'); 
   }
 
   get fullNameOfIssuerEmp() {
     return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp');
   }
 
-  get registrationNumberEmp() {
-    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('registrationNumberEmp');
-  }
-
-  get registrationTypeEmp() {
-    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('registrationTypeEmp');
+  get fullNameOfIssuerEmp_mr() { 
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp_mr'); 
   }
 
   get mobileNumberOfIssuerEmp() {
     return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('mobileNumberOfIssuerEmp');
-  }
-
-  get documentRefNumberEmp() {
-    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('documentRefNumberEmp');
   }
 
   get fromDateEmp() {
@@ -1473,6 +1602,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('toDateEmp');
   }
 
+
   get migrant() { return this.registrationFormGroup.get('employerDetails').get('migrant'); }
   get MNREGACardNumberEmp() { return this.registrationFormGroup.get('employerDetails').get('MNREGACardNumberEmp'); }
   get contractorNameEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('contractorNameEmp_mr'); }
@@ -1482,8 +1612,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get talukaEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('talukaEmp_mr'); }
   get districtEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('districtEmp_mr'); }
   get natureOfWorkEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('natureOfWorkEmp_mr'); }
-  get typeOfEmployerEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('typeOfEmployerEmp_mr'); }
-  get fullNameOfIssuerEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('fullNameOfIssuerEmp_mr'); }
   get registrationTypeEmp_mr() { return this.registrationFormGroup.get('employerDetails').get('registrationTypeEmp_mr'); }
   get migrant_mr() { return this.registrationFormGroup.get('employerDetails').get('migrant_mr'); }
 
