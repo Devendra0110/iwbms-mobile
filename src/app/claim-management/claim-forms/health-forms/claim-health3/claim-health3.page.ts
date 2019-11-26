@@ -140,7 +140,7 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
       }
     },
       error1 => {
-        alert('IFSC Code Not Found.Please fill bank details manually');
+        this.toast.show('IFSC Code Not Found.Please fill bank details manually', '1000', 'bottom')
         this.bankDetails = {
           BANK: '',
           BRANCH: '',
