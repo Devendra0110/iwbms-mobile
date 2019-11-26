@@ -132,10 +132,10 @@ export abstract class ClaimBasePage {
 
     getFileDetails(event) {
         const file = event.target.files[0];
-        // alert('File uploaded successfully')
         this.files[event.target.id] = file;
         this.toast.show('File uploaded successfully', '1000', 'bottom')
         this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
+        // alert('File uploaded successfully')
         // if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152 && (file.type === 'application/pdf' || file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === "image/png")) {
         //   this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
         //   });

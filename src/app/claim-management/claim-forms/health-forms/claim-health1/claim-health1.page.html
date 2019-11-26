@@ -79,7 +79,7 @@
 
       <ion-item>
         <ion-label position="floating">Name of Hospital / रुग्णालयाचे नाव<span style="color: Red">*</span></ion-label>
-        <ion-input (ionBlur)="transliterateValue($event)" clearInput type="text" formControlName="nameOfHospital" id="nameOfHospital"
+        <ion-input class="transliterate" (ionBlur)="transliterateValue($event)" clearInput type="text" formControlName="nameOfHospital" id="nameOfHospital"
           [class.is-invalid]="nameOfHospital.invalid && nameOfHospital.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="nameOfHospital.invalid && nameOfHospital.touched">
           <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['required']">Please enter name of
@@ -97,7 +97,7 @@
       <ion-item>
         <ion-label position="floating">Address of Delivery / प्रसूतीचा पत्ता<span style="color: Red">*</span>
         </ion-label>
-        <ion-input (ionBlur)="transliterateValue($event)" type="text" formControlName="addressOfDelivery" id="addressOfDelivery"
+        <ion-input class="transliterate" (ionBlur)="transliterateValue($event)" type="text" formControlName="addressOfDelivery" id="addressOfDelivery"
           [class.is-invalid]="addressOfDelivery.invalid && addressOfDelivery.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="addressOfDelivery.invalid && addressOfDelivery.touched">
           <small *ngIf="addressOfDelivery.errors &&addressOfDelivery.errors['required']">Please enter Address of
@@ -160,7 +160,7 @@
       <ion-item>
         <ion-label position="floating">Name Of Birth Certificate Issuer Authority / जन्म प्रमाणपत्र जारी करणार्‍याचे
           नाव<span style="color: Red">*</span></ion-label>
-        <ion-input (ionBlur)="transliterateValue($event)" formControlName="nameOfCertificateIssuer" id="nameOfCertificateIssuer"
+        <ion-input class="transliterate" (ionBlur)="transliterateValue($event)" formControlName="nameOfCertificateIssuer" id="nameOfCertificateIssuer"
           [class.is-invalid]="nameOfCertificateIssuer.invalid && nameOfCertificateIssuer.touched" maxlength="120">
         </ion-input>
         <div class="text-danger" *ngIf="nameOfCertificateIssuer.invalid && nameOfCertificateIssuer.touched">

@@ -45,7 +45,6 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
       date: new FormControl('', this.validationService.createValidatorsArray('date')),
       health4Form4Doc1: new FormControl('', this.validationService.createValidatorsArray('health4Form4Doc1')),
       //health4Form4Doc2: new FormControl('', this.validationService.createValidatorsArray('health4Form4Doc2')),
-      // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),

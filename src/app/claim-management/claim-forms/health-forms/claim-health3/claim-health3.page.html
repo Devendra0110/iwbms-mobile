@@ -17,7 +17,7 @@
 
       <ion-item>
         <ion-label position="floating"> Name of Hospital / रुग्णालयाचे नाव<span style="color: Red">*</span></ion-label>
-        <ion-input (ionBlur)="transliterateValue($event)" type="text" formControlName="nameOfHospital" id="nameOfHospital"
+        <ion-input class="transliterate" (ionBlur)="transliterateValue($event)" type="text" formControlName="nameOfHospital" id="nameOfHospital"
           [class.is-invalid]="nameOfHospital.invalid && nameOfHospital.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="nameOfHospital.invalid && nameOfHospital.touched">
           <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['required']">Please enter name of
@@ -33,7 +33,7 @@
       <ion-item>
         <ion-label position="floating">Address of Hospital / रुग्णालयाचे स्थान <span style="color: Red">*</span>
         </ion-label>
-        <ion-input (ionBlur)="transliterateValue($event)" type="text" formControlName="locationOfHospital" id="locationOfHospital"
+        <ion-input class="transliterate" (ionBlur)="transliterateValue($event)" type="text" formControlName="locationOfHospital" id="locationOfHospital"
           [class.is-invalid]="locationOfHospital.invalid && locationOfHospital.touched"></ion-input>
         <div class="text-danger" *ngIf="locationOfHospital.invalid && locationOfHospital.touched">
           <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['required']">Please enter address of
@@ -50,7 +50,7 @@
 
       <ion-item>
         <ion-label position="floating">Name of Doctor / डॉक्टरांचे नाव <span style="color: Red">*</span></ion-label>
-        <ion-input type="text" id="nameOfDoctor" [class.is-invalid]="nameOfDoctor.invalid && nameOfDoctor.touched"
+        <ion-input class="transliterate" type="text" id="nameOfDoctor" [class.is-invalid]="nameOfDoctor.invalid && nameOfDoctor.touched"
           formControlName="nameOfDoctor" maxlength="120">
         </ion-input>
         <div class="text-danger" *ngIf="nameOfDoctor.invalid && nameOfDoctor.touched">
