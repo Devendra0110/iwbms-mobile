@@ -1,20 +1,22 @@
-import * as moment from 'moment';
 import * as _ from 'lodash';
+import * as moment from 'moment';
+
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Storage } from '@ionic/storage';
-import { Dialogs } from '@ionic-native/dialogs/ngx';
-import { Network } from '@ionic-native/network/ngx';
-import { Toast } from '@ionic-native/toast/ngx';
-import { ValidationService } from '../../services/validation.service';
-import { TransliterationService } from '../../services/transliteration.service';
-import { HttpService } from '../../services/http.service';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SchemeID, UserInfo } from '../../../assets/common.interface';
+
 import { ClaimService } from '../../services/claim.service';
-import { UserInfo, SchemeID } from '../../../assets/common.interface';
-import { serverUrl } from '../../../assets/config'
+import { Dialogs } from '@ionic-native/dialogs/ngx';
+import { HttpService } from '../../services/http.service';
+import { Network } from '@ionic-native/network/ngx';
 import { Observable } from 'rxjs';
+import { Storage } from '@ionic/storage';
+import { Toast } from '@ionic-native/toast/ngx';
+import { TransliterationService } from '../../services/transliteration.service';
 import { UserManagementService } from 'src/app/services/user-management.service';
+import { ValidationService } from '../../services/validation.service';
+import { serverUrl } from '../../../assets/config'
 
 @Component({
   selector: 'app-claim-main-form',
@@ -96,6 +98,7 @@ export class ClaimMainFormPage implements OnInit {
         this.claimMainForm.patchValue(userData);
         this.BocwID = userData.bocw_id;
         this.JWTToken = userData.JWTToken;
+        this.setInputDetails();
         this.calculateAge();
       } else {
         this.router.navigate(['claim-management/claim-verification']);
@@ -198,7 +201,7 @@ export class ClaimMainFormPage implements OnInit {
     this.selectScheme.valueChanges.subscribe(value => {
       this.onSelectSchemeChange(value);
     });
-    this.setInputDetails();
+  
   }
 
   setInputDetails() {

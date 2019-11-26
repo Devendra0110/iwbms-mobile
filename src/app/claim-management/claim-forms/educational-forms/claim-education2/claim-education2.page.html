@@ -236,7 +236,7 @@
     </ion-item>
     <ion-item>
       <input formControlName="selfDeclaration" id="selfDeclaration" type="file" accept="application/pdf"
-        [class.is-invalid]="selfDeclaration.invalid && selfDeclaration.touched">
+        [class.is-invalid]="selfDeclaration.invalid && selfDeclaration.touched" >
     </ion-item>
     <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
       <small *ngIf="selfDeclaration.errors && selfDeclaration.errors['required']">Please upload required

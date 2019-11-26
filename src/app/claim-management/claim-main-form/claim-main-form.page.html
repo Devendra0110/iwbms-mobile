@@ -13,7 +13,7 @@
     <ion-list>
       <ion-header color="primary">APPLICANT'S DETAILS / अर्जदार बँक तपशील</ion-header>
       <img *ngIf="uploadedImageUrl" alt="Photo" [src]="uploadedImageUrl" width="275px" height="275px">
-      <ion-item >
+      <ion-item>
         <ion-icon slot="end" name="calendar"></ion-icon>
         <ion-label position="floating"> Registration Date</ion-label>
         <ion-datetime readonly formControlName="registrationDatePersonal" id="registrationDatePersonal"
@@ -21,90 +21,101 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Registration Number/नोंदणी क्रमांक</ion-label>
-        <ion-input formControlName="registration_no" id="registration_no" [class.is-invalid]="registration_no.invalid && registration_no.touched"></ion-input>
-      </ion-item> 
+        <ion-input formControlName="registration_no" id="registration_no"
+          [class.is-invalid]="registration_no.invalid && registration_no.touched"></ion-input>
+      </ion-item>
       <ion-item>
         <ion-label position="floating">Aadhar Number / आधार क्रमांक</ion-label>
-        <ion-input [class.is-invalid]="aadharNoPersonal.invalid && aadharNoPersonal.touched" formControlName="aadharNoPersonal" minlength="12" maxlength="12" id="aadharNoPersonal"></ion-input>
+        <ion-input [class.is-invalid]="aadharNoPersonal.invalid && aadharNoPersonal.touched"
+          formControlName="aadharNoPersonal" minlength="12" maxlength="12" id="aadharNoPersonal"></ion-input>
       </ion-item>
-      
+
       <ion-img>
 
       </ion-img>
-    
+
       <ion-list>
-      <ion-header color="primary">APPLICANT'S PERSONAL DETAILS / अर्जदार तपशील</ion-header>
+        <ion-header color="primary">APPLICANT'S PERSONAL DETAILS / अर्जदार तपशील</ion-header>
 
-      <ion-item>
-        <ion-label position="floating">First Name / पहिले नाव</ion-label>
-        <ion-input  [class.is-invalid]="firstNamePersonal.invalid && firstNamePersonal.touched" id="firstNamePersonal" (ionChange)="transliterateValue($event)" formControlName="firstNamePersonal" maxlength="120"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="firstNamePersonal_mr.value">
-        <ion-label>{{firstNamePersonal_mr.value}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Middle Name / मधले नाव</ion-label>
-        <ion-input  [class.is-invalid]="middleNamePersonal.invalid && middleNamePersonal.touched" maxlength="120" formControlName="middleNamePersonal" (ionChange)="transliterateValue($event)" id="middleNamePersonal"> </ion-input>
-      </ion-item>
-      <ion-item *ngIf="middleNamePersonal_mr.value">
-        <ion-label>{{middleNamePersonal_mr.value}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Last Name / आडनाव</ion-label>
-        <ion-input  [class.is-invalid]="lastNamePersonal.invalid && lastNamePersonal.touched" maxlength="120" formControlName="lastNamePersonal" (ionChange)="transliterateValue($event)"  id="lastNamePersonal"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="lastNamePersonal_mr.value">
-        <ion-label>{{lastNamePersonal_mr.value}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Mobile Number / मोबाइल नंबर</ion-label>
-        <ion-input  [class.is-invalid]="mobilePersonal.invalid && mobilePersonal.touched" formControlName="mobilePersonal" maxlength="10" class="transliterate" id="mobilePersonal"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="floating">First Name / पहिले नाव</ion-label>
+          <ion-input [class.is-invalid]="firstNamePersonal.invalid && firstNamePersonal.touched" id="firstNamePersonal"
+            (ionChange)="transliterateValue($event)" formControlName="firstNamePersonal" maxlength="120"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="firstNamePersonal_mr.value">
+          <ion-label>{{firstNamePersonal_mr.value}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Middle Name / मधले नाव</ion-label>
+          <ion-input [class.is-invalid]="middleNamePersonal.invalid && middleNamePersonal.touched" maxlength="120"
+            formControlName="middleNamePersonal" (ionChange)="transliterateValue($event)" id="middleNamePersonal">
+          </ion-input>
+        </ion-item>
+        <ion-item *ngIf="middleNamePersonal_mr.value">
+          <ion-label>{{middleNamePersonal_mr.value}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Last Name / आडनाव</ion-label>
+          <ion-input [class.is-invalid]="lastNamePersonal.invalid && lastNamePersonal.touched" maxlength="120"
+            formControlName="lastNamePersonal" (ionChange)="transliterateValue($event)" id="lastNamePersonal">
+          </ion-input>
+        </ion-item>
+        <ion-item *ngIf="lastNamePersonal_mr.value">
+          <ion-label>{{lastNamePersonal_mr.value}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Mobile Number / मोबाइल नंबर</ion-label>
+          <ion-input [class.is-invalid]="mobilePersonal.invalid && mobilePersonal.touched"
+            formControlName="mobilePersonal" maxlength="10" class="transliterate" id="mobilePersonal"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Gender<span style="color: Red"> *</span></ion-label>
-        <ion-select formControlName="genderPersonal" [class.is-invalid]="genderPersonal.invalid && genderPersonal.touched"
-          id='personalDetails-genderPersonal' interface="action-sheet">
-          <ion-select-option class="ics" *ngFor="let gender of genderOptions|keyvalue" value="{{ gender.key }}">
-            {{ gender.value }}</ion-select-option>
-        </ion-select>
-        <div class="text-danger" *ngIf="genderPersonal.invalid && genderPersonal.touched">
-          <small *ngIf="!!genderPersonal.errors?.required">Please choose your gender.</small>
-        </div>
-      </ion-item>
+        <ion-item>
+          <ion-label position="floating">Gender<span style="color: Red"> *</span></ion-label>
+          <ion-select formControlName="genderPersonal"
+            [class.is-invalid]="genderPersonal.invalid && genderPersonal.touched" id='personalDetails-genderPersonal'
+            interface="action-sheet">
+            <ion-select-option class="ics" *ngFor="let gender of genderOptions|keyvalue" value="{{ gender.key }}">
+              {{ gender.value }}</ion-select-option>
+          </ion-select>
+          <div class="text-danger" *ngIf="genderPersonal.invalid && genderPersonal.touched">
+            <small *ngIf="!!genderPersonal.errors?.required">Please choose your gender.</small>
+          </div>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Marital Status<span style="color: Red"> *</span></ion-label>
-        <ion-select formControlName="maritalStatusPersonal"
-          [class.is-invalid]="maritalStatusPersonal.invalid && maritalStatusPersonal.touched"
-          id='personalDetails-maritalStatusPersonal' interface="action-sheet">
-          <ion-select-option *ngFor="let maritalStatus of maritalStatusOptions|keyvalue" value="{{ maritalStatus.key }}">
-            {{ maritalStatus.value }}</ion-select-option>
-        </ion-select>
-        <div class="text-danger" *ngIf="maritalStatusPersonal.invalid && maritalStatusPersonal.touched">
-          <small *ngIf="!!maritalStatusPersonal.errors?.required">Please choose your Marital Status.</small>
-        </div>
-      </ion-item>
+        <ion-item>
+          <ion-label position="floating">Marital Status<span style="color: Red"> *</span></ion-label>
+          <ion-select formControlName="maritalStatusPersonal"
+            [class.is-invalid]="maritalStatusPersonal.invalid && maritalStatusPersonal.touched"
+            id='personalDetails-maritalStatusPersonal' interface="action-sheet">
+            <ion-select-option *ngFor="let maritalStatus of maritalStatusOptions|keyvalue"
+              value="{{ maritalStatus.key }}">
+              {{ maritalStatus.value }}</ion-select-option>
+          </ion-select>
+          <div class="text-danger" *ngIf="maritalStatusPersonal.invalid && maritalStatusPersonal.touched">
+            <small *ngIf="!!maritalStatusPersonal.errors?.required">Please choose your Marital Status.</small>
+          </div>
+        </ion-item>
 
-      <ion-item>
-        <ion-icon slot="end" name="calendar"></ion-icon>
-        <ion-label position="floating">Date Of Birth<span style="color: Red">*</span> - As Per Aadhar or PAN Card</ion-label>
-        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" 
-          formControlName="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched"
-          (ionChange)="calculateAge()" (ionBlur)="calculateAge()"></ion-datetime>
-        <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">
-          <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
-        </div>
-      </ion-item>
+        <ion-item>
+          <ion-icon slot="end" name="calendar"></ion-icon>
+          <ion-label position="floating">Date Of Birth<span style="color: Red">*</span> - As Per Aadhar or PAN Card
+          </ion-label>
+          <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" formControlName="dobPersonal"
+            [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched" (ionChange)="calculateAge()"
+            (ionBlur)="calculateAge()"></ion-datetime>
+          <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">
+            <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
+          </div>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Age<span style="color: Red"> *</span></ion-label>
-        <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" readOnly="true" formControlName="agePersonal"
-          [class.is-invalid]="agePersonal.invalid && agePersonal.touched"></ion-input>
-        <div class="text-danger" *ngIf="agePersonal.invalid && agePersonal.touched">
-          <small *ngIf="!!agePersonal.errors?.required">Please enter your Date Of Birth.</small>
-        </div>
-      </ion-item>
+        <ion-item>
+          <ion-label position="floating">Age<span style="color: Red"> *</span></ion-label>
+          <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" readOnly="true"
+            formControlName="agePersonal" [class.is-invalid]="agePersonal.invalid && agePersonal.touched"></ion-input>
+          <div class="text-danger" *ngIf="agePersonal.invalid && agePersonal.touched">
+            <small *ngIf="!!agePersonal.errors?.required">Please enter your Date Of Birth.</small>
+          </div>
+        </ion-item>
       </ion-list>
       <ion-header color="primary">APPLICANT'S BANK DETAILS / अर्जदार बँक तपशील</ion-header>
       <ion-list>
@@ -121,34 +132,34 @@
 
         <ion-item>
           <ion-label position="floating">Bank Name<span style="color: Red">*</span></ion-label>
-          <ion-input  formControlName="bankNameBank"
-            [class.is-invalid]="bankNameBank.invalid && bankNameBank.touched"></ion-input>
+          <ion-input formControlName="bankNameBank" [class.is-invalid]="bankNameBank.invalid && bankNameBank.touched">
+          </ion-input>
           <div class="text-danger" *ngIf="bankNameBank.invalid && bankNameBank.touched">
             <small *ngIf="!!bankNameBank.errors?.required">Please enter Bank name.</small>
             <small *ngIf="!!bankNameBank.errors?.maxlength">Please enter appropriate Bank Name.</small>
           </div>
         </ion-item>
-        
+
         <ion-item>
           <ion-label position="floating">Bank Branch<span style="color: Red">*</span></ion-label>
-          <ion-input  formControlName="bankBranchBank"
+          <ion-input formControlName="bankBranchBank"
             [class.is-invalid]="bankBranchBank.invalid && bankBranchBank.touched"></ion-input>
           <div class="text-danger" *ngIf="bankBranchBank.invalid && bankBranchBank.touched">
             <small *ngIf="!!bankBranchBank.errors?.required">Please enter Bank Branch.</small>
             <small *ngIf="!!bankBranchBank.errors?.maxlength">Please enter appropriate Bank Branch.</small>
           </div>
         </ion-item>
-        
+
         <ion-item>
           <ion-label position="floating">Bank Address<span style="color: Red">*</span></ion-label>
-          <ion-input  formControlName="bankAddressBank"
+          <ion-input formControlName="bankAddressBank"
             [class.is-invalid]="bankAddressBank.invalid && bankAddressBank.touched"></ion-input>
           <div class="text-danger" *ngIf="bankAddressBank.invalid && bankAddressBank.touched">
             <small *ngIf="!!bankAddressBank.errors?.required">Please enter Bank Address.</small>
             <small *ngIf="!!bankAddressBank.errors?.maxlength">Please enter appropriate Bank Address.</small>
           </div>
         </ion-item>
-        
+
         <!-- <ion-item>
           <ion-label position="floating">MICR Code</ion-label>
           <ion-input maxlength="9" type="tel" formControlName="micrCode" id='bankDetails-micrCode'
@@ -157,11 +168,12 @@
             <small *ngIf="!!micrCode.errors?.pattern">Please enter appropriate MICR code.</small>
           </div>
         </ion-item> -->
-        
+
         <ion-item>
           <ion-label position="floating">Account No.<span style="color: Red">*</span></ion-label>
           <ion-input minlength="9" maxlength="18" type="tel" formControlName="accountNumberBank"
-            [class.is-invalid]="accountNumberBank.invalid && accountNumberBank.touched" id='bankDetails-accountNumberBank'>
+            [class.is-invalid]="accountNumberBank.invalid && accountNumberBank.touched"
+            id='bankDetails-accountNumberBank'>
           </ion-input>
           <div class="text-danger" *ngIf="accountNumberBank.invalid && accountNumberBank.touched">
             <small *ngIf="!!accountNumberBank.errors?.required">Please enter your Account no.</small>
@@ -171,8 +183,9 @@
         <ion-item>
           <ion-label position="floating">Select Scheme Category / योजना श्रेणी निवडा</ion-label>
           <ion-select [class.is-invalid]="selectSchemeCategory.invalid && selectSchemeCategory.touched"
-            formControlName="selectSchemeCategory"  id="selectSchemeCategory" interface="action-sheet">
-            <ion-select-option *ngFor="let list1 of schemeArray" [value]='list1'>{{list1.scheme_category}}</ion-select-option>
+            formControlName="selectSchemeCategory" id="selectSchemeCategory" interface="action-sheet">
+            <ion-select-option *ngFor="let list1 of schemeArray" [value]='list1'>{{list1.scheme_category}}
+            </ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="selectSchemeCategory.invalid && selectSchemeCategory.touched">
             <small *ngIf="selectSchemeCategory.errors && selectSchemeCategory.errors['required']">Please Select Scheme
@@ -182,14 +195,150 @@
         <ion-item>
           <ion-label position="floating">Select Scheme / योजना निवडा</ion-label>
           <ion-select text-wrap [class.is-invalid]="selectScheme.invalid && selectScheme.touched"
-            formControlName="selectScheme" id="selectScheme" >
-            <ion-select-option *ngFor="let each of commonClaimArray" class="select-scheme" [value]="each.scheme_number">{{each.scheme_number}}-{{each.scheme_name}}</ion-select-option>
+            formControlName="selectScheme" id="selectScheme">
+            <ion-select-option *ngFor="let each of commonClaimArray" class="select-scheme" [value]="each.scheme_number">
+              {{each.scheme_number}}-{{each.scheme_name}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>
-      <ion-list  *ngIf="selectScheme.value">
-        <ion-item *ngIf="selectScheme.value === 'S01'"> 
-          <app-claim-social1 [filledFormData]="claimData" [user]="formUserInfo"   [familyDetailsArray]="familyDetailsArray" ></app-claim-social1>
+      <ion-list *ngIf="selectScheme.value">
+        <!-- SOCIAL -->
+        <ion-item *ngIf="selectScheme.value === 'S01'">
+          <app-claim-social1 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-social1>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'S02'">
+          <app-claim-social2 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-social2>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'S03'">
+          <app-claim-social3 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-social3>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'S04'">
+          <app-claim-social4 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-social4>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'S05'">
+          <app-claim-social5 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-social5>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'S06'">
+          <app-claim-social6 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-social6>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'S07'">
+          <app-claim-social7 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-social7>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'S08'">
+          <app-claim-social8 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-social8>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'S09'">
+          <app-claim-social9 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-social9>
+        </ion-item>
+
+        <!-- EDUCATION -->
+        <ion-item *ngIf="selectScheme.value === 'E01'">
+          <app-claim-education1 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-education1>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'E02'">
+          <app-claim-education2 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-education2>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'E03'">
+          <app-claim-education3 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-education3>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'E04'">
+          <app-claim-education4 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-education4>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'E05'">
+          <app-claim-education5 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-education5>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'E06'">
+          <app-claim-education6 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-education6>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'E07'">
+          <app-claim-education7 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-education7>
+        </ion-item>
+
+        <!-- FINANCIAL -->
+        <ion-item *ngIf="selectScheme.value === 'F01'">
+          <app-claim-financial1 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-financial1>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'F02'">
+          <app-claim-financial2 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-financial2>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'F03'">
+          <app-claim-financial3 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-financial3>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'F04'">
+          <app-claim-financial4 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-financial4>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'F05'">
+          <app-claim-financial5 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-financial5>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'F06'">
+          <app-claim-financial6 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-financial6>
+        </ion-item>
+
+        <!-- HEALTH -->
+        <ion-item *ngIf="selectScheme.value === 'H01'">
+          <app-claim-health1 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-health1>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'H02'">
+          <app-claim-health2 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-health2>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'H03'">
+          <app-claim-health3 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-health3>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'H04'">
+          <app-claim-health4 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-health4>
+        </ion-item>
+
+        <ion-item *ngIf="selectScheme.value === 'H05'">
+          <app-claim-health5 [filledFormData]="claimData" [user]="formUserInfo"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-health5>
         </ion-item>
 
       </ion-list>
