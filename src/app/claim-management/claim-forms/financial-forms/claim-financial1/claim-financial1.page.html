@@ -18,7 +18,7 @@
           </ion-header>
       <ion-item>
         <ion-label position="floating">Date of Death /मृत्यूची तारीख<span class="text-danger">*</span></ion-label>
-        <ion-datetime [class.is-invalid]="deathDate.invalid && deathDate.touched" [min]="user.registrationDatePersonal" [max]='maxTodaysDate' formControlName="deathDate">
+        <ion-datetime [class.is-invalid]="deathDate.invalid && deathDate.touched" [min]="minDate" [max]='maxTodaysDate' formControlName="deathDate">
         </ion-datetime>
         <div class="text-danger" *ngIf="deathDate.invalid && deathDate.touched">
           <small *ngIf="deathDate.errors && deathDate.errors['required']">Please select a Date.</small>
@@ -80,7 +80,7 @@
             class="text-danger">*</span></ion-label >
         <ion-datetime id="deathCertificateIssueDate"
           [class.is-invalid]="deathCertificateIssueDate.invalid && deathCertificateIssueDate.touched" 
-          formControlName="deathCertificateIssueDate" [max]='maxTodaysDate'>
+          formControlName="deathCertificateIssueDate" [min]="minDate" [max]='maxTodaysDate'>
         </ion-datetime>
         <div class="text-danger" *ngIf="deathCertificateIssueDate.invalid && deathCertificateIssueDate.touched">
           <small *ngIf="deathCertificateIssueDate.errors && deathCertificateIssueDate.errors['required']">Please enter
@@ -132,7 +132,7 @@
           स्वरूप<span class="text-danger">*</span></ion-label>
         <ion-select formControlName="natureOfWork" [class.is-invalid]="natureOfWork.invalid && natureOfWork.touched"
           id="natureOfWork">
-          <ion-select-option *ngFor="let item of natureOfWorkEmpArray" [value]="item.type_of_worker_title"> {{item['type_of_worker_title'] /  item['type_of_worker_title_mr'] }}</ion-select-option>
+          <ion-select-option *ngFor="let item of natureOfWorkEmpArray" [value]="item.type_of_worker_title"> {{item['type_of_worker_title'] }}/{{item['type_of_worker_title_mr'] }}</ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="natureOfWork.invalid && natureOfWork.touched">
           <small *ngIf="natureOfWork.errors && natureOfWork.errors['required']">Please select a option.</small>
@@ -142,6 +142,12 @@
     <br>
     <ion-list>
 <br>
+
+
+<div class="col-lg-9 form-check mb-3" *ngIf="!filledFormData">
+  <ion-toggle id="nomineeOpen" slot="start"  checked="{{nomineeCheck}}" (ionChange)="nomineeSwitch($event)">Check to Change the Nominee. / नामनिर्देशन बदलण्यासाठी खूण करा.</ion-toggle>
+<ion-label>Check to Change the Nominee. / नामनिर्देशन बदलण्यासाठी खूण करा.</ion-label>
+</div>
       <ion-header class="ml-2" style="font-size:18px">APPLICANT DETAILS: / अर्जदाराचा तपशील:
       </ion-header>
       <ion-item>
@@ -161,7 +167,7 @@
           <ion-icon slot="end" name="calendar"></ion-icon>
 
         <ion-label position="floating">Date Of Birth / जन्म तारीख<span class="text-danger">*</span></ion-label>
-        <ion-datetime id="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched" [max]='maxTodaysDate'
+        <ion-datetime id="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched" [min]="minDate" [max]='maxTodaysDate'
           formControlName="dobPersonal">
         </ion-datetime>
         <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">
@@ -171,7 +177,7 @@
 
       <ion-item>
         <ion-label position="floating">Age / वय<span class="text-danger">*</span></ion-label>
-        <ion-input id="agePersonal"  [class.is-invalid]="agePersonal.invalid && agePersonal.touched"
+        <ion-input id="agePersonal"  [class.is-iinvalid]="agePersonal.invalid && agePersonal.touched"
           formControlName="agePersonal">
         </ion-input>
 
@@ -181,7 +187,7 @@
         <ion-label position="floating">Relation /संबंध
           स्वरूप<span class="text-danger">*</span></ion-label>
         <ion-select formControlName="relation" [class.is-invalid]="relation.invalid && relation.touched" id="relation">
-          <ion-select-option></ion-select-option>
+          <ion-select-option *ngFor="let item of getRelationArray" [value]="item.family_relation_id">{{item.relation_title_en}}/{{item.relation_title_mr}}</ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="relation.invalid && relation.touched">
           <small *ngIf="relation.errors && relation.errors['required']">Please select a option.</small>
@@ -208,10 +214,14 @@
       </ion-item>
     </ion-list>
     <br>
-    <ion-list>
+    <div class="col-lg-9 form-check mb-3" *ngIf="!filledFormData">
+      <ion-toggle id="open" slot="start"   (ionChange)="openOtherDetails($event)" >Check to Change the Nominee. / नामनिर्देशन बदलण्यासाठी खूण करा.</ion-toggle>
+    <ion-label>Check if the applicant and registered worker have an account. / <br> अर्जदार आणि नोंदणीकृत कामगार यांचे खाते असेल तर खूण करा.</ion-label>
+    </div>
+    <ion-list *ngIf="open">
       <ion-header class="ml-2" style="font-size:18px">BANK DETAILS: / बँक तपशील:
       </ion-header>
-
+     
       <ion-item>
         <ion-label position="floating">IFSC Code / आयएफएससी कोड<span class="text-danger">*</span></ion-label>
         <ion-input [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched" (keyup)="capitaliseifscCodeBank()" (change)="searchByifscCodeBankCode()" formControlName="ifscCodeBank"
@@ -227,11 +237,12 @@
         <ion-label position="floating">Bank Name / बँकेचे नाव<span class="text-danger">*</span></ion-label>
         <ion-input [class.is-invalid]="bankNameBank.invalid && bankNameBank.touched" formControlName="bankNameBank"
           id="bankNameBank" clearInput></ion-input>
-        <div class="text-danger" *ngIf="bankNameBank.invalid && bankNameBank.touched">
-          <small *ngIf="bankNameBank.errors && bankNameBank.errors['required']">Please enter Bank Name.</small>
-          <small *ngIf="bankNameBank.errors && bankNameBank.errors['maxlength']">You Have Reached Your
-            Maximum.</small>
-        </div>
+          <div class="text-danger" *ngIf="bankNameBank.invalid && bankNameBank.touched">
+            <small *ngIf="bankNameBank.errors && bankNameBank.errors['required']">Please enter Bank Name.</small>
+            <small *ngIf="bankNameBank.errors && bankNameBank.errors['maxlength']">You Have Reached Your
+              Maximum.</small>
+          </div>
+
       </ion-item>
       <ion-item>
         <ion-label position="floating">Bank Branch / बँक शाखा<span class="text-danger">*</span></ion-label>
@@ -338,17 +349,17 @@
                 <ion-label text-wrap floating>6.Successor Certificate if nominee is not available./नामनिर्देशित व्यक्ती उपलब्ध नसल्यास उत्तराधिकारी प्रमाणपत्र.<span style="color: Red">*</span></ion-label>
               </ion-item>
               <ion-item>
-                <input id='nomineeCertificate' formControlName="nomineeCertificate" type="file" accept="application/pdf">
+                <input id='nomineeCertificate'  (change)="getFileDetails($event)" formControlName="nomineeCertificate" type="file" accept="application/pdf">
                 <div class="text-danger" *ngIf="nomineeCertificate.invalid && nomineeCertificate.touched">
                   <small *ngIf="nomineeCertificate.errors && nomineeCertificate.errors['required']">Please upload required
                     document.</small>
                 </div>
               </ion-item>
               <ion-item>
-                  <ion-checkbox checked="false" color="dark" checked slot="start"></ion-checkbox>
+                  <ion-checkbox  checked="false" color="dark" checked slot="start"></ion-checkbox>
                   <ion-label>Documents Verified</ion-label>
                 </ion-item>
-              <ion-button mode="ios" expand="block" >Save</ion-button>
+              <ion-button mode="ios" expand="block"   (click)="saveForm()" >Save</ion-button>
     </ion-list>              
 
   </form>

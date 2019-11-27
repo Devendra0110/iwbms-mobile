@@ -30,6 +30,12 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   public bankDetails: any;
   public sortedArray = [];
   public maxTodaysDate: string;
+  public nomineeCheck = true;
+  public open = true;
+  minDate: string;
+
+
+
   constructor(
     protected validationService: ClaimValidationService,
     protected transliterate: TransliterationService,
@@ -66,7 +72,6 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
       nomineeMobNumber: new FormControl('', this.validationService.createValidatorsArray('nomineeMobNumber')),
       benefitType: new FormControl('', [Validators.required]),
       benefitAmount: new FormControl(''),
-      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       placeOfDeath: new FormControl('', this.validationService.createValidatorsArray('placeOfDeath')),
       natureOfWork: new FormControl(''),
       issuingAuthority: new FormControl('', this.validationService.createValidatorsArray('issuingAuthority')),
@@ -95,18 +100,27 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
+    this.getRelation();
+this.assignBenefits(true)
+this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
+
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     this.sortedArray = this.familyDetailsArray.filter(data => {
+      console.log(data)
+
       return data.nominee === "yes" || data.nominee === "Yes"
     })
 
-    this.patchNominee()
-    console.log(this.sortedArray)
+    setTimeout(()=>{
+      this.patchNominee()
+    },2000)
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
     this.getNatureOfWorkEmp();
-
+    this.fullName.disable();
+    this.dobPersonal.disable();
+    this.relation.disable();
+    this.aadharNumber.disable();
   }
-  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get deathCertificateIssueDate() { return this.formGroup.get('deathCertificateIssueDate'); }
   get placeOfDocIssue() { return this.formGroup.get('placeOfDocIssue'); }
   get deathCertificateNo() { return this.formGroup.get('deathCertificateNo'); }
@@ -172,6 +186,7 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   // this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
   // this.calculateAge(this.dobPersonal.value);
   private patchNominee() {
+    console.log(this.sortedArray);
     const fullNameNominee_mr = `${this.sortedArray[0].firstNameFamily_mr} ${this.sortedArray[0].fatherOrHusbandName_mr} ${this.sortedArray[0].surname_mr}`;
     const nomineeBirthDateArray = moment(this.sortedArray[0].dobFamily).format('YYYY-MM-DD');
     const fullNameNominee = `${this.sortedArray[0].firstNameFamily} ${this.sortedArray[0].fatherOrHusbandName} ${this.sortedArray[0].surname}`
@@ -180,10 +195,11 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
     this.formGroup.get('fullName').patchValue(fullNameNominee);
     this.formGroup.get('fullName_mr').patchValue(fullNameNominee_mr);
     this.formGroup.get('dobPersonal').patchValue(nomineeBirthDateArray);
-    this.formGroup.get('agePersonal').patchValue(this.calculateAge(nomineeBirthDateArray))
-    this.formGroup.get('relation').patchValue(this.sortedArray[0]['category']);
+    this.formGroup.get('relation').patchValue(Number(this.sortedArray[0]['relation']));
     this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
+  this.agePersonal.patchValue(this.calculateAge(nomineeBirthDateArray))
     this.agePersonal.disable()
+  
   }
 
  
@@ -200,7 +216,8 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
         this.formGroup.get('bankNameBank').patchValue(bankDetails['BANK']);
         this.formGroup.get('bankBranchBank').patchValue(bankDetails['BRANCH']);
         this.formGroup.get('bankAddressBank').patchValue(bankDetails['ADDRESS']);
-      }
+      }    this.agePersonal.disable()
+
     },
     
       error => {
@@ -214,6 +231,27 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
       });
 
   }
+
+  nomineeSwitch(event: any) {
+    this.nomineeCheck = !this.nomineeCheck;
+    if (!this.nomineeCheck) {
+
+      this.fullName.enable();
+      this.dobPersonal.enable();
+      this.relation.enable();
+      this.aadharNumber.enable();
+      this.nomineeCertificate.setValidators([Validators.required]);
+
+
+    } else {
+      this.fullName.disable();
+      this.dobPersonal.disable();
+      this.relation.disable();
+      this.aadharNumber.disable();
+      this.nomineeCertificate.clearValidators();
+      this.patchNominee()
+    }
+  }
   capitaliseifscCodeBank() {
    
     let value = this.ifscCodeBank.value;
@@ -223,9 +261,85 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   public getNatureOfWorkEmp(): void {
     this.httpService.getTypesOfWorker().subscribe((data: any) => {
       this.natureOfWorkEmpArray = data;
-      console.log(data);
     });
   }
 
+
+  public saveForm(): void {
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
+        this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+        this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      }
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          deathCertificateIssueDate: this.formGroup.getRawValue().deathCertificateIssueDate,
+          deathCertificateNo: this.formGroup.getRawValue().deathCertificateNo,
+          ifscCodeBank: this.formGroup.getRawValue().ifscCodeBank,
+          bankNameBank: this.formGroup.getRawValue().bankNameBank,
+          bankBranchBank: this.formGroup.getRawValue().bankBranchBank,
+          bankAddressBank: this.formGroup.getRawValue().bankAddressBank,
+          accountNumberBank: this.formGroup.getRawValue().accountNumberBank.toString(),
+          placeOfDocIssue: this.formGroup.getRawValue().placeOfDocIssue,
+          deathDate: this.formGroup.getRawValue().deathDate,
+          fullName: this.formGroup.getRawValue().fullName,
+          fullName_mr: this.formGroup.getRawValue().fullName_mr,
+          dobPersonal: this.formGroup.getRawValue().dobPersonal,
+          agePersonal: this.formGroup.getRawValue().agePersonal,
+          relation: this.formGroup.getRawValue().relation.toString(),
+          nomineeMobNumber: this.formGroup.getRawValue().nomineeMobNumber,
+          aadharNumber: this.formGroup.getRawValue().aadharNumber,
+          benefitType: this.formGroup.getRawValue().benefitType,
+          benefitAmount: this.formGroup.getRawValue().benefitAmount,
+          placeOfDocIssue_mr: this.formGroup.getRawValue().placeOfDocIssue_mr,
+          natureOfWork: this.formGroup.getRawValue().natureOfWork,
+
+          placeOfDeath: this.formGroup.getRawValue().placeOfDeath,
+          placeOfDeath_mr: this.formGroup.getRawValue().placeOfDeath_mr,
+          dateOfFir: this.formGroup.getRawValue().dateOfFir,
+          FIRNo: this.formGroup.getRawValue().FIRNo,
+          policeStationAdd: this.formGroup.getRawValue().policeStationAdd,
+          issuingAuthority: this.formGroup.getRawValue().issuingAuthority,
+          policeStationAdd_mr: this.formGroup.getRawValue().policeStationAdd_mr,
+
+
+          documents: {
+            deathCertificateDoc: this.fileOptions['deathCertificateDoc'],
+            firCertificate: this.fileOptions['firCertificate'],
+            scannedPassbookDoc: this.fileOptions['scannedPassbookDoc'],
+            aadharCardDoc: this.fileOptions['aadharCardDoc'],
+            selfDeclaration: this.fileOptions['selfDeclaration'],
+            nomineeCertificate: this.fileOptions['nomineeCertificate']
+
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+    }
+    else {
+      this.dialogs.alert('Please Update the form.');
+     console.log('error in form ')
+    }
+  }
+  openOtherDetails(event: any) {
+    // this.open = !this.open;
+
+    console.log(this.open)
+    if (this.open) {
+      this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
+      this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);
+      this.formGroup.get('bankAddressBank').patchValue(this.user['bankAddressBank']);
+      this.formGroup.get('accountNumberBank').patchValue(this.user['accountNumberBank']);
+      this.formGroup.get('ifscCodeBank').patchValue(this.user['ifscCodeBank']);
+
+    } else {
+      this.formGroup.get('bankNameBank').reset()
+      this.formGroup.get('bankBranchBank').reset()
+      this.formGroup.get('bankAddressBank').reset()
+      this.formGroup.get('accountNumberBank').reset()
+      this.formGroup.get('ifscCodeBank').reset()
+    }
+  }
 }
 
