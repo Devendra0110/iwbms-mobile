@@ -24,6 +24,7 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
    public Delivery: Object = [];
    public maxTodaysDate: string;
    public minTreatmentDate: string;
+   public saveOnce=1;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -46,7 +47,6 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
       locationOfHospital: new FormControl('', this.validationService.createValidatorsArray('locationOfHospital')),
       date: new FormControl('', this.validationService.createValidatorsArray('date')),
       health4Form4Doc1: new FormControl('', this.validationService.createValidatorsArray('health4Form4Doc1')),
-      //health4Form4Doc2: new FormControl('', this.validationService.createValidatorsArray('health4Form4Doc2')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
@@ -65,9 +65,9 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
    }
 
   ngOnInit() {
+    this.assignBenefits(true);  
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
     this.minTreatmentDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD')
-
 
   }
 
@@ -83,7 +83,36 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
   get nameOfMed_mr() { return this.formGroup.get('nameOfMed_mr'); }
   get locationOfHospital_mr() { return this.formGroup.get('locationOfHospital_mr'); }
 
-  save(){
 
+
+  public saveForm(): void {
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      if(this.saveOnce===1){
+        this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+      this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      }
+
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          nameOfMed: this.formGroup.getRawValue().nameOfMed,
+          nameOfMed_mr: this.formGroup.getRawValue().nameOfMed_mr,
+          date: this.formGroup.getRawValue().date,
+          locationOfHospital: this.formGroup.getRawValue().locationOfHospital,
+          locationOfHospital_mr: this.formGroup.getRawValue().locationOfHospital_mr,
+          typeOfDisability_mr: this.formGroup.getRawValue().typeOfDisability_mr,
+          typeOfDisability: this.formGroup.getRawValue().typeOfDisability,
+          benefitType: this.benefitType.value,
+          benefitAmount: this.benefitAmount.value,
+          documents: {
+            health4Form4Doc1: this.fileOptions['health4Form4Doc1'],
+            selfDeclaration: this.fileOptions['selfDeclaration']
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+    } else {
+      this.dialogs.alert('Please Update the form.');
+    }
   }
 }

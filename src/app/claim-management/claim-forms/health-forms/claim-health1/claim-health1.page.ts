@@ -33,6 +33,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
   public fullName:string;
   public childAgeFlag: boolean;
   public childName:string;
+  public saveOnce=1;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -126,9 +127,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
       this.dateOfDeliveryHealth.patchValue(moment)
       this.childName = this.childDetail.firstNameFamily+' '+this.childDetail.surname
       this.dateOfDeliveryHealth.patchValue(moment(this.childDetail.dobFamily).format('YYYY-MM-DD'))
-      //swal fire for child less than a year
       const childYear = moment(this.childDetail.dobFamily);
-      // const childAge = moment().diff(childYear, 'days');
       //assign male/femalne
       this.genderPersonal.patchValue(this.childDetail.relation === '11' ? 3 : 1)
       this.genderPersonal.disable();
@@ -169,6 +168,11 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
     })
   }
 
+  public capitaliseNumber(): void {
+    this.birthCertificateNumber.setValue(this.birthCertificateNumber.value.toString().toUpperCase());
+  }
+
+
   // english getters
   // get declaration() { return this.formGroup.get('declaration') }
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
@@ -195,10 +199,11 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
  
   public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
-      this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+      if(this.saveOnce===1){
+        this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
       this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
-      this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
-      
+      // this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      }
 
       const postObj = {
         userData: this.user,

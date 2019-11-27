@@ -131,7 +131,7 @@
       <ion-item>
         <ion-label position="floating">Birth certificate Registration Number /जन्म प्रमाणपत्र नोंदणी क्रमांक<span
             style="color: Red">*</span></ion-label>
-        <ion-input clearInput type="text" id="birthCertificateNumber" maxlength="30" autocapitalize="characters"
+        <ion-input clearInput (keyup)="capitaliseNumber()" type="text" id="birthCertificateNumber" maxlength="30" autocapitalize="characters"
           [class.is-invalid]="birthCertificateNumber.invalid && birthCertificateNumber.touched"
           formControlName="birthCertificateNumber"> </ion-input>
         <div class="text-danger" *ngIf="birthCertificateNumber.invalid && birthCertificateNumber.touched">

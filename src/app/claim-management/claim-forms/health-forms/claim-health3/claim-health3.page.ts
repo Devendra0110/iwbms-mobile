@@ -26,15 +26,14 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
   public minTreatmentDate: string;
   public familyArray: Array<string> = [];
   public ifIfscCodeBank: boolean;
-
+  public childName:string;
+  public saveOnce=1;
 
   bankDetails: any = {
     BANK: '',
     BRANCH: '',
     ADDRESS: ''
   };
-
-
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -84,6 +83,7 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
+    this.assignBenefits(true);  
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
     this.minTreatmentDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD')
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
@@ -95,6 +95,7 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
     this.familyArray = _.reverse(_.sortBy(this.familyArray, 'ageFamily'));
     this.childrenDetail.valueChanges.subscribe((FamilyMemberId) => {
       const FamilyMemberDetail: any = this.familyArray.find((eachFamily: any) => eachFamily.family_detail_id === Number(FamilyMemberId));
+      this.childName = FamilyMemberDetail.firstNameFamily+' '+FamilyMemberDetail.surname
       this.aadharNumber.patchValue(FamilyMemberDetail.aadharNoFamily);
     })
 
@@ -156,7 +157,42 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
       });
   }
 
-  save() {
+  public saveForm(): void {
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
 
+      if(this.saveOnce===1){
+        this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+      this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      }
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          aadharNumber: this.formGroup.getRawValue().aadharNumber,
+          childrenDetail: this.childName,
+          nameOfHospital: this.formGroup.getRawValue().nameOfHospital,
+          nameOfHospital_mr: this.formGroup.getRawValue().nameOfHospital_mr,
+          nameOfDoctor: this.formGroup.getRawValue().nameOfDoctor,
+          nameOfDoctor_mr: this.formGroup.getRawValue().nameOfDoctor_mr,
+          locationOfHospital: this.formGroup.getRawValue().locationOfHospital,
+          locationOfHospital_mr: this.formGroup.getRawValue().locationOfHospital_mr,
+          dateOfOp:this.formGroup.getRawValue().dateOfOp,
+          ifscCodeBank: this.formGroup.getRawValue().ifscCodeBank,
+          bankNameBank: this.formGroup.getRawValue().bankNameBank,
+          bankBranchBank: this.formGroup.getRawValue().bankBranchBank,
+          bankAddressBank: this.formGroup.getRawValue().bankAddressBank,
+          benefitType: this.benefitType.value,
+          benefitAmount: this.benefitAmount.value,
+          documents: {
+            health3Form3Doc1: this.fileOptions['health3Form3Doc1'],
+            health3Form3Doc2: this.fileOptions['health3Form3Doc2'],
+            selfDeclaration: this.fileOptions['selfDeclaration'],
+            aadharCardDoc: this.fileOptions['aadharCardDoc'],
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+    } else {
+      this.dialogs.alert('Please Update the form.');
+    }
   }
 }

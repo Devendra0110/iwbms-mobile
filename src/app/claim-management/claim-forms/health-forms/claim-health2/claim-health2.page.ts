@@ -14,8 +14,6 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { TypeOfIllness } from 'src/assets/common.interface';
 
-
-
 @Component({
   selector: 'app-claim-health2',
   templateUrl: './claim-health2.page.html',
@@ -29,6 +27,8 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
   public illness: TypeOfIllness[];
   public minTreatmentDate:string;
   public maxTreatmentDate:string;
+  public familyName:string;
+  public saveOnce=1;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -86,6 +86,7 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
    }
 
   ngOnInit() {
+    this.assignBenefits(false);
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     this.familyArray = this.familyDetailsArray.filter((eachFamily: any) => {
@@ -95,6 +96,7 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
 
     this.familyDetail.valueChanges.subscribe((FamilyMemberId) => {
       const FamilyMemberDetail: any = this.familyArray.find((eachFamily: any) => eachFamily.family_detail_id === Number(FamilyMemberId));
+      this.familyName = FamilyMemberDetail.firstNameFamily+' '+FamilyMemberDetail.surname
       this.aadharNumber.patchValue(FamilyMemberDetail.aadharNoFamily);
     });
 
@@ -134,7 +136,43 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
    get nameOfDoctor_mr() { return this.formGroup.get('nameOfDoctor_mr'); }
    get locationOfHospital_mr() { return this.formGroup.get('locationOfHospital_mr'); }
  
-  save(){
-    
+   public saveForm(): void {
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+
+      if(this.saveOnce===1){
+        this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+      this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      }
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          billAmount: this.formGroup.getRawValue().billAmount,
+          aadharNumber: this.formGroup.getRawValue().aadharNumber,
+          familyDetail: this.familyName,
+          nameOfHospital: this.formGroup.getRawValue().nameOfHospital,
+          nameOfHospital_mr: this.formGroup.getRawValue().nameOfHospital_mr,
+          nameOfDoctor: this.formGroup.getRawValue().nameOfDoctor,
+          nameOfDoctor_mr: this.formGroup.getRawValue().nameOfDoctor_mr,
+          locationOfHospital: this.formGroup.getRawValue().locationOfHospital,
+          locationOfHospital_mr: this.formGroup.getRawValue().locationOfHospital_mr,
+          dateOfOp:this.formGroup.getRawValue().dateOfOp,
+          typeOfIllness: this.formGroup.getRawValue().typeOfIllness,
+          benefitType: this.benefitType.value,
+          benefitAmount: this.formGroup.getRawValue().benefitAmount,
+          documents: {
+            health2Form2Doc1: this.fileOptions['health2Form2Doc1'],
+            health2Form2Doc2: this.fileOptions['health2Form2Doc2'],
+            selfDeclaration: this.fileOptions['selfDeclaration'],
+            aadharCardDoc: this.fileOptions['aadharCardDoc'],
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+
+    } else {
+      this.dialogs.alert('Please Update the form.');
+
+    }
   }
+
 }
