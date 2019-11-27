@@ -105,7 +105,7 @@ export abstract class ClaimBasePage {
     }
 
     public getEducation() {
-        return this.httpService.getEducation()
+        return this.httpService.getEducation();
     }
 
     public convertDateToNGBDateFormat(date: string) {
@@ -181,7 +181,8 @@ export abstract class ClaimBasePage {
     public yearOfPassing(event) {
         const inputYear = this.formGroup.get('year');
         const currentYear = new Date().getFullYear();
-        if (inputYear.value >= this.user.registrationDatePersonal.year && inputYear.value <= currentYear) {
+        const userRegistrationYear = Number(this.user.registrationDatePersonal.slice(0,4))
+        if (inputYear.value >= userRegistrationYear && inputYear.value <= currentYear) {
             // returns the user input if correct
         } else {
             this.toast.show('Invalid Year of Admission', '1000', 'bottom').subscribe(() => { });

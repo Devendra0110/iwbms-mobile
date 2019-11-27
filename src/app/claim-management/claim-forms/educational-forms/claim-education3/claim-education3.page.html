@@ -165,7 +165,7 @@
       उत्तीर्ण झाल्याचे प्रमाणपत्र / गुणपत्रिका</ion-label>
   </ion-item>
   <ion-item>
-    <input formControlName="certificates" id="certificates" type="file" accept="application/pdf"
+    <input (change)="getFileDetails($event)" formControlName="certificates" id="certificates" type="file" accept="application/pdf"
       [class.is-invalid]="certificates.invalid && certificates.touched">
   </ion-item>
   <div class="text-danger" *ngIf="certificates.invalid && certificates.touched">
@@ -179,7 +179,7 @@
       पावती</ion-label>
   </ion-item>
   <ion-item>
-    <input formControlName="receipt" id="receipt" type="file" accept="application/pdf"
+    <input (change)="getFileDetails($event)" formControlName="receipt" id="receipt" type="file" accept="application/pdf"
       [class.is-invalid]="receipt.invalid && receipt.touched">
   </ion-item>
   <div class="text-danger" *ngIf="receipt.invalid && receipt.touched">
@@ -188,10 +188,10 @@
   </div>
 
   <ion-item>
-    <ion-label text-wrap floating>3. School/College Id Card / शाळेचे/महाविद्यालयचे ओळखपत्र</ion-label>
+    <ion-label text-wrap floating>3. College Id Card / महाविद्यालयचे ओळखपत्र</ion-label>
   </ion-item>
   <ion-item>
-    <input formControlName="schoolIdDoc" id="schoolIdDoc" type="file" accept="application/pdf"
+    <input (change)="getFileDetails($event)" formControlName="schoolIdDoc" id="schoolIdDoc" type="file" accept="application/pdf"
       [class.is-invalid]="schoolIdDoc.invalid && schoolIdDoc.touched">
   </ion-item>
   <div class="text-danger" *ngIf="schoolIdDoc.invalid && schoolIdDoc.touched">
@@ -205,7 +205,7 @@
     </ion-label>
   </ion-item>
   <ion-item>
-    <input formControlName="bonafideDoc" id="bonafideDoc" type="file" accept="application/pdf"
+    <input (change)="getFileDetails($event)" formControlName="bonafideDoc" id="bonafideDoc" type="file" accept="application/pdf"
       [class.is-invalid]="bonafideDoc.invalid && bonafideDoc.touched">
   </ion-item>
   <div class="text-danger" *ngIf="bonafideDoc.invalid && bonafideDoc.touched">
@@ -217,7 +217,7 @@
     <ion-label text-wrap floating>5. Aadhar card of the applicable member/<br> लागू सदस्याचे आधार कार्ड</ion-label>
   </ion-item>
   <ion-item>
-    <input formControlName="aadharCardDoc" id="aadharCardDoc" type="file" accept="application/pdf"
+    <input (change)="getFileDetails($event)" formControlName="aadharCardDoc" id="aadharCardDoc" type="file" accept="application/pdf"
       [class.is-invalid]="aadharCardDoc.invalid && aadharCardDoc.touched">
   </ion-item>
   <div class="text-danger" *ngIf="aadharCardDoc.invalid && aadharCardDoc.touched">
@@ -229,7 +229,7 @@
     <ion-label text-wrap floating>6. Self Declaration / हमीपत्र</ion-label>
   </ion-item>
   <ion-item>
-    <input formControlName="selfDeclaration" id="selfDeclaration" type="file" accept="application/pdf"
+    <input (change)="getFileDetails($event)" formControlName="selfDeclaration" id="selfDeclaration" type="file" accept="application/pdf"
       [class.is-invalid]="selfDeclaration.invalid && selfDeclaration.touched">
   </ion-item>
   <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
@@ -241,7 +241,7 @@
     <ion-label text-wrap floating>7. Ration Card / रेशन कार्ड</ion-label>
   </ion-item>
   <ion-item>
-    <input formControlName="rationCardDoc" id="rationCardDoc" type="file" accept="application/pdf"
+    <input (change)="getFileDetails($event)" formControlName="rationCardDoc" id="rationCardDoc" type="file" accept="application/pdf"
       [class.is-invalid]="rationCardDoc.invalid && rationCardDoc.touched">
   </ion-item>
   <div class="text-danger" *ngIf="rationCardDoc.invalid && rationCardDoc.touched">
@@ -254,7 +254,7 @@
     <ion-label>Documents Verified</ion-label>
   </ion-item>
 
-  <ion-button expand="block">SUBMIT</ion-button>
+  <ion-button mode="ios" expand="block" (click)="saveForm()">SUBMIT</ion-button>
 
 </form>
 <!-- </ion-content> -->

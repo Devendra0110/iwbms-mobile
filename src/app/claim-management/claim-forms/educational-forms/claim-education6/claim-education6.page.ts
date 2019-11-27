@@ -8,6 +8,7 @@ import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.ba
 import { ClaimService } from './../../../../services/claim.service';
 import { ClaimValidationService } from './../../../../services/claim-validation.service';
 import { Constants } from './../../../../../assets/constants';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { HttpService } from './../../../../services/http.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -25,7 +26,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
 
   public formGroup: FormGroup;
   public getFile: boolean;
-  public maxTodaysDate:string;
+  public maxTodaysDate: string;
   public academicYear: Object = [];
   public childArray: Array<string> = [];
   public childDetail: any
@@ -39,14 +40,15 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
     protected claimHttpService: ClaimService,
     protected router: Router,
     protected storage: Storage,
-    protected toast: Toast
+    protected toast: Toast,
+    private dialogs: Dialogs
   ) {
     super(transliterate, httpService, claimHttpService, router, storage, toast);
-    this.fileOptions = { certificates: '', receipt: '', bookReceipt: '',schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
-    this.files = { certificates: '', receipt: '', bookReceipt: '',schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.fileOptions = { certificates: '', receipt: '', bookReceipt: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.files = { certificates: '', receipt: '', bookReceipt: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
     this.academicYear = Constants.ACADEMIC_YEAR;
 
-    this.formGroup = new FormGroup ({
+    this.formGroup = new FormGroup({
       // english form controls
       childrenDetail: new FormControl('', this.validationService.createValidatorsArray('childrenDetail')),
       institute: new FormControl('', this.validationService.createValidatorsArray('institute')),
@@ -69,7 +71,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
       degreeName_mr: new FormControl('', this.validationService.createValidatorsArray('degreeName_mr')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
-      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      // verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
       // marathi form controls
@@ -80,7 +82,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
-    this.maxTodaysDate = this.getIonDate([this.todaysDate.day,this.todaysDate.month,this.todaysDate.year]);
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
     this.assignBenefits(false);
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
@@ -91,7 +93,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
     console.log(this.childArray);
     this.childrenDetail.valueChanges.subscribe((childName) => {
-      this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
+      this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName);
       this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
       this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
     });
@@ -99,12 +101,12 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
     this.assignBenefits(false);
 
     this.standard.valueChanges.subscribe(value => {
-      if(this.schemeDetails) {
+      if (this.schemeDetails) {
         const benefitAmount = JSON.parse(this.schemeDetails.benefit_amount);
-        if(Number(value) === 14 && this.schemeDetails.benefit_type === 'cash') {
+        if (Number(value) === 14 && this.schemeDetails.benefit_type === 'cash') {
           this.benefitAmount.patchValue(benefitAmount[0].postGraduation);
           this.academicYear = _.cloneDeep(Constants.ACADEMIC_YEAR).slice(0, 3);
-        } else if(Number(value) === 19 && this.schemeDetails.benefit_type === 'cash') {
+        } else if (Number(value) === 19 && this.schemeDetails.benefit_type === 'cash') {
           this.benefitAmount.patchValue(benefitAmount[0].diploma);
           this.academicYear = _.cloneDeep(Constants.ACADEMIC_YEAR).slice(0, 3);
         }
@@ -112,7 +114,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
     });
 
     this.getEducation().subscribe((data: any[]) => {
-      this.getEducationArray = data.slice(13,19);
+      this.getEducationArray = data.slice(13, 19);
       this.sortedStandard = this.getEducationArray.filter(el => el.education_level_id === 14 || el.education_level_id === 19);
     });
     this.minDateOfAdmission = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
@@ -125,7 +127,6 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
   get placeInstitute_mr(): AbstractControl { return this.formGroup.get('placeInstitute_mr'); }
 
   //english getters
-  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get childrenDetail() { return this.formGroup.get('childrenDetail'); }
   get institute() { return this.formGroup.get('institute'); }
   get aadharNumber() { return this.formGroup.get('aadharNumber'); }
@@ -144,6 +145,51 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
   get insPhNo() { return this.formGroup.get('insPhNo'); }
   get schoolIdDoc() { return this.formGroup.get('schoolIdDoc'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
+  // get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   // get declaration() { return this.formGroup.get('declaration'); }
 
+
+  public saveForm(): void {
+    const benefitAmountInt = Number(this.benefitAmount.value);
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
+        this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+        this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      }
+
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          childrenDetail: this.formGroup.getRawValue().childrenDetail,
+          aadharNumber: this.formGroup.getRawValue().aadharNumber,
+          age: this.formGroup.getRawValue().age,
+          institute: this.formGroup.getRawValue().institute,
+          standard: this.formGroup.getRawValue().standard,
+          placeInstitute: this.formGroup.getRawValue().placeInstitute,
+          institute_mr: this.formGroup.getRawValue().institute_mr,
+          placeInstitute_mr: this.formGroup.getRawValue().placeInstitute_mr,
+          yearOfDegree: this.formGroup.getRawValue().yearOfDegree,
+          dateOfAdmission: this.convertDateToNGBDateFormat(this.formGroup.getRawValue().dateOfAdmission),
+          degreeName: this.formGroup.getRawValue().degreeName,
+          degreeName_mr: this.formGroup.getRawValue().degreeName_mr,
+          insPhNo: this.formGroup.getRawValue().insPhNo,
+          insEmail: this.formGroup.getRawValue().insEmail,
+          benefitType: this.benefitType.value,
+          benefitAmount: benefitAmountInt,
+          documents: {
+            certificates: this.fileOptions['certificates'],
+            receipt: this.fileOptions['receipt'],
+            bonafideDoc: this.fileOptions['bonafideDoc'],
+            aadharCardDoc: this.fileOptions['aadharCardDoc'],
+            schoolIdDoc: this.fileOptions['schoolIdDoc'],
+            selfDeclaration: this.fileOptions['selfDeclaration'],
+            rationCardDoc: this.fileOptions['rationCardDoc'],
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+    } else {
+      this.dialogs.alert('Please Update the form.');
+    }
+  }
 }
