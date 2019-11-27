@@ -22,16 +22,17 @@ import { TypeOfIssuer } from 'src/assets/common.interface';
 })
 export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
 
-
   public formGroup: FormGroup;
+  public minDateOfDelivery:string;
   public childArray: Array<string> = [];
   public issuedBy: TypeOfIssuer[];
   public Delivery: Object = [];
   public childDetail: any
   public todaysDate: any;
   public maxTodaysDate: string;
-
-
+  public fullName:string;
+  public childAgeFlag: boolean;
+  public childName:string;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -45,6 +46,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
   ) {
     super(transliterate, httpService, claimService, router, storage, toast);
     this.issuedBy = Constants.TYPE_OF_ISSUER;
+    this.childAgeFlag = false
     this.fileOptions = { health1Form1Doc1: '', rationCardDoc: '', selfDeclaration: '' };
     this.files = { health1Form1Doc1: '', rationCardDoc: '', selfDeclaration: '' };
 
@@ -83,9 +85,10 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
     this.Delivery = Constants.DELIVERY_TYPE;
     console.log(this.Delivery);
   }
-
+  
   ngOnInit() {
     this.getGenderPersonal();
+    this.assignBenefits(false);
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
     this.typeOfDelivery.valueChanges.subscribe(value => {
       const benefitAmount = JSON.parse(this.schemeDetails.benefit_amount);
@@ -101,36 +104,28 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
         return eachFamily;
       }
     });
-
-    // this.dateOfDeliveryHealth.valueChanges.subscribe((value) => {
-    //   if (this.dateOfDeliveryHealth.errors) {
-    //     Swal.fire({
-    //       type: 'warning',
-    //       text: 'Child is born before registration date.'
-    //     });
-    //     this.childAgeFlag = true;
-    //   }
-    //   else {
-    //     this.childAgeFlag = false;
-    //   }
-    // })
+    this.minDateOfDelivery = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
+    
+    this.dateOfDeliveryHealth.valueChanges.subscribe((value) => {
+      if (this.dateOfDeliveryHealth.errors) {
+      this.toast.show('Child is born before registration date.', '2000', 'bottom')
+        this.childAgeFlag = true;
+      }
+      else {
+        this.childAgeFlag = false;
+      }
+    })
 
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
     console.log(this.childArray);
     this.childrenDetail.valueChanges.subscribe((childId) => {
+      console.log(this.dateOfDeliveryHealth);
       // patch birth year
-      this.childDetail = this.childArray.find((child: any) => child.family_detail_id === Number(childId));
+      this.childDetail = this.childArray.find((child: any) => child.family_detail_id === Number (childId));
       this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
-      if (typeof this.childDetail.dobFamily === 'string') {
-        
-        this.childDetail.dobFamily = moment(this.childDetail.dobFamily).format('DD/MM/YYYY').split('/');
-        this.childDetail.dobFamily = {
-          year: Number(this.childDetail.dobFamily[2]),
-          month: Number(this.childDetail.dobFamily[1]),
-          day: Number(this.childDetail.dobFamily[0])
-        };
-      }
-      this.dateOfDeliveryHealth.patchValue(this.childDetail.dobFamily)
+      this.dateOfDeliveryHealth.patchValue(moment)
+      this.childName = this.childDetail.firstNameFamily+' '+this.childDetail.surname
+      this.dateOfDeliveryHealth.patchValue(moment(this.childDetail.dobFamily).format('YYYY-MM-DD'))
       //swal fire for child less than a year
       const childYear = moment(this.childDetail.dobFamily);
       // const childAge = moment().diff(childYear, 'days');
@@ -197,8 +192,45 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
   get nameOfCertificateIssuer_mr() { return this.formGroup.get('nameOfCertificateIssuer_mr'); }
   get addressOfDelivery_mr() { return this.formGroup.get('addressOfDelivery_mr'); }
 
-  save() {
+ 
+  public saveForm(): void {
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+      this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      
 
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          aadharNumber: this.formGroup.getRawValue().aadharNumber,
+          childrenDetail: this.childName,
+          genderPersonal: this.formGroup.getRawValue().genderPersonal,
+          dateOfDeliveryHealth: this.formGroup.getRawValue().dateOfDeliveryHealth,
+          addressOfDelivery: this.formGroup.getRawValue().addressOfDelivery,
+          addressOfDelivery_mr: this.formGroup.getRawValue().addressOfDelivery_mr,
+          nameOfHospital: this.formGroup.getRawValue().nameOfHospital,
+          nameOfHospital_mr: this.formGroup.getRawValue().nameOfHospital_mr,
+          nameOfCertificateIssuer: this.formGroup.getRawValue().nameOfCertificateIssuer,
+          nameOfCertificateIssuer_mr: this.formGroup.getRawValue().nameOfCertificateIssuer_mr,
+          selectMaternityPlace: this.formGroup.getRawValue().selectMaternityPlace,
+          typeOfDelivery: this.formGroup.getRawValue().typeOfDelivery,
+          birthCertificateNumber: this.formGroup.getRawValue().birthCertificateNumber,
+          birthCertificateIssuedBy: this.formGroup.getRawValue().birthCertificateIssuedBy,
+          benefitType: this.benefitType.value,
+          benefitAmount: this.benefitAmount.value,
+          documents: {
+            health1Form1Doc1: this.fileOptions['health1Form1Doc1'],
+            selfDeclaration :  this.fileOptions['selfDeclaration'],
+            rationCardDoc: this.fileOptions['rationCardDoc'],
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+    } else {
+      this.dialogs.alert('Please Update the form.');
+    }
   }
+
 
 }

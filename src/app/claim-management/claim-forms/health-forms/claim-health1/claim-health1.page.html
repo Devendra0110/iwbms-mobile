@@ -53,11 +53,14 @@
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Date of Birth / जन्मतारीख <span
               style="color: Red">*</span></ion-label>
-          <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMMM, YYYY" formControlName="dateOfDeliveryHealth" id="dateOfDeliveryHealth"
+          <ion-datetime [max]="maxTodaysDate" [min]="minDateOfDelivery" displayFormat="DD MMMM, YYYY"  formControlName="dateOfDeliveryHealth" id="dateOfDeliveryHealth"
             [class.is-invalid]="dateOfDeliveryHealth.invalid && dateOfDeliveryHealth.touched">
           </ion-datetime>
           <div class="text-danger" *ngIf="dateOfDeliveryHealth.errors && dateOfDeliveryHealth.touched">
             <small>Please enter appropriate date.</small>
+          </div>
+          <div class="text-danger" *ngIf="dateOfDeliveryHealth.errors && childrenDetail.touched">
+            <small>Child is born before registration date.</small>
           </div>
         </ion-item>
   
@@ -196,7 +199,7 @@
         <ion-label text-wrap floating>2. Ration card / रेशन कार्ड</ion-label>
       </ion-item>
       <ion-item>
-        <input type="file" (change)="getFileDetails($event)" name="upload" accept="application/pdf" formControlName="rationCardDoc">
+        <input type="file" (change)="getFileDetails($event)" name="upload" accept="application/pdf" formControlName="rationCardDoc" id="rationCardDoc">
         <div class="text-danger" *ngIf="rationCardDoc.invalid && rationCardDoc.touched">
           <small>Please upload required document.</small>
         </div>
@@ -226,6 +229,6 @@
       याची मला पूर्ण जाणीव आहे.</ion-label>
         </ion-item> -->
 
-      <ion-button mode="ios" expand="block" (click)="save()">Save</ion-button>
+      <ion-button mode="ios" expand="block" (click)="saveForm()">Save</ion-button>
     </ion-list>
   </form>

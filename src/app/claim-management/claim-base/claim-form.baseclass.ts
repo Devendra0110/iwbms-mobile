@@ -109,6 +109,15 @@ export abstract class ClaimBasePage {
         return this.httpService.getEducation()
     }
 
+    public convertDateToNGBDateFormat(date: string) {
+        date = moment(date).format('YYYY-MM-DD')
+        const splittedDate = date.split('-');
+        return {
+          year: Number(splittedDate[0]),
+          month: Number(splittedDate[1]),
+          day: Number(splittedDate[2])
+        };
+      }
 
     changeToIonDateTime(diff: any, timeUnit: string) {
         const date = moment(
