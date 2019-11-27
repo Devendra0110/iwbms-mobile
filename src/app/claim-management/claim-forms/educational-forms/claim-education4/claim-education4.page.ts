@@ -1,3 +1,6 @@
+import * as _ from 'lodash';
+import * as moment from 'moment';
+
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -21,7 +24,10 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
 
   public formGroup: FormGroup;
   public getFile: boolean;
+  public childArray: Array<string> = [];
+  public childDetail: any;
   public maxTodaysDate:string;
+  public minDateOfAdmission: string;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -71,6 +77,25 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
 
   ngOnInit() {
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day,this.todaysDate.month,this.todaysDate.year]);
+    this.assignBenefits(true);
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
+      if (eachFamily.category === 'children' || (eachFamily.category === 'spouse' && eachFamily.relation === '4')) {
+        return eachFamily;
+      }
+    });
+    this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
+    console.log(this.childArray);
+    this.familyRelation.valueChanges.subscribe((childName) => {
+      this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
+      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
+    });
+
+    this.getEducation().subscribe((data: any[]) => {
+      this.getEducationArray = data.slice(20, 23);
+    });
+    this.minDateOfAdmission = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
   }
 
   //marathi getters

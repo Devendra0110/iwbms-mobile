@@ -4,7 +4,7 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-content>
+  <!-- <ion-content> -->
     <form [formGroup]="formGroup">
     <ion-header class="p-2" style="font-size:18px">Educational Assistance of Rs. 20,000/- per year to two
           children of the registered worker pursuing Diploma Courses and Rs.25,000/- for Post-Graduation Courses.<br>
@@ -17,7 +17,9 @@
         <ion-label position="floating">Name / नाव<span class="text-danger">*</span></ion-label>
         <ion-select formControlName="childrenDetail" id="childrenDetail"
           [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched">
-          <ion-select-option>
+          <ion-select-option *ngFor="let childObject of childArray; let i = index" [disabled]="i > '1'"
+              [value]="childObject['firstNameFamily']">{{childObject['firstNameFamily']}} {{childObject['surname']}} / 
+              {{childObject['firstNameFamily_mr']}} {{childObject['surname_mr']}}
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="childrenDetail.invalid && childrenDetail.touched">
@@ -54,8 +56,10 @@
         </ion-label>
         <ion-select formControlName="standard" id="standard"
           [class.is-invalid]="standard.invalid && standard.touched">
-        </ion-select>
-        <ion-select-option></ion-select-option>
+        <ion-select-option *ngFor="let each of sortedStandard" [value]="each.education_level_id">{{each.education_level_en}} /
+            {{each.education_level_mr}}
+        </ion-select-option>
+      </ion-select>
         <div class="text-danger" *ngIf="standard.invalid && standard.touched">
           <small *ngIf="standard.errors && standard.errors['required']">Please select your course type.</small>
         </div>
@@ -64,10 +68,9 @@
       <ion-item>
         <ion-label position="floating">Name of Degree / पदवीचे नाव<span class="text-danger">*</span>
         </ion-label>
-        <ion-select formControlName="degreeName" id="degreeName" 
+        <ion-input formControlName="degreeName" id="degreeName" minlength="3" maxlength="100"
           [class.is-invalid]="degreeName.invalid && degreeName.touched">
-        </ion-select>
-        <ion-select-option></ion-select-option>
+        </ion-input>
         <div class="text-danger" *ngIf="degreeName.invalid && degreeName.touched">
           <small *ngIf="degreeName.errors && degreeName.errors['required']">Please select your degree.</small>
         </div>
@@ -78,8 +81,8 @@
         </ion-label>
         <ion-select formControlName="yearOfDegree" id="yearOfDegree"
           [class.is-invalid]="yearOfDegree.invalid && yearOfDegree.touched">
+          <ion-select-option *ngFor="let list of academicYear" [value]="list.id">{{list.type}}</ion-select-option>
         </ion-select>
-        <ion-select-option></ion-select-option>
         <div class="text-danger" *ngIf="yearOfDegree.invalid && yearOfDegree.touched">
           <small *ngIf="yearOfDegree.errors && yearOfDegree.errors['required']">Please select your year of degree.</small>
         </div>
@@ -148,7 +151,8 @@
       <ion-item>
           <ion-icon slot="end" name="calendar"></ion-icon>
         <ion-label position="floating">Date of Admission / प्रवेश तारीख<span class="text-danger">*</span></ion-label>
-        <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMM, YYYY" formControlName="dateOfAdmission" id="dateOfAdmission"
+        <ion-datetime [max]="maxTodaysDate" [min]="minDateOfAdmission" displayFormat="DD MMM, YYYY" picker-format="DD MMMM YYYY" 
+        formControlName="dateOfAdmission" id="dateOfAdmission"
           [class.is-invalid]="dateOfAdmission.invalid && dateOfAdmission.touched">
         </ion-datetime>
         <div class="text-danger" *ngIf="dateOfAdmission.invalid && dateOfAdmission.touched">
@@ -256,4 +260,4 @@
       <ion-button expand="block">SUBMIT</ion-button>
   
     </form>
-  </ion-content>
+  <!-- </ion-content> -->

@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import * as moment from 'moment';
 
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
@@ -23,6 +24,8 @@ export class ClaimEducation7Page extends ClaimBasePage implements OnInit {
 
   public formGroup: FormGroup;
   public getFile: boolean;
+  public childArray: Array<string> = [];
+  public childDetail: any
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -69,9 +72,23 @@ export class ClaimEducation7Page extends ClaimBasePage implements OnInit {
 
     });
 
-   }
+  }
 
   ngOnInit() {
+    this.assignBenefits(true);
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
+      if (eachFamily.category === 'children') {
+        return eachFamily;
+      }
+    });
+    this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
+    console.log(this.childArray);
+    this.childrenDetail.valueChanges.subscribe((childName) => {
+      this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
+      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
+    });
   }
 
    //marathi getters

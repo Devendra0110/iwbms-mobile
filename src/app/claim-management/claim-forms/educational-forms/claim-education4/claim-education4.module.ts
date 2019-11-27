@@ -21,6 +21,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule
   ],
-  declarations: [ClaimEducation4Page]
+  declarations: []
 })
 export class ClaimEducation4PageModule {}

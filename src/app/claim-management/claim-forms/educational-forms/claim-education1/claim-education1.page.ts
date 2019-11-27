@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -21,6 +23,8 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
 
   public formGroup: FormGroup;
   public getFile: boolean;
+  public childArray: Array<string> = [];
+  public childDetail: any
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -65,19 +69,70 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
-  //   this.getEducation().subscribe((data: any) => {
-  //     const amountToPatch = JSON.parse(this.schemeDetails.benefit_amount);
-  //     let minStd, maxStd;
-  //     for(const index in amountToPatch) {
-  //       for(const key in amountToPatch[index]) {
-  //         const standards = key.split('TO');
-  //         minStd = minStd ? Math.min(minStd, Number(standards[0].trim())) : Number(standards[0].trim());
-  //         maxStd = maxStd ? Math.max(maxStd, Number(standards[1].trim())) : Number(standards[1].trim());
+    this.assignBenefits(false);
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
+      if (eachFamily.category === 'children') {
+        return eachFamily;
+      }
+    });
+    this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
+    console.log(this.childArray);
+    this.childrenDetail.valueChanges.subscribe((childName) => {
+      this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
+      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
+    });
+
+    this.standard.valueChanges.subscribe(value => {
+      const amountToPatch = JSON.parse(this.schemeDetails.benefit_amount);
+      for (const index in amountToPatch) {
+        for (const key in amountToPatch[index]) {
+          const standards = key.split('TO');
+          if (Number(value) >= Number(standards[0].trim()) && Number(value) <= Number(standards[1].trim()) && this.schemeDetails.benefit_type === 'cash') {
+            this.benefitAmount.patchValue(amountToPatch[index][key]);
+            break;
+          } else {
+            this.benefitAmount.patchValue(undefined, { emitEvent: false });
+          }
+        }
+      }
+      if (!this.benefitAmount.value) {
+        this.toast.show('This scheme is not for selected standard.', '1000', 'bottom')
+      }
+    });
+
+    this.getEducation().subscribe((data: any[]) => {
+      const amountToPatch = JSON.parse(this.schemeDetails.benefit_amount);
+      let minStd, maxStd;
+      for (const index in amountToPatch) {
+        for (const key in amountToPatch[index]) {
+          const standards = key.split('TO');
+          minStd = minStd ? Math.min(minStd, Number(standards[0].trim())) : Number(standards[0].trim());
+          maxStd = maxStd ? Math.max(maxStd, Number(standards[1].trim())) : Number(standards[1].trim());
+        }
+      }
+      this.getEducationArray = data.slice(minStd - 1, maxStd);
+    });
+  }
+
+  //  private formChildArray() {
+  //   setTimeout(() => {
+  //     if(this.familyDetailsArray) {
+  //       if (typeof this.familyDetailsArray === 'string') {
+  //         this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
   //       }
+  //       this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
+  //         if (eachFamily.category === 'children') {
+  //           return eachFamily;
+  //         }
+  //       });
+  //       this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
+  //     } else {
+  //       this.formChildArray();
   //     }
-  //     this.getEducationArray = data.slice(minStd - 1, maxStd);
-  // })
-   }
+  //   }, 5);
+  // }
 
   // marathi getters
   get school_mr(): AbstractControl { return this.formGroup.get('school_mr'); }

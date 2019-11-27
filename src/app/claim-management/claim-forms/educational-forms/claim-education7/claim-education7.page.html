@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content> -->
   <form [formGroup]="formGroup">
     <ion-list-header class="p-2" style="font-size:18px">Reimbursement of the MS-CIT course fees to two children of
       registered worker.<br>नोंदणीकृत कामगाराच्या पहिल्या दोन पाल्यांना संगणकाचे शिक्षण MSCIT करिता शुल्काची
@@ -15,7 +15,9 @@
       <ion-label position="floating">Name / नाव<span class="text-danger">*</span></ion-label>
       <ion-select formControlName="childrenDetail" id="childrenDetail"
         [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched">
-        <ion-select-option>
+        <ion-select-option *ngFor="let childObject of childArray; let i = index" [disabled]="i > '1'"
+            [value]="childObject['firstNameFamily']">{{childObject['firstNameFamily']}} {{childObject['surname']}} / 
+            {{childObject['firstNameFamily_mr']}} {{childObject['surname_mr']}}
         </ion-select-option>
       </ion-select>
       <div class="text-danger" *ngIf="childrenDetail.invalid && childrenDetail.touched">
@@ -257,4 +259,4 @@
     <ion-button expand="block">SUBMIT</ion-button>
 
   </form>
-</ion-content>
+<!-- </ion-content> -->

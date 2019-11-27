@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -21,6 +23,9 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
 
   public formGroup: FormGroup;
   public getFile: boolean;
+  public childArray: Array<string> = [];
+  public childDetail: any
+  public sortedStandard: Object;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -60,7 +65,6 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
       verifyDocumentCheck : new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
-
       // marathi form controls
       school_mr: new FormControl(''),
       placeSchool_mr: new FormControl(''),
@@ -70,6 +74,25 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
    }
 
   ngOnInit() {
+    this.assignBenefits(true);
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
+      if (eachFamily.category === 'children') {
+        return eachFamily;
+      }
+    });
+    this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
+    console.log(this.childArray);
+    this.childrenDetail.valueChanges.subscribe((childName) => {
+      this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
+      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
+    });
+
+    this.getEducation().subscribe((data: any[]) => {
+      this.getEducationArray = data.slice(9, 12);
+      this.sortedStandard = this.getEducationArray.filter((el: any) => el.education_level_id !== 11);
+    });
   }
 
   // marathi getters

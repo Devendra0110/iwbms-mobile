@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content> -->
   <form [formGroup]="formGroup">
     <ion-header class="p-2" style="font-size:18px">Educational assistance of Rs. 20,000/- per year to the wife or
       two
@@ -94,8 +94,7 @@
       <ion-input formControlName="degreeName" id="degreeName" maxlength="100" minlength="3"
         [class.is-invalid]="degreeName.invalid && degreeName.touched"
         class="transliterate" (ionBlur)="transliterateValue($event)" clearInput>
-      </ion-input>
-      <ion-select-option></ion-select-option>
+    </ion-input>
       <div class="text-danger" *ngIf="degreeName.invalid && degreeName.touched">
         <small *ngIf="degreeName.errors && degreeName.errors['required']">Please enter your degree's name.</small>
         <small *ngIf="degreeName.errors && degreeName.errors['maxlength']">You have reached your maximum.</small>
@@ -110,8 +109,10 @@
       <ion-label position="floating">Academic Year / शैक्षणिक वर्ष<span class="text-danger">*</span>
       </ion-label>
       <ion-select formControlName="standard" id="standard" [class.is-invalid]="standard.invalid && standard.touched">
-      </ion-select>
-      <ion-select-option></ion-select-option>
+      <ion-select-option *ngFor="let each of getEducationArray" [value]="each.education_level_id">{{each.education_level_en}} /
+          {{each.education_level_mr}}
+      </ion-select-option>
+    </ion-select>
       <div class="text-danger" *ngIf="standard.invalid && standard.touched">
         <small *ngIf="standard.errors && standard.errors['required']">Please select your standard.</small>
       </div>
@@ -145,7 +146,8 @@
     <ion-item>
         <ion-icon slot="end" name="calendar"></ion-icon>
       <ion-label position="floating">Date of Admission / प्रवेश तारीख<span class="text-danger">*</span></ion-label>
-      <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMM, YYYY" formControlName="dateOfAdmission" id="dateOfAdmission"
+      <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMM, YYYY" picker-format="DD MMMM YYYY"
+       formControlName="dateOfAdmission" id="dateOfAdmission"
         [class.is-invalid]="dateOfAdmission.invalid && dateOfAdmission.touched">
       </ion-datetime>
       <div class="text-danger" *ngIf="dateOfAdmission.invalid && dateOfAdmission.touched">
@@ -266,4 +268,4 @@
     <ion-button expand="block">SUBMIT</ion-button>
 
   </form>
-</ion-content>
+<!-- </ion-content> -->

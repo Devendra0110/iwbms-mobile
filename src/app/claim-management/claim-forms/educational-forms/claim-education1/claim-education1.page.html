@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content> -->
   <form [formGroup]="formGroup">
     <ion-header class="p-2" style="font-size:18px">Educational Assistance of Rs.2500/- to the first two children of
       the registered worker studying in
@@ -18,7 +18,9 @@
       <ion-label position="floating">Name of Child / मुलाचे/मुलीचे नाव<span class="text-danger">*</span></ion-label>
       <ion-select formControlName="childrenDetail" id="childrenDetail"
         [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched">
-        <ion-select-option>
+        <ion-select-option *ngFor="let childObject of childArray; let i = index" [disabled]="i > '1'"
+            [value]="childObject['firstNameFamily']">{{childObject['firstNameFamily']}} {{childObject['surname']}} / 
+            {{childObject['firstNameFamily_mr']}} {{childObject['surname_mr']}}
         </ion-select-option>
       </ion-select>
       <div class="text-danger" *ngIf="childrenDetail.invalid && childrenDetail.touched">
@@ -54,8 +56,10 @@
       <ion-label position="floating">Standard / इयत्ता<span class="text-danger">*</span>
       </ion-label>
       <ion-select formControlName="standard" id="standard" [class.is-invalid]="standard.invalid && standard.touched">
+        <ion-select-option *ngFor="let each of getEducationArray" [value]="each.education_level_id">{{each.education_level_en}} /
+            {{each.education_level_mr}}
+        </ion-select-option>
       </ion-select>
-      <ion-select-option></ion-select-option>
       <div class="text-danger" *ngIf="standard.invalid && standard.touched">
         <small *ngIf="standard.errors && standard.errors['required']">Please select your standard.</small>
       </div>
@@ -114,7 +118,7 @@
     <ion-item>
       <ion-label position="floating">Passing Year / उत्तीर्ण झाल्याचे वर्ष<span class="text-danger">*</span></ion-label>
       <ion-input type="number" formControlName="year" id="year" minlength="4" maxlength="4" clearInput
-        [class.is-invalid]="year.invalid && year.touched">
+        [class.is-invalid]="year.invalid && year.touched" (ionChange)="yearOfPassing($event)">
       </ion-input>
       <div class="text-danger" *ngIf="year.invalid && year.touched">
         <small *ngIf="year.errors && year.errors['required']">Please enter your passing year.</small>
@@ -199,4 +203,4 @@
     <ion-button expand="block">SUBMIT</ion-button>
 
   </form>
-</ion-content>
+<!-- </ion-content> -->

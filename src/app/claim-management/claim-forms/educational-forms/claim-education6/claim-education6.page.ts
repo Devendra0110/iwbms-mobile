@@ -1,9 +1,13 @@
+import * as _ from 'lodash';
+import * as moment from 'moment';
+
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import { ClaimService } from './../../../../services/claim.service';
 import { ClaimValidationService } from './../../../../services/claim-validation.service';
+import { Constants } from './../../../../../assets/constants';
 import { HttpService } from './../../../../services/http.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -22,6 +26,11 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
   public getFile: boolean;
   public maxTodaysDate:string;
+  public academicYear: Object = [];
+  public childArray: Array<string> = [];
+  public childDetail: any
+  public sortedStandard: Array<string> = [];
+  public minDateOfAdmission: string;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -35,6 +44,8 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
     super(transliterate, httpService, claimHttpService, router, storage, toast);
     this.fileOptions = { certificates: '', receipt: '', bookReceipt: '',schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
     this.files = { certificates: '', receipt: '', bookReceipt: '',schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.academicYear = Constants.ACADEMIC_YEAR;
+
     this.formGroup = new FormGroup ({
       // english form controls
       childrenDetail: new FormControl('', this.validationService.createValidatorsArray('childrenDetail')),
@@ -61,7 +72,6 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
       verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
-
       // marathi form controls
       placeInstitute_mr: new FormControl(''),
       institute_mr: new FormControl(''),
@@ -71,6 +81,41 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
 
   ngOnInit() {
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day,this.todaysDate.month,this.todaysDate.year]);
+    this.assignBenefits(false);
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
+      if (eachFamily.category === 'children') {
+        return eachFamily;
+      }
+    });
+    this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
+    console.log(this.childArray);
+    this.childrenDetail.valueChanges.subscribe((childName) => {
+      this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
+      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
+    });
+
+    this.assignBenefits(false);
+
+    this.standard.valueChanges.subscribe(value => {
+      if(this.schemeDetails) {
+        const benefitAmount = JSON.parse(this.schemeDetails.benefit_amount);
+        if(Number(value) === 14 && this.schemeDetails.benefit_type === 'cash') {
+          this.benefitAmount.patchValue(benefitAmount[0].postGraduation);
+          this.academicYear = _.cloneDeep(Constants.ACADEMIC_YEAR).slice(0, 3);
+        } else if(Number(value) === 19 && this.schemeDetails.benefit_type === 'cash') {
+          this.benefitAmount.patchValue(benefitAmount[0].diploma);
+          this.academicYear = _.cloneDeep(Constants.ACADEMIC_YEAR).slice(0, 3);
+        }
+      }
+    });
+
+    this.getEducation().subscribe((data: any[]) => {
+      this.getEducationArray = data.slice(13,19);
+      this.sortedStandard = this.getEducationArray.filter(el => el.education_level_id === 14 || el.education_level_id === 19);
+    });
+    this.minDateOfAdmission = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
   }
 
 

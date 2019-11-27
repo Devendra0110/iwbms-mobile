@@ -61,12 +61,11 @@ export abstract class ClaimBasePage {
         this.storage.get('token').then((val) => {
             this.JWTToken = val;
         });
-
     }
 
     get benefitType() { return this.formGroup.get('benefitType'); }
     get benefitAmount() { return this.formGroup.get('benefitAmount'); }
-
+    
     async getSchemeDetails() {
         return new Promise((resolve, reject) => {
             if (this.user) {

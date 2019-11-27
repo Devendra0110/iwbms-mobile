@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-
-import { IonicModule } from '@ionic/angular';
+import { RouterModule, Routes } from '@angular/router';
 
 import { ClaimEducation7Page } from './claim-education7.page';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
@@ -22,6 +21,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule
   ],
-  declarations: [ClaimEducation7Page]
+  declarations: []
 })
 export class ClaimEducation7PageModule {}
