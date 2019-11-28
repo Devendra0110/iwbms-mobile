@@ -72,6 +72,8 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
+    this.assignBenefits(true);
+
 
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     this.sortedArray = this.familyDetailsArray.filter(data => {
@@ -160,4 +162,53 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
     this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
     this.agePersonal.disable()
   }
+
+
+  public saveForm(): void {
+    console.log(this.formGroup)
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+
+      const formData = new FormData();
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          placeOfDocIssue: this.formGroup.getRawValue().placeOfDocIssue,
+          placeOfDocIssue_mr: this.formGroup.getRawValue().placeOfDocIssue_mr,
+          bankAddressBank: this.formGroup.getRawValue().bankAddressBank,
+          deathCertificateIssueDate: this.formGroup.getRawValue().deathCertificateIssueDate,
+          deathCertificateNo: this.formGroup.getRawValue().deathCertificateNo,
+          fullName: this.formGroup.getRawValue().fullName,
+          fullName_mr: this.formGroup.getRawValue().fullName_mr,
+          dobPersonal: this.formGroup.getRawValue().dobPersonal,
+          agePersonal: this.formGroup.getRawValue().agePersonal,
+          relation: this.formGroup.getRawValue().relation,
+          ifscCodeBank: this.formGroup.getRawValue().ifscCodeBank,
+          bankNameBank: this.formGroup.getRawValue().bankNameBank,
+          spouseMobNumber: this.formGroup.getRawValue().spouseMobNumber,
+          aadharNumber: this.formGroup.getRawValue().aadharNumber,
+          deathDate: this.formGroup.getRawValue().deathDate,
+          bankBranchBank: this.formGroup.getRawValue().bankBranchBank,
+          accountNumberBank: this.formGroup.getRawValue().accountNumberBank.toString(),
+          benefitType: this.formGroup.getRawValue().benefitType,
+          benefitAmount: this.formGroup.getRawValue().benefitAmount,
+          currentNumberOfClaim: this.PreviousClaimDetails.length+1,
+          issuingAuthority: this.formGroup.getRawValue().issuingAuthority,
+
+          documents: {
+            deathCertificateDoc: this.fileOptions['deathCertificateDoc'],
+            marriageCertificateDoc: this.fileOptions['marriageCertificateDoc'],
+            scannedPassbookDoc: this.fileOptions['scannedPassbookDoc'],
+            selfDeclaration: this.fileOptions['selfDeclaration'],
+            aadharCardDoc: this.fileOptions['aadharCardDoc'],
+
+          }
+        }
+      };
+
+      this.saveClaimForm(postObj);
+    } else {
+      this.dialogs.alert('Please Update the form.');
+    }
+  }
+
 }

@@ -169,4 +169,47 @@ export class ClaimFinancial2Page extends ClaimBasePage implements OnInit {
     this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
     this.agePersonal.disable()
   }
+
+  public saveForm(): void {
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          deathCertificateIssueDate: this.formGroup.getRawValue().deathCertificateIssueDate,
+          placeOfDocIssue: this.formGroup.getRawValue().placeOfDocIssue,
+          placeOfDocIssue_mr: this.formGroup.getRawValue().placeOfDocIssue_mr,
+          deathCertificateNo: this.formGroup.getRawValue().deathCertificateNo,
+          deathDate: this.formGroup.getRawValue().deathDate,
+          fullName: this.formGroup.getRawValue().fullName,
+          fullName_mr: this.formGroup.getRawValue().fullName_mr,
+          dobPersonal:this.formGroup.getRawValue().dobPersonal,
+          agePersonal: this.formGroup.getRawValue().agePersonal,
+          relation: this.formGroup.getRawValue().relation,
+          ifscCodeBank: this.formGroup.getRawValue().ifscCodeBank,
+          bankNameBank: this.formGroup.getRawValue().bankNameBank,
+          bankBranchBank: this.formGroup.getRawValue().bankBranchBank,
+          bankAddressBank: this.formGroup.getRawValue().bankAddressBank,
+          accountNumberBank: this.formGroup.getRawValue().accountNumberBank.toString(),
+          nomineeMobNumber: this.formGroup.getRawValue().nomineeMobNumber,
+          aadharNumber: this.formGroup.getRawValue().aadharNumber,
+          benefitType: this.formGroup.getRawValue().benefitType,
+          benefitAmount: this.formGroup.getRawValue().benefitAmount,
+          issuingAuthority: this.formGroup.getRawValue().issuingAuthority,
+
+          documents: {
+            deathCertificateDoc: this.fileOptions['deathCertificateDoc'],
+            scannedPassbookDoc: this.fileOptions['scannedPassbookDoc'],
+            aadharCardDoc: this.fileOptions['aadharCardDoc'],
+            selfDeclaration: this.fileOptions['selfDeclaration'],
+            nomineeCertificate:this.fileOptions['nomineeCertificate']
+
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+
+    } else {
+      this.dialogs.alert('Please Update the form.');     
+    }
+  }
 }

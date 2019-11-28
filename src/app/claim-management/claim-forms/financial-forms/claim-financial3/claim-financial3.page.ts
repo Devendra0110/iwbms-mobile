@@ -61,7 +61,7 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.assignBenefits(true);
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
 
   }
@@ -85,4 +85,35 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
   get insCompName_mr() { return this.formGroup.get('insCompName_mr'); }
 
 
+  public saveForm(): void {
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          bankNameBank: this.formGroup.getRawValue().bankNameBank,
+          bankBranchBank: this.formGroup.getRawValue().bankBranchBank,
+          amtOfLoan: this.formGroup.getRawValue().amtOfLoan,
+          loanDate: this.formGroup.getRawValue().loanDate,
+          loanPeriod: this.formGroup.getRawValue().loanPeriod,
+          benefitType: this.formGroup.getRawValue().benefitType,
+          benefitAmount: this.formGroup.getRawValue().benefitAmount,
+          bankNameBank_mr: this.formGroup.getRawValue().bankNameBank_mr,
+          interestRate: this.formGroup.getRawValue().interestRate,
+          bankBranchBank_mr: this.formGroup.getRawValue().bankBranchBank_mr,
+
+          documents: {
+            selfDeclaration: this.fileOptions['selfDeclaration'],
+            proofOfLoan: this.fileOptions['proofOfLoan'],
+            proofOfNoHouse: this.fileOptions['proofOfNoHouse'],
+            proofOfHouse: this.fileOptions['proofOfHouse'],
+            interestCertificate: this.fileOptions['interestCertificate'],
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+
+    } else {
+          this.dialogs.alert('Please Update the form.');
+    }
+  }
 }

@@ -17,6 +17,7 @@ import { Dialogs } from '@ionic-native/dialogs/ngx';
 })
 export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
+  public saveOnce=1;
 
   constructor(private validationService: ClaimValidationService,
     protected transliterate: TransliterationService,
@@ -38,23 +39,47 @@ export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
-      placeOfClaim: new FormControl('', Validators.required)
+      placeOfClaim: new FormControl('', Validators.required),
 
       //marathi form controls
-      ,
       benefitType: new FormControl('', [Validators.required]),
       benefitAmount: new FormControl('')
     });
   }
 
   ngOnInit() {
-
+    this.assignBenefits(true);
 
   }
+
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get pmAwaasCertificate() { return this.formGroup.get('pmAwaasCertificate'); }
   // get declaration() { return this.formGroup.get('declaration'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
   get placeOfClaim() { return this.formGroup.get('placeOfClaim'); }
+
+  public saveForm(): void {
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      if(this.saveOnce===1){
+        this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+      this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      }
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          benefitType: this.formGroup.getRawValue().benefitType,
+          benefitAmount: this.formGroup.getRawValue().benefitAmount,
+          documents: {
+            pmAwaasCertificate: this.fileOptions['pmAwaasCertificate'],
+            selfDeclaration: this.fileOptions['selfDeclaration']
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+
+    } else {
+      this.dialogs.alert('Please Update the form.');
+    }
+  }
 
 }

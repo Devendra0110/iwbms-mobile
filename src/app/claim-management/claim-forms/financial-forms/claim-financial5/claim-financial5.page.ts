@@ -75,6 +75,7 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
+    this.assignBenefits(true);
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
 
   }
@@ -144,5 +145,44 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
     let value = this.ifscCodeBank.value;
     value = value.toString().toUpperCase();
     this.ifscCodeBank.setValue(value);
+  }
+  public saveForm(): void {
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          deathCertificateIssueDate:this.formGroup.getRawValue().deathCertificateIssueDate,
+          placeOfDocIssue: this.formGroup.getRawValue().placeOfDocIssue,
+          deathCertificateNo: this.formGroup.getRawValue().deathCertificateNo,
+          fullName: this.formGroup.getRawValue().fullName,
+          // fullName_mr: this.formGroup.getRawValue().fullName_mr,
+          dobPersonal:this.formGroup.getRawValue().dobPersonal,
+          agePersonal: this.formGroup.getRawValue().agePersonal,
+          relation: this.formGroup.getRawValue().relation,
+          ifscCodeBank: this.formGroup.getRawValue().ifscCodeBank,
+          bankNameBank: this.formGroup.getRawValue().bankNameBank,
+          bankAddressBank: this.formGroup.getRawValue().bankAddressBank,
+          bankBranchBank: this.formGroup.getRawValue().bankBranchBank,
+          accountNumberBank: this.formGroup.getRawValue().accountNumberBank.toString(),
+          deathDate:this.formGroup.getRawValue().deathDate,
+          nomineeMobNumber: this.formGroup.getRawValue().nomineeMobNumber,
+          aadharNumber:this.formGroup.getRawValue().aadharNumber,
+          benefitType: this.formGroup.getRawValue().benefitType,
+          benefitAmount: this.formGroup.getRawValue().benefitAmount,
+          placeOfDocIssue_mr: this.formGroup.getRawValue().placeOfDocIssue_mr,
+          documents: {
+            deathCertificateDoc: this.fileOptions['deathCertificateDoc'],
+            // proofOfDeathDoc: this.fileOptions['proofOfDeathDoc'],
+            scannedPassbookDoc: this.fileOptions['scannedPassbookDoc'],
+            aadharCardDoc: this.fileOptions['aadharCardDoc'],
+            selfDeclaration: this.fileOptions['selfDeclaration'],
+            nomineeCertificate: this.fileOptions['nomineeCertificate']
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+    } else {      
+      this.dialogs.alert('Please Update the form.');
+    }
   }
 }
