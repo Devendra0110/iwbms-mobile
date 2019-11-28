@@ -158,7 +158,7 @@
   <ion-item>
     <ion-icon slot="end" name="calendar"></ion-icon>
     <ion-label position="floating">Date of Admission / प्रवेश तारीख<span class="text-danger">*</span></ion-label>
-    <ion-datetime [max]="maxTodaysDate" [min]="minDateOfAdmission" displayFormat="DD MMM, YYYY" picker-format="DD MMMM YYYY"
+    <ion-datetime [max]="maxTodaysDate" [min]="dateReg" displayFormat="DD MMM, YYYY" picker-format="DD MMMM YYYY"
       formControlName="dateOfAdmission" id="dateOfAdmission"
       [class.is-invalid]="dateOfAdmission.invalid && dateOfAdmission.touched">
     </ion-datetime>

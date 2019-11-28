@@ -31,7 +31,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
   public childArray: Array<string> = [];
   public childDetail: any
   public sortedStandard: Array<string> = [];
-  public minDateOfAdmission: string;
+  public dateReg: string;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -117,7 +117,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
       this.getEducationArray = data.slice(13, 19);
       this.sortedStandard = this.getEducationArray.filter(el => el.education_level_id === 14 || el.education_level_id === 19);
     });
-    this.minDateOfAdmission = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
+    this.dateReg = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
   }
 
 

@@ -28,7 +28,7 @@ export class ClaimEducation3Page extends ClaimBasePage implements OnInit {
   public maxTodaysDate: string;
   public childArray: Array<string> = [];
   public childDetail: any;
-  public minDateOfAdmission: string;
+  public dateReg: string;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -97,7 +97,7 @@ export class ClaimEducation3Page extends ClaimBasePage implements OnInit {
     this.getEducation().subscribe((data: any[]) => {
       this.getEducationArray = data.slice(10, 12);
     });
-    this.minDateOfAdmission = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
+    this.dateReg = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
   }
 
   // marathi getters

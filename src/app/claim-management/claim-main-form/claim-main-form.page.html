@@ -121,8 +121,9 @@
       <ion-list>
         <ion-item>
           <ion-label position="floating">IFSC Code<span style="color: Red">*</span> </ion-label>
-          <ion-input type="text" formControlName="ifscCodeBank" [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched"
-            maxlength="11" minlength="11" autocapitalize="characters" clearInput></ion-input>
+          <ion-input type="text" formControlName="ifscCodeBank"
+            [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched" maxlength="11" minlength="11"
+            autocapitalize="characters" clearInput></ion-input>
           <!-- <ion-button (click)="searchByifscCodeBank()">Search</ion-button> -->
           <div class="text-danger" *ngIf="ifscCodeBank.invalid && ifscCodeBank.touched">
             <small *ngIf="!!ifscCodeBank.errors?.required">Please enter IFSC code.</small>
@@ -196,7 +197,8 @@
           <ion-label position="floating">Select Scheme / योजना निवडा</ion-label>
           <ion-select text-wrap [class.is-invalid]="selectScheme.invalid && selectScheme.touched"
             formControlName="selectScheme" id="selectScheme">
-            <ion-select-option *ngFor="let each of commonClaimArray" [disabled]="!each.eligibility" class="select-scheme" [value]="each.scheme_number">
+            <ion-select-option *ngFor="let each of commonClaimArray" [disabled]="!each.eligibility"
+              class="select-scheme" [value]="each.scheme_number">
               {{each.scheme_number}}-{{each.scheme_name}}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -250,43 +252,29 @@
         </ion-item> -->
 
         <!-- EDUCATION -->
-        <ion-item *ngIf="selectScheme.value === 'E01'">
-          <app-claim-education1 [filledFormData]="claimData" [user]="formUserInfo"
+        <app-claim-education1 *ngIf="selectScheme.value === 'E01'" [filledFormData]="claimData" [user]="formUserInfo"
           [familyDetailsArray]="familyDetailsArray"></app-claim-education1>
-        </ion-item>
-        
-        <ion-item *ngIf="selectScheme.value === 'E02'">
-          <app-claim-education2 [filledFormData]="claimData" [user]="formUserInfo"
-            [familyDetailsArray]="familyDetailsArray"></app-claim-education2>
-        </ion-item>
-        
-        <ion-item *ngIf="selectScheme.value === 'E03'">
-          <app-claim-education3 [filledFormData]="claimData" [user]="formUserInfo"
-            [familyDetailsArray]="familyDetailsArray"></app-claim-education3>
-        </ion-item>
 
-        <ion-item *ngIf="selectScheme.value === 'E04'">
-          <app-claim-education4 [filledFormData]="claimData" [user]="formUserInfo"
-            [familyDetailsArray]="familyDetailsArray"></app-claim-education4>
-        </ion-item>
+        <app-claim-education2 *ngIf="selectScheme.value === 'E02'" [filledFormData]="claimData" [user]="formUserInfo"
+          [familyDetailsArray]="familyDetailsArray"></app-claim-education2>
 
-        <ion-item *ngIf="selectScheme.value === 'E05'">
-          <app-claim-education5 [filledFormData]="claimData" [user]="formUserInfo"
-            [familyDetailsArray]="familyDetailsArray"></app-claim-education5>
-        </ion-item>
+        <app-claim-education3 *ngIf="selectScheme.value === 'E03'" [filledFormData]="claimData" [user]="formUserInfo"
+          [familyDetailsArray]="familyDetailsArray"></app-claim-education3>
 
-        <ion-item *ngIf="selectScheme.value === 'E06'">
-          <app-claim-education6 [filledFormData]="claimData" [user]="formUserInfo"
-            [familyDetailsArray]="familyDetailsArray"></app-claim-education6>
-        </ion-item>
+        <app-claim-education4 *ngIf="selectScheme.value === 'E04'" [filledFormData]="claimData" [user]="formUserInfo"
+          [familyDetailsArray]="familyDetailsArray"></app-claim-education4>
 
-        <ion-item *ngIf="selectScheme.value === 'E07'">
-          <app-claim-education7 [filledFormData]="claimData" [user]="formUserInfo"
-            [familyDetailsArray]="familyDetailsArray"></app-claim-education7>
-        </ion-item>
+        <app-claim-education5 *ngIf="selectScheme.value === 'E05'" [filledFormData]="claimData" [user]="formUserInfo"
+          [familyDetailsArray]="familyDetailsArray"></app-claim-education5>
+
+        <app-claim-education6 *ngIf="selectScheme.value === 'E06'" [filledFormData]="claimData" [user]="formUserInfo"
+          [familyDetailsArray]="familyDetailsArray"></app-claim-education6>
+
+        <app-claim-education7 *ngIf="selectScheme.value === 'E07'" [filledFormData]="claimData" [user]="formUserInfo"
+          [familyDetailsArray]="familyDetailsArray"></app-claim-education7>
 
         <!-- FINANCIAL -->
-       <!-- <ion-item *ngIf="selectScheme.value === 'F01'">
+        <!-- <ion-item *ngIf="selectScheme.value === 'F01'">
           <app-claim-financial1 [filledFormData]="claimData" [user]="formUserInfo"
             [familyDetailsArray]="familyDetailsArray"></app-claim-financial1>
         </ion-item>
