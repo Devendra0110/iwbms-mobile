@@ -31,6 +31,7 @@ export abstract class ClaimBasePage {
     public sortedArray = [];
     public userInfo: any;
     public schemeDetails: any;
+    public dateReg: string;
 
     @Input() user: any;
     @Input() filledFormData: any;

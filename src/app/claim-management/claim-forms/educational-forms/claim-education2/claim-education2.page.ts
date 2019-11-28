@@ -136,14 +136,14 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
         } else {
             this.toast.show('Marks obtained cannot be more than total marks', '1000', 'bottom').subscribe(() => { })
             this.formGroup.get('percentage').setValue(0);
-            this.formGroup.get('totalMarks').reset();
             this.formGroup.get('marksObtained').reset();
+            this.formGroup.get('totalMarks').reset();
         }
     } else {
         this.toast.show('Percentage should be more than 50', '1000', 'bottom')
         this.formGroup.get('percentage').setValue(0);
-        this.formGroup.get('totalMarks').reset();
         this.formGroup.get('marksObtained').reset();
+        this.formGroup.get('totalMarks').reset();
     }
   }
 
@@ -168,10 +168,10 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
           placeSchool_mr: this.formGroup.getRawValue().placeSchool_mr,
           boardOfEducation: this.formGroup.getRawValue().boardOfEducation,
           boardOfEducation_mr: this.formGroup.getRawValue().boardOfEducation_mr,
-          seatNumber: this.formGroup.getRawValue().seatNumber,
-          marksObtained: this.formGroup.getRawValue().marksObtained,
-          totalMarks: this.formGroup.getRawValue().totalMarks,
-          percentage: this.formGroup.getRawValue().percentage,
+          seatNumber: `${this.formGroup.getRawValue().seatNumber}`,
+          marksObtained: `${this.formGroup.getRawValue().marksObtained}`,
+          totalMarks: `${this.formGroup.getRawValue().totalMarks}`,
+          percentage: `${this.formGroup.getRawValue().percentage}`,
           benefitType: this.benefitType.value,
           benefitAmount: Number(this.benefitAmount.value),
           documents: {

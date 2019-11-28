@@ -44,8 +44,8 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
     private dialogs: Dialogs
   ) {
     super(transliterate, httpService, claimHttpService, router, storage, toast);
-    this.fileOptions = { certificates: '', receipt: '', bookReceipt: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
-    this.files = { certificates: '', receipt: '', bookReceipt: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.fileOptions = { certificates: '', receipt: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: ''};
+    this.files = { certificates: '', receipt: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
     this.academicYear = Constants.ACADEMIC_YEAR;
 
     this.formGroup = new FormGroup({
@@ -68,7 +68,6 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
       age: new FormControl('', this.validationService.createValidatorsArray('age')),
       bonafideDoc: new FormControl('', this.validationService.createValidatorsArray('bonafideDoc')),
       degreeName: new FormControl('', this.validationService.createValidatorsArray('degreeName')),
-      degreeName_mr: new FormControl('', this.validationService.createValidatorsArray('degreeName_mr')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
       // verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
@@ -77,6 +76,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
       // marathi form controls
       placeInstitute_mr: new FormControl(''),
       institute_mr: new FormControl(''),
+      degreeName_mr: new FormControl(''),
     });
 
   }
@@ -164,16 +164,16 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
           aadharNumber: this.formGroup.getRawValue().aadharNumber,
           age: this.formGroup.getRawValue().age,
           institute: this.formGroup.getRawValue().institute,
-          standard: this.formGroup.getRawValue().standard,
+          standard: `${this.formGroup.getRawValue().standard}`,
           placeInstitute: this.formGroup.getRawValue().placeInstitute,
           institute_mr: this.formGroup.getRawValue().institute_mr,
           placeInstitute_mr: this.formGroup.getRawValue().placeInstitute_mr,
           yearOfDegree: this.formGroup.getRawValue().yearOfDegree,
-          dateOfAdmission: this.convertDateToNGBDateFormat(this.formGroup.getRawValue().dateOfAdmission),
+          dateOfAdmission: this.formGroup.getRawValue().dateOfAdmission,
           degreeName: this.formGroup.getRawValue().degreeName,
           degreeName_mr: this.formGroup.getRawValue().degreeName_mr,
-          insPhNo: this.formGroup.getRawValue().insPhNo,
-          insEmail: this.formGroup.getRawValue().insEmail,
+          insEmail: `${this.formGroup.getRawValue().insEmail}`,
+          insPhNo: `${this.formGroup.getRawValue().insPhNo}`,
           benefitType: this.benefitType.value,
           benefitAmount: benefitAmountInt,
           documents: {

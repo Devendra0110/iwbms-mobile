@@ -147,6 +147,7 @@ export class ClaimEducation7Page extends ClaimBasePage implements OnInit {
       this.toast.show('End Date cannot be smaller than Start Date', '1000', 'bottom').subscribe((toast) => {
       });
     }
+    
     if ((this.startDate == null || this.endDate == null)) {
       this.toast.show('Enter Valid Date', '1000', 'bottom').subscribe((toast) => {
       });
@@ -172,23 +173,23 @@ export class ClaimEducation7Page extends ClaimBasePage implements OnInit {
           placeInstitute: this.formGroup.getRawValue().placeInstitute,
           institute_mr: this.formGroup.getRawValue().institute_mr,
           placeInstitute_mr: this.formGroup.getRawValue().placeInstitute_mr,
-          startDate: this.convertDateToNGBDateFormat(this.formGroup.getRawValue().startDate),
-          endDate: this.convertDateToNGBDateFormat(this.formGroup.getRawValue().endDate),
+          startDate: this.formGroup.getRawValue().startDate,
+          endDate: this.formGroup.getRawValue().endDate,
           regNoInstitute: this.formGroup.getRawValue().regNoInstitute,
           regAuthName: this.formGroup.getRawValue().regAuthName,
           regAuthName_mr: this.formGroup.getRawValue().regAuthName_mr,
-          insPhNo: this.formGroup.getRawValue().insPhNo,
-          insEmail: this.formGroup.getRawValue().insEmail,
-          courseFee: this.formGroup.value.courseFee,
+          insPhNo: `${this.formGroup.getRawValue().insPhNo}`,
+          insEmail: `${this.formGroup.getRawValue().insEmail}`,
+          courseFee: Number(this.formGroup.value.courseFee),
           benefitType: this.benefitType.value,
           benefitAmount: Number(this.formGroup.value.courseFee),
           documents: {
             certificates: this.fileOptions['certificates'],
             receipt: this.fileOptions['receipt'],
             aadharCardDoc: this.fileOptions['aadharCardDoc'],
-            // bonafideDoc: this.fileOptions['bonafideDoc'],
             selfDeclaration: this.fileOptions['selfDeclaration'],
             rationCardDoc: this.fileOptions['rationCardDoc'],
+            // bonafideDoc: this.fileOptions['bonafideDoc'],
           }
         }
       };

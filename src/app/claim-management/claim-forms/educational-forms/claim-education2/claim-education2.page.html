@@ -158,8 +158,8 @@
 
     <ion-item>
       <ion-label position="floating">Total Marks / एकूण गुण<span class="text-danger">*</span></ion-label>
-      <ion-input type="number" formControlName="totalMarks" id="totalMarks" maxlength="4" clearInput
-        [class.is-invalid]="totalMarks.invalid && totalMarks.touched" (ionChange)="calculatePer()">
+      <ion-input type="number" formControlName="totalMarks" id="totalMarks" minlength="1" maxlength="4" clearInput
+        [class.is-invalid]="totalMarks.invalid && totalMarks.touched" (ionBlur)="calculatePer()">
       </ion-input>
       <div class="text-danger" *ngIf="totalMarks.invalid && totalMarks.touched">
         <small *ngIf="totalMarks.errors && totalMarks.errors['required']">Please enter your total marks.</small>
