@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { TransliterationService } from 'src/app/services/transliteration.service';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
 
 export abstract class ClaimBasePage {
 
@@ -45,7 +46,8 @@ export abstract class ClaimBasePage {
         protected claimHttpService: ClaimService,
         protected router: Router,
         protected storage: Storage,
-        protected toast: Toast
+        protected toast: Toast,
+        protected dialogs:Dialogs,
     ) {
         this.todaysDate = {
             year: new Date().getFullYear(),
@@ -103,6 +105,9 @@ export abstract class ClaimBasePage {
         this.httpService.getFamilyRelations().subscribe((data: any) => {
             this.getRelationArray = data;
         })
+    }
+    public getRelationWithoutSubscribe(){
+        return this.httpService.getFamilyRelations();
     }
 
     public getEducation() {
@@ -250,10 +255,12 @@ export abstract class ClaimBasePage {
 
         this.claimHttpService.applyForClaim(formData, this.JWTToken).subscribe((result: any) => {
             if (result) {
-                console.log('Claim approved successfully')
+                // this.dialogs.
+                alert('Scheme Claimed Successfully');
             }
         }, (error: Error) => {
-            console.log('Scheme can not be claimed')
+                // this.dialogs.
+                    alert('Scheme can not be claimed')
         });
     }
 

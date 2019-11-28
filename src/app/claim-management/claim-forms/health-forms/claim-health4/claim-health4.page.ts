@@ -34,10 +34,10 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
     protected router:Router,
     protected storage:Storage,
     protected toast:Toast,
-    private dialogs:Dialogs,
+    protected dialogs:Dialogs,
 
   ) {
-    super(transliterate,httpService,claimService,router,storage,toast);
+    super(transliterate,httpService,claimService,router,storage,toast,dialogs);
     this.fileOptions = { health4Form4Doc1: '', selfDeclaration: '', };
     this.files = { health4Form4Doc1: '', selfDeclaration: '', };
 

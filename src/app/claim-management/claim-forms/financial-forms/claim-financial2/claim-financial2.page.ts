@@ -33,8 +33,8 @@ export class ClaimFinancial2Page extends ClaimBasePage implements OnInit {
     protected router: Router,
     protected storage: Storage,
     protected toast: Toast,
-    private dialogs: Dialogs, ) {
-    super(transliterate, httpService, claimService, router, storage, toast);
+    protected dialogs: Dialogs, ) {
+    super(transliterate, httpService, claimService, router, storage, toast,dialogs);
     this.files = { deathCertificateDoc: '',  scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate:'',selfDeclaration:'' };
     this.fileOptions = { deathCertificateDoc: '',  scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate:'',selfDeclaration:'' };
     this.issuingAuthorityArray = Constants.ISSUING_AUTHORITY;

@@ -43,9 +43,9 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
     protected router: Router,
     protected storage: Storage,
     protected toast: Toast,
-    private dialogs: Dialogs,
+    protected dialogs: Dialogs,
   ) {
-    super(transliterate, httpService, claimService, router, storage, toast);
+    super(transliterate, httpService, claimService, router, storage, toast,dialogs);
     this.familyArray = [];
     this.fileOptions = { health3Form3Doc1: '', health3Form3Doc2: '', aadharCardDoc: '', selfDeclaration: '' };
     this.files = { health3Form3Doc1: '', health3Form3Doc2: '', aadharCardDoc: '', selfDeclaration: '' };

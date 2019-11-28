@@ -41,9 +41,9 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
     protected router: Router,
     protected storage: Storage,
     protected toast: Toast,
-    private dialogs: Dialogs
+    protected dialogs: Dialogs
   ) {
-    super(transliterate, httpService, claimHttpService, router, storage, toast);
+    super(transliterate, httpService, claimHttpService, router, storage, toast,dialogs);
     this.fileOptions = { certificates: '', receipt: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: ''};
     this.files = { certificates: '', receipt: '', schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
     this.academicYear = Constants.ACADEMIC_YEAR;

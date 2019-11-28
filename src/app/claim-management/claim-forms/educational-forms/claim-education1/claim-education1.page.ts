@@ -34,9 +34,9 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
     protected router: Router,
     protected storage: Storage,
     protected toast: Toast,
-    private dialogs: Dialogs,
+    protected dialogs: Dialogs,
   ) {
-    super(transliterate, httpService, claimHttpService, router, storage, toast);
+    super(transliterate, httpService, claimHttpService, router, storage, toast,dialogs);
     this.fileOptions = { attendanceCertificate: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
     this.files = { attendanceCertificate: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
     this.formGroup = new FormGroup({

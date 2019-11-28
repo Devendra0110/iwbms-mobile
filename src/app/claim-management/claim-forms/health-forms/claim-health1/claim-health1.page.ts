@@ -43,9 +43,9 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
     protected router: Router,
     protected storage: Storage,
     protected toast: Toast,
-    private dialogs: Dialogs,
+    protected dialogs: Dialogs,
   ) {
-    super(transliterate, httpService, claimService, router, storage, toast);
+    super(transliterate, httpService, claimService, router, storage, toast,dialogs);
     this.issuedBy = Constants.TYPE_OF_ISSUER;
     this.childAgeFlag = false
     this.fileOptions = { health1Form1Doc1: '', rationCardDoc: '', selfDeclaration: '' };

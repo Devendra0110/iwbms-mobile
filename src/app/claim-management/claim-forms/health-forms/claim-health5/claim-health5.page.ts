@@ -29,10 +29,10 @@ export class ClaimHealth5Page extends ClaimBasePage implements OnInit {
     protected router:Router,
     protected storage:Storage,
     protected toast:Toast,
-    private dialogs:Dialogs,
+    protected dialogs:Dialogs,
 
   ) {
-    super(transliterate,httpService,claimService,router,storage,toast);
+    super(transliterate,httpService,claimService,router,storage,toast,dialogs);
     this.fileOptions = {selfDeclaration: '',};
     this.files = {selfDeclaration: '',};
 

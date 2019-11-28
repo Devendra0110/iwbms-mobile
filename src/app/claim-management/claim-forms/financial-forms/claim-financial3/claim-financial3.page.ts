@@ -27,8 +27,8 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
     protected router: Router,
     protected storage: Storage,
     protected toast: Toast,
-    private dialogs: Dialogs, ) {
-    super(transliterate, httpService, claimService, router, storage, toast);
+    protected dialogs: Dialogs, ) {
+    super(transliterate, httpService, claimService, router, storage, toast,dialogs);
     this.files = { proofOfLoan: '', proofOfNoHouse: '', proofOfHouse: '', selfDeclaration: '' };
     this.fileOptions = { proofOfLoan: '', proofOfNoHouse: '', proofOfHouse: '', selfDeclaration: '' };
    
