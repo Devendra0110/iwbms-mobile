@@ -71,6 +71,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public talukasEmp: any[] = [];
   public talukasIssuerEmp:any[] = [];
   public talukasIssuerGram:any[]=[];
+  public talukasMuncipal:any[]=[];
 
   public genderOptions: string[] = [];
   public genderOptionsMarathi: string[] = [];
@@ -545,23 +546,24 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
 
     this.typeOfIssuer.valueChanges.subscribe((typeOfIssuerId)=>{
-      if(typeOfIssuerId==='2'){
-        this.registeredWith.reset();
-        this.registrationNoOfIssuer.reset();
-        this.nameOfEmployer.reset();
-        this.nameOfEmployer_mr.reset();
-        this.talukaOfEmployer.reset();
-        this.talukaOfEmployer_mr.reset()
-        this.districtOfEmployer.reset();
-        this.districtOfEmployer_mr.reset();
-      } else {
-        this.nameOfGramPanchayat.reset();
-        this.nameOfGramPanchayat_mr.reset();
-        this.talukaOfGramPanchayat.reset();
-        this.talukaOfGramPanchayat_mr.reset();
-        this.districtOfGramPanchayat.reset();
-        this.districtOfGramPanchayat_mr.reset();
-      }
+      this.nameOfGramPanchayat.reset();
+      this.nameOfGramPanchayat_mr.reset();
+      this.districtOfGramPanchayat.reset();
+      this.districtOfGramPanchayat_mr.reset();
+      this.talukaOfGramPanchayat.reset();
+      this.talukaOfGramPanchayat_mr.reset();
+      this.nameOfMunicipalCorporation.reset();
+      this.nameOfMunicipalCorporation_mr.reset();
+      this.districtOfMunicipalCorporation.reset();
+      this.districtOfMunicipalCorporation_mr.reset();
+      this.talukaOfMunicipalCorporation.reset();
+      this.talukaOfMunicipalCorporation_mr.reset();
+      this.nameOfEmployer.reset();
+      this.nameOfEmployer_mr.reset();
+      this.districtOfEmployer.reset();
+      this.districtOfEmployer_mr.reset();
+      this.talukaOfEmployer.reset();
+      this.talukaOfEmployer_mr.reset();
     })
 
     this.districtOfEmployer.valueChanges.subscribe(value => {
@@ -578,6 +580,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
         for (const i of talukaArrObj) {
           this.talukasIssuerGram[i.taluka_name] = i.taluka_id;
+        }
+      }, err => console.log(err));
+    });
+
+    this.districtOfMunicipalCorporation.valueChanges.subscribe(value => {
+      this.talukasMuncipal = [];
+      this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
+        for (const i of talukaArrObj) {
+          this.talukasMuncipal[i.taluka_name] = i.taluka_id;
         }
       }, err => console.log(err));
     });
@@ -1367,6 +1378,12 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       districtOfGramPanchayat_mr: new FormControl(''),
       talukaOfGramPanchayat: new FormControl(''),
       talukaOfGramPanchayat_mr: new FormControl(''),
+      nameOfMunicipalCorporation: new FormControl(''),
+      nameOfMunicipalCorporation_mr: new FormControl(''),
+      districtOfMunicipalCorporation: new FormControl(''),
+      districtOfMunicipalCorporation_mr: new FormControl(''),
+      talukaOfMunicipalCorporation: new FormControl(''),
+      talukaOfMunicipalCorporation_mr: new FormControl('')
     });
   }
 
@@ -1573,6 +1590,31 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get talukaOfGramPanchayat_mr() {
     return this.registrationFormGroup.get('employerDetails').get('talukaOfGramPanchayat_mr');
   }
+  get nameOfMunicipalCorporation() {
+    return this.registrationFormGroup.get('employerDetails').get('nameOfMunicipalCorporation');
+  }
+
+  get nameOfMunicipalCorporation_mr() {
+    return this.registrationFormGroup.get('employerDetails').get('nameOfMunicipalCorporation_mr');
+  }
+
+  get districtOfMunicipalCorporation() {
+    return this.registrationFormGroup.get('employerDetails').get('districtOfMunicipalCorporation');
+  }
+
+  get districtOfMunicipalCorporation_mr() {
+    return this.registrationFormGroup.get('employerDetails').get('districtOfMunicipalCorporation_mr');
+  }
+
+  get talukaOfMunicipalCorporation() {
+    return this.registrationFormGroup.get('employerDetails').get('talukaOfMunicipalCorporation');
+  }
+
+  get talukaOfMunicipalCorporation_mr() {
+    return this.registrationFormGroup.get('employerDetails').get('talukaOfMunicipalCorporation_mr');
+  }
+
+
 
   get typeOfEmployerEmp() {
     return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp');

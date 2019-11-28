@@ -38,6 +38,7 @@ export class RenewalPage implements OnInit {
   public talukas: any[] = [];
   public talukasIssuerEmp: any[] = [];
   public talukasIssuerGram: any[] = [];
+  public talukasMuncipal: any[] = [];
   public natureOfWorkEmpArray: any[];
   public issuers: any[];
   public issuersRegistrationTypes: any[];
@@ -146,6 +147,12 @@ export class RenewalPage implements OnInit {
       districtOfGramPanchayat_mr: new FormControl(''),
       talukaOfGramPanchayat: new FormControl(''),
       talukaOfGramPanchayat_mr: new FormControl(''),
+      nameOfMunicipalCorporation: new FormControl(''),
+      nameOfMunicipalCorporation_mr: new FormControl(''),
+      districtOfMunicipalCorporation: new FormControl(''),
+      districtOfMunicipalCorporation_mr: new FormControl(''),
+      talukaOfMunicipalCorporation: new FormControl(''),
+      talukaOfMunicipalCorporation_mr: new FormControl(''),
       selfDeclaration: new FormControl(''),
       verifyDocumentCheck: new FormControl('', [Validators.required]),
       typeOfWorkEmp: new FormControl('', [Validators.required]),
@@ -212,23 +219,24 @@ export class RenewalPage implements OnInit {
 
 
     this.typeOfIssuer.valueChanges.subscribe((typeOfIssuerId) => {
-      if (typeOfIssuerId === '2') {
-        this.registeredWith.reset();
-        this.registrationNoOfIssuer.reset();
-        this.nameOfEmployer.reset();
-        this.nameOfEmployer_mr.reset();
-        this.talukaOfEmployer.reset();
-        this.talukaOfEmployer_mr.reset()
-        this.districtOfEmployer.reset();
-        this.districtOfEmployer_mr.reset();
-      } else {
-        this.nameOfGramPanchayat.reset();
-        this.nameOfGramPanchayat_mr.reset();
-        this.talukaOfGramPanchayat.reset();
-        this.talukaOfGramPanchayat_mr.reset();
-        this.districtOfGramPanchayat.reset();
-        this.districtOfGramPanchayat_mr.reset();
-      }
+      this.nameOfGramPanchayat.reset();
+      this.nameOfGramPanchayat_mr.reset();
+      this.districtOfGramPanchayat.reset();
+      this.districtOfGramPanchayat_mr.reset();
+      this.talukaOfGramPanchayat.reset();
+      this.talukaOfGramPanchayat_mr.reset();
+      this.nameOfMunicipalCorporation.reset();
+      this.nameOfMunicipalCorporation_mr.reset();
+      this.districtOfMunicipalCorporation.reset();
+      this.districtOfMunicipalCorporation_mr.reset();
+      this.talukaOfMunicipalCorporation.reset();
+      this.talukaOfMunicipalCorporation_mr.reset();
+      this.nameOfEmployer.reset();
+      this.nameOfEmployer_mr.reset();
+      this.districtOfEmployer.reset();
+      this.districtOfEmployer_mr.reset();
+      this.talukaOfEmployer.reset();
+      this.talukaOfEmployer_mr.reset();
     })
 
     this.districtOfEmployer.valueChanges.subscribe(value => {
@@ -245,6 +253,15 @@ export class RenewalPage implements OnInit {
       this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
         for (const i of talukaArrObj) {
           this.talukasIssuerGram[i.taluka_name] = i.taluka_id;
+        }
+      }, err => console.log(err));
+    });
+
+    this.districtOfMunicipalCorporation.valueChanges.subscribe(value => {
+      this.talukasMuncipal = [];
+      this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
+        for (const i of talukaArrObj) {
+          this.talukasMuncipal[i.taluka_name] = i.taluka_id;
         }
       }, err => console.log(err));
     });
@@ -684,6 +701,29 @@ export class RenewalPage implements OnInit {
 
   get talukaOfGramPanchayat_mr() {
     return this.renewalFormGroup.get('talukaOfGramPanchayat_mr');
+  }
+  get nameOfMunicipalCorporation() {
+    return this.renewalFormGroup.get('nameOfMunicipalCorporation');
+  }
+
+  get nameOfMunicipalCorporation_mr() {
+    return this.renewalFormGroup.get('nameOfMunicipalCorporation_mr');
+  }
+
+  get districtOfMunicipalCorporation() {
+    return this.renewalFormGroup.get('districtOfMunicipalCorporation');
+  }
+
+  get districtOfMunicipalCorporation_mr() {
+    return this.renewalFormGroup.get('districtOfMunicipalCorporation_mr');
+  }
+
+  get talukaOfMunicipalCorporation() {
+    return this.renewalFormGroup.get('talukaOfMunicipalCorporation');
+  }
+
+  get talukaOfMunicipalCorporation_mr() {
+    return this.renewalFormGroup.get('talukaOfMunicipalCorporation_mr');
   }
 
   

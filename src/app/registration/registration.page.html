@@ -973,7 +973,7 @@
             <small *ngIf="!!typeOfWorkEmp.errors?.required">Please select type of work.</small>
           </div>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="typeOfWorkEmp.value">
           <ion-label>{{typeOfWorkOptionsMarathi[typeOfWorkEmp.value]}}</ion-label>
         </ion-item>
 
@@ -1125,11 +1125,11 @@
         <ion-item>
           <ion-label position="floating">Dispatch Date<span style="color: red">*</span></ion-label>
           <ion-icon slot="end" name="calendar"></ion-icon>
-          <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="dispatchDate.invalid && dispatchDate.touched" formControlName='dispatchDate' id='employerDetails-dispatchDate' ></ion-datetime>
+          <ion-datetime [min]="appointmentDate" [max]="maxTodaysDate" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="dispatchDate.invalid && dispatchDate.touched" formControlName='dispatchDate' id='employerDetails-dispatchDate' ></ion-datetime>
         </ion-item>
-        <ion-item *ngIf="typeOfIssuer.value!=='2'">
+        <ion-item *ngIf="typeOfIssuer.value ==='1'">
           <ion-label position="floating">Name of Contractor / Developer<span style="color: red">*</span></ion-label>
-          <ion-input formControlName='nameOfEmployer' id='employerDetails-nameOfEmployer' [class.is-invalid]="nameOfEmployer.invalid && nameOfEmployer.touched" class='transliterate' (ionBlur)="transliterateDirect($event)"></ion-input>
+          <ion-input formControlName='nameOfEmployer' id='employerDetails-nameOfEmployer' [class.is-invalid]="nameOfEmployer.invalid && nameOfEmployer.touched" class='transliterate' (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
           <div class="text-danger" *ngIf="nameOfEmployer.invalid && nameOfEmployer.touched">
           <small *ngIf="!!nameOfEmployer.errors?.required">Please enter name of contractor /developer.</small>
           </div>
@@ -1137,7 +1137,7 @@
         <ion-item *ngIf="nameOfEmployer_mr.value">
           <ion-label>{{nameOfEmployer_mr.value}}</ion-label>
         </ion-item>
-        <ion-item *ngIf="typeOfIssuer.value!=='2'">
+        <ion-item *ngIf="typeOfIssuer.value ==='1'">
           <ion-label  position="floating">District of Employer</ion-label>
           <ion-select class="transliterate" formControlName="districtOfEmployer" id='employerDetails-districtOfEmployer' [class.is-invalid]="districtOfEmployer.invalid && districtOfEmployer.touched">
             <ion-select-option *ngFor="let district of districts|keyvalue" [value]="district.value">{{ district.key }}</ion-select-option>
@@ -1146,7 +1146,7 @@
             <small *ngIf="!!districtOfEmployer.errors?.required">Please select district.</small>
           </div>
         </ion-item>
-        <ion-item *ngIf="typeOfIssuer.value!=='2'">
+        <ion-item *ngIf="typeOfIssuer.value ==='1'">
           <ion-label position="floating">Taluka of Employer<span style="color: red">*</span></ion-label>
           <ion-select class="transliterate" formControlName="talukaOfEmployer" id='employerDetails-talukaOfEmployer' [class.is-invalid]="talukaOfEmployer.invalid && talukaOfEmployer.touched" >
             <ion-select-option  *ngFor="let eachTaluka of talukasIssuerEmp|keyvalue" [value]="eachTaluka.value"> {{eachTaluka.key}} </ion-select-option>
@@ -1157,7 +1157,7 @@
         </ion-item>
         <ion-item *ngIf="typeOfIssuer.value==='2'">
           <ion-label position="floating">Name of Gram Panchayat<span style="color: red">*</span></ion-label>
-          <ion-input formControlName='nameOfGramPanchayat' id='employerDetails-nameOfGramPanchayat' [class.is-invalid]="nameOfGramPanchayat.invalid && nameOfGramPanchayat.touched" class='transliterate' (ionBlur)="transliterateDirect($event)"></ion-input>
+          <ion-input formControlName='nameOfGramPanchayat' id='employerDetails-nameOfGramPanchayat' [class.is-invalid]="nameOfGramPanchayat.invalid && nameOfGramPanchayat.touched" class='transliterate' (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
           <div class="text-danger" *ngIf="nameOfGramPanchayat.invalid && nameOfGramPanchayat.touched">
             <small *ngIf="!!nameOfGramPanchayat.errors?.required">Please enter name of gram panchayat.</small>
           </div>
@@ -1183,7 +1183,35 @@
             <small *ngIf="!!talukaOfGramPanchayat.errors?.required">Please select taluka.</small>
           </div>          
         </ion-item>
-
+        <ion-item *ngIf="typeOfIssuer.value==='5'">
+          <ion-label position="floating">Name of Municipal Corporation / महानगरपालिकेचे नाव <span style="color: red">*</span></ion-label>
+          <ion-input  formControlName='nameOfMunicipalCorporation' id='employerDetails-nameOfMunicipalCorporation' [class.is-invalid]="nameOfMunicipalCorporation.invalid && nameOfMunicipalCorporation.touched" class='transliterate' (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
+          <div class="text-danger" *ngIf="nameOfMunicipalCorporation.invalid && nameOfMunicipalCorporation.touched">
+            <small *ngIf="nameOfMunicipalCorporation.errors?.required">Please enter name of municipal
+              corporation.</small>
+          </div>
+        </ion-item>
+        <ion-item *ngIf="nameOfMunicipalCorporation_mr.value">
+          <ion-label>{{nameOfMunicipalCorporation_mr.value}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="typeOfIssuer.value==='5'">
+          <ion-label position="floating">District of Municipal Corporation / महानगरपालिकेचे जिल्हा <span style="color: red">*</span></ion-label>
+          <ion-select class="transliterate" formControlName="districtOfMunicipalCorporation" id='employerDetails-districtOfMunicipalCorporation' [class.is-invalid]="districtOfMunicipalCorporation.invalid && districtOfMunicipalCorporation.touched">
+            <ion-select-option *ngFor="let district of districts|keyvalue" [value]="district.value">{{ district.key }}</ion-select-option>
+          </ion-select>
+          <div class="text-danger" *ngIf="districtOfMunicipalCorporation.invalid && districtOfMunicipalCorporation.touched">
+            <small *ngIf="districtOfMunicipalCorporation.errors?.required">Please select district.</small>
+          </div>
+        </ion-item>
+        <ion-item *ngIf="typeOfIssuer.value==='5'">
+          <ion-label position="floating">Taluka of Municipal Corporation / महानगरपालिकेचा तालुका <span style="color: red">*</span></ion-label>
+          <ion-select class="transliterate" formControlName="talukaOfMunicipalCorporation" id='employerDetails-talukaOfMunicipalCorporation'  [class.is-invalid]="talukaOfMunicipalCorporation.invalid && talukaOfMunicipalCorporation.touched">
+            <ion-select-option *ngFor="let eachTaluka of talukasMuncipal|keyvalue" [value]="eachTaluka.value"> {{eachTaluka.key}}</ion-select-option>
+          </ion-select>
+          <div class="text-danger" *ngIf="talukaOfMunicipalCorporation.invalid && talukaOfMunicipalCorporation.touched">
+            <small *ngIf="talukaOfMunicipalCorporation.errors?.required">Please select taluka.</small>
+          </div>
+        </ion-item>
       </ion-list>
     </form>
 
