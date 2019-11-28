@@ -191,7 +191,7 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
           accountNumberBank: this.formGroup.getRawValue().accountNumberBank.toString(),
           benefitType: this.formGroup.getRawValue().benefitType,
           benefitAmount: this.formGroup.getRawValue().benefitAmount,
-          currentNumberOfClaim: this.PreviousClaimDetails.length+1,
+          // currentNumberOfClaim: this.PreviousClaimDetails.length+1,
           issuingAuthority: this.formGroup.getRawValue().issuingAuthority,
 
           documents: {

@@ -18,8 +18,7 @@
         <ion-input class="transliterate" (ionBlur)="transliterateValue($event)" type="text" formControlName="nameOfMed" id="nameOfMed"
           [class.is-invalid]="nameOfMed.invalid && nameOfMed.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="nameOfMed.invalid && nameOfMed.touched">
-          <small *ngIf="nameOfMed.errors && nameOfMed.errors['required']">Please enter name of
-            Hospital</small>
+          <small *ngIf="nameOfMed.errors && nameOfMed.errors['required']">Please enter name of Civil Surgeon</small>
           <small *ngIf="nameOfMed.errors && nameOfMed.errors['maxlength']">You have reached your
             maximum</small>
         </div>
