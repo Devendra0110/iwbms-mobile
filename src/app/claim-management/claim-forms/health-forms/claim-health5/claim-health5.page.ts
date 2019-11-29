@@ -16,14 +16,11 @@ import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.ba
   styleUrls: ['./claim-health5.page.scss'],
 })
 export class ClaimHealth5Page extends ClaimBasePage implements OnInit {
-  
-
   public formGroup: FormGroup;
   
   constructor(
     protected validationService: ClaimValidationService,
     protected transliterate: TransliterationService,
-
     protected httpService: HttpService,
     protected claimService: ClaimService,
     protected router:Router,
@@ -41,19 +38,40 @@ export class ClaimHealth5Page extends ClaimBasePage implements OnInit {
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
       verifyDocumentCheck :new FormControl('',this.validationService.createValidatorsArray('verifyDocumentCheck')),
-
     });
-
    }
 
   ngOnInit() {
+    this.assignBenefits(true);
   }
 
+  //getters
   get verifyDocumentCheck() {return this.formGroup.get('verifyDocumentCheck'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
 
 
-save(){
-  
+  public saveForm(): void {
+    if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
+        this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+      this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      }
+      const postObj = {
+        userData: this.user,
+        claimData: {
+          benefitType: this.benefitType.value,
+          benefitAmount: this.benefitAmount.value,
+
+          documents: {
+            selfDeclaration :  this.fileOptions['selfDeclaration']
+          }
+        }
+      };
+      this.saveClaimForm(postObj);
+    }else {
+      this.dialogs.alert('Please Update the form.');
+    }
 }
+
+
 }
