@@ -33,6 +33,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
   public fullName:string;
   public childAgeFlag: boolean;
   public childName:string;
+  public dateError:boolean;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -84,6 +85,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
     };
     this.Delivery = Constants.DELIVERY_TYPE;
     console.log(this.Delivery);
+    this.dateError = false;
   }
   
   ngOnInit() {
@@ -123,14 +125,24 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
       // patch birth year
       this.childDetail = this.childArray.find((child: any) => child.family_detail_id === Number (childId));
       this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
-      this.dateOfDeliveryHealth.patchValue(moment)
       this.childName = this.childDetail.firstNameFamily+' '+this.childDetail.surname
-      this.dateOfDeliveryHealth.patchValue(moment(this.childDetail.dobFamily).format('YYYY-MM-DD'))
-      const childYear = moment(this.childDetail.dobFamily);
+      
+      const dateDifference = moment(this.user.registrationDatePersonal).diff(this.childDetail.dobFamily,'days')
+      if(dateDifference<1){
+        this.dateOfDeliveryHealth.patchValue(moment(this.childDetail.dobFamily).format('YYYY-MM-DD'))
+        this.dateError=false
+      }else{
+        this.dateOfDeliveryHealth.reset();
+        this.dateError =true
+      }
+     
+
+      // const childYear = moment(this.childDetail.dobFamily);
       //assign male/femalne
       this.genderPersonal.patchValue(this.childDetail.relation === '11' ? 3 : 1)
       this.genderPersonal.disable();
     })
+    
 
     // if (this.filledFormData) {
     //   this.fileOptions = {
@@ -166,6 +178,11 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
       }
     })
   }
+  calculateAge(date: string): number {
+    const dob = moment(date).format('YYYY-MM-DD');
+    const age = moment().diff(dob, 'years');
+    return age;
+}
 
   public capitaliseNumber(): void {
     this.birthCertificateNumber.setValue(this.birthCertificateNumber.value.toString().toUpperCase());
