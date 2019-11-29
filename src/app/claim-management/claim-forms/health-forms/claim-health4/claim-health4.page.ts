@@ -24,7 +24,7 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
    public Delivery: Object = [];
    public maxTodaysDate: string;
    public minTreatmentDate: string;
-   public saveOnce=1;
+   
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -87,7 +87,7 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
 
   public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
-      if(this.saveOnce===1){
+      if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
         this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
       this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
       }

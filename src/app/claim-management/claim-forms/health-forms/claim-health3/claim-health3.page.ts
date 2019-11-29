@@ -27,7 +27,7 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
   public familyArray: Array<string> = [];
   public ifIfscCodeBank: boolean;
   public childName:string;
-  public saveOnce=1;
+ 
 
   bankDetails: any = {
     BANK: '',
@@ -160,7 +160,7 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
   public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
 
-      if(this.saveOnce===1){
+      if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
         this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
       this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
       }
