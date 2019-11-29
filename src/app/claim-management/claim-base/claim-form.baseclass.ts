@@ -7,13 +7,13 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { Component, Input } from '@angular/core';
 
 import { ClaimService } from 'src/app/services/claim.service';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { HttpService } from 'src/app/services/http.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { TransliterationService } from 'src/app/services/transliteration.service';
-import { Dialogs } from '@ionic-native/dialogs/ngx';
 
 export abstract class ClaimBasePage {
 
@@ -184,10 +184,10 @@ export abstract class ClaimBasePage {
     /**
      * Passing Year Function
      */
-    public yearOfPassing(event) {
+    public yearOfPassing(event,gap:number=0) {
         const inputYear = this.formGroup.get('year');
         const currentYear = new Date().getFullYear();
-        const userRegistrationYear = Number(this.user.registrationDatePersonal.slice(0,4))
+        const userRegistrationYear = Number(this.user.registrationDatePersonal.slice(0,4))-gap
         if (inputYear.value >= userRegistrationYear && inputYear.value <= currentYear) {
             // returns the user input if correct
         } else {
@@ -195,6 +195,8 @@ export abstract class ClaimBasePage {
             this.formGroup.get('year').reset();
         }
     }
+    
+
 
     public calculateAge(date: string): number {
         const dob = moment(date).format('YYYY-MM-DD');

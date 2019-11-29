@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, NavigationExtras } from '@angular/router';
-import { ValidationService } from '../../services/validation.service';
-import { MobileVerificationService } from '../../services/mobile-verification.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavigationExtras, Router } from '@angular/router';
+
 import { ClaimService } from '../../services/claim.service';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
-import { Storage } from '@ionic/storage';
-import { Network } from '@ionic-native/network/ngx';
-import { Toast } from '@ionic-native/toast/ngx';
 import { LoadingController } from '@ionic/angular';
+import { MobileVerificationService } from '../../services/mobile-verification.service';
+import { Network } from '@ionic-native/network/ngx';
+import { Storage } from '@ionic/storage';
+import { Toast } from '@ionic-native/toast/ngx';
+import { ValidationService } from '../../services/validation.service';
 @Component({
   selector: 'app-claim-verification',
   templateUrl: './claim-verification.page.html',
