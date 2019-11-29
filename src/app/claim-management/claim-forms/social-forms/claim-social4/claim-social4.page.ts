@@ -62,10 +62,10 @@ export class ClaimSocial4Page extends ClaimBasePage implements OnInit {
         claimData: {
           benefitType: this.benefitType.value,
           benefitAmount: this.benefitAmount.value,
-          // documents: {
+          documents: {
           //  // socialForm5Doc1 : this.fileOptions['socialForm5Doc1'],
           selfDeclaration: this.fileOptions['selfDeclaration']
-          // }
+          }
         }
       };
       this.saveClaimForm(postObj);

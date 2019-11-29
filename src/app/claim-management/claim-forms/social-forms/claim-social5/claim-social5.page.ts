@@ -125,12 +125,12 @@ public sameAsRegistrationChecked(event) {
           accountNumber: this.formGroup.getRawValue().accountNumber + "",
           benefitType: this.benefitType.value,
           benefitAmount: this.benefitAmount.value,
-          // documents: {
+          documents: {
           socialForm6Doc1: this.fileOptions['socialForm6Doc1'],
           socialForm6Doc2: this.fileOptions['socialForm6Doc2'],
           socialForm6Doc3: this.fileOptions['socialForm6Doc3'],
           selfDeclaration: this.fileOptions['selfDeclaration']
-          // }
+          }
         }
       };
       this.saveClaimForm(postObj);

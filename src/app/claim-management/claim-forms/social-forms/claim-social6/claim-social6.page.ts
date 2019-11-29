@@ -122,12 +122,12 @@ export class ClaimSocial6Page extends ClaimBasePage implements OnInit {
           accountNumber: this.formGroup.getRawValue().accountNumber + "",
           benefitType: this.benefitType.value,
           benefitAmount: this.benefitAmount.value,
-          // documents: {
+          documents: {
           socialForm7Doc1: this.fileOptions['socialForm7Doc1'],
           socialForm7Doc2: this.fileOptions['socialForm7Doc2'],
           socialForm7Doc3: this.fileOptions['socialForm7Doc3'],
           selfDeclaration: this.fileOptions['selfDeclaration']
-          // }
+          }
         }
       };
       this.saveClaimForm(postObj);
