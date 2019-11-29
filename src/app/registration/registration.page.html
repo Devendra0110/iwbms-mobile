@@ -1139,21 +1139,27 @@
         </ion-item>
         <ion-item *ngIf="typeOfIssuer.value ==='1'">
           <ion-label  position="floating">District of Employer</ion-label>
-          <ion-select class="transliterate" formControlName="districtOfEmployer" id='employerDetails-districtOfEmployer' [class.is-invalid]="districtOfEmployer.invalid && districtOfEmployer.touched">
+          <ion-select (ionChange)="transliterateDTP($event)" class="transliterate" formControlName="districtOfEmployer" id='employerDetails-districtOfEmployer' [class.is-invalid]="districtOfEmployer.invalid && districtOfEmployer.touched">
             <ion-select-option *ngFor="let district of districts|keyvalue" [value]="district.value">{{ district.key }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="districtOfEmployer.invalid && districtOfEmployer.touched">
             <small *ngIf="!!districtOfEmployer.errors?.required">Please select district.</small>
           </div>
         </ion-item>
+        <ion-item *ngIf="districtOfEmployer_mr.value">
+          <ion-label>{{districtOfEmployer_mr.value}}</ion-label>
+        </ion-item>
         <ion-item *ngIf="typeOfIssuer.value ==='1'">
           <ion-label position="floating">Taluka of Employer<span style="color: red">*</span></ion-label>
-          <ion-select class="transliterate" formControlName="talukaOfEmployer" id='employerDetails-talukaOfEmployer' [class.is-invalid]="talukaOfEmployer.invalid && talukaOfEmployer.touched" >
+          <ion-select  (ionChange)="transliterateDTP($event)" class="transliterate" formControlName="talukaOfEmployer" id='employerDetails-talukaOfEmployer' [class.is-invalid]="talukaOfEmployer.invalid && talukaOfEmployer.touched" >
             <ion-select-option  *ngFor="let eachTaluka of talukasIssuerEmp|keyvalue" [value]="eachTaluka.value"> {{eachTaluka.key}} </ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="talukaOfEmployer.invalid && talukaOfEmployer.touched">
             <small *ngIf="!!talukaOfEmployer.errors?.required">Please select taluka.</small>
           </div>
+        </ion-item>
+        <ion-item *ngIf="talukaOfEmployer_mr.value">
+          <ion-label>{{talukaOfEmployer_mr.value}}</ion-label>
         </ion-item>
         <ion-item *ngIf="typeOfIssuer.value==='2'">
           <ion-label position="floating">Name of Gram Panchayat<span style="color: red">*</span></ion-label>
@@ -1167,21 +1173,27 @@
         </ion-item>
         <ion-item *ngIf="typeOfIssuer.value==='2'">
           <ion-label position="floating">District of Gram Panchayat<span style="color: red">*</span></ion-label>
-          <ion-select class="transliterate" formControlName="districtOfGramPanchayat" id='employerDetails-districtOfGramPanchayat' [class.is-invalid]="districtOfGramPanchayat.invalid && districtOfGramPanchayat.touched">
+          <ion-select (ionChange)="transliterateDTP($event)" class="transliterate"formControlName="districtOfGramPanchayat" id='employerDetails-districtOfGramPanchayat' [class.is-invalid]="districtOfGramPanchayat.invalid && districtOfGramPanchayat.touched">
             <ion-select-option *ngFor="let district of districts|keyvalue" [value]="district.value">{{ district.key }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="districtOfGramPanchayat.invalid && districtOfGramPanchayat.touched">
             <small *ngIf="!!districtOfGramPanchayat.errors?.required">Please select district.</small>
           </div>
         </ion-item>
+        <ion-item *ngIf="districtOfGramPanchayat_mr.value">
+          <ion-label>{{districtOfGramPanchayat_mr.value}}</ion-label>
+        </ion-item>
         <ion-item *ngIf="typeOfIssuer.value==='2'">
           <ion-label position="floating">Taluka of Gram Panchayat<span style="color: red">*</span></ion-label>
-          <ion-select class="transliterate" formControlName="talukaOfGramPanchayat" id='employerDetails-talukaOfGramPanchayat'  [class.is-invalid]="talukaOfGramPanchayat.invalid && talukaOfGramPanchayat.touched">
+          <ion-select (ionChange)="transliterateDTP($event)" class="transliterate" formControlName="talukaOfGramPanchayat" id='employerDetails-talukaOfGramPanchayat'  [class.is-invalid]="talukaOfGramPanchayat.invalid && talukaOfGramPanchayat.touched">
             <ion-select-option *ngFor="let eachTaluka of talukasIssuerGram|keyvalue" [value]="eachTaluka.value"> {{eachTaluka.key}}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="talukaOfGramPanchayat.invalid && talukaOfGramPanchayat.touched">
             <small *ngIf="!!talukaOfGramPanchayat.errors?.required">Please select taluka.</small>
           </div>          
+        </ion-item>
+        <ion-item *ngIf="talukaOfGramPanchayat_mr.value">
+          <ion-label>{{talukaOfGramPanchayat_mr.value}}</ion-label>
         </ion-item>
         <ion-item *ngIf="typeOfIssuer.value==='5'">
           <ion-label position="floating">Name of Municipal Corporation / महानगरपालिकेचे नाव <span style="color: red">*</span></ion-label>
@@ -1196,21 +1208,27 @@
         </ion-item>
         <ion-item *ngIf="typeOfIssuer.value==='5'">
           <ion-label position="floating">District of Municipal Corporation / महानगरपालिकेचे जिल्हा <span style="color: red">*</span></ion-label>
-          <ion-select class="transliterate" formControlName="districtOfMunicipalCorporation" id='employerDetails-districtOfMunicipalCorporation' [class.is-invalid]="districtOfMunicipalCorporation.invalid && districtOfMunicipalCorporation.touched">
+          <ion-select (ionChange)="transliterateDTP($event)" class="transliterate" formControlName="districtOfMunicipalCorporation" id='employerDetails-districtOfMunicipalCorporation' [class.is-invalid]="districtOfMunicipalCorporation.invalid && districtOfMunicipalCorporation.touched">
             <ion-select-option *ngFor="let district of districts|keyvalue" [value]="district.value">{{ district.key }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="districtOfMunicipalCorporation.invalid && districtOfMunicipalCorporation.touched">
             <small *ngIf="districtOfMunicipalCorporation.errors?.required">Please select district.</small>
           </div>
         </ion-item>
+        <ion-item *ngIf="districtOfMunicipalCorporation_mr.value">
+          <ion-label>{{districtOfMunicipalCorporation_mr.value}}</ion-label>
+        </ion-item>
         <ion-item *ngIf="typeOfIssuer.value==='5'">
           <ion-label position="floating">Taluka of Municipal Corporation / महानगरपालिकेचा तालुका <span style="color: red">*</span></ion-label>
-          <ion-select class="transliterate" formControlName="talukaOfMunicipalCorporation" id='employerDetails-talukaOfMunicipalCorporation'  [class.is-invalid]="talukaOfMunicipalCorporation.invalid && talukaOfMunicipalCorporation.touched">
+          <ion-select (ionChange)="transliterateDTP($event)" class="transliterate" formControlName="talukaOfMunicipalCorporation" id='employerDetails-talukaOfMunicipalCorporation'  [class.is-invalid]="talukaOfMunicipalCorporation.invalid && talukaOfMunicipalCorporation.touched">
             <ion-select-option *ngFor="let eachTaluka of talukasMuncipal|keyvalue" [value]="eachTaluka.value"> {{eachTaluka.key}}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="talukaOfMunicipalCorporation.invalid && talukaOfMunicipalCorporation.touched">
             <small *ngIf="talukaOfMunicipalCorporation.errors?.required">Please select taluka.</small>
           </div>
+        </ion-item>
+        <ion-item *ngIf="talukaOfMunicipalCorporation_mr.value">
+          <ion-label>{{talukaOfMunicipalCorporation_mr.value}}</ion-label>
         </ion-item>
       </ion-list>
     </form>

@@ -698,12 +698,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     let target: any;
     let DTPObject: any;
     // choose if it is district/taluka/postoffice
-    if (targetsArray[2] === 'district' || targetsArray[1] === 'districtEmp')
+    if (targetsArray[2] === 'district' || targetsArray[1] === 'districtEmp' || targetsArray[1] === 'districtOfEmployer' || targetsArray[1] === 'districtOfGramPanchayat' || targetsArray[1] ==='districtOfMunicipalCorporation')
       DTPObject = this.districts;
     else if (targetsArray[2] === 'taluka')
       DTPObject = this.talukasRes;
     else if (targetsArray[2] === 'state') DTPObject = this.states;
     else if (targetsArray[1] === 'talukaEmp') DTPObject = this.talukasEmp;
+    else if (targetsArray[1] === 'talukaOfEmployer') DTPObject = this.talukasIssuerEmp;
+    else if (targetsArray[1] === 'talukaOfGramPanchayat') DTPObject = this.talukasIssuerGram;
+    else if (targetsArray[1] === 'talukaOfMunicipalCorporation') DTPObject = this.talukasMuncipal;
     else DTPObject = this.postOfficeArrayRes;
 
 

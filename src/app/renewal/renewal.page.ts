@@ -308,6 +308,8 @@ export class RenewalPage implements OnInit {
     return this.dispatchDateEmp.value;
   }
 
+  
+
   changeToIonDateTime(diff: any, timeUnit: string) {
     const date = moment(
       new Date(this.todaysDate.year, this.todaysDate.month - 1, this.todaysDate.day))
@@ -393,6 +395,9 @@ export class RenewalPage implements OnInit {
     // choose if it is district/taluka/postoffice
     if (targetsArray === 'districtEmp')
       DTPObject = this.districts;
+    else if (targetsArray === 'talukaOfEmployer') DTPObject = this.talukasIssuerEmp;
+    else if (targetsArray === 'talukaOfGramPanchayat') DTPObject = this.talukasIssuerGram;
+    else if (targetsArray === 'talukaOfMunicipalCorporation') DTPObject = this.talukasMuncipal;
     else if (targetsArray === 'talukaEmp')
       DTPObject = this.talukas;
 
