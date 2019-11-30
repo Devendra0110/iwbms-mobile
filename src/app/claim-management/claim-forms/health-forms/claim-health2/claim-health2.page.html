@@ -16,7 +16,7 @@
       <ion-item>
         <ion-label position="floating">Select Family Member / कुटुंबातील सदस्य निवडा <span style="color: Red">*</span>
         </ion-label>
-        <ion-select formControlName="familyDetail" [class.is-invalid]="familyDetail.invalid && familyDetail.touched"
+        <ion-select interface="action-sheet" formControlName="familyDetail" [class.is-invalid]="familyDetail.invalid && familyDetail.touched"
           id="familyDetail">
           <ion-select-option  *ngFor="let childObject of familyArray; let i = index" [value]="childObject['family_detail_id']">
               {{childObject['firstNameFamily']}} {{childObject['surname']}} / {{childObject['firstNameFamily_mr']}}
@@ -98,7 +98,7 @@
 
       <ion-item>
         <ion-label position="floating">Type of Illness/ आजारपणाचा प्रकार <span style="color: Red">*</span></ion-label>
-        <ion-select formControlName="typeOfIllness" [class.is-invalid]="typeOfIllness.invalid && typeOfIllness.touched"
+        <ion-select interface="action-sheet" formControlName="typeOfIllness" [class.is-invalid]="typeOfIllness.invalid && typeOfIllness.touched"
           id="typeOfIllness">
           <ion-select-option *ngFor="let list of illness" [value]="list.type">{{ list.type }}</ion-select-option>
         </ion-select>

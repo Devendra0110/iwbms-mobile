@@ -33,7 +33,7 @@
       <ion-item>
         <ion-label position="floating">Issuing Authority <br>प्राधिकरण जारी करणे<span class="text-danger">*</span>
         </ion-label>
-        <ion-select formControlName="issuingAuthority"
+        <ion-select interface="action-sheet" formControlName="issuingAuthority"
           [class.is-invalid]="issuingAuthority.invalid && issuingAuthority.touched" id="issuingAuthority">
           <ion-select-option *ngFor="let item of issuingAuthorityArray" value="item.type">{{item.type}}
           </ion-select-option>
@@ -126,7 +126,7 @@
       <ion-item>
         <ion-label position="floating">Relation /संबंध
           स्वरूप<span class="text-danger">*</span></ion-label>
-        <ion-select formControlName="relation" [class.is-invalid]="relation.invalid && relation.touched" id="relation">
+        <ion-select interface="action-sheet" formControlName="relation" [class.is-invalid]="relation.invalid && relation.touched" id="relation">
           <ion-select-option></ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="relation.invalid && relation.touched">

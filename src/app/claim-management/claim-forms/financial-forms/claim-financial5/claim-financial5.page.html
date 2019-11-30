@@ -105,7 +105,7 @@
                   <ion-item>
                     <ion-label position="floating">Relation /संबंध
                       स्वरूप<span class="text-danger">*</span></ion-label>
-                    <ion-select formControlName="relation" [class.is-invalid]="relation.invalid && relation.touched" id="relation">
+                    <ion-select interface="action-sheet" formControlName="relation" [class.is-invalid]="relation.invalid && relation.touched" id="relation">
                       <ion-select-option></ion-select-option>
                     </ion-select>
                     <div class="text-danger" *ngIf="relation.invalid && relation.touched">

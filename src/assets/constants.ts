@@ -187,7 +187,7 @@ export class Constants {
     ];
   
     public static TYPE_OF_ISSUER = [
-      { type: 'Mahaanagar Paalika/ महानगरपालिका', id: "1" },
+      { type: 'Mahaanagar Paalika / महानगरपालिका', id: "1" },
       { type: 'Gram Panchayat / ग्रामपंचायत', id: "2" },
       { type: 'Tehsil / तहसील', id: "3" },
       { type: 'Nagar Paalika / नगरपालिक ', id: "4" },

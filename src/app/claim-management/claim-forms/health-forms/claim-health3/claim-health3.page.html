@@ -77,7 +77,7 @@
 
       <ion-item>
         <ion-label position="floating">Name of Daughter / मुलीचे नाव <span style="color: Red">*</span></ion-label>
-        <ion-select formControlName="childrenDetail"
+        <ion-select interface="action-sheet" formControlName="childrenDetail"
           [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched" 
           id="childrenDetail">
           <ion-select-option *ngFor="let childObject of familyArray; let i = index" [disabled]="i > '0'"

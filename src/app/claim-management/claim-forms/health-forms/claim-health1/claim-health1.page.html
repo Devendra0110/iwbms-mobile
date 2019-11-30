@@ -14,7 +14,7 @@
 
       <ion-item>
         <ion-label position="floating">Child Name / मुलाचे नाव<span class="text-danger">*</span></ion-label>
-        <ion-select formControlName="childrenDetail"
+        <ion-select interface="action-sheet" formControlName="childrenDetail"
           [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched" id="childrenDetail">
           <ion-select-option *ngFor="let childObject of childArray; let childArrayIndex = index" [disabled]="childArrayIndex > '1'"
             [value]="childObject['family_detail_id']">{{childObject['firstNameFamily']}} {{childObject['surname']}} /
@@ -38,7 +38,7 @@
 
       <ion-item>
         <ion-label position="floating">Gender / लिंग<span style="color: Red">*</span></ion-label>
-        <ion-select formControlName="genderPersonal" id="genderPersonal"
+        <ion-select interface="action-sheet" formControlName="genderPersonal" id="genderPersonal"
           [class.is-invalid]="genderPersonal.invalid && genderPersonal.touched">
           <ion-select-option  *ngFor="let genderObject of genderPersonalArray" [value]="genderObject['gender_id']">
             {{genderObject['gender']}} / {{genderObject['gender_mr']}}
@@ -65,7 +65,7 @@
       <ion-item>
         <ion-label position="floating">Maternity Place / प्रसूतीचे ठिकाण/स्थान <span style="color: Red">*</span>
         </ion-label>
-        <ion-select formControlName="selectMaternityPlace" id="selectMaternityPlace"
+        <ion-select interface="action-sheet" formControlName="selectMaternityPlace" id="selectMaternityPlace"
           [class.is-invalid]="selectMaternityPlace.invalid && selectMaternityPlace.touched">
           <ion-select-option>Hospital/रुग्णालय</ion-select-option>
           <ion-select-option>Home/घर</ion-select-option>
@@ -114,7 +114,7 @@
       <ion-item>
         <ion-label position="floating">Method of Delivery / प्रसूतीचे प्रकार<span style="color: Red">*</span>
         </ion-label>
-        <ion-select formControlName="typeOfDelivery"
+        <ion-select interface="action-sheet" formControlName="typeOfDelivery"
           [class.is-invalid]="typeOfDelivery.invalid && typeOfDelivery.touched" id="typeOfDelivery">
           <ion-select-option *ngFor="let list of Delivery" [value]="list.type">{{list.type}} </ion-select-option>
         </ion-select>
@@ -144,7 +144,7 @@
       <ion-item>
         <ion-label position="floating">Birth Certificate Issued by / जन्म प्रमाणपत्र जारीकर्ता प्रकार<span
             style="color: Red">*</span></ion-label>
-        <ion-select formControlName="birthCertificateIssuedBy"
+        <ion-select  interface="action-sheet" formControlName="birthCertificateIssuedBy"
           [class.is-invalid]="birthCertificateIssuedBy.invalid && birthCertificateIssuedBy.touched"
           id="birthCertificateIssuedBy">
           <ion-select-option *ngFor="let list of issuedBy" [value]="list.type">{{ list.type }}
