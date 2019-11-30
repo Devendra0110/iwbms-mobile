@@ -13,7 +13,7 @@
 
     <ion-item>
       <ion-label position="floating">Name / नाव<span class="text-danger">*</span></ion-label>
-      <ion-select formControlName="childrenDetail" id="childrenDetail"
+      <ion-select interface="action-sheet"formControlName="childrenDetail" id="childrenDetail"
         [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched">
         <ion-select-option *ngFor="let childObject of childArray; let i = index" [disabled]="i > '1'"
             [value]="childObject['firstNameFamily']">{{childObject['firstNameFamily']}} {{childObject['surname']}} / 
@@ -28,7 +28,7 @@
     <ion-item>
       <ion-label position="floating">Aadhar Card Number / आधार कार्ड क्रमांक <span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="number" formControlName="aadharNumber" id="aadharNumber" minlength="12" maxlength="12"
+      <ion-input type="tel" formControlName="aadharNumber" id="aadharNumber" minlength="12" maxlength="12"
         [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
@@ -41,7 +41,7 @@
 
     <ion-item>
       <ion-label position="floating">Age / वय <span class="text-danger">*</span></ion-label>
-      <ion-input type="number" formControlName="age" id="age" minlength="2" maxlength="2"
+      <ion-input type="tel" formControlName="age" id="age" minlength="2" maxlength="2"
         [class.is-invalid]="age.invalid && age.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="age.invalid && age.touched">
@@ -131,7 +131,7 @@
     <ion-item>
       <ion-label position="floating">Institute Phone Number / संस्थेचा फोन नंबर <span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="number" formControlName="insPhNo" id="insPhNo" maxlength="10" minlength="8"
+      <ion-input type="tel" formControlName="insPhNo" id="insPhNo" maxlength="10" minlength="8"
         [class.is-invalid]="insPhNo.invalid && insPhNo.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="insPhNo.invalid && insPhNo.touched">
@@ -144,7 +144,7 @@
     <ion-item>
       <ion-label position="floating">Fee of Course / कोर्स फी <span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="number" formControlName="courseFee" id="courseFee" maxlength="4"
+      <ion-input type="tel" formControlName="courseFee" id="courseFee" maxlength="4"
         [class.is-invalid]="courseFee.invalid && courseFee.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="courseFee.invalid && courseFee.touched">

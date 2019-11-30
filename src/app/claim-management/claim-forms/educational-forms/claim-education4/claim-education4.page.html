@@ -18,7 +18,7 @@
 
     <ion-item>
       <ion-label position="floating">Name / नाव<span class="text-danger">*</span></ion-label>
-      <ion-select formControlName="familyRelation" id="familyRelation"
+      <ion-select interface="action-sheet" formControlName="familyRelation" id="familyRelation"
         [class.is-invalid]="familyRelation.invalid && familyRelation.touched">
         <ion-select-option *ngFor="let child of childArray; let i = index" [value]="child['firstNameFamily']">
             {{child['firstNameFamily']}} {{child['surname']}} /
@@ -33,7 +33,7 @@
     <ion-item>
       <ion-label position="floating">Aadhar Card Number / आधार कार्ड क्रमांक <span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="number" formControlName="aadharNumber" id="aadharNumber" minlength="12" maxlength="12"
+      <ion-input type="tel" formControlName="aadharNumber" id="aadharNumber" minlength="12" maxlength="12"
         [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
@@ -46,7 +46,7 @@
 
     <ion-item>
       <ion-label position="floating">Age / वय <span class="text-danger">*</span></ion-label>
-      <ion-input type="number" formControlName="age" id="age" minlength="2" maxlength="2"
+      <ion-input type="tel" formControlName="age" id="age" minlength="2" maxlength="2"
         [class.is-invalid]="age.invalid && age.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="age.invalid && age.touched">
@@ -108,7 +108,7 @@
     <ion-item>
       <ion-label position="floating">Academic Year / शैक्षणिक वर्ष<span class="text-danger">*</span>
       </ion-label>
-      <ion-select formControlName="standard" id="standard" [class.is-invalid]="standard.invalid && standard.touched">
+      <ion-select interface="action-sheet" formControlName="standard" id="standard" [class.is-invalid]="standard.invalid && standard.touched">
       <ion-select-option *ngFor="let each of getEducationArray" [value]="each.education_level_id">{{each.education_level_en}} /
           {{each.education_level_mr}}
       </ion-select-option>
@@ -133,7 +133,7 @@
     <ion-item>
       <ion-label position="floating">College Phone Number / महाविद्यालयाचा फोन नंबर<span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="number" formControlName="insPhNo" id="insPhNo" maxlength="10" minlength="8"
+      <ion-input type="tel" formControlName="insPhNo" id="insPhNo" maxlength="10" minlength="8"
         [class.is-invalid]="insPhNo.invalid && insPhNo.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="insPhNo.invalid && insPhNo.touched">

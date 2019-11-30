@@ -72,6 +72,7 @@ export class ClaimMainFormPage implements OnInit {
   public claimData: any;
   public applicantRegistrationDetails: any;
   public ackNo: any;
+  public schemeSelected:boolean;
 
 
   constructor(
@@ -175,7 +176,7 @@ export class ClaimMainFormPage implements OnInit {
     this.selectedSchemeId = '';
     this.selectedSchemeObj = {};
     this.selectedCategoryObj = {};
-
+    this.schemeSelected = false
 
   }
 
@@ -321,7 +322,10 @@ export class ClaimMainFormPage implements OnInit {
       if (Number(this.schemeObj[each].category_id) === Number(schemeId)) {
         const scheme_number = this.schemeObj[each].scheme_number;
         this.schemeObj[each]['eligibility'] = this.claimEligibilityObject ? this.claimEligibilityObject[scheme_number] : false;
-        this.commonClaimArray.push(this.schemeObj[each]);
+        if (this.schemeObj[each]['eligibility']){
+          this.commonClaimArray.push(this.schemeObj[each]);
+        }
+        
       }
     }
   }
@@ -360,6 +364,7 @@ export class ClaimMainFormPage implements OnInit {
     this.selectedSchemeObj = this.schemeObj.find(scheme => scheme.scheme_number === value);
     this.formUserInfo['schemeID'] = value;
     const selectedSchemeObject = this.schemeObj.find(scheme => scheme.scheme_number === value);
+    this.schemeSelected=true;
     this.formUserInfo['eligibilityForScheme'] = selectedSchemeObject.eligibility;
   }
 

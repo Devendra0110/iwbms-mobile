@@ -1,16 +1,14 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>WELFARE SCHEMES / कल्याणकारी योजना</ion-title>
+    <ion-title style="text-align: center" >WELFARE SCHEMES /<br> कल्याणकारी योजना</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-header *ngIf="selectScheme.value">
-    <!-- {{ selectedCategoryObj.scheme_category }} - {{ selectedSchemeObj.scheme_number}}<br> 
-    {{ selectedSchemeObj.scheme_name_mr }} -->
-  </ion-header>
   <form [formGroup]="claimMainForm">
     <ion-list>
+      <ion-list-header *ngIf="schemeSelected" color="primary" style="margin-top: 5px; text-align: center; font-size: 18px;color:white;">{{ selectedCategoryObj.scheme_category }} / {{ selectedCategoryObj.scheme_category_mr }} -
+      {{ selectedSchemeObj.scheme_number}}</ion-list-header>
       <ion-list-header color="primary" style="margin-top: 5px; text-align: center; font-size: 18px;color:white;">APPLICANT'S DETAILS / अर्जदार बँक तपशील</ion-list-header>
       <img *ngIf="uploadedImageUrl" alt="Photo" [src]="uploadedImageUrl" width="275px" height="275px">
       <ion-item>

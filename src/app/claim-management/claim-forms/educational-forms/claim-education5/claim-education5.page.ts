@@ -94,7 +94,6 @@ export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
       }
     });
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
-    console.log(this.childArray);
     this.familyRelation.valueChanges.subscribe((childName) => {
       this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
       this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);

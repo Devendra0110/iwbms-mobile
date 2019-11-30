@@ -7,7 +7,7 @@
 
   <form [formGroup]="formGroup">
     <ion-list>
-      <ion-list-header style="font-size:20px;">Rs.30,000/- for Reimbursement for First Marriage.<br>पहिल्या विवाहाच्या प्रतिपूर्तीसाठी रु.३०,०००/-.</ion-list-header>
+      <!-- <ion-list-header style="font-size:20px;">Rs.30,000/- for Reimbursement for First Marriage.<br>पहिल्या विवाहाच्या प्रतिपूर्तीसाठी रु.३०,०००/-.</ion-list-header> -->
       <ion-item>
         <ion-label position="floating">Date of Marriage / विवाह तारीख<span class="text-danger">*</span></ion-label>
         <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [min]="dateReg" [max]="sysDate" [class.is-invalid]="dateOfMar.invalid && dateOfMar.touched" formControlName="dateOfMar"></ion-datetime>

@@ -31,7 +31,7 @@
     <ion-item>
       <ion-label position="floating">Aadhar Card Number / आधार कार्ड क्रमांक <span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="number" formControlName="aadharNumber" id="aadharNumber" minlength="12" maxlength="12"
+      <ion-input type="tel" formControlName="aadharNumber" id="aadharNumber" minlength="12" maxlength="12" readonly
         [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
@@ -44,7 +44,7 @@
 
     <ion-item>
       <ion-label position="floating">Age / वय <span class="text-danger">*</span></ion-label>
-      <ion-input type="number" formControlName="age" id="age" minlength="2" maxlength="2"
+      <ion-input type="tel" formControlName="age" id="age" minlength="1" maxlength="2" readonly
         [class.is-invalid]="age.invalid && age.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="age.invalid && age.touched">
@@ -117,7 +117,7 @@
 
     <ion-item>
       <ion-label position="floating">Passing Year / उत्तीर्ण झाल्याचे वर्ष<span class="text-danger">*</span></ion-label>
-      <ion-input type="number"  formControlName="year" id="year" clearInput
+      <ion-input type="tel"  formControlName="year" id="year" clearInput
         [class.is-invalid]="year.invalid && year.touched">
       </ion-input>
       <div class="text-danger" *ngIf="year.invalid && year.touched">

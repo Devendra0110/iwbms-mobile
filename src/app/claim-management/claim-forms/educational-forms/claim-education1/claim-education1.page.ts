@@ -87,7 +87,6 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
       }
     });
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
-    console.log(this.childArray);
     this.childrenDetail.valueChanges.subscribe((childName) => {
       this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName);
       this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
@@ -150,7 +149,6 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
   // get declaration() { return this.formGroup.get('declaration'); }
 
   public saveForm(): void {
-    console.log(this.formGroup);
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
       if (typeof this.user.registrationDatePersonal === 'string' && typeof this.user.dobPersonal === 'string') {
         this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
