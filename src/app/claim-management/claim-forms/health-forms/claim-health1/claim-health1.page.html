@@ -28,7 +28,7 @@
       <ion-item>
         <ion-label position="floating">Aadhar Card Number / आधार कार्ड क्रमांक<span style="color: Red">*</span></ion-label>
         <ion-input type="tel" [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" maxlength="12"
-          minlength="12" formControlName="aadharNumber" id="aadharNumber"></ion-input>
+          minlength="12" formControlName="aadharNumber" id="aadharNumber" readonly></ion-input>
         <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
           <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your Aadhar Number.</small>
           <small *ngIf="aadharNumber.errors && aadharNumber.errors['pattern']">Please enter appropriate Aadhar
@@ -38,7 +38,7 @@
 
       <ion-item>
         <ion-label position="floating">Gender / लिंग<span style="color: Red">*</span></ion-label>
-        <ion-select interface="action-sheet" formControlName="genderPersonal" id="genderPersonal"
+        <ion-select readonly interface="action-sheet" formControlName="genderPersonal" id="genderPersonal"
           [class.is-invalid]="genderPersonal.invalid && genderPersonal.touched">
           <ion-select-option  *ngFor="let genderObject of genderPersonalArray" [value]="genderObject['gender_id']">
             {{genderObject['gender']}} / {{genderObject['gender_mr']}}

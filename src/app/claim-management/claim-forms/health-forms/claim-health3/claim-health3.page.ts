@@ -98,8 +98,6 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
       this.childName = FamilyMemberDetail.firstNameFamily+' '+FamilyMemberDetail.surname
       this.aadharNumber.patchValue(FamilyMemberDetail.aadharNoFamily);
     })
-
-
   }
 
   //english getters

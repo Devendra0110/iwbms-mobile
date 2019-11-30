@@ -132,40 +132,11 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
         this.dateOfDeliveryHealth.reset();
         this.dateError =true
       }
-     
-
-      // const childYear = moment(this.childDetail.dobFamily);
       //assign male/femalne
       this.genderPersonal.patchValue(this.childDetail.relation === '11' ? 3 : 1)
       this.genderPersonal.disable();
     })
-    
 
-    // if (this.filledFormData) {
-    //   this.fileOptions = {
-    //     health1Form1Doc1: this.filledFormData.documents.health1Form1Doc1,
-    //     // selfDeclaration: this.filledFormData.documents.selfDeclaration
-    //   };
-    //   this.viewAttachedDocuments();
-    //   this.filledFormData.dateOfDeliveryHealth = typeof this.filledFormData.dateOfDeliveryHealth === 'string' ? this.convertDateToNGBDateFormat(this.filledFormData.dateOfDeliveryHealth) : this.filledFormData.dateOfDeliveryHealth;
-    //   this.formGroup.patchValue(this.filledFormData, { emitEvent: false });
-    //   this.formGroup.get('health1Form1Doc1').clearValidators();
-    //   this.formGroup.get('rationCardDoc').clearValidators();
-    //   this.formGroup.get('selfDeclaration').clearValidators();
-    //   this.formGroup.disable();
-    //   this.editFormFlagObservable.subscribe(value => {
-    //     if (value) {
-    //       this.formGroup.enable();
-    //       this.aadharNumber.disable();
-    //       this.childrenDetail.disable();
-    //       this.genderPersonal.disable();
-    //       this.dateOfDeliveryHealth.disable();
-    //       this.selectMaternityPlace.disable();
-    //       this.typeOfDelivery.disable();
-    //     }
-    //     else this.formGroup.disable();
-    //   });
-    // }
     this.selectMaternityPlace.valueChanges.subscribe((value) => {
       if (value === 'Hospital/रुग्णालय')
         this.nameOfHospital.enable()
@@ -175,12 +146,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
       }
     })
   }
-  calculateAge(date: string): number {
-    const dob = moment(date).format('YYYY-MM-DD');
-    const age = moment().diff(dob, 'years');
-    return age;
-}
-
+ 
   public capitaliseNumber(): void {
     this.birthCertificateNumber.setValue(this.birthCertificateNumber.value.toString().toUpperCase());
   }
