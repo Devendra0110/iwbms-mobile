@@ -78,7 +78,7 @@
                   <ion-label position="floating">Full Name / पूर्ण नाव
                     <span class="text-danger">*</span></ion-label>
           
-                    <ion-select *ngIf="!nomineeCheck" formControlName="fullName" [class.is-invalid]="fullName.invalid && fullName.touched"
+                    <ion-select interface="action-sheet" *ngIf="!nomineeCheck" formControlName="fullName" [class.is-invalid]="fullName.invalid && fullName.touched"
                      id="fullName">
                     <ion-select-option *ngFor="let childObject of sortedArray; let i = index"
                       [value]="childObject['firstNameFamily']">{{childObject['firstNameFamily']}} {{childObject['surname']}} /
