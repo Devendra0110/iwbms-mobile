@@ -119,10 +119,12 @@
           <ion-item>
             <ion-label position="floating">Aadhar Card Number /<br> आधार कार्ड क्रमांक<span class="text-danger">*</span>
             </ion-label>
-            <ion-input [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" formControlName="aadharNumber"
+            <ion-input type="tel" minlength="12" maxlength="12" [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" formControlName="aadharNumber"
               id="aadharNumber" clearInput></ion-input>
             <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
               <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter Aadhar Number.</small>
+              <small *ngIf="aadharNumber.errors && aadharNumber.errors['pattern']">Please enter appropriate Aadhar
+                Number.</small>
             </div>
           </ion-item>
           <ion-item>
