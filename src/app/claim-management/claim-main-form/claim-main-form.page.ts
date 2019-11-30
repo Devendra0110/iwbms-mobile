@@ -215,12 +215,9 @@ export class ClaimMainFormPage implements OnInit {
         const requiredUserInfo: Array<string> = Object.keys(allFormControls);
         this.formUserInfo = _.pick(userInfo[0], requiredUserInfo);
         this.formUserInfo['bocw_id'] = userInfo[0]['bocw_id'];
-        console.log(this.formUserInfo);
-        console.log(this.familyDetailsArray);
         // Object.assign(this.formUserInfo, this.convertIntoJSDate(_.pick(userInfo[0], ['dobPersonal', 'registrationDatePersonal'])));
         this.claimMainForm.patchValue(this.formUserInfo);
         this.uploadedImageUrl = `${serverUrl}bocw-registration/getfile/${userInfo[0].applicantPhotoFile}?x-access-token=${this.JWTToken}`;
-        console.log(this.uploadedImageUrl);
         this.calculateAge();
       }, error => {
         console.log(error);

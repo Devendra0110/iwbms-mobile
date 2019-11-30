@@ -80,10 +80,8 @@ export class ClaimVerificationPage implements OnInit {
         this.claimService.checkRegistrationAndRenewalValidity(tokenObj, this.JWTToken).subscribe(
           (res: any) => {
             if (res.subscription === 'active') {
-              console.log(res.firstNamePersonal + ' ' + res.lastNamePersonal);
               res['JWTToken']=this.JWTToken;
               delete res.agePersonal
-              console.log(res);
               const userObject: NavigationExtras = {
                 state: res
               }

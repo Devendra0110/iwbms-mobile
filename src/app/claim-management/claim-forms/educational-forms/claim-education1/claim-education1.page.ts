@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup,Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
@@ -48,7 +48,7 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
       school: new FormControl('', this.validationService.createValidatorsArray('school')),
       standard: new FormControl('', this.validationService.createValidatorsArray('standard')),
       placeSchool: new FormControl('', this.validationService.createValidatorsArray('placeSchool')),
-      year: new FormControl('', this.validationService.createValidatorsArray('year')),
+      year: new FormControl('', ),
       attendanceCertificate: new FormControl('', this.validationService.createValidatorsArray('attendanceCertificate')),
       bonafideDoc: new FormControl('', this.validationService.createValidatorsArray('bonafideDoc')),
       aadharCardDoc: new FormControl('', this.validationService.createValidatorsArray('aadharCardDoc')),
@@ -70,6 +70,15 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
+    this.year.setValidators([
+      Validators.required,
+      Validators.pattern('^[0-9]*\.?[0-9]{0,2}$'),
+      Validators.minLength(4),
+      Validators.maxLength(4),
+      Validators.min(Number(this.user.registrationDatePersonal.slice(0, 4)) - 1),
+      Validators.max(Number(new Date().getFullYear()))
+    ])
+    this.year.updateValueAndValidity();
     this.assignBenefits(false);
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
@@ -176,7 +185,9 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
       };
       this.saveClaimForm(postObj);
     } else {
-      this.dialogs.alert('Please Update the form.');
+      this.formGroup.markAllAsTouched();
+      // this.dialogs.
+      alert('Please Update the form.');
     }
   }
 

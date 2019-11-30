@@ -33,6 +33,7 @@ export abstract class ClaimBasePage {
     public userInfo: any;
     public schemeDetails: any;
     public dateReg: string;
+    public wrongYearOfPassing:number;
 
     @Input() user: any;
     @Input() filledFormData: any;
@@ -64,7 +65,9 @@ export abstract class ClaimBasePage {
         this.storage.get('token').then((val) => {
             this.JWTToken = val;
         });
+        this.wrongYearOfPassing=0;
     }
+
 
     get benefitType() { return this.formGroup.get('benefitType'); }
     get benefitAmount() { return this.formGroup.get('benefitAmount'); }
@@ -188,11 +191,17 @@ export abstract class ClaimBasePage {
         const inputYear = this.formGroup.get('year');
         const currentYear = new Date().getFullYear();
         const userRegistrationYear = Number(this.user.registrationDatePersonal.slice(0,4))-gap
-        if (inputYear.value >= userRegistrationYear && inputYear.value <= currentYear) {
+        if (inputYear.value < userRegistrationYear) {
+            this.wrongYearOfPassing=-1;
+            this.toast.show('Invalid Year of Admission', '1000', 'bottom').subscribe(() => { });
             // returns the user input if correct
-        } else {
+        } else if (inputYear.value > currentYear){
+            this.wrongYearOfPassing = 1;
             this.toast.show('Invalid Year of Admission', '1000', 'bottom').subscribe(() => { });
             this.formGroup.get('year').reset();
+        }
+        else {
+            this.wrongYearOfPassing=0;
         }
     }
     
@@ -240,7 +249,12 @@ export abstract class ClaimBasePage {
         }
     }
 
-
+    public joinWfcNames(wfcs) {
+        const wfcNames = wfcs.map((wf) => {
+            return wf.office_name;
+        });
+        return wfcNames.join(' or ');
+    }
 
     protected saveClaimForm(postObj: object) {
         const formData = new FormData();
@@ -255,10 +269,13 @@ export abstract class ClaimBasePage {
         formData.append('data', JSON.stringify(postObj));
         formData.append('modeOfApplication', 'Claim By Field Agent');
 
-        this.claimHttpService.applyForClaim(formData, this.JWTToken).subscribe((result: any) => {
-            if (result) {
+        this.claimHttpService.applyForClaim(formData, this.JWTToken).subscribe((res: any) => {
+            if (res) {
+                // this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
+                // alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
                 // this.dialogs.
                 alert('Scheme Claimed Successfully');
+                this.router.navigate(['/dashboard'])
             }
         }, (error: Error) => {
                 // this.dialogs.

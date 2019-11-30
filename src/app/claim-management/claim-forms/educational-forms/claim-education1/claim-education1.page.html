@@ -16,7 +16,7 @@
 
     <ion-item>
       <ion-label position="floating">Name of Child / मुलाचे/मुलीचे नाव<span class="text-danger">*</span></ion-label>
-      <ion-select formControlName="childrenDetail" id="childrenDetail"
+      <ion-select interface="action-sheet" formControlName="childrenDetail" id="childrenDetail"
         [class.is-invalid]="childrenDetail.invalid && childrenDetail.touched">
         <ion-select-option *ngFor="let childObject of childArray; let i = index" [disabled]="i > '1'"
             [value]="childObject['firstNameFamily']">{{childObject['firstNameFamily']}} {{childObject['surname']}} / 
@@ -55,7 +55,7 @@
     <ion-item>
       <ion-label position="floating">Standard / इयत्ता<span class="text-danger">*</span>
       </ion-label>
-      <ion-select formControlName="standard" id="standard" [class.is-invalid]="standard.invalid && standard.touched">
+      <ion-select interface="action-sheet" formControlName="standard" id="standard" [class.is-invalid]="standard.invalid && standard.touched">
         <ion-select-option *ngFor="let each of getEducationArray" [value]="each.education_level_id">{{each.education_level_en}} /
             {{each.education_level_mr}}
         </ion-select-option>
@@ -118,13 +118,12 @@
     <ion-item>
       <ion-label position="floating">Passing Year / उत्तीर्ण झाल्याचे वर्ष<span class="text-danger">*</span></ion-label>
       <ion-input type="number"  formControlName="year" id="year" clearInput
-        [class.is-invalid]="year.invalid && year.touched" (ionBlur)="yearOfPassing($event,1)">
+        [class.is-invalid]="year.invalid && year.touched">
       </ion-input>
       <div class="text-danger" *ngIf="year.invalid && year.touched">
         <small *ngIf="year.errors && year.errors['required']">Please enter your passing year.</small>
-        <small *ngIf="year.errors && year.errors['maxlength']">You have reached your
-          maximum.</small>
-        <small *ngIf="year.errors && year.errors['minlength']">Please enter appropriate passing year.</small>
+        <small *ngIf="year.errors && year.errors['min'] ">Passing year can not be more than a year back of registration year.</small>
+        <small *ngIf="year.errors && year.errors['max'] ">Passing year can not be more than current year.</small>
       </div>
     </ion-item>
     <br>

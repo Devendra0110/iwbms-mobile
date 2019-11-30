@@ -84,7 +84,6 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
       day: new Date().getDate()
     };
     this.Delivery = Constants.DELIVERY_TYPE;
-    console.log(this.Delivery);
     this.dateError = false;
   }
   
@@ -119,9 +118,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
     })
 
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
-    console.log(this.childArray);
     this.childrenDetail.valueChanges.subscribe((childId) => {
-      console.log(this.dateOfDeliveryHealth);
       // patch birth year
       this.childDetail = this.childArray.find((child: any) => child.family_detail_id === Number (childId));
       this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
