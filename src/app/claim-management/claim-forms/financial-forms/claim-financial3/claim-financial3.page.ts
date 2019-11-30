@@ -9,6 +9,7 @@ import { FormControl, FormControlDirective, FormGroup, Validators } from '@angul
 import { ClaimValidationService } from 'src/app/services/claim-validation.service';
 import { ClaimService } from 'src/app/services/claim.service';
 import { HttpService } from 'src/app/services/http.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-claim-financial3',
@@ -18,6 +19,7 @@ import { HttpService } from 'src/app/services/http.service';
 export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
   public maxTodaysDate : string;
+  loanMinDate: string;
 
   constructor(
     private validationService: ClaimValidationService,
@@ -40,7 +42,6 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       loanDate: new FormControl('', this.validationService.createValidatorsArray('loanDate')),
       loanPeriod: new FormControl('', this.validationService.createValidatorsArray('loanPeriod')),
-      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
 
 
       //fileuploaders
@@ -63,9 +64,9 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
   ngOnInit() {
     this.assignBenefits(true);
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
+    this.loanMinDate = moment('2018/01/17').format('YYYY-MM-DD');
 
   }
-  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get bankNameBank() { return this.formGroup.get('bankNameBank'); }
   get bankBranchBank() { return this.formGroup.get('bankBranchBank'); }
   get amtOfLoan() { return this.formGroup.get('amtOfLoan'); }
@@ -87,18 +88,22 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
 
   public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
+        this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+        this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      }
       const postObj = {
         userData: this.user,
         claimData: {
           bankNameBank: this.formGroup.getRawValue().bankNameBank,
           bankBranchBank: this.formGroup.getRawValue().bankBranchBank,
-          amtOfLoan: this.formGroup.getRawValue().amtOfLoan,
+          amtOfLoan: this.formGroup.getRawValue().amtOfLoan.toString(),
           loanDate: this.formGroup.getRawValue().loanDate,
           loanPeriod: this.formGroup.getRawValue().loanPeriod,
           benefitType: this.formGroup.getRawValue().benefitType,
           benefitAmount: this.formGroup.getRawValue().benefitAmount,
           bankNameBank_mr: this.formGroup.getRawValue().bankNameBank_mr,
-          interestRate: this.formGroup.getRawValue().interestRate,
+          interestRate: this.formGroup.getRawValue().interestRate.toString(),
           bankBranchBank_mr: this.formGroup.getRawValue().bankBranchBank_mr,
 
           documents: {
@@ -113,6 +118,7 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
       this.saveClaimForm(postObj);
 
     } else {
+      console.log('error in form ');
           this.dialogs.alert('Please Update the form.');
     }
   }

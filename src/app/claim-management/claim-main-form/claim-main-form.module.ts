@@ -51,13 +51,13 @@ const routes: Routes = [
   declarations: [
     ClaimMainFormPage,
 
-    ClaimEducation1Page,
-    ClaimEducation2Page,
-    ClaimEducation3Page,
-    ClaimEducation4Page,
-    ClaimEducation5Page,
-    ClaimEducation6Page,
-    ClaimEducation7Page,
+    // ClaimEducation1Page,
+    // ClaimEducation2Page,
+    // ClaimEducation3Page,
+    // ClaimEducation4Page,
+    // ClaimEducation5Page,
+    // ClaimEducation6Page,
+    // ClaimEducation7Page,
 
     ClaimSocial1Page,
     // ClaimSocial2Page,
@@ -76,11 +76,11 @@ const routes: Routes = [
     ClaimFinancial5Page,
     ClaimFinancial6Page,
 
-    ClaimHealth1Page,
-    ClaimHealth2Page,
-    ClaimHealth3Page,
-    ClaimHealth4Page,
-    ClaimHealth5Page,
+    // ClaimHealth1Page,
+    // ClaimHealth2Page,
+    // ClaimHealth3Page,
+    // ClaimHealth4Page,
+    // ClaimHealth5Page,
 
   ],
 })

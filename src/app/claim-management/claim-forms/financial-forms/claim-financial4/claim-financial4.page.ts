@@ -1,3 +1,4 @@
+import { Constants } from './../../../../../assets/constants';
 import { Storage } from '@ionic/storage';
 import { HttpService } from './../../../../services/http.service';
 import { TransliterationService } from './../../../../services/transliteration.service';
@@ -18,6 +19,7 @@ import { Dialogs } from '@ionic-native/dialogs/ngx';
 export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
   public saveOnce=1;
+  claimRegionObj: { type: string; id: string; }[];
 
   constructor(private validationService: ClaimValidationService,
     protected transliterate: TransliterationService,
@@ -38,13 +40,14 @@ export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
       pmAwaasCertificate: new FormControl('', this.validationService.createValidatorsArray('pmAwaasCertificate')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
-      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       placeOfClaim: new FormControl('', Validators.required),
 
       //marathi form controls
       benefitType: new FormControl('', [Validators.required]),
       benefitAmount: new FormControl('')
     });
+    this.claimRegionObj = Constants.claimRegion;
+
   }
 
   ngOnInit() {
@@ -52,7 +55,6 @@ export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
 
   }
 
-  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get pmAwaasCertificate() { return this.formGroup.get('pmAwaasCertificate'); }
   // get declaration() { return this.formGroup.get('declaration'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }

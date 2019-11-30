@@ -26,6 +26,14 @@ export class ClaimService {
     return this.http.get(`${serverUrl}claim-management/scheme-categories`);
   }
 
+
+  getPreviousClaims(schemeNo: string, registrationNo: string,JWTToken) {
+    const headers = appendTokenToHeaderObject(
+      new HttpHeaders(),JWTToken
+    );
+    return this.http.get(`${serverUrl}claim-management/recent-claims/${schemeNo}/${registrationNo}`);
+  }
+
   getSchemeDetail(JWTToken: any) {
     const headers = appendTokenToHeaderObject(
       new HttpHeaders(), JWTToken

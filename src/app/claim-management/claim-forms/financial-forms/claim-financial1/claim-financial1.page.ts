@@ -197,8 +197,8 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
     this.formGroup.get('dobPersonal').patchValue(nomineeBirthDateArray);
     this.formGroup.get('relation').patchValue(Number(this.sortedArray[0]['relation']));
     this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
-  this.agePersonal.patchValue(this.calculateAge(nomineeBirthDateArray))
-    this.agePersonal.disable()
+  this.agePersonal.patchValue(this.calculateAge(nomineeBirthDateArray));
+    this.agePersonal.disable();
   
   }
 
@@ -302,6 +302,7 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
           policeStationAdd: this.formGroup.getRawValue().policeStationAdd,
           issuingAuthority: this.formGroup.getRawValue().issuingAuthority,
           policeStationAdd_mr: this.formGroup.getRawValue().policeStationAdd_mr,
+          nomineeCheck:this.nomineeCheck,
 
 
           documents: {
@@ -323,10 +324,10 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
     }
   }
   openOtherDetails(event: any) {
-    // this.open = !this.open;
+    this.open = !this.open;
 
     console.log(this.open)
-    if (this.open) {
+    if (!this.open) {
       this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
       this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);
       this.formGroup.get('bankAddressBank').patchValue(this.user['bankAddressBank']);

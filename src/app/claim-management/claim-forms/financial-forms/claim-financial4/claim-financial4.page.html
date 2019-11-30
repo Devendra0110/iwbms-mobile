@@ -20,7 +20,7 @@
                   </ion-label>
                   <ion-select interface="action-sheet" formControlName="placeOfClaim"
                     [class.is-invalid]="placeOfClaim.invalid && placeOfClaim.touched" id="placeOfClaim">
-                    <ion-select-option></ion-select-option>
+                    <ion-select-option *ngFor="let item of claimRegionObj" [value]="item['type']">{{item['type']}}</ion-select-option>
                   </ion-select>
                   <div class="text-danger" *ngIf="placeOfClaim.invalid && placeOfClaim.touched">
                     <small *ngIf="placeOfClaim.errors && placeOfClaim.errors['required']">Please select a option.</small>

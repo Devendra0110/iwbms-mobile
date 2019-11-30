@@ -80,7 +80,7 @@
             class="text-danger">*</span></ion-label >
         <ion-datetime id="deathCertificateIssueDate"
           [class.is-invalid]="deathCertificateIssueDate.invalid && deathCertificateIssueDate.touched" 
-          formControlName="deathCertificateIssueDate" [min]="minDate" [max]='maxTodaysDate'>
+          formControlName="deathCertificateIssueDate" [min]="deathDate.value" [max]='maxTodaysDate'>
         </ion-datetime>
         <div class="text-danger" *ngIf="deathCertificateIssueDate.invalid && deathCertificateIssueDate.touched">
           <small *ngIf="deathCertificateIssueDate.errors && deathCertificateIssueDate.errors['required']">Please enter
@@ -92,7 +92,7 @@
           <ion-icon slot="end" name="calendar"></ion-icon>
 
         <ion-label position="floating">Date Of FIR / एफआयआर तारीख<span class="text-danger">*</span></ion-label>
-        <ion-datetime id="dateOfFir" [class.is-invalid]="dateOfFir.invalid && dateOfFir.touched"
+        <ion-datetime id="dateOfFir" [min]="deathDate.value" [max]='maxTodaysDate' [class.is-invalid]="dateOfFir.invalid && dateOfFir.touched"
           formControlName="dateOfFir">
         </ion-datetime>
         <div class="text-danger" *ngIf="dateOfFir.invalid && dateOfFir.touched">

@@ -9,6 +9,8 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { Storage } from '@ionic/storage';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-claim-financial5',
   templateUrl: './claim-financial5.page.html',
@@ -16,9 +18,11 @@ import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.ba
 })
 export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
-  public maxTodaysDate : string;
+  public maxTodaysDate: string;
   public isifscCodeBankCodeFound: boolean;
   public bankDetails: any;
+  minDate: any;
+  public nomineeCheck=false;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -59,7 +63,6 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
       aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       nomineeMobNumber: new FormControl('', this.validationService.createValidatorsArray('nomineeMobNumber')),
-      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
 
 
 
@@ -75,11 +78,38 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
+    this.getRelation();
     this.assignBenefits(true);
+    this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
+    this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+    this.sortedArray = this.familyDetailsArray.filter(data => {
+      return data.category !== "self";
+    })
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
+    this.fullName.valueChanges.subscribe(value => {
 
+      const childSelected = this.familyDetailsArray.find((child: any) => child.firstNameFamily === value)
+      // this.dobPersonal.patchValue(childSelected.dobFamily);
+      if (childSelected !== undefined) {
+        this.aadharNumber.patchValue(childSelected.aadharNoFamily);
+        this.relation.patchValue(Number(childSelected.relation));
+        // this.relation_mr.patchValue(childSelected.category_mr);
+        // if (typeof childSelected.dobFamily === 'string') {
+        //   childSelected.dobFamily = moment(childSelected.dobFamily).format('YYYY-MM-DD').split('/');
+        //   childSelected.dobFamily = {
+        //     year: Number(childSelected.dobFamily[2]),
+        //     month: Number(childSelected.dobFamily[1]),
+        //     day: Number(childSelected.dobFamily[0])
+        //   };
+        // }
+        const formattedAge = moment(childSelected.dobFamily).format('YYYY-MM-DD');
+this.agePersonal.disable()
+        this.dobPersonal.patchValue(formattedAge)
+        this.agePersonal.patchValue(this.calculateAge(formattedAge))
+
+      }
+    })
   }
-  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get deathCertificateIssueDate() { return this.formGroup.get('deathCertificateIssueDate'); }
   get placeOfDocIssue() { return this.formGroup.get('placeOfDocIssue'); }
   get deathCertificateNo() { return this.formGroup.get('deathCertificateNo'); }
@@ -128,7 +158,7 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
         this.formGroup.get('bankAddressBank').patchValue(bankDetails['ADDRESS']);
       }
     },
-    
+
       error => {
         this.toast.show('IFSC code not found', '1000', 'bottom');
         this.bankDetails = {
@@ -141,22 +171,26 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
 
   }
   capitaliseifscCodeBank() {
-   
+
     let value = this.ifscCodeBank.value;
     value = value.toString().toUpperCase();
     this.ifscCodeBank.setValue(value);
   }
   public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
+      if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
+        this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
+        this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
+      }
       const postObj = {
         userData: this.user,
         claimData: {
-          deathCertificateIssueDate:this.formGroup.getRawValue().deathCertificateIssueDate,
+          deathCertificateIssueDate: this.formGroup.getRawValue().deathCertificateIssueDate,
           placeOfDocIssue: this.formGroup.getRawValue().placeOfDocIssue,
           deathCertificateNo: this.formGroup.getRawValue().deathCertificateNo,
           fullName: this.formGroup.getRawValue().fullName,
           // fullName_mr: this.formGroup.getRawValue().fullName_mr,
-          dobPersonal:this.formGroup.getRawValue().dobPersonal,
+          dobPersonal: this.formGroup.getRawValue().dobPersonal,
           agePersonal: this.formGroup.getRawValue().agePersonal,
           relation: this.formGroup.getRawValue().relation,
           ifscCodeBank: this.formGroup.getRawValue().ifscCodeBank,
@@ -164,12 +198,14 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
           bankAddressBank: this.formGroup.getRawValue().bankAddressBank,
           bankBranchBank: this.formGroup.getRawValue().bankBranchBank,
           accountNumberBank: this.formGroup.getRawValue().accountNumberBank.toString(),
-          deathDate:this.formGroup.getRawValue().deathDate,
+          deathDate: this.formGroup.getRawValue().deathDate,
           nomineeMobNumber: this.formGroup.getRawValue().nomineeMobNumber,
-          aadharNumber:this.formGroup.getRawValue().aadharNumber,
+          aadharNumber: this.formGroup.getRawValue().aadharNumber,
           benefitType: this.formGroup.getRawValue().benefitType,
           benefitAmount: this.formGroup.getRawValue().benefitAmount,
           placeOfDocIssue_mr: this.formGroup.getRawValue().placeOfDocIssue_mr,
+          nomineeCheck:this.nomineeCheck,
+
           documents: {
             deathCertificateDoc: this.fileOptions['deathCertificateDoc'],
             // proofOfDeathDoc: this.fileOptions['proofOfDeathDoc'],
@@ -181,8 +217,61 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
         }
       };
       this.saveClaimForm(postObj);
-    } else {      
+    } else {
+      
       this.dialogs.alert('Please Update the form.');
     }
   }
+
+  nomineeSwitch(event: any) {
+    this.nomineeCheck = !this.nomineeCheck;
+    if (!this.nomineeCheck) {
+
+      this.fullName.reset();
+      this.dobPersonal.reset();
+      this.relation.reset();
+      this.aadharNumber.reset();
+this.fullName_mr.reset();
+this.agePersonal.reset();
+
+      this.nomineeCertificate.clearValidators();
+
+    } else {
+
+      // this.patchNominee()
+
+      
+      this.nomineeCertificate.setValidators([Validators.required]);
+this.agePersonal.reset();
+      this.fullName.reset();
+      this.dobPersonal.reset();
+      this.relation.reset();
+      this.aadharNumber.reset();
+this.fullName_mr.reset()
+    }
+  }
+  public calculateAgepatched(date: string): void {
+    const dob = moment(date).format('YYYY-MM-DD');
+    const age = moment().diff(dob, 'years');
+this.agePersonal.patchValue(age)}
+
+openOtherDetails(event: any) {
+  this.open = !this.open;
+
+  console.log(this.open)
+  if (!this.open) {
+    this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
+    this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);
+    this.formGroup.get('bankAddressBank').patchValue(this.user['bankAddressBank']);
+    this.formGroup.get('accountNumberBank').patchValue(this.user['accountNumberBank']);
+    this.formGroup.get('ifscCodeBank').patchValue(this.user['ifscCodeBank']);
+
+  } else {
+    this.formGroup.get('bankNameBank').reset()
+    this.formGroup.get('bankBranchBank').reset()
+    this.formGroup.get('bankAddressBank').reset()
+    this.formGroup.get('accountNumberBank').reset()
+    this.formGroup.get('ifscCodeBank').reset()
+  }
+}
 }
