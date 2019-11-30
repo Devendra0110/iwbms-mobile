@@ -85,7 +85,7 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.user                                                                                                                                       )
+    this.issuingAuthority.disable();
     this.claimHttpService.getPreviousClaims('F06', this.user.registration_no,this.JWTToken).subscribe(res => {
       this.PreviousClaimDetails = res;
       console.log(this.PreviousClaimDetails);
@@ -251,13 +251,14 @@ this.aadharNumber.disable()
   }
   patchClaimData() {
 
+    this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
     if ( this.parsedClaimData) {
-      this.formGroup.get('deathDate').patchValue(this.convertDateToNGBDateFormat(this.parsedClaimData['deathDate']));
+      this.formGroup.get('deathDate').patchValue(moment(this.parsedClaimData['deathDate']).format('YYYY-MM-DD'));
       this.formGroup.get('placeOfDocIssue').patchValue(this.parsedClaimData['placeOfDocIssue']);
       this.formGroup.get('spouseMobNumber').patchValue(this.parsedClaimData['spouseMobNumber']);
       this.formGroup.get('deathCertificateNo').patchValue(this.parsedClaimData['deathCertificateNo']);
       this.formGroup.get('aadharNumber').patchValue(this.parsedClaimData['aadharNumber']);
-      this.formGroup.get('deathCertificateIssueDate').patchValue(this.convertDateToNGBDateFormat(this.parsedClaimData['deathCertificateIssueDate']));
+      this.formGroup.get('deathCertificateIssueDate').patchValue(moment(this.parsedClaimData['deathCertificateIssueDate']).format('YYYY-MM-DD'));
       this.formGroup.get('accountNumberBank').patchValue(this.parsedClaimData['accountNumberBank']);
       this.formGroup.get('bankAddressBank').patchValue(this.parsedClaimData['bankAddressBank']);
       this.formGroup.get('issuingAuthority').patchValue(this.parsedClaimData['issuingAuthority']);

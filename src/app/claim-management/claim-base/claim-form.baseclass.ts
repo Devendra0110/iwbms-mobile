@@ -261,10 +261,7 @@ export abstract class ClaimBasePage {
         for (const item in this.files) {
             if (this.files[item]) {
                 formData.append('files', this.files[item], this.fileOptions[item]);
-            } else if (item !== 'schoolIdDoc') {
-                alert('Please upload all the required Documents.');
-                return;
-            }
+            }       
         }
         formData.append('data', JSON.stringify(postObj));
         formData.append('modeOfApplication', 'Claim By Field Agent');
