@@ -284,10 +284,7 @@ export class ClaimValidationService {
         break;
       }
 
-      case 'birthCertificateIssuedBy': {
-        validatorsArr = [Validators.required];
-        break;
-      }
+     
 
       case 'rationCardNumber': {
         validatorsArr = [
@@ -773,6 +770,8 @@ export class ClaimValidationService {
 
 // *********************************************************************************************
 
+
+
       // HEALTH VALIDATIONS
       case 'billAmount': {
         validatorsArr = [
@@ -780,6 +779,12 @@ export class ClaimValidationService {
           Validators.maxLength(8),
           Validators.pattern('^[0-9]*\.?[0-9]{0,2}$')
         ];
+        break;
+      }
+
+      case 'birthCertificateIssuedBy': {
+        validatorsArr = [Validators.required];
+        Validators.pattern('^[a-zA-Z][a-zA-Z\\s]+$')
         break;
       }
 
@@ -831,7 +836,6 @@ export class ClaimValidationService {
         validatorsArr = [
           Validators.required,
           Validators.maxLength(120),
-          Validators.pattern('^[a-zA-Z0-9 ]*$')
         ];
         break;
       }
@@ -848,7 +852,7 @@ export class ClaimValidationService {
         validatorsArr = [
           Validators.required,
           Validators.maxLength(240),
-         // Validators.pattern('[^0-9]+$')
+          Validators.pattern('^[a-zA-Z][a-zA-Z\\s]+$')
         ];
         break;
       }
@@ -880,8 +884,7 @@ export class ClaimValidationService {
         validatorsArr = [
           Validators.required,
           Validators.maxLength(120),
-          Validators.pattern('^[a-zA-Z0-9 ]*$'),
-         // Validators.pattern('^[a-zA-Z]*$')
+          // Validators.pattern('^[a-zA-Z0-9 ]*$'),
         ];
         break;
       }

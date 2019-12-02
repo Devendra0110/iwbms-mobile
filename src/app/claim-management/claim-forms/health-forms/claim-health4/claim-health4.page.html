@@ -21,6 +21,7 @@
           <small *ngIf="nameOfMed.errors && nameOfMed.errors['required']">Please enter name of Civil Surgeon</small>
           <small *ngIf="nameOfMed.errors && nameOfMed.errors['maxlength']">You have reached your
             maximum</small>
+            <small *ngIf="nameOfMed.errors && nameOfMed.errors['pattern']">Please enter proper value</small>
         </div>
       </ion-item>
       <ion-item *ngIf="nameOfMed_mr.value">
@@ -79,20 +80,20 @@
       </ion-item>
       <ion-item>
         <input id='health4Form4Doc1' (change)="getFileDetails($event)" formControlName="health4Form4Doc1" type="file" accept="application/pdf">
+      </ion-item>
         <div class="text-danger" *ngIf="health4Form4Doc1.invalid && health4Form4Doc1.touched">
           <small> Please Upload Required Document</small>
         </div>
-      </ion-item>
 
       <ion-item lines="none">
         <ion-label text-wrap floating>2. Self Declaration / हमीपत्र </ion-label>
       </ion-item>
       <ion-item>
         <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" accept="application/pdf">
+      </ion-item>
         <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
           <small> Please Upload Required Document</small>
         </div>
-      </ion-item>
 
       <ion-item>
         <ion-checkbox formControlName="verifyDocumentCheck" slot="start" checked="false"></ion-checkbox>

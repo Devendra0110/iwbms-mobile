@@ -79,6 +79,8 @@
         <div class="text-danger" *ngIf="nameOfDoctor.invalid && nameOfDoctor.touched">
           <small *ngIf="nameOfDoctor.errors && nameOfDoctor.errors['required']">Please enter Name of Doctor </small>
           <small *ngIf="nameOfDoctor.errors  && nameOfDoctor.errors['maxlength']">You have reached your maximum</small>
+          <small *ngIf="nameOfDoctor.errors  && nameOfDoctor.errors['pattern']">Please enter proper name</small>
+
         </div>
       </ion-item>
       <ion-item *ngIf="nameOfDoctor_mr.value">
@@ -120,7 +122,7 @@
 
       <ion-item>
         <ion-label position="floating">Benefit Amount / मोबदला रक्कम <span style="color: Red">*</span></ion-label>
-        <ion-input type="number" id="benefitAmount" [class.is-invalid]="benefitAmount.invalid && benefitAmount.touched"
+        <ion-input type="number" disabled id="benefitAmount" [class.is-invalid]="benefitAmount.invalid && benefitAmount.touched"
           formControlName="benefitAmount"></ion-input>
         <div class="text-danger" *ngIf="benefitAmount.invalid && benefitAmount.touched">
           <small *ngIf="benefitAmount.errors && benefitAmount.errors['required']">Please enter your amount.</small>
@@ -135,10 +137,10 @@
       </ion-item>
       <ion-item>
         <input id='health2Form2Doc1' (change)="getFileDetails($event)" formControlName="health2Form2Doc1" type="file" accept="application/pdf">
+      </ion-item>
         <div class="text-danger" *ngIf="health2Form2Doc1.invalid && health2Form2Doc1.touched">
           <small> Please Upload Required Document</small>
         </div>
-      </ion-item>
 
 
       <ion-item lines="none">
@@ -146,10 +148,10 @@
       </ion-item>
       <ion-item>
         <input id='health2Form2Doc2' (change)="getFileDetails($event)" formControlName="health2Form2Doc2" type="file" accept="application/pdf">
+      </ion-item>
         <div class="text-danger" *ngIf="health2Form2Doc2.invalid && health2Form2Doc2.touched">
           <small> Please Upload Required Document</small>
         </div>
-      </ion-item>
 
 
       <ion-item lines="none">
@@ -157,10 +159,10 @@
       </ion-item>
       <ion-item>
         <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" accept="application/pdf">
+      </ion-item>
         <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
           <small> Please Upload Required Document</small>
         </div>
-      </ion-item>
 
 
       <ion-item lines="none">
@@ -168,10 +170,10 @@
       </ion-item>
       <ion-item>
         <input id='aadharCardDoc' (change)="getFileDetails($event)" formControlName="aadharCardDoc" type="file" accept="application/pdf">
+      </ion-item>
         <div class="text-danger" *ngIf="aadharCardDoc.invalid && aadharCardDoc.touched">
           <small> Please Upload Required Document</small>
         </div>
-      </ion-item>
 
       <ion-item>
           <ion-checkbox formControlName="verifyDocumentCheck" slot="start" checked="false"></ion-checkbox>
