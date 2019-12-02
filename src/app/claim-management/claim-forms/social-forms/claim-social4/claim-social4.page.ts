@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup} from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ClaimValidationService } from 'src/app/services/claim-validation.service';
 import { TransliterationService } from 'src/app/services/transliteration.service';
 import { HttpService } from 'src/app/services/http.service';
@@ -63,15 +63,18 @@ export class ClaimSocial4Page extends ClaimBasePage implements OnInit {
           benefitType: this.benefitType.value,
           benefitAmount: this.benefitAmount.value,
           documents: {
-          //  // socialForm5Doc1 : this.fileOptions['socialForm5Doc1'],
-          selfDeclaration: this.fileOptions['selfDeclaration']
+            //  // socialForm5Doc1 : this.fileOptions['socialForm5Doc1'],
+            selfDeclaration: this.fileOptions['selfDeclaration']
           }
         }
       };
       this.saveClaimForm(postObj);
     } else {
-      // this.dialogs.
-      alert('Form save')
+      this.formGroup.markAllAsTouched();
+
+      this.dialogs.alert('Please Update the form.');
+
+
     }
   }
 

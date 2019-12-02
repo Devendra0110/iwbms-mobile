@@ -110,8 +110,11 @@ export class ClaimSocial3Page extends ClaimBasePage implements OnInit {
       };
       this.saveClaimForm(postObj);
     } else {
+      this.formGroup.markAllAsTouched();
+
      // this.dialogs.
-      alert('form saved');
+     this.dialogs.alert('Please Update the form.');
+
     }
   }
 

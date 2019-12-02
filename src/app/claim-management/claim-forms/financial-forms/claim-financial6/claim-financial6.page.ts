@@ -249,6 +249,7 @@ this.aadharNumber.disable()
 
       this.saveClaimForm(postObj);
     } else {
+      this.formGroup.markAllAsTouched();
       this.dialogs.alert('Please Update the form.');
     }
   }

@@ -134,8 +134,11 @@ public sameAsRegistrationChecked(event) {
         }
       };
       this.saveClaimForm(postObj);
-    } else {
-      alert('form is invalid')
+    } else {      this.formGroup.markAllAsTouched();
+
+      this.dialogs.alert('Please Update the form.');
+
+
     }
   }
 

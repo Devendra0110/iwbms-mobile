@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { FormControl, FormControlDirective, FormGroup,Validators } from '@angular/forms';
+import { FormControl, FormControlDirective, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { ClaimValidationService } from 'src/app/services/claim-validation.service';
 import { TransliterationService } from 'src/app/services/transliteration.service';
@@ -24,23 +24,23 @@ export class ClaimSocial1Page extends ClaimBasePage implements OnInit {
   public endDateFordobPersonal: any;
   public startDateFordobPersonal: any;
   public spouseDetails: any;
-  public sysDate:string;
+  public sysDate: string;
   public uploadedSocialForm2Doc1Url: string;
   public uploadedSocialForm2Doc2Url: string;
   public uploadedSelfDeclarationUrl: string;
   public uploadedAadharCardDocUrl: string;
 
   constructor(
-  protected validationService: ClaimValidationService,
-  protected transliterate: TransliterationService,
-  protected httpService: HttpService,
-  protected claimService: ClaimService,
-  protected router:Router,
-  protected storage:Storage,
-  protected toast:Toast,
-  protected dialogs:Dialogs
+    protected validationService: ClaimValidationService,
+    protected transliterate: TransliterationService,
+    protected httpService: HttpService,
+    protected claimService: ClaimService,
+    protected router: Router,
+    protected storage: Storage,
+    protected toast: Toast,
+    protected dialogs: Dialogs
   ) {
-    super(transliterate,httpService,claimService,router,storage,toast,dialogs);
+    super(transliterate, httpService, claimService, router, storage, toast, dialogs);
     this.fileOptions = { socialForm2Doc1: '', socialForm2Doc2: '', selfDeclaration: '', aadharCardDoc: '' };
     this.files = { socialForm2Doc1: '', socialForm2Doc2: '', selfDeclaration: '', aadharCardDoc: '' };
     this.formGroup = new FormGroup({
@@ -70,10 +70,10 @@ export class ClaimSocial1Page extends ClaimBasePage implements OnInit {
 
   ngOnInit() {
     this.assignBenefits(true);
-    this.sysDate = this.changeToIonDateTime(0,'years')
-    this.marrageMinDate = this.changeToIonDateTime(5,'years');
-    this.startDateFordobPersonal = this.changeToIonDateTime(18,'years');
-    this.endDateFordobPersonal = this.changeToIonDateTime(60,'years');
+    this.sysDate = this.changeToIonDateTime(0, 'years')
+    this.marrageMinDate = this.changeToIonDateTime(5, 'years');
+    this.startDateFordobPersonal = this.changeToIonDateTime(18, 'years');
+    this.endDateFordobPersonal = this.changeToIonDateTime(60, 'years');
     this.getRelationWithoutSubscribe().subscribe((data: any) => {
       this.getRelationArray = data;
       this.relationSpouse.patchValue(Number(this.spouseDetails.relation));
@@ -94,7 +94,7 @@ export class ClaimSocial1Page extends ClaimBasePage implements OnInit {
     this.dateReg = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
   }
 
-  calculateAgePersonal(){
+  calculateAgePersonal() {
     const age = this.calculateAge(this.dobSpouse.value)
     if (age > 18 && age < 100) {
       this.ageSpouse.patchValue(age);
@@ -140,9 +140,12 @@ export class ClaimSocial1Page extends ClaimBasePage implements OnInit {
       };
       this.saveClaimForm(postObj);
     } else {
-      alert('Form is not vaid')
+      this.formGroup.markAllAsTouched();
+
+      this.dialogs.alert('Please Update the form.');
+
+    }
   }
-}
 
 
   get dateOfMar() { return this.formGroup.get('dateOfMar'); }

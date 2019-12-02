@@ -33,7 +33,7 @@ export abstract class ClaimBasePage {
     public userInfo: any;
     public schemeDetails: any;
     public dateReg: string;
-    public wrongYearOfPassing:number;
+    public wrongYearOfPassing: number;
 
     @Input() user: any;
     @Input() filledFormData: any;
@@ -48,7 +48,7 @@ export abstract class ClaimBasePage {
         protected router: Router,
         protected storage: Storage,
         protected toast: Toast,
-        protected dialogs:Dialogs,
+        protected dialogs: Dialogs,
     ) {
         this.todaysDate = {
             year: new Date().getFullYear(),
@@ -65,13 +65,13 @@ export abstract class ClaimBasePage {
         this.storage.get('token').then((val) => {
             this.JWTToken = val;
         });
-        this.wrongYearOfPassing=0;
+        this.wrongYearOfPassing = 0;
     }
 
 
     get benefitType() { return this.formGroup.get('benefitType'); }
     get benefitAmount() { return this.formGroup.get('benefitAmount'); }
-    
+
     async getSchemeDetails() {
         return new Promise((resolve, reject) => {
             if (this.user) {
@@ -109,7 +109,7 @@ export abstract class ClaimBasePage {
             this.getRelationArray = data;
         })
     }
-    public getRelationWithoutSubscribe(){
+    public getRelationWithoutSubscribe() {
         return this.httpService.getFamilyRelations();
     }
 
@@ -121,11 +121,11 @@ export abstract class ClaimBasePage {
         date = moment(date).format('YYYY-MM-DD')
         const splittedDate = date.split('-');
         return {
-          year: Number(splittedDate[0]),
-          month: Number(splittedDate[1]),
-          day: Number(splittedDate[2])
+            year: Number(splittedDate[0]),
+            month: Number(splittedDate[1]),
+            day: Number(splittedDate[2])
         };
-      }
+    }
 
     changeToIonDateTime(diff: any, timeUnit: string) {
         const date = moment(
@@ -187,24 +187,24 @@ export abstract class ClaimBasePage {
     /**
      * Passing Year Function
      */
-    public yearOfPassing(event,gap:number=0) {
+    public yearOfPassing(event, gap: number = 0) {
         const inputYear = this.formGroup.get('year');
         const currentYear = new Date().getFullYear();
-        const userRegistrationYear = Number(this.user.registrationDatePersonal.slice(0,4))-gap
+        const userRegistrationYear = Number(this.user.registrationDatePersonal.slice(0, 4)) - gap
         if (inputYear.value < userRegistrationYear) {
-            this.wrongYearOfPassing=-1;
+            this.wrongYearOfPassing = -1;
             this.toast.show('Invalid Year of Admission', '1000', 'bottom').subscribe(() => { });
             // returns the user input if correct
-        } else if (inputYear.value > currentYear){
+        } else if (inputYear.value > currentYear) {
             this.wrongYearOfPassing = 1;
             this.toast.show('Invalid Year of Admission', '1000', 'bottom').subscribe(() => { });
             this.formGroup.get('year').reset();
         }
         else {
-            this.wrongYearOfPassing=0;
+            this.wrongYearOfPassing = 0;
         }
     }
-    
+
 
 
     public calculateAge(date: string): number {
@@ -261,25 +261,28 @@ export abstract class ClaimBasePage {
         for (const item in this.files) {
             if (this.files[item]) {
                 formData.append('files', this.files[item], this.fileOptions[item]);
-            }       
+            }
         }
         formData.append('data', JSON.stringify(postObj));
         formData.append('modeOfApplication', 'Claim By Field Agent');
 
         this.claimHttpService.applyForClaim(formData, this.JWTToken).subscribe((res: any) => {
             if (res) {
-                // this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
-                // alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
-                // this.dialogs.
+                this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
+                alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
+
                 alert('Scheme Claimed Successfully');
                 this.router.navigate(['/dashboard'])
             }
         }, (error: Error) => {
-                // this.dialogs.
-                    alert('Scheme can not be claimed')
+            // this.dialogs.
+            alert(error['error'].message,
+            )
+this.dialogs.alert(error['error'].message)
+
         });
     }
 
 
-   
+
 }

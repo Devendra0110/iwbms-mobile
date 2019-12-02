@@ -279,7 +279,7 @@ public nomineeCheck = true;
       this.saveClaimForm(postObj);
     }
     else {this.dialogs.alert('Please Update the form.');
-    console.log('error in form ')
+    this.formGroup.markAllAsTouched();
     }
   }
 

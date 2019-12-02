@@ -83,6 +83,7 @@ export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
       this.saveClaimForm(postObj);
 
     } else {
+      console.log('error in form ');
       this.dialogs.alert('Please Update the form.');
     }
   }

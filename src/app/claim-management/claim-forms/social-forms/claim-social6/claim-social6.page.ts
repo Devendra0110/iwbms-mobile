@@ -131,8 +131,11 @@ export class ClaimSocial6Page extends ClaimBasePage implements OnInit {
         }
       };
       this.saveClaimForm(postObj);
-    } else {
-      alert('form is invalid');
+    } else {      this.formGroup.markAllAsTouched();
+
+      this.dialogs.alert('Please Update the form.');
+
+
     }
   }
 

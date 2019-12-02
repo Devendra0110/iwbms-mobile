@@ -212,6 +212,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
       };
       this.saveClaimForm(postObj);
     } else {
+      this.formGroup.markAllAsTouched();
       this.dialogs.alert('Please Update the form.');
     }
   }

@@ -321,6 +321,7 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
       this.saveClaimForm(postObj);
     }
     else {
+      this.formGroup.markAllAsTouched();
       this.dialogs.alert('Please Update the form.');
      console.log('error in form ')
     }

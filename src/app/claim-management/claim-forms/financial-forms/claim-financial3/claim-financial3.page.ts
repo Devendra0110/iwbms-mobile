@@ -121,7 +121,7 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
       this.saveClaimForm(postObj);
 
     } else {
-      console.log('error in form ');
+      this.formGroup.markAllAsTouched()
           this.dialogs.alert('Please Update the form.');
     }
   }
