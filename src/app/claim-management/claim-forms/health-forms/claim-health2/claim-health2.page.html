@@ -110,7 +110,7 @@
 
       <ion-item>
         <ion-label position="floating">Bill Amount / बिल रक्कम <span style="color: Red">*</span></ion-label>
-        <ion-input type="number" id="billAmount" maxlength="8"
+        <ion-input type="tel" id="billAmount" maxlength="8"
           [class.is-invalid]="billAmount.invalid && billAmount.touched" formControlName="billAmount"></ion-input>
         <div class="text-danger" *ngIf="billAmount.invalid && billAmount.touched">
           <small *ngIf="billAmount.errors && billAmount.errors['required']">Please enter your amount.</small>
