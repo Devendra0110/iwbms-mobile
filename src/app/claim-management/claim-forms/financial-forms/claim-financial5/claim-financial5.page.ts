@@ -108,7 +108,8 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
 this.agePersonal.disable()
         this.dobPersonal.patchValue(formattedAge)
         this.agePersonal.patchValue(this.calculateAge(formattedAge))
-
+this.relation.disable()
+this.aadharNumber.disable()
       }
     })
   }

@@ -24,6 +24,15 @@ export class ClaimValidationService {
         ];
         break;
       }
+
+
+      case 'firCertificate': {
+        validatorsArr = [
+          Validators.required
+        ];
+        break;
+      }
+      
       case 'benefitType': {
         validatorsArr = [
           Validators.required
