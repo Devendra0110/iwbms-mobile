@@ -41,6 +41,8 @@ export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       placeOfClaim: new FormControl('', Validators.required),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+  
 
       //marathi form controls
       benefitType: new FormControl('', [Validators.required]),
@@ -59,6 +61,7 @@ export class ClaimFinancial4Page extends ClaimBasePage implements OnInit {
   // get declaration() { return this.formGroup.get('declaration'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
   get placeOfClaim() { return this.formGroup.get('placeOfClaim'); }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
 
   public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {

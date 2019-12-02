@@ -63,7 +63,7 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
       rationCardDoc: new FormControl('', this.validationService.createValidatorsArray('rationCardDoc')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
-    // verifyDocumentCheck : new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+    verifyDocumentCheck : new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
       // marathi form controls
@@ -128,7 +128,7 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
   get aadharCardDoc() { return this.formGroup.get('aadharCardDoc'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
   get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
-  // get verifyDocumentCheck() {return this.formGroup.get('verifyDocumentCheck'); }
+  get verifyDocumentCheck() {return this.formGroup.get('verifyDocumentCheck'); }
   // get declaration() { return this.formGroup.get('declaration'); }
 
   public calculatePer() {

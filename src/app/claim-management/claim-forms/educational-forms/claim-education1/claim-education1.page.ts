@@ -56,7 +56,7 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
       rationCardDoc: new FormControl('', this.validationService.createValidatorsArray('rationCardDoc')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
-      // verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       // schoolIdDoc: new FormControl('', this.validationService.createValidatorsArray('schoolIdDoc')),
       // boardOfEducation: new FormControl('', this.validationService.createValidatorsArray('boardOfEducation')),
@@ -143,7 +143,7 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
   get bonafideDoc() { return this.formGroup.get('bonafideDoc'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
   get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
-  // get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   // get schoolIdDoc() { return this.formGroup.get('schoolIdDoc'); }
   // get boardOfEducation() { return this.formGroup.get('boardOfEducation'); }
   // get declaration() { return this.formGroup.get('declaration'); }

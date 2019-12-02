@@ -84,6 +84,7 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
       dateOfFir: new FormControl('', this.validationService.createValidatorsArray('dateOfFir')),
       FIRNo: new FormControl('', this.validationService.createValidatorsArray('FIRNo')),
       policeStationAdd: new FormControl('', this.validationService.createValidatorsArray('policeStationAdd')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
 
 
       // marathi values
@@ -121,6 +122,7 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
     this.relation.disable();
     this.aadharNumber.disable();
   }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get deathCertificateIssueDate() { return this.formGroup.get('deathCertificateIssueDate'); }
   get placeOfDocIssue() { return this.formGroup.get('placeOfDocIssue'); }
   get deathCertificateNo() { return this.formGroup.get('deathCertificateNo'); }
@@ -342,5 +344,6 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
       this.formGroup.get('ifscCodeBank').reset()
     }
   }
+ 
 }
 

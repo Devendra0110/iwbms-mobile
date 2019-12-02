@@ -73,7 +73,7 @@ export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
       category: new FormControl('', this.validationService.createValidatorsArray('category')),
-      // verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // bookReceipt: new FormControl('', this.validationService.createValidatorsArray('bookReceipt')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       
@@ -147,7 +147,7 @@ export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
     get bonafideDoc() { return this.formGroup.get('bonafideDoc'); }
     get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
     get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
-    // get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
+    get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
     // get declaration() { return this.formGroup.get('declaration'); }
     // get bookReceipt() { return this.formGroup.get('bookReceipt'); }
 

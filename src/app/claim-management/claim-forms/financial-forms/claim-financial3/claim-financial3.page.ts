@@ -42,6 +42,8 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       loanDate: new FormControl('', this.validationService.createValidatorsArray('loanDate')),
       loanPeriod: new FormControl('', this.validationService.createValidatorsArray('loanPeriod')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+  
 
 
       //fileuploaders
@@ -84,6 +86,7 @@ export class ClaimFinancial3Page extends ClaimBasePage implements OnInit {
   get bankNameBank_mr() { return this.formGroup.get('bankNameBank_mr'); }
   get bankBranchBank_mr() { return this.formGroup.get('bankBranchBank_mr'); }
   get insCompName_mr() { return this.formGroup.get('insCompName_mr'); }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
 
 
   public saveForm(): void {

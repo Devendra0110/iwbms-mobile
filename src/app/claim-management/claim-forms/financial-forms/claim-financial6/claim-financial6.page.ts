@@ -48,6 +48,8 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
       //english values
 
       issuingAuthority: new FormControl('', this.validationService.createValidatorsArray('issuingAuthority')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+  
 
       placeOfDocIssue: new FormControl("", this.validationService.createValidatorsArray('placeOfDocIssue')),
       deathCertificateIssueDate: new FormControl('', this.validationService.createValidatorsArray('deathCertificateIssueDate')),
@@ -106,6 +108,7 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
   }
   get issuingAuthority() { return this.formGroup.get('issuingAuthority') }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
 
   get deathCertificateIssueDate() { return this.formGroup.get('deathCertificateIssueDate'); }
   get deathCertificateNo() { return this.formGroup.get('deathCertificateNo'); }

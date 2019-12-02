@@ -64,7 +64,7 @@ export class ClaimEducation3Page extends ClaimBasePage implements OnInit {
       insPhNo: new FormControl('', this.validationService.createValidatorsArray('insPhNo')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
-      // verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // seatNumber: new FormControl('', this.validationService.createValidatorsArray('seatNumber')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
@@ -122,7 +122,7 @@ export class ClaimEducation3Page extends ClaimBasePage implements OnInit {
   get insPhNo() { return this.formGroup.get('insPhNo'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
   get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
-  // get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   // get declaration() { return this.formGroup.get('declaration'); }
 
   public saveForm(): void {

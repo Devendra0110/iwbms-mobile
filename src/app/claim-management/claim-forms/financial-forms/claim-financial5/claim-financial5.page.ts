@@ -63,6 +63,8 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
       aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       nomineeMobNumber: new FormControl('', this.validationService.createValidatorsArray('nomineeMobNumber')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+  
 
 
 
@@ -110,8 +112,10 @@ this.agePersonal.disable()
       }
     })
   }
-  get deathCertificateIssueDate() { return this.formGroup.get('deathCertificateIssueDate'); }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
+
   get placeOfDocIssue() { return this.formGroup.get('placeOfDocIssue'); }
+  get deathCertificateIssueDate() { return this.formGroup.get('deathCertificateIssueDate'); }
   get deathCertificateNo() { return this.formGroup.get('deathCertificateNo'); }
   get fullName() { return this.formGroup.get('fullName'); }
   get dobPersonal() { return this.formGroup.get('dobPersonal'); }

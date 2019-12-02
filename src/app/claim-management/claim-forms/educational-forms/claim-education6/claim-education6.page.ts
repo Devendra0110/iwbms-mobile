@@ -70,7 +70,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
       degreeName: new FormControl('', this.validationService.createValidatorsArray('degreeName')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
-      // verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
       // marathi form controls
@@ -144,7 +144,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
   get insPhNo() { return this.formGroup.get('insPhNo'); }
   get schoolIdDoc() { return this.formGroup.get('schoolIdDoc'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
-  // get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   // get declaration() { return this.formGroup.get('declaration'); }
 
 

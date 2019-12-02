@@ -61,6 +61,7 @@ public nomineeCheck = true;
       nomineeMobNumber: new FormControl('', this.validationService.createValidatorsArray('nomineeMobNumber')),
       aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),
       issuingAuthority: new FormControl('', this.validationService.createValidatorsArray('issuingAuthority')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
 
 
       // document validations
@@ -115,6 +116,8 @@ public nomineeCheck = true;
   get deathCertificateDoc() { return this.formGroup.get('deathCertificateDoc') }
   get scannedPassbookDoc() { return this.formGroup.get('scannedPassbookDoc') }
   get aadharCardDoc() { return this.formGroup.get('aadharCardDoc') }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck') }
+
   // get declaration() { return this.formGroup.get('declaration') }
   get deathDate() { return this.formGroup.get('deathDate') }
   get nomineeMobNumber() { return this.formGroup.get('nomineeMobNumber') }

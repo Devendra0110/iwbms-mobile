@@ -67,7 +67,7 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
       category: new FormControl('', this.validationService.createValidatorsArray('category')),
-      // verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
       // marathi form controls
@@ -124,7 +124,7 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
   get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
   get bookReceipt() { return this.formGroup.get('bookReceipt'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
-  // get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   // get declaration() { return this.formGroup.get('declaration'); }
 
   public saveForm(): void {
