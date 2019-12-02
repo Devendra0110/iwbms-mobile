@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { AbstractControl, FormControl, FormGroup,Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
@@ -89,8 +89,10 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
     this.childrenDetail.valueChanges.subscribe((childName) => {
       this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName);
-      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
-      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily)
+      this.aadharNumber.disable();
+      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily))
+      this.age.disable();
     });
 
     this.standard.valueChanges.subscribe(value => {
@@ -184,7 +186,6 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
       this.saveClaimForm(postObj);
     } else {
       this.formGroup.markAllAsTouched();
-      // this.dialogs.
       alert('Please Update the form.');
     }
   }

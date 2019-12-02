@@ -130,7 +130,7 @@
     <ion-label position="floating">Institute/College Email ID /<br> संस्थेचे / विद्यालयाचे इमेल आयदी <span
         class="text-danger">*</span>
     </ion-label>
-    <ion-input type="email" formControlName="insEmail" id="insEmail" maxlength="100"
+    <ion-input type="email" formControlName="insEmail" id="insEmail" maxlength="150"
       [class.is-invalid]="insEmail.invalid && insEmail.touched" clearInput>
     </ion-input>
     <div class="text-danger" *ngIf="insEmail.invalid && insEmail.touched">
@@ -268,7 +268,7 @@
     <ion-label>Documents Verified</ion-label>
   </ion-item>
 
-  <ion-button mode="ios" expand="block" (click)="saveForm()">SAVE</ion-button>
+<ion-button mode="ios" expand="block" (click)="saveForm()">SAVE</ion-button>
 
 </form>
 <!-- </ion-content> -->

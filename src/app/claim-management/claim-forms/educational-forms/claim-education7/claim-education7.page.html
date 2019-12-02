@@ -119,7 +119,7 @@
     <ion-item>
       <ion-label position="floating">Institute Email ID / संस्थेचे इमेल आयदी <span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="email" formControlName="insEmail" id="insEmail" maxlength="100"
+      <ion-input type="email" formControlName="insEmail" id="insEmail" maxlength="150"
         [class.is-invalid]="insEmail.invalid && insEmail.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="insEmail.invalid && insEmail.touched">
@@ -131,13 +131,13 @@
     <ion-item>
       <ion-label position="floating">Institute Phone Number / संस्थेचा फोन नंबर <span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="tel" formControlName="insPhNo" id="insPhNo" maxlength="10" minlength="8"
+      <ion-input type="tel" formControlName="insPhNo" id="insPhNo" maxlength="11" minlength="8"
         [class.is-invalid]="insPhNo.invalid && insPhNo.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="insPhNo.invalid && insPhNo.touched">
         <small *ngIf="insPhNo.errors && insPhNo.errors['required']">Please enter your institute's phone number.</small>
         <small *ngIf="insPhNo.errors && insPhNo.errors['maxlength']">You have reached your maximum.</small>
-        <small *ngIf="insPhNo.errors && insPhNo.errors['maxlength']">Enter appropriate phone number.</small>
+        <small *ngIf="insPhNo.errors && insPhNo.errors['minlength']">Enter appropriate phone number.</small>
       </div>
     </ion-item>
 
@@ -155,7 +155,8 @@
 
     <ion-item>
       <ion-label position="floating">Passing Year / उत्तीर्ण झाल्याचे वर्ष<span class="text-danger">*</span></ion-label>
-      <ion-input formControlName="year" id="year" [class.is-invalid]="year.invalid && year.touched">
+      <ion-input formControlName="year" id="year" (ionChange)="yearOfPassing($event)"
+      [class.is-invalid]="year.invalid && year.touched">
       </ion-input>
       <div class="text-danger" *ngIf="year.invalid && year.touched">
         <small *ngIf="year.errors && year.errors['required']">Please enter your passing year.</small>
@@ -169,7 +170,7 @@
     <ion-item>
         <ion-icon slot="end" name="calendar"></ion-icon>
       <ion-label position="floating">Start Date / प्रारंभ तारीख<span class="text-danger">*</span></ion-label>
-      <ion-datetime formControlName="startDate" id="startDate"
+      <ion-datetime formControlName="startDate" id="startDate" 
         [class.is-invalid]="startDate.invalid && startDate.touched">
       </ion-datetime>
       <div class="text-danger" *ngIf="startDate.invalid && startDate.touched">
@@ -180,7 +181,8 @@
     <ion-item>
         <ion-icon slot="end" name="calendar"></ion-icon>
       <ion-label position="floating">End Date / शेवटची तारीख<span class="text-danger">*</span></ion-label>
-      <ion-datetime formControlName="endDate" id="endDate" [class.is-invalid]="endDate.invalid && endDate.touched">
+      <ion-datetime formControlName="endDate" id="endDate" [min]="dateReg" [max]="maxTodaysDate"
+      (ionChange)="checkDate()" [class.is-invalid]="endDate.invalid && endDate.touched">
       </ion-datetime>
       <div class="text-danger" *ngIf="endDate.invalid && endDate.touched">
         <small *ngIf="endDate.errors && endDate.errors['required']">Please enter end date.</small>

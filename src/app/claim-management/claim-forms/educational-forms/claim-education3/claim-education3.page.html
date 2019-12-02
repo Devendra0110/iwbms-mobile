@@ -100,7 +100,7 @@
   <ion-item>
     <ion-label position="floating">College Email ID / महाविद्यालयाचे इमेल आयदी<span class="text-danger">*</span>
     </ion-label>
-    <ion-input type="email" formControlName="insEmail" id="insEmail" maxlength="100"
+    <ion-input type="email" formControlName="insEmail" id="insEmail" maxlength="150"
       [class.is-invalid]="insEmail.invalid && insEmail.touched" clearInput>
     </ion-input>
     <div class="text-danger" *ngIf="insEmail.invalid && insEmail.touched">
@@ -112,13 +112,13 @@
   <ion-item>
     <ion-label position="floating">College Phone Number / महाविद्यालयाचा फोन नंबर<span class="text-danger">*</span>
     </ion-label>
-    <ion-input type="tel" formControlName="insPhNo" id="insPhNo" maxlength="10" minlength="8"
+    <ion-input type="tel" formControlName="insPhNo" id="insPhNo" maxlength="11" minlength="8"
       [class.is-invalid]="insPhNo.invalid && insPhNo.touched" clearInput>
     </ion-input>
     <div class="text-danger" *ngIf="insPhNo.invalid && insPhNo.touched">
       <small *ngIf="insPhNo.errors && insPhNo.errors['required']">Please enter your college's phone number.</small>
       <small *ngIf="insPhNo.errors && insPhNo.errors['maxlength']">You have reached your maximum.</small>
-      <small *ngIf="insPhNo.errors && insPhNo.errors['maxlength']">Enter appropriate phone number.</small>
+      <small *ngIf="insPhNo.errors && insPhNo.errors['minlength']">Enter appropriate phone number.</small>
     </div>
   </ion-item>
 

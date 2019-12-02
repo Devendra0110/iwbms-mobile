@@ -26,7 +26,8 @@ export class ClaimEducation7Page extends ClaimBasePage implements OnInit {
   public formGroup: FormGroup;
   public getFile: boolean;
   public childArray: Array<string> = [];
-  public childDetail: any
+  public childDetail: any;
+  public maxTodaysDate: string;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -77,7 +78,8 @@ export class ClaimEducation7Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
-    this.assignBenefits(true);
+    this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year]);
+    this.assignBenefits(false);
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
       if (eachFamily.category === 'children') {
@@ -87,8 +89,18 @@ export class ClaimEducation7Page extends ClaimBasePage implements OnInit {
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
     this.childrenDetail.valueChanges.subscribe((childName) => {
       this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
-      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
-      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily)
+      this.aadharNumber.disable();
+      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily))
+      this.age.disable();
+    });
+
+    this.courseFee.valueChanges.subscribe((value) => {
+      const benefitAmountPatch = JSON.parse(this.schemeDetails.benefit_amount);
+      if(Number(value) >= Number(benefitAmountPatch[0].maxAmount)) {
+        this.courseFee.patchValue('');
+        this.toast.show(`Amount cannot be more than ${benefitAmountPatch[0].maxAmount}.!\nPlease enter correct amount.`, '1000', 'bottom');
+      }
     });
   }
 
@@ -194,7 +206,8 @@ export class ClaimEducation7Page extends ClaimBasePage implements OnInit {
       };
       this.saveClaimForm(postObj);
     } else {
-      this.dialogs.alert('Please Update the form.');
+      this.formGroup.markAllAsTouched();
+      alert('Please Update the form.');
     }
   }
 }

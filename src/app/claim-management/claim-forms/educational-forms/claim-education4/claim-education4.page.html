@@ -121,7 +121,7 @@
     <ion-item>
       <ion-label position="floating">College Email ID / महाविद्यालयाचे इमेल आयदी<span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="email" formControlName="insEmail" id="insEmail" maxlength="100"
+      <ion-input type="email" formControlName="insEmail" id="insEmail" maxlength="150"
         [class.is-invalid]="insEmail.invalid && insEmail.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="insEmail.invalid && insEmail.touched">
@@ -133,7 +133,7 @@
     <ion-item>
       <ion-label position="floating">College Phone Number / महाविद्यालयाचा फोन नंबर<span class="text-danger">*</span>
       </ion-label>
-      <ion-input type="tel" formControlName="insPhNo" id="insPhNo" maxlength="10" minlength="8"
+      <ion-input type="tel" formControlName="insPhNo" id="insPhNo" maxlength="11" minlength="8"
         [class.is-invalid]="insPhNo.invalid && insPhNo.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="insPhNo.invalid && insPhNo.touched">
@@ -146,7 +146,7 @@
     <ion-item>
         <ion-icon slot="end" name="calendar"></ion-icon>
       <ion-label position="floating">Date of Admission / प्रवेश तारीख<span class="text-danger">*</span></ion-label>
-      <ion-datetime [max]="maxTodaysDate" displayFormat="DD MMM, YYYY" picker-format="DD MMMM YYYY"
+      <ion-datetime [max]="maxTodaysDate" [min]="dateReg" displayFormat="DD MMM, YYYY" picker-format="DD MMMM YYYY"
        formControlName="dateOfAdmission" id="dateOfAdmission"
         [class.is-invalid]="dateOfAdmission.invalid && dateOfAdmission.touched">
       </ion-datetime>

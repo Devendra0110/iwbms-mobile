@@ -82,15 +82,17 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
     this.assignBenefits(true);
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
-      if (eachFamily.category === 'children' || (eachFamily.category === 'spouse' && eachFamily.relation === '4')) {
+      if (eachFamily.category === 'children' || eachFamily.category === 'spouse' && eachFamily.relation === '4'){
         return eachFamily;
-      }
+        }else{ }
     });
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
     this.familyRelation.valueChanges.subscribe((childName) => {
       this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
-      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
-      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily)
+      this.aadharNumber.disable();
+      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily))
+      this.age.disable();
     });
 
     this.getEducation().subscribe((data: any[]) => {
@@ -168,7 +170,8 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
 
       this.saveClaimForm(postObj);
     } else {
-      this.dialogs.alert('Please Update the form.');
+      this.formGroup.markAllAsTouched();
+      alert('Please Update the form.');
     }
   }
 }

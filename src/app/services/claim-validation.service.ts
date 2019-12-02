@@ -531,6 +531,34 @@ export class ClaimValidationService {
         break;
       }
 
+      case 'bookReceipt': {
+        validatorsArr = [
+          Validators.required
+        ];
+        break;
+      }
+
+      case 'fileSelect': {
+        validatorsArr = [
+          Validators.required
+        ];
+        break;
+      }
+
+      case 'schoolIdDoc': {
+        validatorsArr = [
+          Validators.required
+        ];
+        break;
+      }
+
+      case 'bonafideDoc': {
+        validatorsArr = [
+          Validators.required
+        ];
+        break;
+      }
+
       case 'school': {
         validatorsArr = [
           Validators.required,
@@ -576,6 +604,7 @@ export class ClaimValidationService {
       case 'boardOfEducation': {
         validatorsArr = [
           Validators.required,
+          Validators.pattern('^[a-zA-Z_ ]*$'),
           Validators.minLength(3),
           Validators.maxLength(200)
         ];
@@ -588,16 +617,6 @@ export class ClaimValidationService {
           Validators.minLength(1),
           Validators.maxLength(10),
           Validators.pattern('^([a-zA-Z0-9_\s\-]*)$'),
-        ];
-        break;
-      }
-
-      case 'rollNumber': {
-        validatorsArr = [
-          Validators.required,
-          Validators.minLength(1),
-          Validators.maxLength(3),
-          Validators.pattern('^[0-9]*\.?[0-9]{0,2}$')
         ];
         break;
       }
@@ -640,20 +659,6 @@ export class ClaimValidationService {
         break;
       }
 
-      case 'fileSelect': {
-        validatorsArr = [
-          Validators.required
-        ];
-        break;
-      }
-
-      case 'schoolIdDoc': {
-        validatorsArr = [
-          Validators.required
-        ];
-        break;
-      }
-
       case 'placeCollege': {
         validatorsArr = [
           Validators.required,
@@ -683,8 +688,9 @@ export class ClaimValidationService {
       case 'insPhNo': {
         validatorsArr = [
           Validators.required,
+          Validators.pattern('^[0-9]*$'),
           Validators.minLength(8),
-          Validators.maxLength(10),
+          Validators.maxLength(11),
         ];
         break;
       }
@@ -701,6 +707,7 @@ export class ClaimValidationService {
       case 'regNoInstitute': {
         validatorsArr = [
           Validators.required,
+          Validators.pattern('^([a-zA-Z0-9_\s\-]*)$'),
         ];
         break;
       }
@@ -708,6 +715,7 @@ export class ClaimValidationService {
       case 'regAuthName': {
         validatorsArr = [
           Validators.required,
+          Validators.pattern('^([a-zA-Z_ ]*)$'),
         ];
         break;
       }
@@ -738,20 +746,6 @@ export class ClaimValidationService {
         break;
       }
 
-      case 'bonafideDoc': {
-        validatorsArr = [
-          Validators.required
-        ];
-        break;
-      }
-
-      case 'bookReceipt': {
-        validatorsArr = [
-          Validators.required
-        ];
-        break;
-      }
-
       case 'degreeName': {
         validatorsArr = [
           Validators.required,
@@ -762,7 +756,7 @@ export class ClaimValidationService {
       case 'courseFee': {
         validatorsArr = [
           Validators.required,
-          Validators.maxLength(5),
+          Validators.maxLength(4),
           Validators.pattern('^[0-9]*\.?[0-9]{0,2}$')
         ];
         break;

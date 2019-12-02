@@ -96,8 +96,10 @@ export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
     this.familyRelation.valueChanges.subscribe((childName) => {
       this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
-      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
-      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily)
+      this.aadharNumber.disable();
+      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily))
+      this.age.disable();
     });
 
     this.assignBenefits(false);
@@ -192,7 +194,8 @@ export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
         };
         this.saveClaimForm(postObj);
       } else {
-        this.dialogs.alert('Please Update the form.');
+        this.formGroup.markAllAsTouched();
+        alert('Please Update the form.');
       }
     }
   

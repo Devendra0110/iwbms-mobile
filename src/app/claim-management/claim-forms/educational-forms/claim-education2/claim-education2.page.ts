@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { AbstractControl, FormControl, FormGroup,Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
@@ -50,7 +50,7 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
       placeSchool: new FormControl('', this.validationService.createValidatorsArray('placeSchool')),
       standard: new FormControl('', this.validationService.createValidatorsArray('standard')),
       boardOfEducation: new FormControl('', this.validationService.createValidatorsArray('boardOfEducation')),
-      year: new FormControl('',),
+      year: new FormControl('',this.validationService.createValidatorsArray('year')),
       seatNumber: new FormControl('', this.validationService.createValidatorsArray('seatNumber')),
       marksObtained: new FormControl('', this.validationService.createValidatorsArray('marksObtained')),
       totalMarks: new FormControl('', this.validationService.createValidatorsArray('totalMarks')),
@@ -94,8 +94,10 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
     this.childrenDetail.valueChanges.subscribe((childName) => {
       this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
-      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily);
-      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily));
+      this.aadharNumber.patchValue(this.childDetail.aadharNoFamily)
+      this.aadharNumber.disable();
+      this.age.patchValue(this.calculateAge(this.childDetail.dobFamily))
+      this.age.disable();
     });
 
     this.getEducation().subscribe((data: any[]) => {
@@ -194,7 +196,8 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
       };
       this.saveClaimForm(postObj);
     }else {
-      this.dialogs.alert('Please Update the form.');
+      this.formGroup.markAllAsTouched();
+      alert('Please Update the form.');
     }
   }
 }
