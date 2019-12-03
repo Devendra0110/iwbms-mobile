@@ -231,7 +231,7 @@ this.aadharNumber.disable()
 
   nomineeSwitch(event: any) {
     this.nomineeCheck = !this.nomineeCheck;
-    if (!this.nomineeCheck) {
+    if (this.nomineeCheck) {
 
       this.fullName.reset();
       this.dobPersonal.reset();

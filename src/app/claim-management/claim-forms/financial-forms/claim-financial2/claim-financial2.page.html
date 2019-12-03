@@ -108,7 +108,7 @@
         <ion-icon slot="end" name="calendar"></ion-icon>
 
         <ion-label position="floating">Date Of Birth / जन्म तारीख<span class="text-danger">*</span></ion-label>
-        <ion-datetime id="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched"
+        <ion-datetime id="dobPersonal" (ionChange)="calculateAgepatched(dobPersonal.value)" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched"
           formControlName="dobPersonal">
         </ion-datetime>
         <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">

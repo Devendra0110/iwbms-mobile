@@ -30,8 +30,8 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   public bankDetails: any;
   public sortedArray = [];
   public maxTodaysDate: string;
-  public nomineeCheck = true;
-  public open = true;
+  public nomineeCheck = false;
+  publicopen = true;
   minDate: string;
 
 
@@ -199,10 +199,15 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
     this.formGroup.get('dobPersonal').patchValue(nomineeBirthDateArray);
     this.formGroup.get('relation').patchValue(Number(this.sortedArray[0]['relation']));
     this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
-  this.agePersonal.patchValue(this.calculateAge(nomineeBirthDateArray));
+    
     this.agePersonal.disable();
+
   
   }
+  public calculateAgepatched(date: string): void {
+    const dob = moment(date).format('YYYY-MM-DD');
+    const age = moment().diff(dob, 'years');
+this.agePersonal.patchValue(age)}
 
  
   searchByifscCodeBankCode() {
@@ -236,7 +241,7 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
 
   nomineeSwitch(event: any) {
     this.nomineeCheck = !this.nomineeCheck;
-    if (!this.nomineeCheck) {
+    if (this.nomineeCheck) {
 
       this.fullName.enable();
       this.dobPersonal.enable();
