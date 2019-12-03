@@ -203,20 +203,20 @@
       </ion-list>
       <ion-list *ngIf="selectScheme.value">
         <!-- SOCIAL -->
-          <app-claim-social1 *ngIf="selectScheme.value === 'S01'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-social1 *ngIf="selectScheme.value === 'S01'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
           [familyDetailsArray]="familyDetailsArray"></app-claim-social1>
         
-          <app-claim-social3 *ngIf="selectScheme.value === 'S03'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-social3 *ngIf="selectScheme.value === 'S03'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-social3>
 
-          <app-claim-social4 *ngIf="selectScheme.value === 'S04'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-social4 *ngIf="selectScheme.value === 'S04'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-social4>
              
-          <app-claim-social5 *ngIf="selectScheme.value === 'S05'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-social5 *ngIf="selectScheme.value === 'S05'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-social5>
        
-          <app-claim-social6 *ngIf="selectScheme.value === 'S06'" [filledFormData]="claimData" [user]="formUserInfo"
-            [familyDetailsArray]="familyDetailsArray"></app-claim-social6>
+          <app-claim-social6 *ngIf="selectScheme.value === 'S06'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
+            [familyDetailsArray]="familyDetailsArray"></app-claim-social6> 
       
  <!--
         <ion-item *ngIf="selectScheme.value === 'S07'">
@@ -235,65 +235,65 @@
         </ion-item> -->
 
         <!-- EDUCATION -->
-        <app-claim-education1 *ngIf="selectScheme.value === 'E01'" [filledFormData]="claimData" [user]="formUserInfo"
-          [familyDetailsArray]="familyDetailsArray"></app-claim-education1>
+        <app-claim-education1 *ngIf="selectScheme.value === 'E01'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
+          [familyDetailsArray]="familyDetailsArray" ></app-claim-education1>
 
-        <app-claim-education2 *ngIf="selectScheme.value === 'E02'" [filledFormData]="claimData" [user]="formUserInfo"
+        <app-claim-education2 *ngIf="selectScheme.value === 'E02'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
           [familyDetailsArray]="familyDetailsArray"></app-claim-education2>
 
-        <app-claim-education3 *ngIf="selectScheme.value === 'E03'" [filledFormData]="claimData" [user]="formUserInfo"
+        <app-claim-education3 *ngIf="selectScheme.value === 'E03'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
           [familyDetailsArray]="familyDetailsArray"></app-claim-education3>
 
-        <app-claim-education4 *ngIf="selectScheme.value === 'E04'" [filledFormData]="claimData" [user]="formUserInfo"
+        <app-claim-education4 *ngIf="selectScheme.value === 'E04'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
           [familyDetailsArray]="familyDetailsArray"></app-claim-education4>
 
-        <app-claim-education5 *ngIf="selectScheme.value === 'E05'" [filledFormData]="claimData" [user]="formUserInfo"
+        <app-claim-education5 *ngIf="selectScheme.value === 'E05'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
           [familyDetailsArray]="familyDetailsArray"></app-claim-education5>
 
-        <app-claim-education6 *ngIf="selectScheme.value === 'E06'" [filledFormData]="claimData" [user]="formUserInfo"
+        <app-claim-education6 *ngIf="selectScheme.value === 'E06'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
           [familyDetailsArray]="familyDetailsArray"></app-claim-education6>
 
-        <app-claim-education7 *ngIf="selectScheme.value === 'E07'" [filledFormData]="claimData" [user]="formUserInfo"
+        <app-claim-education7 *ngIf="selectScheme.value === 'E07'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
           [familyDetailsArray]="familyDetailsArray"></app-claim-education7>
 
 
 
         <!-- FINANCIAL -->
-          <app-claim-financial1 *ngIf="selectScheme.value === 'F01'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-financial1 *ngIf="selectScheme.value === 'F01'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-financial1>
  
-          <app-claim-financial2 *ngIf="selectScheme.value === 'F02'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-financial2 *ngIf="selectScheme.value === 'F02'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-financial2>
        
-          <app-claim-financial3 *ngIf="selectScheme.value === 'F03'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-financial3 *ngIf="selectScheme.value === 'F03'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-financial3>
 
-          <app-claim-financial4 *ngIf="selectScheme.value === 'F04'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-financial4 *ngIf="selectScheme.value === 'F04'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-financial4>
 
-          <app-claim-financial5 *ngIf="selectScheme.value === 'F05'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-financial5 *ngIf="selectScheme.value === 'F05'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-financial5>
         
-          <app-claim-financial6 *ngIf="selectScheme.value === 'F06'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-financial6 *ngIf="selectScheme.value === 'F06'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-financial6> 
 
 
 
         <!-- HEALTH -->
 
-          <app-claim-health1 *ngIf="selectScheme.value === 'H01'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-health1 *ngIf="selectScheme.value === 'H01'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-health1>
 
-          <app-claim-health2 *ngIf="selectScheme.value === 'H02'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-health2 *ngIf="selectScheme.value === 'H02'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-health2>
 
-          <app-claim-health3 *ngIf="selectScheme.value === 'H03'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-health3 *ngIf="selectScheme.value === 'H03'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-health3>
 
-          <app-claim-health4 *ngIf="selectScheme.value === 'H04'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-health4 *ngIf="selectScheme.value === 'H04'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-health4>
 
-          <app-claim-health5 *ngIf="selectScheme.value === 'H05'" [filledFormData]="claimData" [user]="formUserInfo"
+          <app-claim-health5 *ngIf="selectScheme.value === 'H05'" [filledFormData]="claimData" [user]="formUserInfo" [selectedSchemeName]="selectedSchemeObj.scheme_name+''+ selectedSchemeObj.scheme_name_mr"
             [familyDetailsArray]="familyDetailsArray"></app-claim-health5>
 
       </ion-list>

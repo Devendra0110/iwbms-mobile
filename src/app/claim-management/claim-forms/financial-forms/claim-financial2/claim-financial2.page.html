@@ -8,11 +8,7 @@
   <form [formGroup]="formGroup">
 
     <ion-list>
-      <ion-header class="ml-2" style="font-size:18px">Financial assistance of Rs. 5,00,000/- to the legal
-        heir(nominee), in case
-        of Accidental death at workplace of worker during the course of employment.
-        नोंदणीकृत कामगाराचा कामाच्या ठिकाणी अपघाती मृत्यू झाल्यास त्याच्या कायदेशीर वारसार(नामित)
-        रू.५,००,०००/-
+      <ion-header class="ml-2" style="font-size:18px">{{selectedSchemeName}}
       </ion-header>
     </ion-list>
     <br>
@@ -294,7 +290,7 @@
         <ion-checkbox formControlName="verifyDocumentCheck" checked="false" color="dark"  slot="start"></ion-checkbox>
         <ion-label>Documents Verified</ion-label>
       </ion-item>
-      <ion-button mode="ios" (click)="saveForm()" expand="block">Save</ion-button>
+      <ion-button mode="ios" (click)="saveForm()" expand="block">SAVE</ion-button>
 
     </ion-list>
   </form>

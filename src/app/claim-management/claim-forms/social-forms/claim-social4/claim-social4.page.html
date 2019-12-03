@@ -6,8 +6,7 @@
 
 <form [formGroup]="formGroup">
   <ion-list>
-    <!-- <ion-list-header>Assistance For Purchase Of Tools gets Rs.5000/<br>
-    अवजारे खरेदी करण्याकरिता रू.५०००/-.</ion-list-header> -->
+    <ion-header class="p-2" style="font-size:20px;">{{selectedSchemeName}}</ion-header>
     <ion-item>
       <ion-label>DOCUMENTS REQUIRED:-</ion-label>
     </ion-item>
@@ -26,7 +25,7 @@
       <ion-checkbox checked="false" slot="start" formControlName="verifyDocumentCheck"></ion-checkbox>
       <ion-label>Documents Verified / कागदपत्र पडताळले</ion-label>
     </ion-item>
-    <ion-button mode="ios" expand="block" (click)="saveForm()">Save</ion-button>
+    <ion-button mode="ios" expand="block" (click)="saveForm()">SAVE</ion-button>
   </ion-list>
 
 </form>

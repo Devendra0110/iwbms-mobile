@@ -40,6 +40,7 @@ export abstract class ClaimBasePage {
     @Input() familyDetailsArray: any;
     @Input() editFormFlagObservable: Observable<any>;
     @Input() applicantRegistrationDetails: any;
+    @Input() selectedSchemeName:string;
 
     constructor(
         protected transliterate: TransliterationService,

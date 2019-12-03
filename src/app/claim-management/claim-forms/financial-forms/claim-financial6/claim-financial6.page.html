@@ -7,9 +7,7 @@
 <!-- <ion-content> -->
   <form [formGroup]="formGroup">
     <ion-list>
-      <ion-header class="ml-2" style="font-size:18px">Financial Assistance of Rs. 24,000/- per year up to 5 years to the widow or widower in case of death of
-        registered worker./
-        नोंदणीकृत कामगाराच्या मृत्यू झाल्यास त्याच्या विधवा पत्नी अथवा स्त्री कामगारांचे विधुर पतीस रू.२४,०००/-(५ वर्षांकरिता प्रति वर्षी अर्ज करणे).
+      <ion-header class="ml-2" style="font-size:18px">{{selectedSchemeName}}
       </ion-header>
  
  
@@ -290,7 +288,7 @@
                       <ion-checkbox checked="false" color="dark" formControlName="verifyDocumentCheck" slot="start"></ion-checkbox>
                       <ion-label>Documents Verified</ion-label>
                     </ion-item>
-                  <ion-button mode="ios" (click)="saveForm()" expand="block" >Save</ion-button>
+                  <ion-button mode="ios" (click)="saveForm()" expand="block" >SAVE</ion-button>
 
     </ion-list>
 </form>

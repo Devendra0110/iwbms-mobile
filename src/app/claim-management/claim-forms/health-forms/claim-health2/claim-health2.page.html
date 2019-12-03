@@ -7,11 +7,7 @@
 <!-- <ion-content> -->
   <form [formGroup]="formGroup">
     <ion-list>
-      <ion-header style="font-size:18px" class="ml-2">Medical Assistance of Rs. 1,00,000/- for the treatment
-        of serious illness for registered worker's and his/her family
-        members.<br>
-        लाभार्थी कामगार व त्यांच्या कुटुंबियांना गंभीर आजाराच्या उपचारार्थ रू.१,००,०००/- (आरोग्यविमा योजना लागू
-        नसल्यासच)</ion-header>
+      <ion-header style="font-size:18px" class="ml-2">{{selectedSchemeName}}</ion-header>
 
       <ion-item>
         <ion-label position="floating">Select Family Member / कुटुंबातील सदस्य निवडा <span style="color: Red">*</span>
@@ -180,7 +176,7 @@
           <ion-label>Documents Verified / कागदपत्र पडताळले</ion-label>
         </ion-item>
         
-      <ion-button mode="ios" expand="block" (click)="saveForm()">Save</ion-button>
+      <ion-button mode="ios" expand="block" (click)="saveForm()">SAVE</ion-button>
     </ion-list>
   </form>
 <!-- </ion-content> -->

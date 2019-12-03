@@ -7,10 +7,7 @@
 <!-- <ion-content> -->
   <form [formGroup]="formGroup">
     <ion-list>
-      <ion-header style="font-size:18px" class="ml-2">Financial Assistance of Rs. 2,00,000/- to the registered worker in case of
-        75% or more permanent disability.
-        <br><br>
-        ७५% अपंगत्व आल्यास रू.२,००,०००/</ion-header>
+      <ion-header style="font-size:18px" class="ml-2">{{selectedSchemeName}}</ion-header>
       <br>
       <ion-header class="ml-2"><b><u>DOCUMENTS REQUIRED:-</u></b></ion-header>
       <ion-item lines="none">
@@ -28,7 +25,7 @@
         <ion-label>Documents Verified / कागदपत्र पडताळले</ion-label>
       </ion-item>
 
-      <ion-button mode="ios" expand="block" (click)="saveForm()">Save</ion-button>
+      <ion-button mode="ios" expand="block" (click)="saveForm()">SAVE</ion-button>
     </ion-list>
   </form>
 
