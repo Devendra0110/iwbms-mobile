@@ -20,7 +20,8 @@ export class ClaimValidationService {
 
       case 'verifyDocumentCheck': {
         validatorsArr = [
-          Validators.required
+          Validators.required,
+          Validators.pattern('true')
         ];
         break;
       }

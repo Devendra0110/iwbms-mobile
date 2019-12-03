@@ -13,6 +13,11 @@ export class MobileVerificationService {
     return this.http.post(`${serverUrl}otp/generate-otp`, { mobileNo, aadharNo }, { headers });
   }
 
+  sendClaimOTP(registrationNo: string,mobileNo: string,) {
+    const headers = new HttpHeaders().append('Content-Type', 'application/json');
+    return this.http.post(`${serverUrl}otp/generate-otp`, { registrationNo, mobileNo,purpose:'Claim' }, { headers });
+  }
+
   validateOTP(mobileNo: string,otp: string) {
     const headers = new HttpHeaders().append('Content-Type', 'application/json');
     return this.http.post(`${serverUrl}otp/verify-otp`, { mobileNo,otp }, { headers });
