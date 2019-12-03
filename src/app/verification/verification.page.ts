@@ -80,7 +80,7 @@ export class VerificationPage implements OnInit {
         }).then((res)=>{
           res.present();
         });
-        this.mobileVerification.sendOTP(mobileNo, aadharNo).subscribe(
+        this.mobileVerification.sendOTP(Number(mobileNo), Number(aadharNo)).subscribe(
           (res: any) => {
             this.loadingController.dismiss();
             if (res.message === 'OTP Sent') {
