@@ -256,16 +256,22 @@ export abstract class ClaimBasePage {
         return wfcNames.join(' or ');
     }
 
-    protected saveClaimForm(postObj: object) {
+    protected async saveClaimForm(postObj: object) {
         const formData = new FormData();
+        const filesFormData = new FormData();
         for (const item in this.files) {
             if (this.files[item]) {
-                formData.append('files', this.files[item], this.fileOptions[item]);
+                filesFormData.append('files', this.files[item], this.fileOptions[item]);
             }
         }
         formData.append('data', JSON.stringify(postObj));
         formData.append('modeOfApplication', 'Claim By Field Agent');
-
+        try {
+            await this.httpService.uploadFiles(filesFormData).toPromise();
+        } catch (error) {
+            this.dialogs.alert('Application not saved. An error occured while saving documents.');
+            return;
+        }
         this.claimHttpService.applyForClaim(formData, this.JWTToken).subscribe((res: any) => {
             if (res) {
                 this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);

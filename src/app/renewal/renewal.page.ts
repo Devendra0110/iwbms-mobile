@@ -584,21 +584,29 @@ export class RenewalPage implements OnInit {
     return wfcNames.join(' or ');
   }
 
-  save() {
+  async save() {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
       if (this.renewalFormGroup.valid) {
         const formData = new FormData();
         // tslint:disable-next-line: forin
+        const filesFormData = new FormData();
         for (const item in this.files) {
           if (this.files[item]) {
-            formData.append('files', this.files[item], this.fileOptions[item]);
+            filesFormData.append('files', this.files[item], this.fileOptions[item]);
           }
         }
           formData.append('fileOptions', JSON.stringify(this.fileOptions));
           formData.append('data', JSON.stringify(this.renewalFormGroup.getRawValue()));
           formData.append('modeOfApplication', 'Renewal By Field Agent');
+
+        try {
+          await this.httpService.uploadFiles(filesFormData).toPromise();
+        } catch (error) {
+          this.dialogs.alert('Application not saved. An error occured while saving documents.');
+          return;
+        }
         this.httpService.saveRenewalData(formData, this.JWTToken).subscribe(
           (res: any) => {
             this.dialogs.alert(`Renewal Form is saved successfully 👍🙂. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res)}`)

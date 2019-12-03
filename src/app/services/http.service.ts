@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { serverUrl } from '../../assets/config';
+import { serverUrl,storageServerUrl } from '../../assets/config';
 import { appendTokenToHeaderObject, } from '../../assets/token-helper';
 import { Storage } from '@ionic/storage';
 
@@ -20,6 +20,10 @@ export class HttpService {
       new HttpHeaders(), JWTToken
     );
     return this.http.post(`${serverUrl}bocw-registration`, formData, {headers});
+  }
+
+  uploadFiles(filesFormData: FormData) {
+    return this.http.post(`${storageServerUrl}upload`, filesFormData);
   }
 
   saveRenewalData(renewalDetails: any, JWTToken: any) {

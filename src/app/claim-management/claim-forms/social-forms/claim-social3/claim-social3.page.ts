@@ -48,7 +48,7 @@ export class ClaimSocial3Page extends ClaimBasePage implements OnInit {
       schoolLocation: new FormControl('', this.validationService.createValidatorsArray('schoolLocation')),
       aadharNumber: new FormControl('', this.validationService.createValidatorsArray('aadharNumber')),
       socialForm4Doc1: new FormControl('', this.validationService.createValidatorsArray('socialForm4Doc1')),
-      //selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
+      selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       aadharCardDoc: new FormControl('', this.validationService.createValidatorsArray('aadharCardDoc')),
       //declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       // socialForm4Doc2: new FormControl('', this.validationService.createValidatorsArray('socialForm4Doc2')),
@@ -103,7 +103,7 @@ export class ClaimSocial3Page extends ClaimBasePage implements OnInit {
 
           documents: {
             socialForm4Doc1: this.fileOptions['socialForm4Doc1'],
-            //selfDeclaration: this.fileOptions['selfDeclaration'],
+            selfDeclaration: this.fileOptions['selfDeclaration'],
             aadharCardDoc: this.fileOptions['aadharCardDoc']
           }
         }

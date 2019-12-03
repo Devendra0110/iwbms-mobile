@@ -1195,6 +1195,19 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // }
   }
 
+  public findNominee(familyDetails: any): boolean {
+    const areThereFamilyMembers = familyDetails.filter(member => member.relation !== '1');
+
+    // we don't need to check for nominee if there are no family members other than the applicant.
+    if (!areThereFamilyMembers.length) return true;
+
+    const nominee = familyDetails.find(member => member.nominee === 'yes');
+
+    if (!nominee) return false;
+
+    return true;
+  }
+
   public joinWfcNames(wfcs) {
     const wfcNames = wfcs.map((wf) => {
       return wf.office_name;
@@ -1202,22 +1215,32 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return wfcNames.join(' or ');
   }
 
-  save() {
+  async save() {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
       if (this.registrationFormGroup.valid) {
         const formData = new FormData();
         // tslint:disable-next-line: forin
+
+        const filesFormData = new FormData();
         for (const item in this.files) {
           if (this.files[item]) {
-            formData.append('files', this.files[item], this.fileOptions[item]);
+            filesFormData.append('files', this.files[item], this.fileOptions[item]);
           }
+        }
           formData.append('files', JSON.stringify(this.registrationFormGroup.get('supportingDocuments').value));
           formData.append('fileOptions', JSON.stringify(this.fileOptions));
           formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
           formData.append('modeOfApplication', 'By Field Agent');
+
+        try {
+          await this.httpService.uploadFiles(filesFormData).toPromise();
+        } catch (error) {
+          this.dialogs.alert( 'Application not saved. An error occured while saving documents.');
+          return;
         }
+
         this.httpService.saveData(formData, this.JWTToken).subscribe(
           (res: any) => {
             this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
