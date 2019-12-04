@@ -17,47 +17,47 @@
       <ion-input type="text" id='ifscCode' maxlength="11" [class.is-invalid]="ifscCode.invalid && ifscCode.touched" formControlName="ifscCode"></ion-input>
       <ion-button (click)="searchByIfscCode()">Search</ion-button>
       <div class="text-danger" *ngIf="ifscCode.invalid && ifscCode.touched">
-        <small *ngIf="ifscCode.errors?.required">Please enter IFSC code.</small>
-        <small *ngIf="ifscCode.errors?.pattern">Please enter appropriate IFSC code.</small>
+        <small *ngIf=" ifscCode.errors && ifscCode.errors['required']">Please enter IFSC code.</small>
+        <small *ngIf=" ifscCode.errors && ifscCode.errors['maxlength']">Please enter appropriate IFSC code.</small>
       </div>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Bank Name / बँकेचे नाव</ion-label>
       <ion-input id='bankName' type="text" [readonly]="isIfscCodeFound"   maxlength="40" [class.is-invalid]="bankName.invalid && bankName.touched" formControlName="bankName"></ion-input>
       <div class="text-danger" *ngIf="bankName.invalid && bankName.touched">
-        <small *ngIf="bankName.errors?.required">Please enter Bank name.</small>
-        <small *ngIf="bankName.errors?.maxlength">Please enter appropriate Bank Name.</small>
+        <small *ngIf="bankName.errors && bankName.errors['required']">Please enter Bank name.</small>
+        <small *ngIf="bankName.errors && bankName.errors['maxlength']">Please enter appropriate Bank Name.</small>
       </div>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Bank Branch / बँक शाखा</ion-label>
       <ion-input id='bankBranch' type="text" [readonly]="isIfscCodeFound"  [class.is-invalid]="bankBranch.invalid && bankBranch.touched" formControlName="bankBranch"></ion-input>
       <div class="text-danger" *ngIf="bankBranch.invalid && bankBranch.touched">
-        <small *ngIf="bankBranch.errors?.required">Please enter Bank Branch.</small>
-        <small *ngIf="bankBranch.errors?.maxlength">Please enter appropriate Bank Branch.</small>
+        <small *ngIf="bankBranch.errors && bankBranch.errors['required']">Please enter Bank Branch.</small>
+        <small *ngIf="bankBranch.errors && bankBranch.errors['maxlength']">Please enter appropriate Bank Branch.</small>
       </div>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Bank Address / बँकेचा पत्ता</ion-label>
       <ion-input id='bankAddress' type="text" [readonly]="isIfscCodeFound" maxlength="200" [class.is-invalid]="bankAddress.invalid && bankAddress.touched" formControlName="bankAddress"></ion-input>
       <div class="text-danger" *ngIf="bankAddress.invalid && bankAddress.touched">
-        <small *ngIf="bankAddress.errors?.required">Please enter Bank Address.</small>
-        <small *ngIf="bankAddress.errors?.maxlength">Please enter appropriate Bank Address.</small>
+        <small *ngIf="bankAddress.errors && bankAddress.errors['required']">Please enter Bank Address.</small>
+        <small *ngIf="bankAddress.errors && bankAddress.errors['maxlength']">Please enter appropriate Bank Address.</small>
       </div>
     </ion-item>
     <ion-item>
       <ion-label position="floating">MICR Code / एमआयसीआर कोड</ion-label>
       <ion-input minlength="9" maxlength="9" [class.is-invalid]="micrCode.invalid && micrCode.touched" formControlName="micrCode" id='micrCode'></ion-input>
       <div class="text-danger" *ngIf="micrCode.invalid && micrCode.touched">
-        <small *ngIf="micrCode.errors?.minlength">MICR Code should be of 9 digits.</small>
+        <small *ngIf=" micrCode.errors && micrCode.errors['required']">MICR Code should be of 9 digits.</small>
       </div>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Account Number / खाते क्रमांक.</ion-label>
       <ion-input minlength="9" maxlength="18" [class.is-invalid]="accountNumber.invalid && accountNumber.touched" formControlName="accountNumber" id='accountNumber'></ion-input>
       <div class="text-danger" *ngIf="accountNumber.invalid && accountNumber.touched">
-        <small *ngIf="accountNumber.errors?.required">Please enter your Account Number.</small>
-        <small *ngIf="accountNumber .errors?.pattern">Please enter appropriate Account Number.</small>
+        <small *ngIf=" accountNumber.errors && accountNumber.errors['required']">Please enter your Account Number.</small>
+        <small *ngIf="accountNumber.errors && accountNumber.errors['maxlength']">Please enter appropriate Account Number.</small>
       </div>
     </ion-item>
     <ion-item>

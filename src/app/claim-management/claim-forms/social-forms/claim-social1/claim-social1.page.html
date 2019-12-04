@@ -20,9 +20,11 @@
         </div>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Date of Marriage Registration /<br> विवाह नोंदणी तारीख<span class="text-danger">*</span></ion-label>
+        <ion-label position="floating">c /<br> विवाह नोंदणी तारीख<span class="text-danger">*</span></ion-label>
         <ion-datetime  displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [min]="dateOfMar.value" [max]="sysDate" [class.is-invalid]="dateOfMarReg.invalid && dateOfMarReg.touched" formControlName="dateOfMarReg"></ion-datetime>
         <div class="text-danger" *ngIf="dateOfMarReg.invalid && dateOfMarReg.touched">
+            <small *ngIf=" dateOfMarReg.errors && dateOfMarReg.errors['required']">Enter your Date of Marriage Registration
+                place.</small>
         </div>
       </ion-item>
       <ion-item>
