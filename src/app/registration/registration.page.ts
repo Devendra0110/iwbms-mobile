@@ -45,6 +45,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public endDate: any;
   public maxAppointmentDate: any;
   public minAppointmentDate: any;
+  public minDispatchDate:any;
+  public dispatchDateFlag:boolean;
+  public readableDispatchDate:string;
   public appointmentDate: any;
   public minFromDate: string;
   public maxToDate: string;
@@ -119,24 +122,32 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     applicantPhoto: File,
     supportingDocuments: File,
     workCertificate: File,
-    bankPassbook: File
+    bankPassbook: File,
+    selfDeclarationDocuments: File,
+    aadharDeclaration: File,
   } = {
       applicantPhoto: null,
       supportingDocuments: null,
       workCertificate: null,
-      bankPassbook: null
+      bankPassbook: null,
+      selfDeclarationDocuments: null,
+      aadharDeclaration: null
     };
 
   public fileOptions: {
     applicantPhoto: any,
     supportingDocuments: any,
     workCertificate: any,
-    bankPassbook: any
+    bankPassbook: any,
+    selfDeclarationDocuments: File,
+    aadharDeclaration: File,
   } = {
       applicantPhoto: null,
       supportingDocuments: null,
       workCertificate: null,
-      bankPassbook: null
+      bankPassbook: null,
+      selfDeclarationDocuments: null,
+      aadharDeclaration: null
     };
 
   public suggestionBox: ComponentRef<SuggestionBoxComponent>;
@@ -175,15 +186,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.network.onConnect().subscribe(() => { });
 
 
-    this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
-        this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-        this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-      } else {
-        this.router.navigate(['/verification']);
-      }
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   if (this.router.getCurrentNavigation().extras.state) {
+    //     this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
+    //     this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+    //     this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+    //   } else {
+    //     this.router.navigate(['/verification']);
+    //   }
+    // });
 
     // re-route to homepage if not logged-in
     this.storage.get('token').then((val) => {
@@ -289,6 +300,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       employerDetails: this.employerDetailsFormFroup(),
       employerWorkDetails: new FormArray([this.employerWorkDetailsFormFroup()]),
       supportingDocuments: this.supportingDocumentsFormFroup(),
+      verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      moreThan90Days: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
     });
 
     this.todaysDate = {
@@ -302,6 +316,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.minAppointmentDate = this.changeToIonDateTime(18, 'years');
     this.maxTodaysDate = this.changeToIonDateTime(0, 'years');
     this.minFromDate = this.changeToIonDateTime(1, 'years')
+    this.minDispatchDate = moment().subtract(1, 'years').add(90, 'days').format('YYYY-MM-DD')
+    this.readableDispatchDate = moment(this.minDispatchDate,'YYYY-MM-DD').format('DD/MM/YYYY')
+    this.dispatchDateFlag=false;
 
     this.attachmentDetails = [
       {
@@ -604,6 +621,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.dispatchDateEmp.valueChanges.subscribe(value => {
       this.maxToDate = moment(value).format('YYYY-MM-DD');
       this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp').patchValue(this.maxToDate, { emitEvent: false });
+        this.dispatchDateFlag = moment(this.maxToDate,'YYYY-MM-DD').diff(moment(this.minDispatchDate,'YYYY-MM-DD'),'days')<0?true:false;
     }, err => console.log(err));
 
     this.isBocwRegistered(0);
@@ -832,7 +850,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     } else {
       // alert('select date');
     }
-    this.minAppointmentDate = this.changeToIonDateTime(Number(this.agePersonal.value) - 18, 'years');
+    this.minAppointmentDate = moment(this.dobPersonal.value,'YYYY-MM-DD').add(18,'years').format('YYYY-MM-DD')
+    
   }
 
   getter(formGroup) {
@@ -1022,11 +1041,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   addMoreWorkerDetails() {
+    if (this.dispatchDateFlag || this.appointmentDateEmp.value === null|| this.dispatchDateEmp.value === null) return;
     const workerDetailsArray = this.registrationFormGroup.get('employerWorkDetails') as FormArray;
     this.showEmployerModal(workerDetailsArray.length, 'add');
   }
 
   editWorkerDetail(i: number) {
+    if (this.dispatchDateFlag || this.appointmentDateEmp.value === null || this.dispatchDateEmp.value === null) return;
     if (this.appointmentDateEmp.value && this.dispatchDateEmp.value) {
       this.showEmployerModal(i, 'update', this.registrationFormGroup.get('employerWorkDetails').get(`${i}`));
     } else if (this.appointmentDateEmp.value) {
@@ -1092,6 +1113,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       } else {
         this.workingDayFlag = false;
       }
+      this.moreThan90Days.setValue(this.workingDayFlag)
     }
   }
 
@@ -1173,26 +1195,27 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   uploadFile(event) {
     const file = event.target.files[0];
-    this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
-    });
-    this.files[event.target.id] = file;
-    this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
-    // if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152 && (file.type === 'application/pdf' || file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === "image/png")) {
-    //   this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
-    //   });
-    //   this.files[event.target.id] = file;
-    //   this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
-    // } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
-    //   this.registrationFormGroup.get(event.target.id).patchValue(null);
-    //   this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
-    //   });
+    // this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
+    // });
+    // this.files[event.target.id] = file;
+    // this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
 
-    // } else {
-    //   this.registrationFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
-    //   this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
-    //   });
+    if (event.target.files[0].size > 2097152 ) {
+      this.registrationFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
+      this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
+      });
+      
+    } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
+      this.registrationFormGroup.get(event.target.id).patchValue(null);
+      this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
+      });
 
-    // }
+    } else {
+      this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
+      });
+      this.files[event.target.id] = file;
+      this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
+    }
   }
 
   public findNominee(familyDetails: any): boolean {
@@ -1250,13 +1273,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           (err: any) => console.error(err)
         );
       } else {
-        this.registrationFormGroup.markAllAsTouched();
-
-        if (this.workingDay < 90){
-          alert('Working Days are less than ')
-        }else{
-          alert('The form is invalid. Please fill all the * mark fields with appropriate details')
-        }
+        this.registrationFormGroup.markAllAsTouched()
       }
     }
   }
@@ -1390,7 +1407,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       typeOfIssuer_mr: new FormControl(''),
       registeredWith: new FormControl(''),
       registrationNoOfIssuer: new FormControl(''),
-      dispatchNo: new FormControl(''),
+      dispatchNo: new FormControl('', [Validators.required]),
       dispatchDate: new FormControl(''),
       nameOfEmployer: new FormControl(''),
       nameOfEmployer_mr: new FormControl(''),
@@ -1438,18 +1455,26 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   supportingDocumentsFormFroup(): FormGroup {
     return new FormGroup({
       attachmentList: new FormArray([]),
-      supportingDocuments: new FormControl(''),
-      applicantPhoto: new FormControl(''),
-      registrationReceipt: new FormControl(''),
-      bankPassbook: new FormControl(''),
-      workCertificate: new FormControl('')
+      supportingDocuments: new FormControl('', Validators.required),
+      applicantPhoto: new FormControl('', Validators.required),
+      selfDeclarationDocuments: new FormControl('', Validators.required),
+      aadharDeclaration: new FormControl('', Validators.required),
+      bankPassbook: new FormControl('', Validators.required),
+      workCertificate: new FormControl('', Validators.required)
     });
   }
 
   // Getters
+  get verifyDocumentCheck() {
+    return this.registrationFormGroup.get('verifyDocumentCheck');
+  }
 
-  get firstName() {
-    return this.registrationFormGroup.get('personalDetails').get('firstName');
+  get selfDeclaration() {
+    return this.registrationFormGroup.get('selfDeclaration');
+  }
+
+  get moreThan90Days(){
+    return this.registrationFormGroup.get('moreThan90Days');
   }
 
 
@@ -1739,6 +1764,25 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   get dateOfRegistration() {
     return this.registrationFormGroup.get('bankDetails').get('dateOfRegistration');
+  }
+  get supportingDocuments() {
+    return this.registrationFormGroup.get('supportingDocuments').get('supportingDocuments');
+  }
+
+  get selfDeclarationDocuments() {
+    return this.registrationFormGroup.get('supportingDocuments').get('selfDeclarationDocuments');
+  }
+
+  get aadharDeclaration() {
+    return this.registrationFormGroup.get('supportingDocuments').get('aadharDeclaration');
+  }
+
+  get workCertificate() {
+    return this.registrationFormGroup.get('supportingDocuments').get('workCertificate');
+  }
+
+  get bankPassbook() {
+    return this.registrationFormGroup.get('supportingDocuments').get('bankPassbook');
   }
 
 }

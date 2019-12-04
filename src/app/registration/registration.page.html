@@ -116,7 +116,7 @@
 
         <ion-item>
           <ion-icon slot="end" name="calendar"></ion-icon>
-          <ion-label position="floating">Date Of Birth<span style="color: Red">*</span> - As Per Aadhar or PAN Card</ion-label>
+          <ion-label  class="ion-text-wrap">Date Of Birth<span style="color: Red">*</span> - As Per Aadhar or PAN Card</ion-label>
           <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [min]="startDate" [max]="endDate" formControlName="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched" (ionChange)="calculateAge()" (ionBlur)="calculateAge()"></ion-datetime>
           <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">
             <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
@@ -415,7 +415,7 @@
         <ion-item>
           <ion-checkbox formControlName="permanentEqualsResidentialAddress" (ionChange)="copyAddress($event)">
           </ion-checkbox>
-          <ion-label>स्थानिक पत्ता व कायमचा पत्ता सारखा असेल तर येथे क्लिक करा / Click
+          <ion-label  class="ion-text-wrap">स्थानिक पत्ता व कायमचा पत्ता सारखा असेल तर येथे क्लिक करा / Click
             here to use the same Residential Address as Permanent
             Address</ion-label>
         </ion-item>
@@ -687,7 +687,7 @@
     <form [formGroup]="registrationFormGroup.get('familyDetails')">
         <ion-list>
           <ion-list-header color="primary" style="font-size:20px;">Family Details</ion-list-header>
-          <div style="padding: 5%; overflow-x: scroll">
+          <div style="overflow-x: scroll">
           <ion-grid style='width: 1511px;' border="1">
             <ion-row>
               <!-- <ion-col style="width: 15px"  *ngFor="let familyHeader of familyHeaderOptions">
@@ -753,7 +753,7 @@
               </ion-col>
               <ion-col style="width: 15px ;margin-left: -71px;">
                 <ion-item>
-                  <ion-input formControlName='firstNameFamily' id='familyDetails-{{i}}-firstNameFamily' class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input><br>
+                  <ion-input [attr.disabled]="true" formControlName='firstNameFamily' id='familyDetails-{{i}}-firstNameFamily' class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input><br>
                 </ion-item>
                 <ion-input *ngIf="firstNameFamily_mr.value" formControlName='firstNameFamily_mr' readonly></ion-input>
                 <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('firstNameFamily').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('firstNameFamily').touched">
@@ -763,7 +763,7 @@
               </ion-col>
               <ion-col style="width: 15px">
                 <ion-item>
-                <ion-input maxlength="20" formControlName="surname" id='familyDetails-{{i}}-surname' class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
+                <ion-input [attr.disabled]="true" maxlength="20" formControlName="surname" id='familyDetails-{{i}}-surname' class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
                 </ion-item>
                 <ion-input *ngIf="surname_mr.value" formControlName="surname_mr" readonly> </ion-input>
                 <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('surname').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('surname').touched">
@@ -773,7 +773,7 @@
               </ion-col>
               <ion-col style="width: 15px">
                 <ion-item>
-                <ion-input maxlength="20" formControlName="fatherOrHusbandName" id='familyDetails-{{i}}-fatherOrHusbandName' class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
+                <ion-input [attr.disabled]="true" maxlength="20" formControlName="fatherOrHusbandName" id='familyDetails-{{i}}-fatherOrHusbandName' class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
                 </ion-item>
                 <ion-input *ngIf="fatherOrHusbandName_mr.value" formControlName="fatherOrHusbandName_mr" readonly></ion-input>
                 <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('fatherOrHusbandName').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('fatherOrHusbandName').touched">
@@ -784,7 +784,7 @@
               <ion-col >    
                 <ion-item style="width: 225px;">
                   <ion-icon  name="calendar"></ion-icon>
-                  <ion-datetime [readonly]='i===0' displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [max]="maxTodaysDate" id='familyDetails-{{i}}-dobFamily' formControlName="dobFamily" (ionChange)="calculateAgeForFamilyDetails(i)">
+                  <ion-datetime [attr.disabled]="true" [readonly]='i===0' displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [max]="maxTodaysDate" id='familyDetails-{{i}}-dobFamily' formControlName="dobFamily" (ionChange)="calculateAgeForFamilyDetails(i)">
                   </ion-datetime>
                   </ion-item>
                   <div class="text-danger"
@@ -794,11 +794,11 @@
               </ion-col>
               <ion-col >
                 <ion-item>
-                    <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" formControlName="ageFamily" id='familyDetails-{{i}}-ageFamily' readonly ></ion-input>
+                    <ion-input [attr.disabled]="true" maxlength="2" minlength="1" max="60" min="18" type="number" formControlName="ageFamily" id='familyDetails-{{i}}-ageFamily' readonly ></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col style="width: 15px">
-                  <ion-select interface="action-sheet" formControlName="relation" (ionChange)="handleSpecialDropdowns($event)" id='familyDetails-{{i}}-relation'>
+                  <ion-select [attr.disabled]="true" interface="action-sheet" formControlName="relation" (ionChange)="handleSpecialDropdowns($event)" id='familyDetails-{{i}}-relation'>
                     <ion-select-option *ngFor="let familyRelation of familyRelationOptions|keyvalue" value="{{familyRelation.key}}"><span *ngIf="!(familyRelation.key === '1')">{{familyRelation.value}}</span><span *ngIf="(familyRelation.key === '1')">Self</span></ion-select-option>
                   </ion-select>
                   <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('relation').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('relation').touched">
@@ -809,14 +809,14 @@
                 <ion-item>
                   <ion-input maxlength="20" id='familyDetails-{{i}}-profession' formControlName="profession"class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
                   </ion-item> 
-                  <ion-input *ngIf="profession_mr.value" formControlName="profession_mr" readonly></ion-input>
+                  <ion-input [attr.disabled]="true" *ngIf="profession_mr.value" formControlName="profession_mr" readonly></ion-input>
                   <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('profession').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('profession').touched">
                     <small *ngIf="!!profession.errors?.maxlength">You have exceded the maxlength.</small>
                     <small *ngIf="!!profession.errors?.pattern">Please enter appropriate profession name.</small>
                   </div>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-select interface="action-sheet" formControlName="education" (ionChange)="handleSpecialDropdowns($event)" id='familyDetails-{{i}}-education'>
+                <ion-select [attr.disabled]="true" interface="action-sheet" formControlName="education" (ionChange)="handleSpecialDropdowns($event)" id='familyDetails-{{i}}-education'>
                   <ion-select-option *ngFor="let education of educationOptions|keyvalue" value={{education.key}}>{{education.value}}</ion-select-option>
                 </ion-select>
                 <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('education').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('education').touched">
@@ -825,18 +825,18 @@
               </ion-col>
               <ion-col style="width:15px"> 
                 <ion-item>
-                  <ion-input type="tel" maxlength="12" minlength="12" type="tel" formControlName="aadharNoFamily" id='familyDetails-{{i}}-aadharNoFamily' clearInput></ion-input>
+                  <ion-input [attr.disabled]="true" type="tel" maxlength="12" minlength="12" type="tel" formControlName="aadharNoFamily" id='familyDetails-{{i}}-aadharNoFamily' clearInput></ion-input>
                 </ion-item>
                 <div class="text-danger" *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('aadharNoFamily').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('aadharNoFamily').touched" >
                   <small *ngIf="!!aadharNoFamily.errors?.pattern">Please enter appropriate aadhar number.</small>
                 </div>
               </ion-col>
               <ion-col style="width: 15px; text-align: center;">
-                <ion-checkbox [attr.disabled]="i === 0 || null" formControlName="isRegisteredInBOCW" (ionChange)="isBocwRegistered(i)" ></ion-checkbox>
+                <ion-checkbox [attr.disabled]="true" formControlName="isRegisteredInBOCW" (ionChange)="isBocwRegistered(i)" ></ion-checkbox>
               </ion-col>
               <ion-col style="width:15px">
                 <ion-item>
-                  <ion-input type="tel"  maxlength="12" minlength="12" formControlName="bocwRegistrationNo"  id='familyDetails-{{i}}-bocwRegistrationNo' clearInput></ion-input>
+                  <ion-input [attr.disabled]="true" type="tel"  maxlength="12" minlength="12" formControlName="bocwRegistrationNo"  id='familyDetails-{{i}}-bocwRegistrationNo' clearInput></ion-input>
                 </ion-item>
                 <div class="text-danger"
                   *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('bocwRegistrationNo').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('bocwRegistrationNo').touched">
@@ -844,7 +844,7 @@
                 </div>
               </ion-col>
               <ion-col style="width: 15px; text-align: center;">
-                <input type="radio" [attr.disabled]="i === 0 || null" formControlName="nominee" (change)="applyNominee(i)" [value]="'yes'">
+                <input type="radio" [attr.disabled]="true" formControlName="nominee" (change)="applyNominee(i)" [value]="'yes'">
               </ion-col>
               <ion-col>
                 <ion-fab  horizontal="end" style="margin-top: -36px;margin-right: 50px;">
@@ -857,10 +857,8 @@
             </ng-container>
           </ion-grid>
           </div>
-
-          <ion-item margin-bottom>
-            <ion-button  (click)="addMoreFamilyDetails()">Add More </ion-button>
-          </ion-item>
+          
+            <ion-button style="margin-left: 11px;margin-top: 8px;"  (click)="addMoreFamilyDetails()">Add More </ion-button>
         </ion-list>
       </form>
       
@@ -965,7 +963,7 @@
           <ion-label position="floating">Type of Work /कामाचा प्रकार<span style="color: Red">*</span></ion-label>
           <ion-select formControlName='typeOfWorkEmp' [class.is-invalid]="typeOfWorkEmp.invalid && typeOfWorkEmp.touched"
             id='employerDetails-typeOfWorkEmp' (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
-            <ion-select-option text-wrap class="ion-padding-top ion-padding-bottom" text-justify
+            <ion-select-option  class="ion-text-wrap" text-justify
               *ngFor="let typeOfWork of typeOfWorkOptions|keyvalue" value="{{ typeOfWork.key }}">{{ typeOfWork.value }}
             </ion-select-option>
           </ion-select>
@@ -1057,7 +1055,7 @@
         <ion-item>
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-label position="floating">Appointment Date/नियुक्तीची तारीख<span style="color: Red">*</span></ion-label>
-          <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" min="1990-01-01" [max]="maxAppointmentDate" [min]="minAppointmentDate" id='employerDetails-appointmentDateEmp' formControlName="appointmentDateEmp" [class.is-invalid]=" appointmentDateEmp.invalid && appointmentDateEmp.touched"></ion-datetime>
+          <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [min]="minAppointmentDate" [max]="maxAppointmentDate"  id='employerDetails-appointmentDateEmp' formControlName="appointmentDateEmp" [class.is-invalid]=" appointmentDateEmp.invalid && appointmentDateEmp.touched"></ion-datetime>
             <div class="text-danger" *ngIf="appointmentDateEmp.invalid && appointmentDateEmp.touched">
               <small *ngIf="!!appointmentDateEmp.errors?.required">Please enter your Appointment Date.</small>
             </div>
@@ -1235,11 +1233,16 @@
 
       <form [formGroup]="registrationFormGroup.get('employerWorkDetails')">
         <ion-list>
-          <div style="padding: 5%; overflow-x: scroll">
+          <div style="overflow-x: scroll">
             <ion-grid style='width: 1511px;' border="1">
               <ion-row *ngIf="appointmentDateEmp.value===null || dispatchDateEmp.value ===null">
                 <ion-col>
-                  <small style="color:red;">Please choose the appointment and dispatch date first.</small>
+                  <small  style="color:red;">Please choose the appointment and dispatch date first.</small>
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="dispatchDateFlag" >
+                <ion-col>
+                  <small class="text-danger"> Minimum Dispatch Date :{{readableDispatchDate}} </small>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -1282,8 +1285,8 @@
                       </ion-fab-button>
                     </ion-fab>
                   </ion-col>
-                  <ion-col style="width: 15px;margin-left: -71px;" >
-                      <ion-select [class.is-invalid]="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched" interface="action-sheet" formControlName="typeOfEmployerEmp" id='employerWorkDetails-{{i}}-typeOfEmployerEmp' (ionChange)="handleSpecialDropdowns($event)">
+                  <ion-col  style="width: 15px;margin-left: -71px;" >
+                      <ion-select [attr.disabled]="true" [class.is-invalid]="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched" interface="action-sheet" formControlName="typeOfEmployerEmp" id='employerWorkDetails-{{i}}-typeOfEmployerEmp' (ionChange)="handleSpecialDropdowns($event)">
                         <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptions|keyvalue" value="{{ typeOfIssuer.key }}">{{ typeOfIssuer.value }}</ion-select-option>
                       </ion-select>
                       <div class="text-danger" *ngIf="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched">
@@ -1292,7 +1295,7 @@
                   </ion-col>
                   <ion-col style="width: 15px">
                       <ion-item>
-                        <ion-input id='employerWorkDetails-{{i}}-fullNameOfIssuerEmp' formControlName="fullNameOfIssuerEmp" class="transliterate" (ionBlur)="transliterateDirect($event)" [class.is-invalid]="fullNameOfIssuerEmp.invalid && fullNameOfIssuerEmp.touched" autocapitalize="words" clearInput></ion-input>
+                        <ion-input [attr.disabled]="true" id='employerWorkDetails-{{i}}-fullNameOfIssuerEmp' formControlName="fullNameOfIssuerEmp" class="transliterate" (ionBlur)="transliterateDirect($event)" [class.is-invalid]="fullNameOfIssuerEmp.invalid && fullNameOfIssuerEmp.touched" autocapitalize="words" clearInput></ion-input>
                       </ion-item>
                       <div class="text-danger" *ngIf="fullNameOfIssuerEmp.invalid && fullNameOfIssuerEmp.touched">
                             <small *ngIf="!!fullNameOfIssuerEmp.errors?.required">Please enter full name.</small>
@@ -1301,7 +1304,7 @@
                   </ion-col>
                   <ion-col style="width: 15px">
                       <ion-item> 
-                        <ion-input type="tel"  maxlength="10" minlength="10" formControlName="mobileNumberOfIssuerEmp" [class.is-invalid]="mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched" 
+                        <ion-input [attr.disabled]="true" type="tel"  maxlength="10" minlength="10" formControlName="mobileNumberOfIssuerEmp" [class.is-invalid]="mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched" 
                       id='employerWorkDetails-{{i}}-mobileNumberOfIssuerEmp' clearInput></ion-input>
                       </ion-item>
                       <div class="text-danger" *ngIf="mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched">
@@ -1312,7 +1315,7 @@
                   <ion-col style="width: 15px">
                       <ion-item >
                         <ion-icon  name="calendar"></ion-icon>
-                      <ion-datetime [readonly]="appointmentDateEmp.value===null || dispatchDateEmp.value ===null" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"   id='employerWorkDetails-{{i}}-fromDateEmp' (ionChange)="calculateDayForWorkDetails(i)"  formControlName="fromDateEmp" [min]="minFDate(i)" [max]="maxFDate(i)"></ion-datetime>
+                      <ion-datetime [attr.disabled]="true" [readonly]="appointmentDateEmp.value===null || dispatchDateEmp.value ===null" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"   id='employerWorkDetails-{{i}}-fromDateEmp' (ionChange)="calculateDayForWorkDetails(i)"  formControlName="fromDateEmp" [min]="minFDate(i)" [max]="maxFDate(i)"></ion-datetime>
                       </ion-item>
                       <div class="text-danger" *ngIf="fromDateEmp.invalid && fromDateEmp.touched" >
                         <small *ngIf="!!fromDateEmp.errors?.required">Please choose the joining date</small>
@@ -1321,7 +1324,7 @@
                   <ion-col style="width: 15px">
                       <ion-item>
                         <ion-icon  name="calendar"></ion-icon>
-                      <ion-datetime [readonly]="appointmentDateEmp.value===null || dispatchDateEmp.value ===null" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"   id='employerWorkDetails-{{i}}-toDateEmp' (ionChange)="calculateDayForWorkDetails(i)" formControlName="toDateEmp" [min]="minTDate(i)" [max]="maxTDate(i)"></ion-datetime>
+                      <ion-datetime [attr.disabled]="true" [readonly]="appointmentDateEmp.value===null || dispatchDateEmp.value ===null" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"   id='employerWorkDetails-{{i}}-toDateEmp' (ionChange)="calculateDayForWorkDetails(i)" formControlName="toDateEmp" [min]="minTDate(i)" [max]="maxTDate(i)"></ion-datetime>
                       </ion-item>
                        <div class="text-danger" *ngIf="toDateEmp.invalid && toDateEmp.touched" >
                         <small *ngIf="!!toDateEmp.errors?.required">Please choose the resiging date</small>
@@ -1344,9 +1347,7 @@
           <ion-item *ngIf="workingDayFlag" style="color:red;">
             Working days are less than 90
           </ion-item>
-          <ion-item margin-bottom>
-            <ion-button  (click)="addMoreWorkerDetails()">Add More </ion-button>
-          </ion-item>
+            <ion-button style="margin-left: 11px;margin-top: 8px;" (click)="addMoreWorkerDetails()">Add More </ion-button>
         </ion-list>
       </form> 
 
@@ -1367,7 +1368,9 @@
         </ng-container>       
         
         <ion-item>
-          <ion-label >Applicant Photo<span style="color: Red">*</span></ion-label>
+          <ion-label >Applicant Photo/ अर्जदार फोटो<span style="color: Red">*</span><span class="text-danger" *ngIf="supportingDocuments.invalid && supportingDocuments.touched">
+            <small *ngIf="!!supportingDocuments.errors?.required">Applicant Photo is Required</small>
+          </span></ion-label>
           <ion-fab  horizontal="end">
               <ion-fab-button (click)="takePicture()">
               <ion-icon name="camera"></ion-icon>
@@ -1377,28 +1380,60 @@
         <img [src]="currentImage" *ngIf="currentImage">
 
         <ion-item lines="none">
-          <ion-label floating> Supporting Document<span style="color: Red">*</span></ion-label><br>
+          <ion-label floating> Supporting Document/ समर्थन दस्तऐवज<span style="color: Red">*</span><span class="text-danger" *ngIf="supportingDocuments.invalid && supportingDocuments.touched">
+            <small *ngIf="!!supportingDocuments.errors?.required">Document is required</small>
+          </span></ion-label><br>
           </ion-item>
           <ion-item>
             <input id='supportingDocuments' formControlName="supportingDocuments" type="file"  accept="application/pdf" (change)="uploadFile($event)" >
           </ion-item>
-          
-
+          <ion-item lines="none">
+            <ion-label text-wrap floating> Self Declaration / हमीपत्र<span style="color: Red">*</span><span class="text-danger"
+                *ngIf="selfDeclarationDocuments.invalid && selfDeclarationDocuments.touched">
+                <small *ngIf="!!selfDeclarationDocuments.errors?.required">Document is required</small>
+              </span></ion-label>
+          </ion-item>
+          <ion-item>
+            <input id='selfDeclarationDocuments' formControlName="selfDeclarationDocuments" type="file" accept="application/pdf"
+              (change)="uploadFile($event)">
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label text-wrap floating>Aadhar-Declaration / हमीपत्र<span style="color: Red">*</span><span class="text-danger"
+                *ngIf="aadharDeclaration.invalid && aadharDeclaration.touched">
+                <small *ngIf="!!aadharDeclaration.errors?.required">Document is required</small>
+              </span></ion-label>
+          </ion-item>
+          <ion-item>
+            <input id='aadharDeclaration' formControlName="aadharDeclaration" type="file" accept="application/pdf"
+              (change)="uploadFile($event)">
+          </ion-item>
         <ion-item lines="none">
-          <ion-label text-wrap floating>90 Days Work Certificate<span style="color: Red">*</span></ion-label>          
+          <ion-label text-wrap floating>90 Days Work Certificate / 90 दिवस कामाचे प्रमाणपत्र<span style="color: Red">*</span><span class="text-danger" *ngIf="workCertificate.invalid && workCertificate.touched">
+            <small *ngIf="!!workCertificate.errors?.required">Document is required</small>
+          </span></ion-label>          
         </ion-item>
         <ion-item>        
           <input id='workCertificate' formControlName="workCertificate" type="file" accept="application/pdf" (change)="uploadFile($event)" >
         </ion-item>
         <ion-item lines="none">
-          <ion-label text-wrap floating> Bank Passbook<span style="color: Red">*</span></ion-label>
+          <ion-label text-wrap floating>Bank Passbook / बँक पासबुक<span style="color: Red">*</span><span class="text-danger" *ngIf="bankPassbook.invalid && bankPassbook.touched">
+            <small *ngIf="!!bankPassbook.errors?.required">Document is required</small>
+          </span></ion-label>
         </ion-item>
         <ion-item>
           <input id='bankPassbook' formControlName="bankPassbook" type="file" accept="application/pdf" (change)="uploadFile($event)" >
         </ion-item>
+      </ion-list>
+      
+    </form>
         <ion-item>
-          <ion-checkbox slot="start" checked="false"></ion-checkbox>
-          <ion-label text-wrap>I hereby declare that the information provided in above form is true & correct to the best of my
+          <ion-checkbox slot="start" checked="false" formControlName="verifyDocumentCheck"></ion-checkbox>
+          <ion-label><span style="color: Red">*</span> Documents Verified / कागदपत्र पडताळले</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" formControlName="selfDeclaration" checked="false"></ion-checkbox>
+          <ion-label text-wrap><span style="color: Red">*</span>I hereby declare that the information provided in above form is
+            true & correct to the best of my
             knowledge and belief
             and nothing has been falsely stated. In case any of the above information is found to be false or untrue or
             misleading
@@ -1410,11 +1445,6 @@
             राहीन
             याची मला पूर्ण जाणीव आहे.</ion-label>
         </ion-item>
-
-          <ion-button mode="ios"  expand="block" (click)="save()">Save</ion-button>
-
-      </ion-list>
-      
-    </form>
+    <ion-button mode="ios"  expand="block" (click)="save()">Save</ion-button>
   </form>
 </ion-content>

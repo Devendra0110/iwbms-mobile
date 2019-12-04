@@ -276,6 +276,14 @@ export class ValidationService {
         validatorsArr = [];
         break;
       }
+      case 'verifyDocumentCheck': {
+        validatorsArr = [
+          Validators.required,
+          Validators.pattern('true')
+        ];
+        break;
+      }
+
 
     }
     return validatorsArr;
