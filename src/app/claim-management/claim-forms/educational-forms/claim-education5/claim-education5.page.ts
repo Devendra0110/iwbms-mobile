@@ -100,6 +100,7 @@ export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
       this.aadharNumber.disable();
       this.age.patchValue(this.calculateAge(this.childDetail.dobFamily))
       this.age.disable();
+      this.category.patchValue(this.childDetail.category);
     });
 
     this.assignBenefits(false);
