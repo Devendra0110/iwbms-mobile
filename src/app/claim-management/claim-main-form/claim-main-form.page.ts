@@ -359,6 +359,7 @@ export class ClaimMainFormPage implements OnInit {
   }
 
   onSelectSchemeChange(value) {
+    if(value===undefined) return;
     this.isSelectScheme = true;
     this.selectedSchemeId = value;
     this.selectedSchemeObj = this.schemeObj.find(scheme => scheme.scheme_number === value);
