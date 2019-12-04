@@ -7,9 +7,7 @@
 <!-- <ion-content> -->
     <form [formGroup]="formGroup">
         <ion-list>
-            <ion-header class="ml-2" style="font-size:18px">Funeral Benefit of Rs. 10,000/- (Ten Thousand) to the nominated
-                heir of deceased registered worker.
-                नोंदणीकृत कामगाराच्या मृत्यू झाल्यास त्याच्या अंत्यविधी करिता रू. १०,०००/-.
+            <ion-header class="ml-2" style="font-size:18px">{{selectedSchemeName}}
             </ion-header>
       </ion-list>
 
@@ -274,7 +272,7 @@
                             <ion-checkbox checked="false" color="dark" formControlName="verifyDocumentCheck" slot="start"></ion-checkbox>
                             <ion-label>Documents Verified</ion-label>
                           </ion-item>
-                        <ion-button mode="ios" (click)="saveForm()" expand="block" >Save</ion-button>
+                        <ion-button mode="ios" (click)="saveForm()" expand="block" >SAVE</ion-button>
   
           </ion-list>
       </form>

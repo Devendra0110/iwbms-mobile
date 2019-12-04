@@ -24,7 +24,7 @@ export class ClaimFinancial2Page extends ClaimBasePage implements OnInit {
   public bankDetails: any;
   public isifscCodeBankCodeFound: boolean;
 public minDate;
-public nomineeCheck = true;
+public nomineeCheck = false;
 
 
   constructor(
@@ -175,7 +175,7 @@ public nomineeCheck = true;
     this.formGroup.get('fullName').patchValue(fullNameNominee);
     this.formGroup.get('fullName_mr').patchValue(fullNameNominee_mr);
     this.formGroup.get('dobPersonal').patchValue(nomineeBirthDateArray);
-    this.formGroup.get('relation').patchValue(Number(this.sortedArray[0]['relation']));
+      this.formGroup.get('relation').patchValue(Number(this.sortedArray[0]['relation']));
     this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
   this.agePersonal.patchValue(this.calculateAge(nomineeBirthDateArray))
     this.agePersonal.disable()
@@ -185,16 +185,28 @@ public nomineeCheck = true;
 
   nomineeSwitch(event: any) {
     this.nomineeCheck = !this.nomineeCheck;
-    if (!this.nomineeCheck) {
+    if (this.nomineeCheck) {
 
       this.fullName.enable();
       this.dobPersonal.enable();
       this.relation.enable();
       this.aadharNumber.enable();
+this.fullName_mr.reset()
+this.agePersonal.reset()
+
+      this.fullName.reset();
+      this.dobPersonal.reset();
+      this.relation.reset();
+      this.aadharNumber.reset();
       this.nomineeCertificate.setValidators([Validators.required]);
 
-
     } else {
+this.agePersonal.reset()
+this.fullName_mr.reset()
+this.fullName.reset();
+this.dobPersonal.reset();
+this.relation.reset();
+this.aadharNumber.reset();
       this.fullName.disable();
       this.dobPersonal.disable();
       this.relation.disable();
@@ -203,6 +215,15 @@ public nomineeCheck = true;
       this.patchNominee()
     }
   }
+
+  public calculateAgepatched(date: string): void {
+   if( typeof date === 'string'){
+    const dob = moment(date).format('YYYY-MM-DD');
+    const age = moment().diff(dob, 'years');
+   
+this.agePersonal.patchValue(age)}}
+
+
   openOtherDetails(event: any) {
     this.open = !this.open;
 

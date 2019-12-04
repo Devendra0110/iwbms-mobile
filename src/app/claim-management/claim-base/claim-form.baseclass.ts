@@ -40,6 +40,7 @@ export abstract class ClaimBasePage {
     @Input() familyDetailsArray: any;
     @Input() editFormFlagObservable: Observable<any>;
     @Input() applicantRegistrationDetails: any;
+    @Input() selectedSchemeName:string;
 
     constructor(
         protected transliterate: TransliterationService,
@@ -208,9 +209,10 @@ export abstract class ClaimBasePage {
 
 
     public calculateAge(date: string): number {
+        if(typeof date === 'string'){
         const dob = moment(date).format('YYYY-MM-DD');
         const age = moment().diff(dob, 'years');
-        return age;
+        return age;}
     }
 
 
@@ -274,8 +276,8 @@ export abstract class ClaimBasePage {
         }
         this.claimHttpService.applyForClaim(formData, this.JWTToken).subscribe((res: any) => {
             if (res) {
-                this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
-                alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
+                this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res.data.acknowledgementNo}. Please visit below WFC with original documents for verification : ${res.data.wfcDetail.office_name}`);
+                alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res.data.acknowledgementNo}. Please visit below WFC with original documents for verification : ${res.data.wfcDetail.office_name}`)
 
                 alert('Scheme Claimed Successfully');
                 this.router.navigate(['/dashboard'])

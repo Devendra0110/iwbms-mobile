@@ -8,10 +8,7 @@
 <!-- <ion-content> -->
     <form [formGroup]="formGroup">
         <ion-list>
-            <ion-header class="ml-2" style="font-size:18px">In Atal Bandhkam Kamgar Awaas Yojna Shahari / Gramin, the
-                construction
-                workers will get Rs.2,00,000 grant.
-                अटल बंधम कामगार आवास योजना शहरी / ग्रामीण मध्ये बांधकाम कामगारांना २,००,००० रुपये अनुदान मिळणार आहे.
+            <ion-header class="ml-2" style="font-size:18px">{{selectedSchemeName}}
               </ion-header>
               <br>
 
@@ -59,7 +56,7 @@
                       <ion-checkbox checked="false" color="dark" formControlName="verifyDocumentCheck" slot="start"></ion-checkbox>
                       <ion-label>Documents Verified</ion-label>
                     </ion-item>
-                  <ion-button mode="ios" (click)="saveForm()" expand="block" >Save</ion-button>
+                  <ion-button mode="ios" (click)="saveForm()" expand="block" >SAVE</ion-button>
               
               </ion-list>
           </form>

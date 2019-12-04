@@ -6,10 +6,7 @@
 
   <form [formGroup]="formGroup">
     <ion-list>
-      <ion-header  class="ml-2" style="font-size:18px">Financial assistance of Rs. 5,00,000/- to the legal
-        heir(nominee), in case
-        of Accidental death at workplace of worker during the course of employment.
-        नोंदणीकृत कामगाराच्या कामाच्या ठिकाणी अपघाती मृत्यू झाल्यास त्याच्या कायदेशीर वारसार(नामित) रू.५,००,०००/-.
+      <ion-header  class="ml-2" style="font-size:18px">{{selectedSchemeName}}
       </ion-header>
 <br>
 </ion-list>
@@ -167,7 +164,7 @@
           <ion-icon slot="end" name="calendar"></ion-icon>
 
         <ion-label position="floating">Date Of Birth / जन्म तारीख<span class="text-danger">*</span></ion-label>
-        <ion-datetime id="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched"  [max]='maxTodaysDate'
+        <ion-datetime id="dobPersonal"  (ionChange)="calculateAgepatched(dobPersonal.value)" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched"  [max]='maxTodaysDate'
           formControlName="dobPersonal">
         </ion-datetime>
         <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">
@@ -177,7 +174,7 @@
 
       <ion-item>
         <ion-label position="floating">Age / वय<span class="text-danger">*</span></ion-label>
-        <ion-input id="agePersonal"  [class.is-iinvalid]="agePersonal.invalid && agePersonal.touched"
+        <ion-input id="agePersonal"   [class.is-iinvalid]="agePersonal.invalid && agePersonal.touched"
           formControlName="agePersonal">
         </ion-input>
 
@@ -361,7 +358,7 @@
                   <ion-checkbox formControlName="verifyDocumentCheck"  checked="false" color="dark"  slot="start"></ion-checkbox>
                   <ion-label>Documents Verified</ion-label>
                 </ion-item>
-              <ion-button mode="ios" expand="block"   (click)="saveForm()" >Save</ion-button>
+              <ion-button mode="ios" expand="block"   (click)="saveForm()" >SAVE</ion-button>
     </ion-list>              
 
   </form>

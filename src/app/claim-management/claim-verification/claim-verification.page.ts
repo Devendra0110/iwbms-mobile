@@ -18,8 +18,15 @@ import { ValidationService } from '../../services/validation.service';
 export class ClaimVerificationPage implements OnInit {
 
   public claimVerificationForm: FormGroup;
+  public cardTitle:string;
   public ineligible: boolean;
   public unregisteredUser: boolean;
+  public allowOTP=false
+  public otpflag = false;
+  public resendOtpFlag=true;
+  public otpCountdown:number;
+  public ECode: string;
+  public passingResponse:any;
   public JWTToken: any;
 
   constructor(
@@ -33,6 +40,7 @@ export class ClaimVerificationPage implements OnInit {
     private loadingController: LoadingController,
     private toast: Toast
   ) {
+    this.cardTitle = 'BOCW Registration No. Verification'
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
     this.claimVerificationForm = new FormGroup({
@@ -61,10 +69,14 @@ export class ClaimVerificationPage implements OnInit {
     this.ineligible = false;
   }
 
+  deadWorker(){
+    this.mobileNo.enable()
+  }
+
   verify() {
     const tokenObj ={
-      registrationNo:this.registrationNo.value,
-      mobileNo:this.mobileNo.value
+      registrationNo:this.claimVerificationForm.getRawValue().registrationNo,
+      mobileNo:this.claimVerificationForm.getRawValue().mobileNo,
     }
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
@@ -79,14 +91,14 @@ export class ClaimVerificationPage implements OnInit {
         });
         this.claimService.checkRegistrationAndRenewalValidity(tokenObj, this.JWTToken).subscribe(
           (res: any) => {
+            
             if (res.subscription === 'active') {
-              res['JWTToken']=this.JWTToken;
-              delete res.agePersonal
-              const userObject: NavigationExtras = {
-                state: res
-              }
-              this.router.navigate(['/claim-management/claim-main-form'], userObject);
+              this.passingResponse=res;
+              this.allowOTP=true;
+              this.cardTitle = "Registered Worker Mobile Verification"
+             
             } else {
+              this.allowOTP=false;
               this.dialogs.alert('Worker is not eligible.')
               this.ineligible = true
             }
@@ -95,7 +107,6 @@ export class ClaimVerificationPage implements OnInit {
             this.dialogs.alert('Registered does not exist');
           }
         )
-
       } else {
         this.dialogs.alert('Registration No. is not valid')
         this.ineligible = true;
@@ -104,6 +115,90 @@ export class ClaimVerificationPage implements OnInit {
       }
     }
   }
+  
+  sendOTP() {
+    this.resendOtpFlag = true;
+    this.otpCountdown = 32
+    if (this.network.type === 'none' || this.network.type === 'NONE') {
+      this.dialogs.alert('Please check your internet connectivity.');
+    } else {
+      if (this.claimVerificationForm.valid) {
+        const mobileNo = this.claimVerificationForm.get('mobileNo').value;
+        const loading = this.loadingController.create({
+          message: 'Please Wait',
+          duration:500,
+          spinner: "crescent"
+        }).then((res)=>{
+          res.present();
+        });
+        this.mobileVerification.sendClaimOTP(this.registrationNo.value, this.mobileNo.value).subscribe(
+          (res: any) => {
+            this.loadingController.dismiss();
+            if (res.message === 'OTP Sent') {
+              this.toast.show(`OTP sent`, '2000', 'bottom').subscribe(
+                toast => {
+                  console.log(toast);
+                }
+              );
+              this.otpflag = true;
+              this.unregisteredUser = false;
+              setInterval(()=>{
+                this.otpCountdown--;
+                this.resendOtpFlag = this.otpCountdown<1?false:true
+              },1000)
+            }
+          },
+          (err: any) => {
+            this.loadingController.dismiss();
+            console.log(err);
+            this.unregisteredUser = true;
+          }
+        );
+      } else {
+        this.dialogs.alert('Details are not valid.');
+      }
+    }
+  }
+
+  async validateOTP(otp) {    // fallback, if sendotp is enabled
+    if (this.network.type === 'none' || this.network.type === 'NONE') {
+      this.dialogs.alert('Please check your internet connectivity.');
+    } else {
+      const mobileNo = this.claimVerificationForm.get('mobileNo').value;
+      const loading = this.loadingController.create({
+        message: 'Please Wait',
+        duration: 500,
+        spinner: "crescent"
+      }).then((res)=>{
+        res.present();
+      });
+      this.mobileVerification.validateOTP(mobileNo,otp).subscribe(
+        (res: any) => {
+          if (res.message === 'OTP Verified') {
+            // otp verified
+            this.passingResponse['JWTToken']=this.JWTToken;
+            delete this.passingResponse.agePersonal
+            const userObject: NavigationExtras = {
+              state: this.passingResponse
+            }
+            this.claimVerificationForm.reset();
+            this.allowOTP=false;
+            this.otpflag = false;
+            this.loadingController.dismiss();
+            this.cardTitle = 'BOCW Registration No. Verification'
+            this.router.navigate(['/claim-management/claim-main-form'], userObject);
+          }
+        },
+        (err: any) => {
+          this.loadingController.dismiss();
+          this.otpCountdown=0;
+          this.resendOtpFlag=false;
+          this.dialogs.alert('Invalid OTP');
+        }
+      );
+    }
+  }
+
   get registrationNo() { return this.claimVerificationForm.get('registrationNo'); }
   get mobileNo() { return this.claimVerificationForm.get('mobileNo'); }
 

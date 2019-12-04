@@ -195,7 +195,8 @@ export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
         this.saveClaimForm(postObj);
       } else {
         this.formGroup.markAllAsTouched();
-        alert('Please Update the form.');
+  this.dialogs.alert
+('Please Update the form.');
       }
     }
   

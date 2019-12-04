@@ -6,8 +6,7 @@
 
 <form [formGroup]="formGroup">
   <ion-list>
-    <!-- <ion-list-header style="font-size:20px;">Distribution Of Personality Development Book Set.<br>
-    व्यक्तिमत्व विकास पुस्तक संचाचे वाटप.</ion-list-header> -->
+    <ion-header class="p-2" style="font-size:20px;">{{selectedSchemeName}}</ion-header>
     <ion-item>
       <ion-label position="floating">Name of child / मुलांची नावे <span class="text-danger">*</span></ion-label>
       <ion-select formControlName="childName" [class.is-invalid]="childName.invalid && childName.touched" class="transliterate" id="childName">
@@ -102,6 +101,6 @@
     <ion-checkbox checked="false" slot="start" formControlName="verifyDocumentCheck"></ion-checkbox>
     <ion-label>Documents Verified / कागदपत्र पडताळले</ion-label>
   </ion-item>
-    <ion-button mode="ios" expand="block" (click)="saveFormS03()">SUBMIT</ion-button>
+    <ion-button mode="ios" expand="block" (click)="saveFormS03()">SAVE</ion-button>
   </ion-list>
 </form>

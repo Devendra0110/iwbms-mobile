@@ -6,8 +6,7 @@
 
 <form [formGroup]="formGroup">
   <ion-list>
-    <!-- <ion-list-header style="font-size:20px;">Pradhan Mantri Jeevan Jyoti Bima Yojana.<br>
-    प्रधानमंत्री जीवनज्योती विमा योजना.</ion-list-header> -->
+    <ion-list-header style="font-size:20px;">{{selectedSchemeName}}</ion-list-header>
     <ion-list-header style="font-size:20px;">Applicant's bank account details /अर्जदाराच्या बँक खात्याचा तपशील</ion-list-header>
     <ion-item>
       <ion-checkbox  checked="false" slot="start" (ionChange)="sameAsRegistrationChecked($event)" id="sameAsRegistration" formControlName="sameAsRegistration"></ion-checkbox>
@@ -108,7 +107,7 @@
       <ion-checkbox checked="false" slot="start" formControlName="verifyDocumentCheck"></ion-checkbox>
       <ion-label>Documents Verified / कागदपत्र पडताळले</ion-label>
     </ion-item>
-    <ion-button mode="ios" expand="block"  (click)="saveFormS05()" >SUBMIT</ion-button>
+    <ion-button mode="ios" expand="block"  (click)="saveFormS05()" >SAVE</ion-button>
     </ion-list>
 
 </form>

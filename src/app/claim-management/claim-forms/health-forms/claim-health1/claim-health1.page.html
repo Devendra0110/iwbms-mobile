@@ -6,10 +6,7 @@
 
   <form [formGroup]="formGroup">
     <ion-list>
-      <ion-header style="font-size:18px" class="ml-2">Financial Assistance of Rs. 15,000/- for natural
-        delivery and Rs. 20,000/- for caesarean delivery to the wife of registered male worker and/or
-        to the registered female worker.<br><br>
-        दोन जिवीत अपत्यांपर्यंत नैसर्गिक प्रसूतीसाठी रू.१५,०००/- व शस्त्रक्रियेद्वारे प्रसूतीसाठी रू.२०,०००/
+      <ion-header style="font-size:18px" class="ml-2">{{selectedSchemeName}}
       </ion-header>
 
       <ion-item>
@@ -226,6 +223,6 @@
       याची मला पूर्ण जाणीव आहे.</ion-label>
         </ion-item> -->
 
-      <ion-button mode="ios" expand="block" (click)="saveForm()">Save</ion-button>
+      <ion-button mode="ios" expand="block" (click)="saveForm()">SAVE</ion-button>
     </ion-list>
   </form>

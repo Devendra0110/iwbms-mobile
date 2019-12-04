@@ -7,12 +7,7 @@
 <!-- <ion-content> -->
   <form [formGroup]="formGroup">
     <ion-list>
-      <ion-header class="ml-2" style="font-size:18px">reimbursement /Financial assistance on the interest amounting upto Rs.6
-        lakhs or discount
-        of Rs.2 lakhs
-        on the loan taken from a bank for purchasing or contstructing a house.<br>
-        घरखरेदी किंवा घरबांधणीकरता बँकेकडून घेतलेल्या गृहकर्जावरील रू.६ लक्ष पर्यतच्या व्याजाची रक्कम अथवा रू.२ लक्ष
-        अनुदान.
+      <ion-header class="ml-2" style="font-size:18px">{{selectedSchemeName}}
       </ion-header>
       <br>
 
@@ -147,7 +142,7 @@
           <ion-checkbox checked="false" formControlName="verifyDocumentCheck" color="dark"  slot="start"></ion-checkbox>
           <ion-label>Documents Verified</ion-label>
         </ion-item>
-      <ion-button mode="ios" (click)="saveForm()" expand="block" >Save</ion-button>
+      <ion-button mode="ios" (click)="saveForm()" expand="block" >SAVE</ion-button>
     </ion-list>
   </form>
 <!-- </ion-content> -->
