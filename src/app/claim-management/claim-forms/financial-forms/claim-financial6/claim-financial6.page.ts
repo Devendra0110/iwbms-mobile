@@ -87,7 +87,6 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
-    this.issuingAuthority.disable();
     this.claimHttpService.getPreviousClaims('F06', this.user.registration_no,this.JWTToken).subscribe(res => {
       this.PreviousClaimDetails = res;
       console.log(this.PreviousClaimDetails);

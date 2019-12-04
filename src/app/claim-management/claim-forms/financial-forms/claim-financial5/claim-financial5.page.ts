@@ -108,8 +108,7 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
 this.agePersonal.disable()
         this.dobPersonal.patchValue(formattedAge)
         this.agePersonal.patchValue(this.calculateAge(formattedAge))
-this.relation.disable()
-this.aadharNumber.disable()
+
       }
     })
   }
@@ -254,12 +253,16 @@ this.agePersonal.reset();
       this.relation.reset();
       this.aadharNumber.reset();
 this.fullName_mr.reset()
+this.relation.disable();
+this.aadharNumber.disable()
+
     }
   }
   public calculateAgepatched(date: string): void {
+    if( typeof date === 'string'){
     const dob = moment(date).format('YYYY-MM-DD');
     const age = moment().diff(dob, 'years');
-this.agePersonal.patchValue(age)}
+this.agePersonal.patchValue(age)}}
 
 openOtherDetails(event: any) {
   this.open = !this.open;

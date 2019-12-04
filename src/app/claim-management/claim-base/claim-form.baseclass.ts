@@ -209,9 +209,10 @@ export abstract class ClaimBasePage {
 
 
     public calculateAge(date: string): number {
+        if(typeof date === 'string'){
         const dob = moment(date).format('YYYY-MM-DD');
         const age = moment().diff(dob, 'years');
-        return age;
+        return age;}
     }
 
 

@@ -191,10 +191,22 @@ public nomineeCheck = false;
       this.dobPersonal.enable();
       this.relation.enable();
       this.aadharNumber.enable();
+this.fullName_mr.reset()
+this.agePersonal.reset()
+
+      this.fullName.reset();
+      this.dobPersonal.reset();
+      this.relation.reset();
+      this.aadharNumber.reset();
       this.nomineeCertificate.setValidators([Validators.required]);
-this.agePersonal.patchValue(this.calculateAge(this.dobPersonal.value))
 
     } else {
+this.agePersonal.reset()
+this.fullName_mr.reset()
+this.fullName.reset();
+this.dobPersonal.reset();
+this.relation.reset();
+this.aadharNumber.reset();
       this.fullName.disable();
       this.dobPersonal.disable();
       this.relation.disable();
@@ -205,9 +217,11 @@ this.agePersonal.patchValue(this.calculateAge(this.dobPersonal.value))
   }
 
   public calculateAgepatched(date: string): void {
+   if( typeof date === 'string'){
     const dob = moment(date).format('YYYY-MM-DD');
     const age = moment().diff(dob, 'years');
-this.agePersonal.patchValue(age)}
+   
+this.agePersonal.patchValue(age)}}
 
 
   openOtherDetails(event: any) {

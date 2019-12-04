@@ -205,9 +205,11 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
   
   }
   public calculateAgepatched(date: string): void {
+    if(typeof date === 'string'){
     const dob = moment(date).format('YYYY-MM-DD');
     const age = moment().diff(dob, 'years');
-this.agePersonal.patchValue(age)}
+this.agePersonal.patchValue(age)
+}}
 
  
   searchByifscCodeBankCode() {
@@ -247,11 +249,25 @@ this.agePersonal.patchValue(age)}
       this.dobPersonal.enable();
       this.relation.enable();
       this.aadharNumber.enable();
+      this.fullName.reset();
+      this.fullName_mr.reset()
+      this.dobPersonal.reset();
+      this.relation.reset();
+      this.aadharNumber.reset();
+      this.agePersonal.reset()
       this.nomineeCertificate.setValidators([Validators.required]);
 
 
     } else {
+      this.fullName.reset();
+      this.dobPersonal.reset();
+      this.relation.reset();
+      this.aadharNumber.reset();
       this.fullName.disable();
+      this.fullName_mr.reset()
+
+      this.agePersonal.reset()
+
       this.dobPersonal.disable();
       this.relation.disable();
       this.aadharNumber.disable();
