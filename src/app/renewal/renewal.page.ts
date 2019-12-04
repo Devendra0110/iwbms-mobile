@@ -32,6 +32,9 @@ export class RenewalPage implements OnInit {
   public todaysDate: any;
   public maxAppointmentDispatchDate: any;
   public minAppointmentDate: any;
+  public minDispatchDate: any;
+  public dispatchDateFlag: boolean;
+  public readableDispatchDate: string;
   public registrationDetails: any;
   public selectedRenewalData: any;
   public districts: any[] = [];
@@ -168,6 +171,9 @@ export class RenewalPage implements OnInit {
       month: new Date().getMonth() + 1,
       day: new Date().getDate()
     };
+    this.minDispatchDate = moment().subtract(1, 'years').add(90, 'days').format('YYYY-MM-DD')
+    this.readableDispatchDate = moment(this.minDispatchDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
+    this.dispatchDateFlag = false;
 
     this.maxAppointmentDispatchDate = this.changeToIonDateTime(0, 'year');
     this.httpService.getTypeOfWork().subscribe((typeOfWorkArrObj: any) => {
@@ -277,6 +283,7 @@ export class RenewalPage implements OnInit {
     this.dispatchDateEmp.valueChanges.subscribe(value => {
       this.maxToDate = moment(value).format('YYYY-MM-DD');
       this.renewalFormGroup.get('dispatchDateEmp').patchValue(this.maxToDate, { emitEvent: false });
+      this.dispatchDateFlag = moment(this.maxToDate, 'YYYY-MM-DD').diff(moment(this.minDispatchDate, 'YYYY-MM-DD'), 'days') < 0 ? true : false;
     }, err => console.log(err));
 
   }
@@ -524,12 +531,14 @@ export class RenewalPage implements OnInit {
   }
 
   addMoreWorkerDetails() {
+    if (this.dispatchDateFlag || this.appointmentDateEmp.value === null || this.dispatchDateEmp.value === null) return;
     const workerDetailsArray = this.renewalFormGroup.get('employerWorkDetails') as FormArray;
     this.showEmployerModal(workerDetailsArray.length, 'add');
   }
 
 
   editWorkerDetail(i: number) {
+    if (this.dispatchDateFlag || this.appointmentDateEmp.value === null || this.dispatchDateEmp.value === null) return;
     if (this.appointmentDateEmp.value && this.dispatchDateEmp.value) {
       this.showEmployerModal(i, 'update', this.renewalFormGroup.get('employerWorkDetails').get(`${i}`));
     } else if (this.appointmentDateEmp.value) {

@@ -31,7 +31,8 @@ export class RenewalVerificationPage implements OnInit {
     this.network.onDisconnect().subscribe(() => { });
       this.network.onConnect().subscribe(() => { });
       this.verificationForm = new FormGroup({
-        registrationNo: new FormControl('', [Validators.required, Validators.pattern('^(MH)\\d{12}$')])
+        registrationNo: new FormControl('', [Validators.required, Validators.pattern('^(MH)\\d{12}$')]),
+         mobileNo: new FormControl()
       });
 
     this.storage.get('token').then((val) => {
@@ -96,5 +97,6 @@ export class RenewalVerificationPage implements OnInit {
   }
 
   get registrationNo() { return this.verificationForm.get('registrationNo'); }
+  get mobileNo() { return this.verificationForm.get('mobileNo'); }
 
 }

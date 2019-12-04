@@ -379,11 +379,16 @@
 
         <form [formGroup]="renewalFormGroup.get('employerWorkDetails')">
           <ion-list>
-            <div style="padding: 5%; overflow-x: scroll">
+            <div style="overflow-x: scroll">
               <ion-grid style='width: 1511px;' border="1">
                 <ion-row *ngIf="appointmentDateEmp.value===null || dispatchDateEmp.value ===null">
                   <ion-col>
                     <small style="color:red;">Please choose the appointment and dispatch date first.</small>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="dispatchDateFlag">
+                  <ion-col>
+                    <small class="text-danger"> Minimum Dispatch Date :{{readableDispatchDate}} </small>
                   </ion-col>
                 </ion-row>
                 <ion-row>
@@ -427,7 +432,7 @@
                       </ion-fab>
                     </ion-col>
                     <ion-col style="width: 15px;margin-left: -71px;">
-                      <ion-select [class.is-invalid]="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched"
+                      <ion-select [attr.disabled]="true" [class.is-invalid]="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched"
                         interface="action-sheet" formControlName="typeOfEmployerEmp"
                         id='employerWorkDetails-{{i}}-typeOfEmployerEmp' (ionChange)="handleSpecialDropdowns($event)">
                         <ion-select-option *ngFor="let typeOfIssuer of typeOfIssuerOptions|keyvalue"
@@ -439,7 +444,7 @@
                     </ion-col>
                     <ion-col style="width: 15px">
                       <ion-item>
-                        <ion-input id='employerWorkDetails-{{i}}-fullNameOfIssuerEmp' formControlName="fullNameOfIssuerEmp"
+                        <ion-input [attr.disabled]="true" id='employerWorkDetails-{{i}}-fullNameOfIssuerEmp' formControlName="fullNameOfIssuerEmp"
                           class="transliterate" (ionBlur)="transliterateDirect($event)"
                           [class.is-invalid]="fullNameOfIssuerEmp.invalid && fullNameOfIssuerEmp.touched" autocapitalize="words"
                           clearInput></ion-input>
@@ -452,7 +457,7 @@
                     
                     <ion-col style="width: 15px">
                       <ion-item>
-                        <ion-input type="tel" maxlength="10" minlength="10" formControlName="mobileNumberOfIssuerEmp"
+                        <ion-input [attr.disabled]="true" type="tel" maxlength="10" minlength="10" formControlName="mobileNumberOfIssuerEmp"
                           [class.is-invalid]="mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched"
                           id='employerWorkDetails-{{i}}-mobileNumberOfIssuerEmp' clearInput></ion-input>
                       </ion-item>
@@ -464,7 +469,7 @@
                     <ion-col style="width: 15px">
                       <ion-item>
                         <ion-icon name="calendar"></ion-icon>
-                        <ion-datetime [readonly]="appointmentDateEmp.value===null || dispatchDateEmp.value ===null"
+                        <ion-datetime [attr.disabled]="true" [readonly]="appointmentDateEmp.value===null || dispatchDateEmp.value ===null"
                           displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" id='employerWorkDetails-{{i}}-fromDateEmp'
                           (ionChange)="calculateDayForWorkDetails(i)" formControlName="fromDateEmp" [min]="minFDate(i)"
                           [max]="maxFDate(i)"></ion-datetime>
@@ -476,7 +481,7 @@
                     <ion-col style="width: 15px">
                       <ion-item>
                         <ion-icon name="calendar"></ion-icon>
-                        <ion-datetime [readonly]="appointmentDateEmp.value===null || dispatchDateEmp.value ===null"
+                        <ion-datetime [attr.disabled]="true" [readonly]="appointmentDateEmp.value===null || dispatchDateEmp.value ===null"
                           displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" id='employerWorkDetails-{{i}}-toDateEmp'
                           (ionChange)="calculateDayForWorkDetails(i)" formControlName="toDateEmp" [min]="minTDate(i)"
                           [max]="maxTDate(i)"></ion-datetime>
@@ -502,9 +507,8 @@
             <ion-item *ngIf="workingDayFlag && toDateEmp.touched" style="color:red;">
               Working days are less than 90
             </ion-item>
-            <ion-item margin-bottom>
-              <ion-button (click)="addMoreWorkerDetails()">Add More </ion-button>
-            </ion-item>
+            
+              <ion-button style="margin-left: 11px;margin-top: 8px;"  (click)="addMoreWorkerDetails()">Add More </ion-button>
           </ion-list>
         </form>
 
