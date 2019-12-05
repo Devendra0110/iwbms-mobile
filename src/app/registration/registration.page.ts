@@ -611,8 +611,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
 
     this.appointmentDateEmp.valueChanges.subscribe(value => {
-      if (moment(value).diff(this.minFromDate, 'years') === 0) {
+      if (moment(value).diff(moment(this.minFromDate,'YYYY-MM-DD'), 'days') > 0) {
         this.minFromDate = moment(value).format('YYYY-MM-DD');
+      }else{
+        this.minFromDate = this.changeToIonDateTime(1, 'years')
       }
       this.appointmentDate = moment(value).format('YYYY-MM-DD');
       this.registrationFormGroup.get('employerDetails').get('appointmentDateEmp').patchValue(this.appointmentDate, { emitEvent: false });

@@ -174,7 +174,7 @@ export class RenewalPage implements OnInit {
     this.minDispatchDate = moment().subtract(1, 'years').add(90, 'days').format('YYYY-MM-DD')
     this.readableDispatchDate = moment(this.minDispatchDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
     this.dispatchDateFlag = false;
-
+    this.minFromDate = this.changeToIonDateTime(1, 'years')
     this.maxAppointmentDispatchDate = this.changeToIonDateTime(0, 'year');
     this.httpService.getTypeOfWork().subscribe((typeOfWorkArrObj: any) => {
       for (const i of typeOfWorkArrObj) {
@@ -273,8 +273,10 @@ export class RenewalPage implements OnInit {
     });
 
     this.appointmentDateEmp.valueChanges.subscribe(value => {
-      if (moment(value).diff(this.minFromDate, 'years') === 0) {
+      if (moment(value).diff(moment(this.minFromDate, 'YYYY-MM-DD'), 'days') > 0) {
         this.minFromDate = moment(value).format('YYYY-MM-DD');
+      } else {
+        this.minFromDate = this.changeToIonDateTime(1, 'years')
       }
       this.appointmentDate = moment(value).format('YYYY-MM-DD');
       this.renewalFormGroup.get('appointmentDateEmp').patchValue(this.appointmentDate, { emitEvent: false });
