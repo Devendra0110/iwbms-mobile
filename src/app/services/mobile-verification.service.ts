@@ -18,6 +18,13 @@ export class MobileVerificationService {
     return this.http.post(`${serverUrl}otp/generate-otp`, { registrationNo, mobileNo,purpose:'Claim' }, { headers });
   }
 
+  sendRenewalOTP(registrationNo: string,mobileNo: string,) {
+    const headers = new HttpHeaders().append('Content-Type', 'application/json');
+    return this.http.post(`${serverUrl}otp/generate-otp`, { registrationNo, mobileNo,purpose:'Update Registration' }, { headers });
+  }
+
+  // /purpose === 'Update Registration'
+
   validateOTP(mobileNo: string,otp: string) {
     const headers = new HttpHeaders().append('Content-Type', 'application/json');
     return this.http.post(`${serverUrl}otp/verify-otp`, { mobileNo,otp }, { headers });

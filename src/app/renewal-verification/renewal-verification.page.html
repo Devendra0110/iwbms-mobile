@@ -5,10 +5,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
+  <ion-card *ngIf="!otpflag">
     <ion-card-header>
-      <ion-card-title>
-        BOCW Registration No. Verification
+      <ion-card-title>{{cardTitle}}
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -17,8 +16,6 @@
           <ion-label position="floating"> BOCW Registration No. </ion-label>
           <ion-input (ionChange)="clearErrors()" maxlength='14' formControlName="registrationNo" clearInput> </ion-input>
         </ion-item>
-        <ion-button style="margin-top: 16px;" mode="ios" expand="block"
-          (click)="verify()">Verify</ion-button>
           <ion-item *ngIf="unregisteredUser">
             <div style="color:red">
               <ion-icon style=" position: relative;top: 7px;right: 3px;font-size: 26px;" slot="end" name="alert"></ion-icon>There is no worker registered with {{registrationNo.value}} 
@@ -29,7 +26,31 @@
               <ion-icon  style=" position: relative;top: 7px;right: 3px;font-size: 26px;"slot="end" name="alert"></ion-icon>Invalid Registration No.
             </div>
           </ion-item>
+          <ion-item *ngIf="allowOTP"> 
+            <ion-label position="floating" >Mobile Number / दूरध्वनी क्रमांक</ion-label>
+            <ion-input (ionChange)="clearErrors()" [disabled]="allowOTP"  type="tel" maxlength='10' id="mobileNo" formControlName="mobileNo" clearInput>
+            </ion-input>
+            <div class="text-danger" *ngIf="mobileNo.invalid && mobileNo.touched">
+              <small *ngIf="!!mobileNo.errors?.required">Please enter your Mobile No.</small>
+              <small *ngIf="!!mobileNo.errors?.pattern">Please enter appropriate Mobile Number.</small>
+            </div>
+          </ion-item>
+          <ion-button style="margin-top: 16px;" *ngIf="!allowOTP" mode="ios" expand="block" (click)="verify()">Verify</ion-button>
+          <ion-button style="margin-top: 16px;" *ngIf="allowOTP" (click)="sendOTP()" mode="ios" expand="block"><ion-icon mode="ios" name="paper-plane" slot="start"></ion-icon>Send OTP</ion-button>
       </form>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="otpflag">
+    <ion-card-header>
+      <ion-card-title>Verify OTP</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">OTP</ion-label>
+        <ion-input type="tel" maxlength="6" #otp></ion-input>
+      </ion-item>
+    <ion-button style="margin-top: 16px;" mode="ios" [disabled]="!otp.value"  expand="block" (click)="validateOTP(otp.value)">Verify</ion-button>
+    <ion-button style="margin-top: 16px;" mode="ios" [disabled]="resendOtpFlag" (click)="sendOTP()"  expand="block" ><ion-icon mode="ios" name="paper-plane" slot="start"></ion-icon>Resend OTP&nbsp;<p *ngIf="otpCountdown>0">in {{otpCountdown}}sec</p> </ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
