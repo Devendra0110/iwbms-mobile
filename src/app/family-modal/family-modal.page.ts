@@ -61,7 +61,7 @@ export class FamilyModalPage implements OnInit {
       education: new FormControl('', this.validationService.createValidatorsArray('education')),
       education_mr: new FormControl(''),
       nominee: new FormControl('', this.validationService.createValidatorsArray('nominee')),
-        aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$')]),
+        aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$'),Validators.required]),
         isRegisteredInBOCW: new FormControl(''),
         bocwRegistrationNo: new FormControl('')
     });

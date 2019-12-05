@@ -1245,6 +1245,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
       if (this.registrationFormGroup.valid) {
+        if (!this.findNominee(this.registrationFormGroup.getRawValue().familyDetails)) {
+         alert('Nominee Required.: Please select a nominee in family details to proceed.');
+          return;
+        }
         const formData = new FormData();
         // tslint:disable-next-line: forin
 
@@ -1343,7 +1347,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       education: new FormControl('', this.validationService.createValidatorsArray('education')),
       education_mr: new FormControl(''),
       nominee: new FormControl('', this.validationService.createValidatorsArray('nominee')),
-      aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$')]),
+      aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$'),Validators.required]),
       isRegisteredInBOCW: new FormControl(''),
       bocwRegistrationNo: new FormControl('', [Validators.maxLength(12), Validators.minLength(12)])
     });
