@@ -153,7 +153,7 @@
 
     <ion-item>
       <ion-label position="floating">Passing Year / उत्तीर्ण झाल्याचे वर्ष<span class="text-danger">*</span></ion-label>
-      <ion-input formControlName="year" id="year" (ionChange)="yearOfPassing($event)"
+      <ion-input formControlName="year" id="year" (ionBlur)="yearOfPassing($event)"
       [class.is-invalid]="year.invalid && year.touched">
       </ion-input>
       <div class="text-danger" *ngIf="year.invalid && year.touched">
