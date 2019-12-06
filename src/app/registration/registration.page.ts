@@ -358,7 +358,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         document_mr: `बँक पासबुक ची झेरॉक्स`,
         attachmentType: [],
         uploaded: false,
-        required: false
+        required: true
       }
     ];
 
@@ -1387,7 +1387,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       contractorNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorNameEmp')),
       contractorCompanyNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorCompanyNameEmp')),
-      contractorPhoneEmp: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
+      contractorPhoneEmp: new FormControl('', [Validators.required,  Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
       workPlaceEmp: new FormControl('', [Validators.maxLength(50)]),
       townEmp: new FormControl('', [Validators.required]),
       talukaEmp: new FormControl('', [Validators.required]),
@@ -1440,7 +1440,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       typeOfEmployerEmp: new FormControl('', [Validators.required]),
       fullNameOfIssuerEmp: new FormControl('', [Validators.required, Validators.pattern('[a-zA-z\\s]{8,50}')]),
-      mobileNumberOfIssuerEmp: new FormControl('', [Validators.required, Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
+      mobileNumberOfIssuerEmp: new FormControl('', [Validators.required,  Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
       fromDateEmp: new FormControl(null, [Validators.required]),
       toDateEmp: new FormControl(null, [Validators.required]),
       typeOfEmployerEmp_mr: new FormControl(''),
