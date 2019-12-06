@@ -57,14 +57,14 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
       verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      boardOfEducation: new FormControl(''),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
       // schoolIdDoc: new FormControl('', this.validationService.createValidatorsArray('schoolIdDoc')),
-      // boardOfEducation: new FormControl('', this.validationService.createValidatorsArray('boardOfEducation')),
 
       // marathi form controls
       school_mr: new FormControl(''),
       placeSchool_mr: new FormControl(''),
-      // boardOfEducation_mr: new FormControl(''),
+      boardOfEducation_mr: new FormControl(''),
     });
 
   }
@@ -130,7 +130,7 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
   // marathi getters
   get school_mr(): AbstractControl { return this.formGroup.get('school_mr'); }
   get placeSchool_mr(): AbstractControl { return this.formGroup.get('placeSchool_mr'); }
-  // get boardOfEducation_mr(): AbstractControl { return this.formGroup.get('boardOfEducation_mr'); }
+  get boardOfEducation_mr(): AbstractControl { return this.formGroup.get('boardOfEducation_mr'); }
 
   // english getters
   get childrenDetail() { return this.formGroup.get('childrenDetail'); }
@@ -146,8 +146,8 @@ export class ClaimEducation1Page extends ClaimBasePage implements OnInit {
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
   get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
+  get boardOfEducation() { return this.formGroup.get('boardOfEducation'); }
   // get schoolIdDoc() { return this.formGroup.get('schoolIdDoc'); }
-  // get boardOfEducation() { return this.formGroup.get('boardOfEducation'); }
   // get declaration() { return this.formGroup.get('declaration'); }
 
   public saveForm(): void {
