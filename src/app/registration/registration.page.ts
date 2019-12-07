@@ -643,7 +643,12 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     }
   }
-
+  capitaliseifscCodeBank() {
+   
+    let value = this.ifscCode.value;
+    value = value.toString().toUpperCase();
+    this.ifscCode.setValue(value);
+  }
   getApplicantsDetails() {
     const user = JSON.parse(localStorage.getItem('user'));
     this.httpService.getApplicantsDetails(user._id, this.JWTToken).subscribe(
