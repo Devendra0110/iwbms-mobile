@@ -1115,7 +1115,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       } else {
         this.workingDayFlag = false;
       }
-      this.moreThan90Days.setValue(this.workingDayFlag)
+      this.moreThan90Days.setValue(!this.workingDayFlag)
     }
   }
 
@@ -1207,12 +1207,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
       });
       
-    } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
-      this.registrationFormGroup.get(event.target.id).patchValue(null);
+    } else if (file.type !== 'application/pdf' && file.type!=="application/wps-office.pdf" && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
+      this.registrationFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
       this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
       });
 
     } else {
+      
       this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
       });
       this.files[event.target.id] = file;
@@ -1462,7 +1463,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       attachmentList: new FormArray([]),
       supportingDocuments: new FormControl('', Validators.required),
-      applicantPhoto: new FormControl('', Validators.required),
+      applicantPhoto: new FormControl('',),
       selfDeclarationDocuments: new FormControl('', Validators.required),
       aadharDeclaration: new FormControl('', Validators.required),
       bankPassbook: new FormControl('', Validators.required),
