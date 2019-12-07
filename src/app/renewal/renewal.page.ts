@@ -1,24 +1,25 @@
 import * as moment from 'moment';
-import * as uuidv4 from 'uuid/v4';
 import * as sanscript from '@sanskrit-coders/sanscript';
+import * as uuidv4 from 'uuid/v4';
+
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, Platform } from '@ionic/angular';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Storage } from '@ionic/storage';
+
 import { Dialogs } from '@ionic-native/dialogs/ngx';
-import { Network } from '@ionic-native/network/ngx';
-import { Toast } from '@ionic-native/toast/ngx';
-import { states } from '../models/states';
-import { serverUrl } from '../../assets/config';
-import { ValidationService } from '../services/validation.service';
-import { TransliterationService } from '../services/transliteration.service';
-import { HttpService } from '../services/http.service';
 import { EmployerModalData } from '../../assets/common.interface';
 import { EmployerModalPage } from '../employer-modal/employer-modal.page';
-import { Subscription } from 'rxjs';
+import { HttpService } from '../services/http.service';
+import { Network } from '@ionic-native/network/ngx';
 import { RenewalService } from '../services/renewal.service';
-
+import { Storage } from '@ionic/storage';
+import { Subscription } from 'rxjs';
+import { Toast } from '@ionic-native/toast/ngx';
+import { TransliterationService } from '../services/transliteration.service';
+import { ValidationService } from '../services/validation.service';
+import { serverUrl } from '../../assets/config';
+import { states } from '../models/states';
 
 @Component({
   selector: 'app-renewal',
@@ -108,23 +109,23 @@ export class RenewalPage implements OnInit {
     });
 
     this.renewalFormGroup = new FormGroup({
+      contractorNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorNameEmp')),
+      contractorCompanyNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorCompanyNameEmp')),
       selfDeclarationFile: new FormControl('', [Validators.required]),
       workCertificate: new FormControl('', [Validators.required]),
       yellowBook: new FormControl('', []),
       employerWorkDetails: new FormArray([this.employerWorkDetailsFormFroup()]),
       registrationNo: new FormControl('', this.validationService.createValidatorsArray('regNo')),
-      contractorNameEmp: new FormControl('', this.validationService.createValidatorsArray('conName')),
-      contractorCompanyNameEmp: new FormControl('', this.validationService.createValidatorsArray('compName')),
-      contractorPhoneEmp: new FormControl('', this.validationService.createValidatorsArray('conMobile')),
-      workPlaceEmp: new FormControl('', this.validationService.createValidatorsArray('workplace')),
+      contractorPhoneEmp: new FormControl('', this.validationService.createValidatorsArray('contractorPhoneEmp')),
+      workPlaceEmp: new FormControl('', this.validationService.createValidatorsArray('workPlaceEmp')),
       townEmp: new FormControl('', this.validationService.createValidatorsArray('city')),
       talukaEmp: new FormControl('', this.validationService.createValidatorsArray('taluka')),
       districtEmp: new FormControl('', this.validationService.createValidatorsArray('district')),
-      pinCodeEmp: new FormControl('', this.validationService.createValidatorsArray('pincode')),
-      appointmentDateEmp: new FormControl(null, this.validationService.createValidatorsArray('apptDate')),
-      dispatchDateEmp: new FormControl(null, this.validationService.createValidatorsArray('apptDate')),
-      remunerationPerDayEmp: new FormControl('', this.validationService.createValidatorsArray('renum')),
-      natureOfWorkEmp: new FormControl('', this.validationService.createValidatorsArray('natureOfWork')),
+      pinCodeEmp: new FormControl('', this.validationService.createValidatorsArray('pinCodeEmp')),
+      appointmentDateEmp: new FormControl(null, this.validationService.createValidatorsArray('appointmentDateEmp')),
+      dispatchDateEmp: new FormControl(null, this.validationService.createValidatorsArray('dispatchDateEmp')),
+      remunerationPerDayEmp: new FormControl('', this.validationService.createValidatorsArray('remunerationPerDayEmp')),
+      natureOfWorkEmp: new FormControl('', this.validationService.createValidatorsArray('natureOfWorkEmp')),
       contractorNameEmp_mr: new FormControl(''),
       contractorCompanyNameEmp_mr: new FormControl(''),
       workPlaceEmp_mr: new FormControl(''),
@@ -136,7 +137,7 @@ export class RenewalPage implements OnInit {
       typeOfIssuer_mr: new FormControl(''),
       registeredWith: new FormControl(''),
       registrationNoOfIssuer: new FormControl(''),
-      dispatchNo: new FormControl(''),
+      dispatchNo: new FormControl('', this.validationService.createValidatorsArray('dispatchNo')),
       dispatchDate: new FormControl(''),
       nameOfEmployer: new FormControl(''),
       nameOfEmployer_mr: new FormControl(''),

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -112,6 +111,18 @@ export class ValidationService {
         ];
         break;
       }
+
+      case 'remunerationPerDayEmp': {
+        validatorsArr = [
+          Validators.required,
+          Validators.maxLength(8),
+          Validators.pattern(
+            '^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[67890]\\d{9}$'
+          )
+        ];
+        break;
+      }
+
       case 'houseNo': {
         validatorsArr = [
           Validators.required,
@@ -213,12 +224,62 @@ export class ValidationService {
           Validators.pattern('[A-Za-z0-9]+\\s*[A-Za-z0-9]\\s*([A-Za-z0-9]+\\s*)*')];
         break;
       }
-
       case 'contractorCompanyNameEmp' :{
         validatorsArr = [Validators.required, 
           Validators.pattern('[A-Za-z0-9]+\\s*[A-Za-z0-9]\\s*([A-Za-z0-9]+\\s*)*'),
           Validators.maxLength(40)]
       }
+      case 'contractorPhoneEmp' :{
+        validatorsArr = [Validators.required, 
+          Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[67890]\\d{9}$'),
+          Validators.maxLength(10)]
+      }
+      case 'workPlaceEmp' :{
+        validatorsArr = [
+          Validators.required, 
+          Validators.pattern('[A-Za-z0-9]+\\s*[A-Za-z0-9]\\s*([A-Za-z0-9]+\\s*)*'),
+          Validators.maxLength(50)
+        ];
+      }
+      case 'pinCodeEmp': {
+        validatorsArr = [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(6),
+          Validators.pattern('[0-9]{6}')
+        ];
+        break;
+      }
+      case 'dispatchNo': {
+        validatorsArr = [
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.pattern('[0-9]{50}')
+        ];
+        break;
+      }
+      case 'appointmentDateEmp': {
+        validatorsArr = [
+          Validators.required
+        ];
+        break;
+      }
+      case 'dispatchDateEmp': {
+        validatorsArr = [
+          Validators.required
+        ];
+      }
+      case 'natureOfWorkEmp': {
+        validatorsArr = [
+          Validators.required
+        ];
+      }
+      case 'dispatchDateEmp': {
+        validatorsArr = [
+          Validators.required
+        ];
+      }
+
 
       // FamilyDetails Validation
       case 'firstNameFamily': {

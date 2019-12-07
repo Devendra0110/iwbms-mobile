@@ -10,6 +10,7 @@ import { Network } from '@ionic-native/network/ngx';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { ValidationService } from '../../services/validation.service';
+
 @Component({
   selector: 'app-claim-verification',
   templateUrl: './claim-verification.page.html',
@@ -46,6 +47,8 @@ export class ClaimVerificationPage implements OnInit {
     this.claimVerificationForm = new FormGroup({
       registrationNo: new FormControl('MH020040000006', [Validators.required, Validators.pattern('^(MH)\\d{12}$')]),
       mobileNo: new FormControl('7387171322',this.validationService.createValidatorsArray('mobile'))
+      // registrationNo: new FormControl('MH293030000001', [Validators.required, Validators.pattern('^(MH)\\d{12}$')]),
+      // mobileNo: new FormControl('9829348244',this.validationService.createValidatorsArray('mobile'))
     });
 
     this.storage.get('token').then((val) => {
