@@ -1285,6 +1285,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           (err: any) => console.error(err)
         );
       } else {
+        console.log(this.registrationFormGroup.get('familyDetails').status)
         this.registrationFormGroup.markAllAsTouched()
       }
     }

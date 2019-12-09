@@ -167,7 +167,7 @@
 
       <ion-item>
         <ion-label position="floating">IFSC Code / आयएफएससी कोड<span class="text-danger">*</span></ion-label>
-        <ion-input [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched" (keyup)="capitaliseifscCodeBank()" (change)="searchByifscCodeBankCode()" formControlName="ifscCodeBank"
+        <ion-input [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched"   (change)="searchByifscCodeBankCode()" formControlName="ifscCodeBank"
           id="ifscCodeBank" clearInput></ion-input>
         <div class="text-danger" *ngIf="ifscCodeBank.invalid && ifscCodeBank.touched">
           <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['required']">Please enter IFSC Code.</small>
