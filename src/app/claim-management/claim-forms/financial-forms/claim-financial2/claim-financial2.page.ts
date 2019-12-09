@@ -166,7 +166,6 @@ public nomineeCheck = false;
 
   }
   private patchNominee() {
-    console.log(this.sortedArray);
     const fullNameNominee_mr = `${this.sortedArray[0].firstNameFamily_mr} ${this.sortedArray[0].fatherOrHusbandName_mr} ${this.sortedArray[0].surname_mr}`;
     const nomineeBirthDateArray = moment(this.sortedArray[0].dobFamily).format('YYYY-MM-DD');
     const fullNameNominee = `${this.sortedArray[0].firstNameFamily} ${this.sortedArray[0].fatherOrHusbandName} ${this.sortedArray[0].surname}`
@@ -226,8 +225,6 @@ this.agePersonal.patchValue(age)}}
 
   openOtherDetails(event: any) {
     this.open = !this.open;
-
-    console.log(this.open)
     if (!this.open) {
       this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
       this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);

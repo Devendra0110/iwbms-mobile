@@ -107,8 +107,6 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
 
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     this.sortedArray = this.familyDetailsArray.filter(data => {
-      console.log(data)
-
       return data.nominee === "yes" || data.nominee === "Yes"
     })
 
@@ -188,7 +186,6 @@ this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
   // this.formGroup.get('aadharNumber').patchValue(this.sortedArray[0]['aadharNoFamily']);
   // this.calculateAge(this.dobPersonal.value);
   private patchNominee() {
-    console.log(this.sortedArray);
     const fullNameNominee_mr = `${this.sortedArray[0].firstNameFamily_mr} ${this.sortedArray[0].fatherOrHusbandName_mr} ${this.sortedArray[0].surname_mr}`;
     const nomineeBirthDateArray = moment(this.sortedArray[0].dobFamily).format('YYYY-MM-DD');
     const fullNameNominee = `${this.sortedArray[0].firstNameFamily} ${this.sortedArray[0].fatherOrHusbandName} ${this.sortedArray[0].surname}`
@@ -344,13 +341,10 @@ this.agePersonal.patchValue(age)
     else {
       this.formGroup.markAllAsTouched();
       this.dialogs.alert('Please Update the form.');
-     console.log('error in form ')
     }
   }
   openOtherDetails(event: any) {
     this.open = !this.open;
-
-    console.log(this.open)
     if (!this.open) {
       this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
       this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);

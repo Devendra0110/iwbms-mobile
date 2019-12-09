@@ -89,7 +89,6 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
   ngOnInit() {
     this.claimHttpService.getPreviousClaims('F06', this.user.registration_no,this.JWTToken).subscribe(res => {
       this.PreviousClaimDetails = res;
-      console.log(this.PreviousClaimDetails);
       this.sortedPreviousClaimDetails = _.last(this.PreviousClaimDetails);
       this.parsedClaimData = JSON.parse(this.sortedPreviousClaimDetails.claim_data)
       this.patchClaimData();
@@ -202,7 +201,6 @@ this.aadharNumber.disable()
 
 
   public saveForm(): void {
-    console.log(this.formGroup)
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
       if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
         this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
@@ -297,7 +295,6 @@ this.aadharNumber.disable()
   openOtherDetails(event: any) {
     this.open = !this.open;
   
-    console.log(this.open)
     if (!this.open) {
       this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
       this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);

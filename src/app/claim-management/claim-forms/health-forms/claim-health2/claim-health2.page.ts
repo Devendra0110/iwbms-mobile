@@ -81,7 +81,6 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
     }
    
     this.Delivery = Constants.DELIVERY_TYPE;
-    console.log(this.Delivery);
    }
 
   ngOnInit() {

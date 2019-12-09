@@ -266,8 +266,6 @@ this.agePersonal.patchValue(age)}}
 
 openOtherDetails(event: any) {
   this.open = !this.open;
-
-  console.log(this.open)
   if (!this.open) {
     this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
     this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);

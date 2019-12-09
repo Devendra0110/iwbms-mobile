@@ -61,7 +61,6 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
       day: new Date().getDate()
     };
     this.Delivery = Constants.DELIVERY_TYPE;
-    console.log(this.Delivery);
    }
 
   ngOnInit() {

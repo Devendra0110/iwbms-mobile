@@ -104,7 +104,6 @@ public sameAsRegistrationChecked(event) {
         this[`${control}`].enable();
       }
     }
-    console.log(this.user)
   }
 
   public saveFormS05(): void {

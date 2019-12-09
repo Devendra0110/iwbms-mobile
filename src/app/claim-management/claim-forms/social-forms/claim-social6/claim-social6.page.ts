@@ -76,7 +76,6 @@ export class ClaimSocial6Page extends ClaimBasePage implements OnInit {
         this[`${control}`].enable();
       }
     }
-    console.log(this.user)
   }
 
   public searchByIfscCode(): void {

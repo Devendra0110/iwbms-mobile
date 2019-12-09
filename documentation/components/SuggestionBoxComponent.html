@@ -453,7 +453,7 @@ export class SuggestionBoxComponent implements AfterViewInit {
     this.DOMInstance &#x3D; document.querySelector(&#x27;.sg-box-container&#x27;);
 
     this.eventsSupplier.eventObservable.subscribe((event) &#x3D;&gt; {
-      console.log(event);
+    
 
       if (event.code &#x3D;&#x3D;&#x3D; &#x27;Enter&#x27; || event.code &#x3D;&#x3D;&#x3D; &#x27;Space&#x27; || event.code &#x3D;&#x3D;&#x3D; &#x27;Tab&#x27;) {
 
