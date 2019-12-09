@@ -1115,8 +1115,8 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Dispatch Number<span style="color: red">*</span></ion-label>
-          <ion-input maxlength="50" [class.is-invalid]="dispatchNo.invalid && dispatchNo.touched" formControlName='dispatchNo' id='employerDetails-dispatchNo' class='transliterate'></ion-input>
-          <div class="text-danger" *ngIf="dispatchNo.invalid && dispatchNo.touched" type="tel">
+          <ion-input maxlength="50" [class.is-invalid]="dispatchNo.invalid && dispatchNo.touched" type="tel" formControlName='dispatchNo' id='employerDetails-dispatchNo' class='transliterate'></ion-input>
+          <div class="text-danger" *ngIf="dispatchNo.invalid && dispatchNo.touched">
             <small *ngIf="!!dispatchNo.errors?.required">Please enter your dispatch number.</small>
           </div>
         </ion-item>
