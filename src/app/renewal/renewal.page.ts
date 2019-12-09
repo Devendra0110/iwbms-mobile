@@ -57,8 +57,8 @@ export class RenewalPage implements OnInit {
   public natureOfWorkOptionsMarathi: string[] = [];
   public typeOfIssuerOptions: string[] = [];
   public typeOfIssuerOptionsMarathi: string[] = [];
-  public registrationTypeOptions:string[] = [];
-  public registrationTypeOptionsMarathi:string[] = []
+  public registrationTypeOptions: string[] = [];
+  public registrationTypeOptionsMarathi: string[] = []
   public uploadedSupportingDocuments: any;
   public workingDay: number;
   public workingDayFlag: boolean;
@@ -67,7 +67,7 @@ export class RenewalPage implements OnInit {
     marathi: ['पुरुष', 'स्त्री', 'इतर', 'अविवाहित', 'विवाहित', 'घटस्फोटित', 'विधवा', 'विधुर', 'अनुसूचित जाती', 'अनुसूचित जमाती', 'एनटी', 'इमाव', 'खुला', 'ठेकेदार/विकासक', 'ग्रामसेवक', 'नगरपालिका अथवा महानगरपालिकेद्वारे अधिकृतता असलेले व्यक्ती', 'इतर', 'बीओसीडब्ल्यू कायदा', 'कॉन्ट्रॅक्ट कायदा', 'स्थलांतरीत', 'स्थानिक निवासी', 'इमारती', 'रस्त्यावर', 'रस्ते', 'रेल्वे', 'ट्रामवे', 'एअरफील्ड', 'सिंचन', 'ड्रेनेज', 'तटबंध आणि नेव्हिगेशन वर्क्स', 'स्टॉर्म वॉटर ड्रेनेज वर्क्ससह', 'निर्मिती', 'पारेषण आणि पॉवर वितरण', 'पाणी वितरणासाठी चॅनल समाविष्ट करण', 'तेल आणि गॅसची स्थापना', 'इलेक्ट्रिक लाईन्स', 'वायरलेस', 'रेडिओ', 'दूरदर्शन', 'दूरध्वनी', 'टेलीग्राफ आणि ओव्हरसीज कम्युनिकेशन्स', 'डॅम', 'नद्या', 'रक्षक', 'पाणीपुरवठा', 'टनेल', 'पुल', 'पदवीधर', 'जलविद्युत', 'पाइपलाइन', 'टावर्स', 'कूलिंग टॉवर्स', 'ट्रान्समिशन टावर्स आणि अशा इतर कार्य', 'दगड कापणे, फोडणे व दगडाचा बारीक चुरा करणे', 'लादी किंवा टाईल्स कापणे व पॉलिश करणे', 'रंग, वॉर्निश लावणे, इत्यादीसह सुतारकाम', 'गटार व नळजोडणीची कामे', 'वायरिंग, वितरण, तावदान बसविणे इत्यादीसहित विद्युत कामे', 'अग्निशमन यंत्रणा बसविणे व तिची दुरुस्ती करणे', 'वातानुकूलित यंत्रणा बसविणे व तिची दुरुस्ती करणे', 'उद्वाहने, स्वयंचलित जिने इत्यादी बसविणे', 'सुरक्षा दरवाजे उपकरणे इत्यादी बसविणे', 'लोखंडाच्या किंवा धातुच्या ग्रिल्स, खिडक्या, दरवाजे तयार करणे व बसविणे', 'जलसंचयन संरचनेचे बांधकाम करणे', 'सुतारकाम करणे, आभाशी छत, प्रकाश व्यवस्था, प्लास्टर ऑफ पेरीस यांसहित अंतर्गत (सजावटीचे) काम', 'काच कापणे, काचरोगण लावणे व काचेची तावदाने बसविणे', 'कारखाना अधिनियम, 1948 खाली समावेश नसलेल्या विटा, छप्परांवरील कौल इत्यादी तयार करणे', 'सौर तावदाने इत्यादींसारखी ऊर्जाक्षम उपकरण बसविणे', 'स्वयंपाकखोली सारख्या ठिकाणी वापरण्यासाठी मोडुलर (आधुनिक) युनिट बसविणे', 'सिमेन्ट काँक्रिटच्या साचेबद्ध वस्तू इत्यादी तयार करणे व बसविणे', 'जलतरण तलाव, गोल्फचे मैदान इत्यादीसह खेळ किंवा मनोरंजनाच्या सुविधांचे बांधकाम करणे', 'माहिती फलक, रोड फर्निचर, प्रवाशी निवारे किंवा बसस्थानके, सिग्नल यंत्रणा इत्यादी बांधणे किंवा उभारणे', 'रोटरीजचे बांधकाम करणे, कारंजे बसविणे इत्यादी', 'सार्वजनिक उद्याने, पदपथ, रमणीय भू-प्रदेश इत्यादींचे बांधकाम', 'दारिद्र रेषेखालील पिवळे', 'अंत्योदय अन्न योजना', 'अन्नपूर्णा शिधापत्रिका', 'केशरी शिधापत्रिका (रु. १ लाखापर्यंत वार्षिक उत्पन्न असलेली)', 'यापैकी एकही नाही', 'स्वतः', 'वडील', 'आई', 'पत्नी', 'पती', 'भाऊ', 'बहीण', 'वहिनी', 'ननंद', 'मुलगा', 'मुलगी', 'सून', 'देवर', 'नातु', 'नात', 'सासू', 'सासरा', 'पदव्युत्तर पदवी', 'वैद्यकीय पदवीधर', 'अभियांत्रिकी पदवी', 'पीएचडी', 'पदवीधर', 'डिप्लोमा', 'आय.टी.आय', 'एचएससी', '११ वी', 'एसएससी', '९ वी', '८ वी', '७ वी', '६ वी', '५ वी', '४ थी', '३ री', '२ री', '१ ली', 'अशिक्षित']
   };
   public files: { workCertificate: File, yellowBook: File, selfDeclarationFile: File };
-  public fileOptions: { workCertificate: string, yellowBook: string, selfDeclarationFile: string }; 
+  public fileOptions: { workCertificate: string, yellowBook: string, selfDeclarationFile: string };
   public mode: any = {
     create: false,
     read: false,
@@ -214,7 +214,7 @@ export class RenewalPage implements OnInit {
       // create district-name:district-id key-value in district
       for (const i of districtsArrObj) this.districts[i.district_name] = i.district_id;
     }, err => console.log(err));
-    
+
     this.districtEmp.valueChanges.subscribe(value => {
       this.talukas = [];
       this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
@@ -318,7 +318,7 @@ export class RenewalPage implements OnInit {
     return this.dispatchDateEmp.value;
   }
 
-  
+
 
   changeToIonDateTime(diff: any, timeUnit: string) {
     const date = moment(
@@ -327,12 +327,12 @@ export class RenewalPage implements OnInit {
     return this.getIonDate(date);
   }
 
-    getIonDate(date: any): string {
-      if (Number(date[1]) < 10 && Number(date[0]) < 10) return `${Number(date[2])}-0${Number(date[1])}-0${Number(date[0])}`;
-      else if (Number(date[1]) < 10 && Number(date[0]) >= 10) return `${Number(date[2])}-0${Number(date[1])}-${Number(date[0])}`;
-      else if (Number(date[1]) >= 10 && Number(date[0]) < 10) return `${Number(date[2])}-${Number(date[1])}-0${Number(date[0])}`;
-      else return `${Number(date[2])}-${Number(date[1])}-${Number(date[0])}`;
-    }
+  getIonDate(date: any): string {
+    if (Number(date[1]) < 10 && Number(date[0]) < 10) return `${Number(date[2])}-0${Number(date[1])}-0${Number(date[0])}`;
+    else if (Number(date[1]) < 10 && Number(date[0]) >= 10) return `${Number(date[2])}-0${Number(date[1])}-${Number(date[0])}`;
+    else if (Number(date[1]) >= 10 && Number(date[0]) < 10) return `${Number(date[2])}-${Number(date[1])}-0${Number(date[0])}`;
+    else return `${Number(date[2])}-${Number(date[1])}-${Number(date[0])}`;
+  }
 
   employerWorkDetailsFormFroup(): FormGroup {
     return new FormGroup({
@@ -403,7 +403,7 @@ export class RenewalPage implements OnInit {
     let target: any;
     let DTPObject: any;
     // choose if it is district/taluka/postoffice
-    if (targetsArray === 'districtEmp' || targetsArray ==='districtOfGramPanchayat' ||targetsArray ==='districtOfMunicipalCorporation' || targetsArray ==='districtOfEmployer')
+    if (targetsArray === 'districtEmp' || targetsArray === 'districtOfGramPanchayat' || targetsArray === 'districtOfMunicipalCorporation' || targetsArray === 'districtOfEmployer')
       DTPObject = this.districts;
     else if (targetsArray === 'talukaOfEmployer') DTPObject = this.talukasIssuerEmp;
     else if (targetsArray === 'talukaOfGramPanchayat') DTPObject = this.talukasIssuerGram;
@@ -413,7 +413,7 @@ export class RenewalPage implements OnInit {
 
 
     // set formControl
-      target = this.renewalFormGroup.get(`${targetsArray}_mr`);
+    target = this.renewalFormGroup.get(`${targetsArray}_mr`);
 
     // get the string for id
     const DTPValue = typeof event.target.value === 'string' ? event.target.value : Object.keys(DTPObject).find(key => DTPObject[key] === event.target.value);
@@ -492,7 +492,7 @@ export class RenewalPage implements OnInit {
       this.renewalFormGroup.get(idArray[0]).get(`${idArray[1]}_mr`).patchValue(value, { emitEvent: false });
     } else if (idArray.length === 3) {
       this.renewalFormGroup.get(idArray[0]).get(idArray[1]).get(`${idArray[2]}_mr`).patchValue(value, { emitEvent: false });
-    }else{
+    } else {
       this.renewalFormGroup.get(`${idArray[0]}_mr`).patchValue(value, { emitEvent: false });
     }
   }
@@ -609,9 +609,9 @@ export class RenewalPage implements OnInit {
             filesFormData.append('files', this.files[item], this.fileOptions[item]);
           }
         }
-          formData.append('fileOptions', JSON.stringify(this.fileOptions));
-          formData.append('data', JSON.stringify(this.renewalFormGroup.getRawValue()));
-          formData.append('modeOfApplication', 'Renewal By Field Agent');
+        formData.append('fileOptions', JSON.stringify(this.fileOptions));
+        formData.append('data', JSON.stringify(this.renewalFormGroup.getRawValue()));
+        formData.append('modeOfApplication', 'Renewal By Field Agent');
 
         try {
           await this.httpService.uploadFiles(filesFormData).toPromise();
@@ -621,7 +621,7 @@ export class RenewalPage implements OnInit {
         }
         this.httpService.saveRenewalData(formData, this.JWTToken).subscribe(
           (res: any) => {
-            this.dialogs.alert(`Renewal Form is saved successfully 👍🙂. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res)}`)
+            this.dialogs.alert(`Renewal Form is saved successfully. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res)}`)
             this.router.navigate(['/dashboard']);
           },
           (err: any) => console.error(err)
@@ -751,7 +751,7 @@ export class RenewalPage implements OnInit {
     return this.renewalFormGroup.get('talukaOfMunicipalCorporation_mr');
   }
 
-  
+
 
   get typeOfEmployerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp'); }
   get fullNameOfIssuerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp'); }
