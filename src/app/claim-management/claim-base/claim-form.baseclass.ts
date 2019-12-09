@@ -276,8 +276,8 @@ export abstract class ClaimBasePage {
         }
         this.claimHttpService.applyForClaim(formData, this.JWTToken).subscribe((res: any) => {
             if (res) {
-                this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res.data.acknowledgementNo}. Please visit below WFC with original documents for verification : ${res.data.wfcDetail.office_name}`);
-                alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res.data.acknowledgementNo}. Please visit below WFC with original documents for verification : ${res.data.wfcDetail.office_name}`)
+                this.dialogs.alert(`Data Captured. Your Acknowledgement Number is ${res.data.acknowledgementNo}. Please visit below WFC with original documents for verification : ${res.data.wfcDetail.office_name}`);
+                alert(`Data Captured. Your Acknowledgement Number is ${res.data.acknowledgementNo}. Please visit below WFC with original documents for verification : ${res.data.wfcDetail.office_name}`)
 
                 alert('Scheme Claimed Successfully');
                 this.router.navigate(['/dashboard'])

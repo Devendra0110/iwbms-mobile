@@ -1,29 +1,31 @@
 import * as moment from 'moment';
 import * as uuidv4 from 'uuid/v4';
-import { Component, OnInit, ViewChild, QueryList, ViewChildren, AfterViewInit, ViewContainerRef, ComponentRef } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { ModalController, Platform } from '@ionic/angular';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { AfterViewInit, Component, ComponentRef, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Storage } from '@ionic/storage';
+import { EmployerModalData, UserInfo, familyModalData } from '../../assets/common.interface';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalController, Platform } from '@ionic/angular';
+
 import { Dialogs } from '@ionic-native/dialogs/ngx';
-import { Network } from '@ionic-native/network/ngx';
-import { Toast } from '@ionic-native/toast/ngx';
-import { states } from '../models/states';
-import { Modes } from '../../assets/modes';
-import { serverUrl } from '../../assets/config';
-import { ValidationService } from '../services/validation.service';
-import { TransliterationService } from '../services/transliteration.service';
-import { FormControlDirective } from '../directives/form-control.directive';
-import { SuggestionBoxComponent } from '../components/suggestion-box/suggestion-box.component';
-import { RegistrationService } from '../services/registration.service';
-import { UserManagementService } from '../services/user-management.service';
-import { HttpService } from '../services/http.service';
-import { UserInfo, familyModalData, EmployerModalData } from '../../assets/common.interface';
-import { FamilyModalPage } from '../family-modal/family-modal.page';
 import { EmployerModalPage } from '../employer-modal/employer-modal.page';
-import { Subscription } from 'rxjs';
+import { FamilyModalPage } from '../family-modal/family-modal.page';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FormControlDirective } from '../directives/form-control.directive';
+import { HttpService } from '../services/http.service';
+import { Modes } from '../../assets/modes';
+import { Network } from '@ionic-native/network/ngx';
+import { RegistrationService } from '../services/registration.service';
+import { Storage } from '@ionic/storage';
+import { Subscription } from 'rxjs';
+import { SuggestionBoxComponent } from '../components/suggestion-box/suggestion-box.component';
+import { Toast } from '@ionic-native/toast/ngx';
+import { TransliterationService } from '../services/transliteration.service';
+import { UserManagementService } from '../services/user-management.service';
+import { ValidationService } from '../services/validation.service';
+import { serverUrl } from '../../assets/config';
+import { states } from '../models/states';
 
 @Component({
   selector: 'app-registration',
@@ -1278,8 +1280,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
         this.httpService.saveData(formData, this.JWTToken).subscribe(
           (res: any) => {
-            this.dialogs.alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
-            alert(`Data Captured 👍🙂. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
+            this.dialogs.alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
+            alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
             // this.router.navigate(['/dashboard']);
           },
           (err: any) => console.error(err)
