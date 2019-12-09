@@ -40,7 +40,7 @@ export abstract class ClaimBasePage {
     @Input() familyDetailsArray: any;
     @Input() editFormFlagObservable: Observable<any>;
     @Input() applicantRegistrationDetails: any;
-    @Input() selectedSchemeName:string;
+    @Input() selectedSchemeName: string;
 
     constructor(
         protected transliterate: TransliterationService,
@@ -209,10 +209,11 @@ export abstract class ClaimBasePage {
 
 
     public calculateAge(date: string): number {
-        if(typeof date === 'string'){
-        const dob = moment(date).format('YYYY-MM-DD');
-        const age = moment().diff(dob, 'years');
-        return age;}
+        if (typeof date === 'string') {
+            const dob = moment(date).format('YYYY-MM-DD');
+            const age = moment().diff(dob, 'years');
+            return age;
+        }
     }
 
 
@@ -286,7 +287,7 @@ export abstract class ClaimBasePage {
             // this.dialogs.
             alert(error['error'].message,
             )
-this.dialogs.alert(error['error'].message)
+            this.dialogs.alert(error['error'].message)
 
         });
     }
