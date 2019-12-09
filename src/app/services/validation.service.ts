@@ -111,18 +111,14 @@ export class ValidationService {
         ];
         break;
       }
-
       case 'remunerationPerDayEmp': {
         validatorsArr = [
           Validators.required,
           Validators.maxLength(8),
-          Validators.pattern(
-            '^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[67890]\\d{9}$'
-          )
+          Validators.pattern('^[0-9]*$')
         ];
         break;
       }
-
       case 'houseNo': {
         validatorsArr = [
           Validators.required,
@@ -221,32 +217,38 @@ export class ValidationService {
       }
       case 'contractorNameEmp' :{
         validatorsArr = [Validators.required, 
-          Validators.pattern('[A-Za-z0-9]+\\s*[A-Za-z0-9]\\s*([A-Za-z0-9]+\\s*)*')];
+          Validators.pattern('^([A-Za-z]+\\s*)+$'),
+        ];
         break;
       }
       case 'contractorCompanyNameEmp' :{
-        validatorsArr = [Validators.required, 
-          Validators.pattern('[A-Za-z0-9]+\\s*[A-Za-z0-9]\\s*([A-Za-z0-9]+\\s*)*'),
-          Validators.maxLength(40)]
+        validatorsArr = [Validators.required,
+          Validators.pattern('^([A-Za-z]+\\s*)+$'),
+          Validators.maxLength(100)
+        ];
+        break;
       }
       case 'contractorPhoneEmp' :{
         validatorsArr = [Validators.required, 
           Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[67890]\\d{9}$'),
-          Validators.maxLength(10)]
+          Validators.maxLength(10)
+        ];
+        break;
       }
       case 'workPlaceEmp' :{
         validatorsArr = [
-          Validators.required, 
-          Validators.pattern('[A-Za-z0-9]+\\s*[A-Za-z0-9]\\s*([A-Za-z0-9]+\\s*)*'),
+          Validators.required,
+          Validators.pattern('^([A-Za-z]+\\s*)+$'),
           Validators.maxLength(50)
         ];
+        break;
       }
       case 'pinCodeEmp': {
         validatorsArr = [
           Validators.required,
           Validators.minLength(6),
           Validators.maxLength(6),
-          Validators.pattern('[0-9]{6}')
+          Validators.pattern('^[0-9]*$')
         ];
         break;
       }
@@ -254,7 +256,7 @@ export class ValidationService {
         validatorsArr = [
           Validators.required,
           Validators.maxLength(50),
-          Validators.pattern('[0-9]{50}')
+          Validators.pattern('^[0-9]*$')
         ];
         break;
       }
@@ -268,16 +270,19 @@ export class ValidationService {
         validatorsArr = [
           Validators.required
         ];
+        break;
       }
       case 'natureOfWorkEmp': {
         validatorsArr = [
           Validators.required
         ];
+        break;
       }
       case 'dispatchDateEmp': {
         validatorsArr = [
           Validators.required
         ];
+        break;
       }
 
 

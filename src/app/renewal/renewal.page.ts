@@ -403,7 +403,7 @@ export class RenewalPage implements OnInit {
     let target: any;
     let DTPObject: any;
     // choose if it is district/taluka/postoffice
-    if (targetsArray === 'districtEmp')
+    if (targetsArray === 'districtEmp' || targetsArray ==='districtOfGramPanchayat' ||targetsArray ==='districtOfMunicipalCorporation' || targetsArray ==='districtOfEmployer')
       DTPObject = this.districts;
     else if (targetsArray === 'talukaOfEmployer') DTPObject = this.talukasIssuerEmp;
     else if (targetsArray === 'talukaOfGramPanchayat') DTPObject = this.talukasIssuerGram;
