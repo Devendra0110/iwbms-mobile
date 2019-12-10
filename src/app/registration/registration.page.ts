@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import * as uuidv4 from 'uuid/v4';
-
+import * as _ from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfterViewInit, Component, ComponentRef, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -55,6 +55,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public maxToDate: string;
   public dateOfBirth: any;
   public attachmentDetails: any = [];
+  public errorMsgList: any[];
+
   bankDetails: any = {
     BANK: '',
     BRANCH: '',
@@ -1286,10 +1288,20 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           },
           (err: any) => console.error(err)
         );
-      } else {
-        console.log(this.registrationFormGroup.get('familyDetails').status)
-        this.registrationFormGroup.markAllAsTouched()
+      } else{
+        if(this.registrationFormGroup.get('familyDetails').status==="INVALID"){
+        this.registrationFormGroup.markAllAsTouched();
+        this.checkValidationErrors(this.registrationFormGroup.get('familyDetails')['controls'][0]);
+        this.registrationFormGroup.valueChanges.subscribe(() => {
+          this.checkValidationErrors( this.registrationFormGroup.get('familyDetails')['controls'][0]);
+        });
+      this.dialogs.alert(this.errorMsgList +' is required' )
+  }
+ 
+
+          // familyDetailsFormGroup()
       }
+  
     }
   }
 
@@ -1479,6 +1491,327 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
+
+  private checkValidationErrors(formGroup: FormGroup): void {
+    this.errorMsgList = [];
+    const subFormGroup = formGroup['controls'];
+    for (const index in subFormGroup) {
+      if (subFormGroup[index]['controls']) {
+        const subFormControls = subFormGroup[index]['controls'];
+        for (const j in subFormControls) {
+          if (subFormControls[j].invalid) {
+            if (subFormControls[j].errors) {
+              this.filterErrorForErrorMessages(subFormControls[j].errors, j);
+              subFormControls[j].markAsTouched();
+            } else {
+              if (_.isArray(subFormControls)) {
+                if (subFormControls[j]['controls']) {
+                  const formArrayControls = subFormControls[j]['controls'];
+                      for (const k in formArrayControls) {
+                    if (formArrayControls[k].invalid) {
+                      if (formArrayControls[k].errors) {
+                        this.filterErrorForErrorMessages(formArrayControls[k].errors, k);
+                        formArrayControls[k].markAsTouched();
+                      }
+                    }
+                  }
+                }
+              } else {
+                if (subFormControls[j]['controls']) {
+                  const subFormFormControls = subFormControls[j]['controls'];
+                  for (const k in subFormFormControls) {
+                    if (subFormFormControls[k].invalid) {
+                      if (subFormFormControls[k].errors) {
+                        this.filterErrorForErrorMessages(subFormFormControls[k].errors, k);
+                        subFormFormControls[k].markAsTouched();
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else {
+        if (subFormGroup[index].invalid) {
+          if (subFormGroup[index].errors) {
+            this.filterErrorForErrorMessages(subFormGroup[index].errors, index);
+            subFormGroup[index].markAsTouched();
+          }
+        }
+      }
+    }
+  }
+
+  private filterErrorForErrorMessages(errors: any, controlName: string): void {
+    const label = this.createLabelForErrors(controlName);
+    for (const error in errors) {
+      if (error === 'required') {
+        let message: string;
+        if (controlName === 'recaptcha') {
+          message = `I am not sure you are human`;
+        } else {
+          message = `${label}`;
+        }
+        this.errorMsgList.push(message);
+      
+      }
+      if (error === 'pattern') {
+        const message = `${label} is not appropriate`;
+        this.errorMsgList.push(message);
+      }
+      if (error === 'minlength') {
+        const message = `${label} length should be more than ${errors[error].requiredLength}`;
+        this.errorMsgList.push(message);
+      }
+      if (error === 'maxlength') {
+        const message = `${label} length should be less than ${errors[error].requiredLength}`;
+        this.errorMsgList.push(message);
+      }
+    
+    }
+  }
+
+  private createLabelForErrors(formControl: string): string {
+    let label: string;
+    switch (formControl) {
+      //FamilyDetails
+      case 'firstNameFamily': {
+        label = 'First Name';
+        break;
+      }
+      case 'fatherOrHusbandName': {
+        label = 'Father Or Husband Name';
+        break;
+      }
+      case 'surname': {
+        label = 'Surname';
+        break;
+      }
+      case 'ageFamily': {
+        label = 'Age';
+        break;
+      }
+      case 'dobFamily': {
+        label = 'Date Of birth';
+        break;
+      }
+      case 'relation': {
+        label = 'Relation';
+        break;
+      }
+      case 'aadharNoFamily': {
+        label = 'Aadhar no.';
+        break;
+      }
+      case 'profession': {
+        label = 'Profession';
+        break;
+      }
+      case 'education': {
+        label = 'Education';
+        break;
+      }
+      case 'contractorNameEmp': {
+        label = 'Contractor Name';
+        break;
+      }
+      case 'contractorCompanyNameEmp': {
+        label = 'Contractor Company Name';
+        break;
+      }
+      case 'contractorPhoneEmp': {
+        label = 'Contractor Phone';
+        break;
+      }
+      case 'workPlaceEmp': {
+        label = 'Workplace';
+        break;
+      }
+      case 'townEmp': {
+        label = 'Town in Employer Details';
+        break;
+      }
+      case 'talukaEmp': {
+        label = 'Taluka in Employer Details';
+        break;
+      }
+      case 'districtEmp': {
+        label = 'District in Employer Details';
+        break;
+      }
+      case 'pinCodeEmp': {
+        label = 'Pin Code in Employer Details';
+        break;
+      }
+      case 'appointmentDateEmp': {
+        label = 'Appointment Date';
+        break;
+      }
+      case 'remunerationPerDayEmp': {
+        label = 'Wages per day';
+        break;
+      }
+      case 'typeOfWorkEmp': {
+        label = 'Type Of Work';
+        break;
+      }
+      case 'natureOfWorkEmp': {
+        label = 'Nature Of Work';
+        break;
+      }
+      case 'dispatchDate':
+      case 'dispatchDateEmp': {
+        label = 'Dispatch Date';
+        break;
+      }
+      case 'typeOfEmployerEmp': {
+        label = 'Type Of Employer';
+        break;
+      }
+      case 'fullNameOfIssuerEmp': {
+        label = 'Full Name Of Issuer';
+        break;
+      }
+      case 'registrationNumberEmp': {
+        label = 'Issuer Registration No.';
+        break;
+      }
+      case 'registrationTypeEmp': {
+        label = 'Issuer Registration Type';
+        break;
+      }
+      case 'mobileNumberOfIssuerEmp': {
+        label = 'Mobile No.Of Issuer';
+        break;
+      }
+      case 'documentRefNumberEmp': {
+        label = 'Document Ref No.';
+        break;
+      }
+      case 'fromDateEmp': {
+        label = 'From Date';
+        break;
+      }
+      case 'toDateEmp': {
+        label = 'To Date';
+        break;
+      }
+      case 'selfDeclaration': {
+        label = 'Self Declaration';
+        break;
+      }
+      case 'verifyDocumentCheck': {
+        label = 'Verify Document Checkbox';
+        break;
+      }
+      case 'schemeCategory': {
+        label = 'Scheme Category';
+        break;
+      }
+      case 'schemeName': {
+        label = 'Scheme Name';
+        break;
+      }
+      case 'claimDate': {
+        label = 'Claim Date';
+        break;
+      }
+      case 'benefitType': {
+        label = 'Benefit Type';
+        break;
+      }
+      case 'benefitAmount': {
+        label = 'Benefit Amount';
+        break;
+      }
+      case 'renewalDate': {
+        label = 'Renewal Date';
+        break;
+      }
+      case 'renewalCashDeposit': {
+        label = 'Renewal Cash Deposit';
+        break;
+      }
+      case 'receiptNo': {
+        label = 'Receipt No';
+        break;
+      }
+      case 'cashReceiptDate': {
+        label = 'Cash Receipt Date';
+        break;
+      }
+      case 'amount': {
+        label = 'Amount';
+        break;
+      }
+      case 'purpose': {
+        label = 'Purpose';
+        break;
+      }
+      case 'regOrRenewalDate': {
+        label = 'Registration Or Renewal';
+        break;
+      }
+      case 'typeOfWorkEmp': {
+        label = 'Type of Work';
+        break;
+      }
+      case 'nameOfEmployer': {
+        label = 'Name Of Employer';
+        break;
+      }
+      case 'districtOfEmployer': {
+        label = 'District Of Employer';
+        break;
+      }
+      case 'talukaOfEmployer': {
+        label = 'Taluka Of Employer';
+        break;
+      }
+      case 'nameOfGramPanchayat': {
+        label = 'Name Of Gram Panchayat';
+        break;
+      }
+      case 'districtOfGramPanchayat': {
+        label = 'District Of Gram Panchayat';
+        break;
+      }
+      case 'talukaOfGramPanchayat': {
+        label = 'Taluka Of Gram Panchayat';
+        break;
+      }
+      case 'nameOfMunicipalCorporation': {
+        label = 'Name Of Municipal Corporation';
+        break;
+      }
+      case 'districtOfMunicipalCorporation': {
+        label = 'District Of Municipal Corporation';
+        break;
+      }
+      case 'talukaOfMunicipalCorporation': {
+        label = 'Taluka Of Municipal Corporation';
+        break;
+      }
+      case 'dispatchNo': {
+        label = 'Dispatch Number';
+        break;
+      }
+      case 'typeOfIssuer': {
+        label = 'Type Of Issuer';
+        break;
+      }
+      case 'registeredWith': {
+        label = 'Registered With';
+        break;
+      }
+      case 'registrationNoOfIssuer': {
+        label = 'Registration No.of Issuer';
+        break;
+      }
+    }
+    return label;
+  }
   // Getters
   get verifyDocumentCheck() {
     return this.registrationFormGroup.get('verifyDocumentCheck');
@@ -1491,6 +1824,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get moreThan90Days(){
     return this.registrationFormGroup.get('moreThan90Days');
   }
+
+get familyDetails(){  return (this.registrationFormGroup.get('familyDetails') as FormArray).controls;}
+
 
 
   // personal getters
@@ -1799,5 +2135,4 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get bankPassbook() {
     return this.registrationFormGroup.get('supportingDocuments').get('bankPassbook');
   }
-
 }
