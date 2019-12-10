@@ -161,29 +161,47 @@ export abstract class ClaimBasePage {
         }
     }
 
-    getFileDetails(event) {
-        const file = event.target.files[0];
-        this.files[event.target.id] = file;
-        this.toast.show('File uploaded successfully', '1000', 'bottom')
-        this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
-        // alert('File uploaded successfully')
-        // if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152 && (file.type === 'application/pdf' || file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === "image/png")) {
+    // getFileDetails(event) {
+    //     const file = event.target.files[0];
+    //     this.files[event.target.id] = file;
+    //     // this.toast.show('File uploaded successfully', '1000', 'bottom')
+    //     // this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
+    //     alert('File uploaded successfully')
+    //     if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152 && (file.type === 'application/pdf' || file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === "image/png")) {
         //   this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
         //   });
-        //   this.files[event.target.id] = file;
-        //   this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
-        // } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
-        //   this.registrationFormGroup.get(event.target.id).patchValue(null);
-        //   this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
-        //   });
+    //       this.files[event.target.id] = file;
+    //       this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
+    //     } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
+    //       this.registrationFormGroup.get(event.target.id).patchValue(null);
+    //       this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
+    //       });
 
-        // } else {
-        //   this.registrationFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
-        //   this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
-        //   });
+    //     } else {
+    //       this.registrationFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
+    //       this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
+    //       });
 
-        // }
+    //     }
+    // }
+
+    getFileDetails(event) {
+        const file = event.target.files[0];
+    if (event.target.files[0].size > 2097152 ) {
+      this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
+      });
+      this.formGroup.get(event.target.id).patchValue(null);
+    } else if (file.type !== 'application/pdf' && file.type!=="application/wps-office.pdf" && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
+      this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
+      });
+      this.formGroup.get(event.target.id).patchValue(null);
+    } else {
+      this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
+      });
+      this.files[event.target.id] = file;
+      this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
     }
+      }
 
     /**
      * Passing Year Function
