@@ -41,10 +41,22 @@
 }
 
 .alert-radio-label.sc-ion-alert-md,
-.alert-radio-label.sc-ion-alert-ios {
+.alert-radio-label.sc-ion-alert-ios{
     white-space: normal;
+    // color:grey
 }
+// .select-disabled{
+//   color: red
+// }
+// .alert-radio-label.sc-ion-alert-md:disabled{
+//   color:red;
+// }
 
+[disabled] {
+  cursor: default;
+  opacity: .5;
+  
+  }
 // .action-sheet-button.sc-ion-action-sheet-md{
 //    white-space: normal;
 //   height: auto;

@@ -12,3 +12,10 @@
   height: auto;
    contain: content;
 }
+
+ion-select-option[disabled]{
+   background-color: #771515;
+
+}.alert-radio-label.sc-ion-alert-md{
+   color: red;
+}

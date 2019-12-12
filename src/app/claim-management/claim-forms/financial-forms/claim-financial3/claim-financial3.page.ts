@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { TransliterationService } from './../../../../services/transliteration.service';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormControlDirective, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClaimValidationService } from 'src/app/services/claim-validation.service';
 import { ClaimService } from 'src/app/services/claim.service';
 import { HttpService } from 'src/app/services/http.service';

@@ -79,7 +79,10 @@ export class VerificationPage implements OnInit {
           spinner: "crescent"
         }).then((res)=>{
           res.present();
+
         });
+        this.otpflag = true;
+        this.unverifiedUser = false;
         this.mobileVerification.sendOTP(Number(mobileNo), Number(aadharNo)).subscribe(
           (res: any) => {
             this.loadingController.dismiss();

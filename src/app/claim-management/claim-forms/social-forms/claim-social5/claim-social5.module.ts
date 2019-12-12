@@ -23,6 +23,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [],
-  exports: [ClaimSocial5Page]
+  exports: []
 })
 export class ClaimSocial5PageModule {}

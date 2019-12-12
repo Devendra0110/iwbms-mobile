@@ -94,7 +94,7 @@ export class ClaimSocial6Page extends ClaimBasePage implements OnInit {
           this.formGroup.get('bankAddress').patchValue(this.bankDetails.ADDRESS);
         }
       }, () => {
-        alert('ifsc not found')
+        this.dialogs.alert('ifsc not found')
         this.bankDetails = {
           BANK: '',
           BRANCH: '',

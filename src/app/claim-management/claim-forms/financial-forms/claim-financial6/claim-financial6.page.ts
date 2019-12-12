@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormControlDirective, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClaimValidationService } from 'src/app/services/claim-validation.service';
 import { TransliterationService } from 'src/app/services/transliteration.service';
 import { HttpService } from 'src/app/services/http.service';

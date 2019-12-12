@@ -545,9 +545,9 @@ export class RenewalPage implements OnInit {
     if (this.appointmentDateEmp.value && this.dispatchDateEmp.value) {
       this.showEmployerModal(i, 'update', this.renewalFormGroup.get('employerWorkDetails').get(`${i}`));
     } else if (this.appointmentDateEmp.value) {
-      alert('Please choose the dispatch date');
+      this.dialogs.alert('Please choose the dispatch date');
     } else {
-      alert('Please choose the appointment date');
+      this.dialogs.alert('Please choose the appointment date');
     }
   }
 

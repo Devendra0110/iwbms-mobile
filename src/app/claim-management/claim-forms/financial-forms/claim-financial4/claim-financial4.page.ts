@@ -3,7 +3,7 @@ import { Storage } from '@ionic/storage';
 import { HttpService } from './../../../../services/http.service';
 import { TransliterationService } from './../../../../services/transliteration.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormControlDirective, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClaimValidationService } from 'src/app/services/claim-validation.service';
 import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.baseclass';
 import { ClaimService } from 'src/app/services/claim.service';

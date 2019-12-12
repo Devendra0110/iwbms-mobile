@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { FormControl, FormControlDirective, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { ClaimValidationService } from 'src/app/services/claim-validation.service';
 import { TransliterationService } from 'src/app/services/transliteration.service';
@@ -101,7 +101,7 @@ export class ClaimSocial1Page extends ClaimBasePage implements OnInit {
       this.ageSpouse.disable();
     } else {
       // this.dialogs.
-      alert('Applicant age should be greater than 18 and less than 60')
+      this.dialogs.alert('Applicant age should be greater than 18 and less than 60')
       this.dobSpouse.get('ageSpouse').setValue('');
       this.dobSpouse.get('dobSpouse').setValue('');
     }

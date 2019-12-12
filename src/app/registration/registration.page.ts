@@ -852,7 +852,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
             this.registrationFormGroup.get('personalDetails').get('agePersonal').setValue(age);
           } else {
             this.dialogs.alert('Applicant age should be greater than 18 and less than 60 ');
-            alert('Applicant age should be greater than 18 and less than 60 ')
+            this.dialogs.alert('Applicant age should be greater than 18 and less than 60 ')
             this.registrationFormGroup.get('personalDetails').get('agePersonal').setValue('');
             this.registrationFormGroup.get('personalDetails').get('dobPersonal').setValue('');
           }
@@ -1009,7 +1009,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     },
       error1 => {
         this.dialogs.alert('IFSC Code Not Found.Please fill bank details manually');
-        alert('IFSC Code Not Found.Please fill bank details manually');
         this.bankDetails = {
           BANK: '',
           BRANCH: '',
@@ -1062,9 +1061,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     if (this.appointmentDateEmp.value && this.dispatchDateEmp.value) {
       this.showEmployerModal(i, 'update', this.registrationFormGroup.get('employerWorkDetails').get(`${i}`));
     } else if (this.appointmentDateEmp.value) {
-      alert('Please choose the dispatch date');
+      this.dialogs.alert('Please choose the dispatch date');
     } else {
-      alert('Please choose the appointment date');
+      this.dialogs.alert('Please choose the appointment date');
     }
   }
 
@@ -1256,7 +1255,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     } else {
       if (this.registrationFormGroup.valid) {
         if (!this.findNominee(this.registrationFormGroup.getRawValue().familyDetails)) {
-         alert('Nominee Required.: Please select a nominee in family details to proceed.');
+         this.dialogs.alert('Nominee Required.: Please select a nominee in family details to proceed.');
           return;
         }
         const formData = new FormData();
@@ -1283,8 +1282,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         this.httpService.saveData(formData, this.JWTToken).subscribe(
           (res: any) => {
             this.dialogs.alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
-            alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
-            // this.router.navigate(['/dashboard']);
+            this.dialogs.alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
+            this.router.navigate(['/dashboard']);
           },
           (err: any) => console.error(err)
         );
@@ -1297,7 +1296,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         });
       this.dialogs.alert(this.errorMsgList +' is required' )
   }
- 
+ this.dialogs.alert('Form is not Valid')
 
           // familyDetailsFormGroup()
       }

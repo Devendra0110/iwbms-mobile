@@ -1,3 +1,4 @@
+import { Dialogs } from '@ionic-native/dialogs/ngx';
 import * as moment from 'moment';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -37,7 +38,9 @@ export class EmployerModalPage implements OnInit {
   constructor(
     private httpService:HttpService,
     private transliterate:TransliterationService,
-    private mdlController:ModalController
+    private mdlController:ModalController,
+    private dialogs: Dialogs,
+
   ) {
     this.addFlag=true;
     this.httpService.getIssuerTypes().subscribe((issuerTypesArrObj: any) => {
@@ -124,7 +127,7 @@ export class EmployerModalPage implements OnInit {
       }
     }else{
       this.employerWorkDetailsFormFroup.markAllAsTouched()
-      alert('Please fill all the details properly');
+      this.dialogs.alert('Please fill all the details properly');
     }
   }
 

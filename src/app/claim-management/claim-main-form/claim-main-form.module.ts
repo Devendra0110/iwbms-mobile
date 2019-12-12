@@ -60,13 +60,13 @@ const routes: Routes = [
     ClaimEducation7Page,
 
     ClaimSocial1Page,
-    // ClaimSocial2Page,
+    ClaimSocial2Page,
     ClaimSocial3Page,
     ClaimSocial4Page,
     ClaimSocial5Page,
     ClaimSocial6Page,
-    // ClaimSocial7Page,
-    // ClaimSocial8Page,
+    ClaimSocial7Page,
+    ClaimSocial8Page,
     // ClaimSocial9Page,
 
     ClaimFinancial1Page,

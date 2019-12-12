@@ -268,7 +268,7 @@ export class ClaimMainFormPage implements OnInit {
       }
     },
       error1 => {
-        alert('IFSC Code Not Found.Please fill bank details manually');
+        this.dialogs.alert('IFSC Code Not Found.Please fill bank details manually');
         this.bankDetails = {
           BANK: '',
           BRANCH: '',
@@ -286,7 +286,7 @@ export class ClaimMainFormPage implements OnInit {
       this.claimMainForm.get('agePersonal').setValue(age);
     } else {
       this.dialogs.alert('Applicant age should be greater than 18 and less than 60 ');
-      alert('Applicant age should be greater than 18 and less than 60 ');
+      this.dialogs.alert('Applicant age should be greater than 18 and less than 60 ');
       this.claimMainForm.get('age').setValue('');
       this.claimMainForm.get('dobPersonal').setValue('');
     }
@@ -304,11 +304,11 @@ export class ClaimMainFormPage implements OnInit {
     if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152) {
       // TODO: provide success message for file attachment.
       this.getFile = true;
-      alert('File Upload Successfully');
+      this.dialogs.alert('File Upload Successfully');
     } else {
       // TODO: provide error message for file size
       this.getFile = false;
-      alert('File Should Be Less Than 2MB');
+      this.dialogs.alert('File Should Be Less Than 2MB');
       this.claimMainForm.get(event.target.id).setValue(null);
 
     }
@@ -322,9 +322,8 @@ export class ClaimMainFormPage implements OnInit {
       if (Number(this.schemeObj[each].category_id) === Number(schemeId)) {
         const scheme_number = this.schemeObj[each].scheme_number;
         this.schemeObj[each]['eligibility'] = this.claimEligibilityObject ? this.claimEligibilityObject[scheme_number] : false;
-        if (this.schemeObj[each]['eligibility']){
-          this.commonClaimArray.push(this.schemeObj[each]);
-        }
+                  this.commonClaimArray.push(this.schemeObj[each]);
+        
         
       }
     }

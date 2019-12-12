@@ -95,7 +95,7 @@ export abstract class ClaimBasePage {
                 this.benefitAmount.patchValue(benefit_amount_patch[0].benefit);
             }
         } catch (error) {
-            alert(error.message)
+            this.dialogs.alert(error.message)
         }
     }
 

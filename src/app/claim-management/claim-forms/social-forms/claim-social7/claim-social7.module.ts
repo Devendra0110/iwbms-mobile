@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ClaimSocial7Page]
+  declarations: []
 })
 export class ClaimSocial7PageModule {}
