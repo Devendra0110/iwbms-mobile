@@ -221,6 +221,8 @@ export class ValidationService {
         ];
         break;
       }
+     
+      
       case 'contractorCompanyNameEmp' :{
         validatorsArr = [Validators.required,
           Validators.pattern('^([A-Za-z]+\\s*)+$'),

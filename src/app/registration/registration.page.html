@@ -136,11 +136,11 @@
           <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [min]="startDate" [max]="endDate"
             formControlName="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched"
             (ionChange)="calculateAge()" (ionBlur)="calculateAge()"></ion-datetime>
-          <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">
-            <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
-          </div>
+            <div class="text-danger" *ngIf="dobPersonal.invalid && dobPersonal.touched">
+              <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
+            </div>
         </ion-item>
-
+       
         <ion-item>
           <ion-label position="floating">Age<span style="color: Red"> *</span></ion-label>
           <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" readOnly="true"
@@ -585,8 +585,8 @@
                 <ion-select-option *ngFor="let eachState of states|keyvalue" [value]="eachState.value">{{eachState.key}}
                 </ion-select-option>
               </ion-select>
-              <div class="text-danger" *ngIf="state.invalid && state.touched">
-                <small *ngIf="!!state.errors?.required">Please choose your State.</small>
+              <div class="text-danger" *ngIf="statePer.invalid && statePer.touched">
+                <small *ngIf="!!statePer.errors?.required">Please choose your State.</small>
               </div>
             </ion-item>
 
@@ -882,7 +882,7 @@
                 </ion-col>
                 <ion-col style="width: 15px">
                   <ion-item>
-                    <ion-input maxlength="20" id='familyDetails-{{i}}-profession' formControlName="profession"
+                    <ion-input maxlength="20"  [attr.disabled]="true" id='familyDetails-{{i}}-profession' formControlName="profession"
                       class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput>
                     </ion-input>
                   </ion-item>
@@ -907,7 +907,7 @@
                 </ion-col>
                 <ion-col style="width:15px">
                   <ion-item>
-                    <ion-input [attr.disabled]="true" type="tel" maxlength="12" minlength="12" type="tel"
+                    <ion-input  [attr.disabled]="true" type="tel" maxlength="12" minlength="12" type="tel"
                       formControlName="aadharNoFamily" id='familyDetails-{{i}}-aadharNoFamily' clearInput></ion-input>
                   </ion-item>
                   <div class="text-danger"
@@ -1186,7 +1186,10 @@
           <ion-label position="floating">Dispatch Date/पाठविण्याची तारीख<span style="color: Red">*</span></ion-label>
           <ion-datetime formControlName="dispatchDateEmp" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
             [min]="appointmentDate" [max]="maxTodaysDate" id='employerDetails-dispatchDateEmp'></ion-datetime>
-        </ion-item>
+            <div class="text-danger" *ngIf="dispatchDateEmp.invalid && dispatchDateEmp.touched">
+              <small *ngIf="!!dispatchDateEmp.errors?.required">Please enter date of dispatch.</small>
+            </div>
+          </ion-item>
 
         <ion-item>
           <ion-label position="floating">Wages per day / दिवसा मजुरी<span style="color: Red">*</span></ion-label>
@@ -1220,7 +1223,7 @@
           <ion-label position="floating">Type of Issuer<span style="color: red">*</span></ion-label>
           <ion-select [class.is-invalid]="typeOfIssuer.invalid && typeOfIssuer.touched" interface="action-sheet"
             formControlName="typeOfIssuer" id='employerDetails-typeOfIssuer'>
-            <ion-select-option *ngFor="let issuerType of typeOfIssuerOptions|keyvalue" [value]="issuerType.key">
+            <ion-select-option *ngFor="let issuerType of typeOfIssuerOptions|keyvalue"  [value]="issuerType.key">
               {{ issuerType.value }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="typeOfIssuer.invalid && typeOfIssuer.touched">
@@ -1260,7 +1263,10 @@
           <ion-datetime [min]="appointmentDate" [max]="maxTodaysDate" displayFormat="DD MMMM, YYYY"
             picker-format="DD MMMM YYYY" [class.is-invalid]="dispatchDate.invalid && dispatchDate.touched"
             formControlName='dispatchDate' id='employerDetails-dispatchDate'></ion-datetime>
-        </ion-item>
+            <div class="text-danger" *ngIf="dispatchDate.invalid && dispatchDate.touched">
+              <small *ngIf="!!dispatchDate.errors?.required">Please enter date of dispatch.</small>
+            </div>
+          </ion-item>
         <ion-item *ngIf="typeOfIssuer.value ==='1'">
           <ion-label position="floating">Name of Contractor / Developer<span style="color: red">*</span></ion-label>
           <ion-input formControlName='nameOfEmployer' id='employerDetails-nameOfEmployer'

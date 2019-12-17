@@ -39,7 +39,6 @@
           [class.is-invalid]="contractorCompanyNameEmp.invalid && contractorCompanyNameEmp.touched"
           class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
         <div class="text-danger" *ngIf="contractorCompanyNameEmp.invalid && contractorCompanyNameEmp.touched">
-          <small>{{contractorCompanyNameEmp.errors|json}}</small>
           <small *ngIf="!!contractorCompanyNameEmp.errors?.required">Please enter Name of company.</small>
           <small *ngIf="!!contractorCompanyNameEmp.errors?.maxlength">You have exceeded max length.</small>
           <small *ngIf="!!contractorCompanyNameEmp.errors?.pattern">Please enter appropriate name.</small>
@@ -232,6 +231,8 @@
         </ion-input>
         <div class="text-danger" *ngIf="registrationNoOfIssuer.invalid && registrationNoOfIssuer.touched">
           <small *ngIf="!!registrationNoOfIssuer.errors?.required">Please enter registration number of issuer.</small>
+          <small *ngIf="!!registrationNoOfIssuer.errors?.pattern">Please enter appropriate name.</small>
+      
         </div>
       </ion-item>
       <ion-item>
@@ -248,6 +249,9 @@
         <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
           [class.is-invalid]="dispatchDate.invalid && dispatchDate.touched" formControlName='dispatchDate'
           id='dispatchDate'></ion-datetime>
+          <div class="text-danger" *ngIf="dispatchDate.invalid && dispatchDate.touched">
+            <small *ngIf="!!dispatchDate.errors?.required">Please enter date of dispatch.</small>
+          </div>
       </ion-item>
       <ion-item *ngIf="typeOfIssuer.value==='1'">
         <ion-label position="floating">Name of Contractor / Developer<span style="color: red">*</span></ion-label>

@@ -113,7 +113,7 @@ export class RenewalPage implements OnInit {
       contractorCompanyNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorCompanyNameEmp')),
       selfDeclarationFile: new FormControl('', [Validators.required]),
       workCertificate: new FormControl('', [Validators.required]),
-      yellowBook: new FormControl('', []),
+      yellowBook: new FormControl('', [Validators.required]),
       employerWorkDetails: new FormArray([this.employerWorkDetailsFormFroup()]),
       registrationNo: new FormControl('', this.validationService.createValidatorsArray('regNo')),
       contractorPhoneEmp: new FormControl('', this.validationService.createValidatorsArray('contractorPhoneEmp')),
@@ -136,7 +136,7 @@ export class RenewalPage implements OnInit {
       typeOfIssuer: new FormControl('', [Validators.required]),
       typeOfIssuer_mr: new FormControl(''),
       registeredWith: new FormControl(''),
-      registrationNoOfIssuer: new FormControl(''),
+      registrationNoOfIssuer: new FormControl('' ),
       dispatchNo: new FormControl('', this.validationService.createValidatorsArray('dispatchNo')),
       dispatchDate: new FormControl(''),
       nameOfEmployer: new FormControl(''),
@@ -157,7 +157,7 @@ export class RenewalPage implements OnInit {
       districtOfMunicipalCorporation_mr: new FormControl(''),
       talukaOfMunicipalCorporation: new FormControl(''),
       talukaOfMunicipalCorporation_mr: new FormControl(''),
-      selfDeclaration: new FormControl(''),
+      selfDeclaration: new FormControl('', [Validators.required]),
       verifyDocumentCheck: new FormControl('', [Validators.required]),
       typeOfWorkEmp: new FormControl('', [Validators.required]),
       typeOfWorkEmp_mr: new FormControl(''),
@@ -209,7 +209,7 @@ export class RenewalPage implements OnInit {
   }
 
   ngOnInit() {
-
+console.log(this.registrationNoOfIssuer)
     this.httpService.getDistricts(21).subscribe((districtsArrObj: any) => {
       // create district-name:district-id key-value in district
       for (const i of districtsArrObj) this.districts[i.district_name] = i.district_id;
@@ -244,6 +244,8 @@ export class RenewalPage implements OnInit {
       this.districtOfEmployer_mr.reset();
       this.talukaOfEmployer.reset();
       this.talukaOfEmployer_mr.reset();
+      this.employerOrGramsevak();
+
     })
 
     this.districtOfEmployer.valueChanges.subscribe(value => {
@@ -595,7 +597,139 @@ export class RenewalPage implements OnInit {
     });
     return wfcNames.join(' or ');
   }
+  public setValidatorsOnCertificateIssuerDetails() {
+    this.nameOfGramPanchayat.setValidators([Validators.required]);
+    this.districtOfGramPanchayat.setValidators([Validators.required]);
+    this.talukaOfGramPanchayat.setValidators([Validators.required]);
+    this.nameOfMunicipalCorporation.setValidators([Validators.required]);
+    this.districtOfMunicipalCorporation.setValidators([Validators.required]);
+    this.talukaOfMunicipalCorporation.setValidators([Validators.required]);
+    this.nameOfEmployer.setValidators([Validators.required]);
+    this.districtOfEmployer.setValidators([Validators.required]);
+    this.talukaOfEmployer.setValidators([Validators.required]);
+  }
 
+  public employerOrGramsevak(): void {
+    this.setValidatorsOnCertificateIssuerDetails();
+
+    switch (this.typeOfIssuer.value) {
+
+      case '1': {
+          
+          this.registrationNoOfIssuer.setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9]{4,10}$'), ]);
+        this.registeredWith.setValidators([Validators.required]);
+        this.dispatchDate.setValidators([Validators.required]);
+        this.dispatchDate.updateValueAndValidity()
+        this.nameOfGramPanchayat.setValidators([]);
+        this.districtOfGramPanchayat.setValidators([]);
+        this.talukaOfGramPanchayat.setValidators([]);
+        this.nameOfMunicipalCorporation.setValidators([]);
+        this.districtOfMunicipalCorporation.setValidators([]);
+        this.talukaOfMunicipalCorporation.setValidators([]);
+
+        this.nameOfGramPanchayat.setErrors(null);
+        this.districtOfGramPanchayat.setErrors(null);
+        this.talukaOfGramPanchayat.setErrors(null);
+        this.nameOfMunicipalCorporation.setErrors(null);
+        this.districtOfMunicipalCorporation.setErrors(null);
+        this.talukaOfMunicipalCorporation.setErrors(null);
+        this.registrationNoOfIssuer.setErrors(null);
+        this.registeredWith.setErrors(null);
+        break;
+      }
+
+      case '2': {
+        this.registrationNoOfIssuer.setValidators([]);
+        this.registeredWith.setValidators([]);
+        this.nameOfMunicipalCorporation.setValidators([]);
+        this.districtOfMunicipalCorporation.setValidators([]);
+        this.talukaOfMunicipalCorporation.setValidators([]);
+        this.nameOfEmployer.setValidators([]);
+        this.districtOfEmployer.setValidators([]);
+        this.talukaOfEmployer.setValidators([]);
+        this.nameOfMunicipalCorporation.setErrors(null);
+
+        this.nameOfMunicipalCorporation.setErrors(null);
+        this.districtOfMunicipalCorporation.setErrors(null);
+        this.talukaOfMunicipalCorporation.setErrors(null);
+        this.nameOfEmployer.setErrors(null);
+        this.districtOfEmployer.setErrors(null);
+        this.talukaOfEmployer.setErrors(null);
+        this.registrationNoOfIssuer.setErrors(null);
+        this.registeredWith.setErrors(null);
+        break;
+      }
+      case '5': {
+
+        this.registrationNoOfIssuer.setValidators([]);
+        this.registeredWith.setValidators([]);
+        this.nameOfGramPanchayat.setValidators([]);
+        this.districtOfGramPanchayat.setValidators([]);
+        this.talukaOfGramPanchayat.setValidators([]);
+        this.nameOfEmployer.setValidators([]);
+        this.districtOfEmployer.setValidators([]);
+        this.talukaOfEmployer.setValidators([]);
+
+        this.nameOfGramPanchayat.setErrors(null);
+        this.districtOfGramPanchayat.setErrors(null);
+        this.talukaOfGramPanchayat.setErrors(null);
+        this.nameOfEmployer.setErrors(null);
+        this.districtOfEmployer.setErrors(null);
+        this.talukaOfEmployer.setErrors(null);
+        this.registrationNoOfIssuer.setErrors(null);
+        this.registeredWith.setErrors(null);
+        break;
+      }
+      default: {
+
+        this.nameOfMunicipalCorporation.setValidators([]);
+        this.districtOfMunicipalCorporation.setValidators([]);
+        this.talukaOfMunicipalCorporation.setValidators([]);
+        this.nameOfGramPanchayat.setValidators([]);
+        this.districtOfGramPanchayat.setValidators([]);
+        this.talukaOfGramPanchayat.setValidators([]);
+        this.nameOfEmployer.setValidators([]);
+        this.districtOfEmployer.setValidators([]);
+        this.talukaOfEmployer.setValidators([]);
+        this.registeredWith.setValidators([]);
+        this.registrationNoOfIssuer.setValidators([]);
+
+        this.nameOfMunicipalCorporation.setErrors(null);
+        this.districtOfMunicipalCorporation.setErrors(null);
+        this.talukaOfMunicipalCorporation.setErrors(null);
+        this.nameOfGramPanchayat.setErrors(null);
+        this.districtOfGramPanchayat.setErrors(null);
+        this.talukaOfGramPanchayat.setErrors(null);
+        this.nameOfEmployer.setErrors(null);
+        this.districtOfEmployer.setErrors(null);
+        this.talukaOfEmployer.setErrors(null);
+        this.registeredWith.setErrors(null);
+        this.registrationNoOfIssuer.setErrors(null);
+        this.registrationNoOfIssuer.setErrors(null);
+        this.registeredWith.setErrors(null);
+        break;
+      }
+    }
+
+    this.nameOfGramPanchayat.reset();
+    this.nameOfGramPanchayat_mr.reset();
+    this.districtOfGramPanchayat.reset();
+    this.districtOfGramPanchayat_mr.reset();
+    this.talukaOfGramPanchayat.reset();
+    this.talukaOfGramPanchayat_mr.reset();
+    this.nameOfMunicipalCorporation.reset();
+    this.nameOfMunicipalCorporation_mr.reset();
+    this.districtOfMunicipalCorporation.reset();
+    this.districtOfMunicipalCorporation_mr.reset();
+    this.talukaOfMunicipalCorporation.reset();
+    this.talukaOfMunicipalCorporation_mr.reset();
+    this.nameOfEmployer.reset();
+    this.nameOfEmployer_mr.reset();
+    this.districtOfEmployer.reset();
+    this.districtOfEmployer_mr.reset();
+    this.talukaOfEmployer.reset();
+    this.talukaOfEmployer_mr.reset();
+  }
   async save() {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
@@ -627,7 +761,6 @@ export class RenewalPage implements OnInit {
           (err: any) => console.error(err)
         );
       } else {
-        console.log(this.renewalFormGroup.controls);
         this.renewalFormGroup.markAllAsTouched();
         this.dialogs.alert('Form is not valid yet!');
       }

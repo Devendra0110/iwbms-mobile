@@ -117,6 +117,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public workerTypeOptionsMarathi: string[];
   public currentImage: any;
   public geoImage: any;
+  public familyAaadhar:string[]=[];
 
   public map: any;
   public marker: any;
@@ -211,6 +212,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
         this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+        this.familyAaadhar.push(this.router.getCurrentNavigation().extras.state.aadhar)
         this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
       } else {
         this.router.navigate(['/verification']);
@@ -602,6 +604,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       this.districtOfEmployer_mr.reset();
       this.talukaOfEmployer.reset();
       this.talukaOfEmployer_mr.reset();
+      this.employerOrGramsevak();
     })
 
     this.districtOfEmployer.valueChanges.subscribe(value => {
@@ -951,7 +954,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     const familyDetail: familyModalData = {
       index,
       mode,
-      familyDetail: familyForm
+      familyDetail: familyForm,
+      familyAadhar:this.familyAaadhar
     };
     const familyModal = await this.mdlController.create({
       component: FamilyModalPage,
@@ -969,6 +973,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           if (this.registrationFormGroup.get('familyDetails').get(`${index}`).get('nominee').value === 'yes') {
             this.applyNominee(index)
           }
+          this.familyAaadhar.push(res.data.formData.get('aadharNoFamily').value);
         } else if (res.data.formState === 'delete') this.deleteFamilyDetail(index);
         else {
           this.registrationFormGroup.get('familyDetails').get(`${index}`).patchValue(res.data.formData.value);
@@ -1454,13 +1459,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       contractorNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorNameEmp')),
       contractorCompanyNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorCompanyNameEmp')),
       contractorPhoneEmp: new FormControl('', [Validators.required,  Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
-      workPlaceEmp: new FormControl('', [Validators.maxLength(50)]),
+      workPlaceEmp: new FormControl('', [Validators.required,Validators.maxLength(50)]),
       townEmp: new FormControl('', [Validators.required]),
       talukaEmp: new FormControl('', [Validators.required]),
       districtEmp: new FormControl('', [Validators.required]),
       pinCodeEmp: new FormControl('', [Validators.required, Validators.pattern('^\\d{6}$')]),
       appointmentDateEmp: new FormControl(null, [Validators.required]),
-      dispatchDateEmp: new FormControl(null),
+      dispatchDateEmp: new FormControl('',[Validators.required]),
       remunerationPerDayEmp: new FormControl('', [Validators.required,Validators.maxLength(8)]),
       natureOfWorkEmp: new FormControl('', [Validators.required]),
       migrant: new FormControl(''),
@@ -1480,7 +1485,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       registeredWith: new FormControl(''),
       registrationNoOfIssuer: new FormControl(''),
       dispatchNo: new FormControl('', [Validators.required]),
-      dispatchDate: new FormControl(''),
+      dispatchDate: new FormControl('',[Validators.required]),
       nameOfEmployer: new FormControl(''),
       nameOfEmployer_mr: new FormControl(''),
       districtOfEmployer: new FormControl(''),
@@ -1503,6 +1508,101 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
+  public setValidatorsOnCertificateIssuerDetails() {
+    this.nameOfGramPanchayat.setValidators([Validators.required]);
+    this.districtOfGramPanchayat.setValidators([Validators.required]);
+    this.talukaOfGramPanchayat.setValidators([Validators.required]);
+    this.nameOfMunicipalCorporation.setValidators([Validators.required]);
+    this.districtOfMunicipalCorporation.setValidators([Validators.required]);
+    this.talukaOfMunicipalCorporation.setValidators([Validators.required]);
+    this.nameOfEmployer.setValidators([Validators.required]);
+    this.districtOfEmployer.setValidators([Validators.required]);
+    this.talukaOfEmployer.setValidators([Validators.required]);
+    this.registeredWith.setValidators([Validators.required]);
+    this.registrationNoOfIssuer.setValidators([Validators.required]);
+  }
+
+  public employerOrGramsevak(): void {
+    this.setValidatorsOnCertificateIssuerDetails();
+
+    switch (this.typeOfIssuer.value) {
+
+      case '1': {
+        this.registrationNoOfIssuer.setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9]{4,10}$'), ]);
+        this.registeredWith.setValidators([Validators.required]);
+        this.dispatchDate.setValidators([Validators.required]);
+        this.dispatchDate.updateValueAndValidity()
+        this.nameOfGramPanchayat.setValidators([]);
+        this.districtOfGramPanchayat.setValidators([]);
+        this.talukaOfGramPanchayat.setValidators([]);
+        this.nameOfMunicipalCorporation.setValidators([]);
+        this.districtOfMunicipalCorporation.setValidators([]);
+        this.talukaOfMunicipalCorporation.setValidators([]);
+        break;
+      }
+
+      case '2': {
+        this.nameOfMunicipalCorporation.setValidators([]);
+        this.districtOfMunicipalCorporation.setValidators([]);
+        this.talukaOfMunicipalCorporation.setValidators([]);
+        this.nameOfEmployer.setValidators([]);
+        this.districtOfEmployer.setValidators([]);
+        this.talukaOfEmployer.setValidators([]);
+        this.registeredWith.setValidators([]);
+        this.registrationNoOfIssuer.setValidators([]);
+        break;
+      }
+      case '5': {
+        this.nameOfGramPanchayat.setValidators([]);
+        this.districtOfGramPanchayat.setValidators([]);
+        this.talukaOfGramPanchayat.setValidators([]);
+        this.nameOfEmployer.setValidators([]);
+        this.districtOfEmployer.setValidators([]);
+        this.talukaOfEmployer.setValidators([]);
+        this.registeredWith.setValidators([]);
+        this.registrationNoOfIssuer.setValidators([]);
+        break;
+      }
+      default: {
+        this.nameOfMunicipalCorporation.setValidators([]);
+        this.districtOfMunicipalCorporation.setValidators([]);
+        this.talukaOfMunicipalCorporation.setValidators([]);
+        this.nameOfGramPanchayat.setValidators([]);
+        this.districtOfGramPanchayat.setValidators([]);
+        this.talukaOfGramPanchayat.setValidators([]);
+        this.nameOfEmployer.setValidators([]);
+        this.districtOfEmployer.setValidators([]);
+        this.talukaOfEmployer.setValidators([]);
+        this.registeredWith.setValidators([]);
+        this.registrationNoOfIssuer.setValidators([]);
+      }
+    }
+
+    this.nameOfGramPanchayat.reset();
+    this.nameOfGramPanchayat_mr.reset();
+    this.districtOfGramPanchayat.reset();
+    this.districtOfGramPanchayat_mr.reset();
+    this.talukaOfGramPanchayat.reset();
+    this.talukaOfGramPanchayat_mr.reset();
+    this.nameOfMunicipalCorporation.reset();
+    this.nameOfMunicipalCorporation_mr.reset();
+    this.districtOfMunicipalCorporation.reset();
+    this.districtOfMunicipalCorporation_mr.reset();
+    this.talukaOfMunicipalCorporation.reset();
+    this.talukaOfMunicipalCorporation_mr.reset();
+    this.nameOfEmployer.reset();
+    this.nameOfEmployer_mr.reset();
+    this.districtOfEmployer.reset();
+    this.districtOfEmployer_mr.reset();
+    this.talukaOfEmployer.reset();
+    this.talukaOfEmployer_mr.reset();
+    this.registeredWith.reset();
+    this.registrationNoOfIssuer.reset();
+
+    this.registrationFormGroup.valueChanges.subscribe(() => {
+      this.checkValidationErrors(this.registrationFormGroup);
+    });
+  }
   employerWorkDetailsFormFroup(): FormGroup {
     return new FormGroup({
       typeOfEmployerEmp: new FormControl('', [Validators.required]),
@@ -1537,8 +1637,31 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       workCertificate: new FormControl('', Validators.required),
     });
   }
-
-
+ 
+  // private checkForAadharFamilyUniqueness(index: number) {
+    
+  //   const familyDetails = this.registrationFormGroup.getRawValue()['familyDetails'].filter((eachFamilyDetail: any) => {
+  //     if (eachFamilyDetail.aadharNoFamily !== aadharNo.value) {
+  //       return eachFamilyDetail;
+  //     } else {
+  //       if (eachFamilyDetail.relation !== relation.value) {
+  //         return eachFamilyDetail;
+  //       }
+  //     }
+  //   });
+  //   for (const each in familyDetails) {
+  //     if (familyDetails[each].aadharNoFamily === aadharNo.value) {
+  //       // Swal.fire({
+  //       //   type: 'error',
+  //       //   title: 'Duplicate aadhar no.',
+  //       //   text: 'Aadhar no. should be unique for every family member'
+  //       // })
+  //       alert('Aadhar no. should be unique for every family member')
+  //         aadharNo.reset();
+        
+  //     }
+  //   }
+  // }
   private checkValidationErrors(formGroup: FormGroup): void {
     this.errorMsgList = [];
     const subFormGroup = formGroup['controls'];

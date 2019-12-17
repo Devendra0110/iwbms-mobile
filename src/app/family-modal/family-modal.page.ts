@@ -23,6 +23,7 @@ export class FamilyModalPage implements OnInit {
       formState: '',
       formData: null
   };
+  public familyAadhar:string[];
   public familyFormGroup: FormGroup;
   public selfFlag: boolean;
   public addFlag: boolean;
@@ -79,15 +80,10 @@ export class FamilyModalPage implements OnInit {
         this.educationOptionsMarathi[Number(i.education_level_id)] = i.education_level_mr;
       }
     });
-
-      this.ageFamily.valueChanges.subscribe((value)=>{
-        this.adultFlag = value >= 18;
-        this.isRegisteredInBOCW.setValue(false);
-        this.bocwValidatorsChange();
-      })
     }
 
   ngOnInit() {
+    this.familyAadhar = this.modalData.familyAadhar
     if (this.modalData.mode === 'update') {
       this.familyFormGroup.patchValue(this.modalData.familyDetail.getRawValue());
       this.familyFormGroup.get('nominee').setValue(this.nominee.value === 'yes' ? true : false);
@@ -100,6 +96,11 @@ export class FamilyModalPage implements OnInit {
       this.relation.patchValue('1');
       this.selfFlag = true;
     }
+    this.ageFamily.valueChanges.subscribe((value)=>{
+      this.adultFlag = value >= 18;
+      this.isRegisteredInBOCW.setValue(false);
+      this.bocwValidatorsChange();
+    })
   }
 
   transliterateDirect(event) {
@@ -171,6 +172,17 @@ export class FamilyModalPage implements OnInit {
       this.dialogs.alert('Please fill all the details properly');
     }
   }
+
+  checkAadharUnique(){
+    if(this.aadharNoFamily.valid){
+     this.familyAadhar = this.familyAadhar.filter(str => {
+      if (str!==this.aadharNoFamily.value){
+      return str}
+      else{
+       this.dialogs.alert('Aadhar no. should be unique for every family member ')
+      }
+    });
+ } }
 
   get firstNameFamily() { return this.familyFormGroup.get('firstNameFamily'); }
   get firstNameFamily_mr() { return this.familyFormGroup.get('firstNameFamily_mr'); }

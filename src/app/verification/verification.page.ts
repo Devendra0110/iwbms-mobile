@@ -92,7 +92,6 @@ export class VerificationPage implements OnInit {
                   console.log(toast);
                 }
               );
-              this.otpflag = true;
               this.unverifiedUser = false;
               setInterval(()=>{
                 this.otpCountdown--;
@@ -103,6 +102,7 @@ export class VerificationPage implements OnInit {
           (err: any) => {
             this.loadingController.dismiss();
             console.log(err);
+            this.otpflag = false;
             this.unverifiedUser = true;
             if (err.error.message === 'Mobile No. already Registered') {
               this.ECode = 'E1';

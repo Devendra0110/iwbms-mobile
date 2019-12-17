@@ -19,6 +19,7 @@ export interface familyModalData {
     index: number;
     mode: string;
     familyDetail?: FormGroup;
+    familyAadhar:string[]
 }
 
 export interface EmployerModalData {

@@ -84,7 +84,7 @@
   </ion-item>
   <ion-item>
     <ion-label position="floating">Aadhar No</ion-label>
-    <ion-input [readonly]="selfFlag" type="tel" maxlength="12" formControlName="aadharNoFamily" [class.is-invalid]="aadharNoFamily.invalid && aadharNoFamily.touched" class="transliterate" clearInput></ion-input>
+    <ion-input [readonly]="selfFlag" (ionBlur)="checkAadharUnique()" type="tel" maxlength="12" formControlName="aadharNoFamily" [class.is-invalid]="aadharNoFamily.invalid && aadharNoFamily.touched" class="transliterate" clearInput></ion-input>
     <div class="text-danger" *ngIf="aadharNoFamily.invalid && aadharNoFamily.touched">
       <small *ngIf="!!aadharNoFamily.errors?.pattern">Please enter appropriate aadhar number.</small>
       <small *ngIf="!!aadharNoFamily.errors?.required">Please enter aadhar number.</small>
