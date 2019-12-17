@@ -1556,7 +1556,7 @@
         </ng-container>
 
         <ion-item>
-          <ion-label>Applicant Photo/ अर्जदार फोटो<span style="color: Red">*</span><span class="text-danger"
+          <ion-label>Applicant Photo / अर्जदार फोटो<span style="color: Red">*</span><span class="text-danger"
               *ngIf="supportingDocuments.invalid && supportingDocuments.touched">
               <small *ngIf="!!supportingDocuments.errors?.required">Applicant Photo is Required</small>
             </span></ion-label>
@@ -1567,6 +1567,20 @@
           </ion-fab>
         </ion-item>
         <img [src]="currentImage" *ngIf="currentImage">
+
+        <ion-item>
+          <ion-label>Worksite Photo/ कामाचे स्थळ फोटो<span style="color: Red">*</span><span class="text-danger"
+              *ngIf="supportingDocuments.invalid && supportingDocuments.touched">
+              <small *ngIf="!!supportingDocuments.errors?.required">Worksite Photo is Required</small>
+            </span>
+          </ion-label>
+          <ion-fab horizontal="end">
+            <ion-fab-button (click)="takeGeoPicture()">
+              <ion-icon name="camera"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </ion-item>
+        <img [src]="geoImage" *ngIf="geoImage">
 
         <ion-item lines="none">
           <ion-label floating> Supporting Document/ समर्थन दस्तऐवज<span style="color: Red">*</span><span

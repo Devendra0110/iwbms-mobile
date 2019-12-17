@@ -1,38 +1,37 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule} from '@angular/common/http';
-
-import { Camera } from '@ionic-native/camera/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { IonicStorageModule } from '@ionic/storage';
-import { Dialogs } from '@ionic-native/dialogs/ngx';
-import { Network } from '@ionic-native/network/ngx';
-import { HTTP} from '@ionic-native/http/ngx';
-import { Toast } from '@ionic-native/toast/ngx';
-import { FileChooser } from '@ionic-native/file-chooser/ngx'
 
 import { AppComponent } from './app.component';
-import {SuggestionBoxComponent } from './components/suggestion-box/suggestion-box.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthGuardService } from './services/auth-guard.service';
+import { BrowserModule } from '@angular/platform-browser';
+import { Camera } from '@ionic-native/camera/ngx';
+import { ClaimValidationService } from './services/claim-validation.service';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
+import { EmployerModalPageModule } from './employer-modal/employer-modal.module';
+import { EventService } from './services/event.service';
+import { FamilyModalPageModule } from './family-modal/family-modal.module';
+import { FileChooser } from '@ionic-native/file-chooser/ngx'
+import { FormControlDirective } from './directives/form-control.directive';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpService } from './services/http.service';
+import { IonicStorageModule } from '@ionic/storage';
+import { Network } from '@ionic-native/network/ngx';
+import { NgModule } from '@angular/core';
+import { RegistrationService } from './services/registration.service';
+import { RenewalService } from './services/renewal.service';
+import { RouteReuseStrategy } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {SuggestionBoxComponent} from './components/suggestion-box/suggestion-box.component';
+import { Toast } from '@ionic-native/toast/ngx';
 // Services
 import {TransliterationService} from './services/transliteration.service';
-import {ValidationService} from './services/validation.service';
-import { RegistrationService } from './services/registration.service';
-import { EventService } from './services/event.service';
-import { HttpService } from './services/http.service';
 import { UserManagementService } from './services/user-management.service';
-import { AuthGuardService } from './services/auth-guard.service';
-import { FormControlDirective } from './directives/form-control.directive';
-import { FamilyModalPageModule } from './family-modal/family-modal.module';
-import { EmployerModalPageModule } from './employer-modal/employer-modal.module';
-import { RenewalService } from './services/renewal.service';
-import { ClaimValidationService } from './services/claim-validation.service';
-
+import {ValidationService} from './services/validation.service';
 
 @NgModule({
   declarations: [AppComponent, FormControlDirective, SuggestionBoxComponent],
@@ -52,6 +51,7 @@ import { ClaimValidationService } from './services/claim-validation.service';
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
     Dialogs,
     Network,
     Toast,

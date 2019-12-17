@@ -1,6 +1,7 @@
+import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as uuidv4 from 'uuid/v4';
-import * as _ from 'lodash';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfterViewInit, Component, ComponentRef, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -13,6 +14,7 @@ import { EmployerModalPage } from '../employer-modal/employer-modal.page';
 import { FamilyModalPage } from '../family-modal/family-modal.page';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FormControlDirective } from '../directives/form-control.directive';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { HttpService } from '../services/http.service';
 import { Modes } from '../../assets/modes';
 import { Network } from '@ionic-native/network/ngx';
@@ -26,6 +28,8 @@ import { UserManagementService } from '../services/user-management.service';
 import { ValidationService } from '../services/validation.service';
 import { serverUrl } from '../../assets/config';
 import { states } from '../models/states';
+
+declare var google;
 
 @Component({
   selector: 'app-registration',
@@ -112,10 +116,17 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public workerTypeOptions: string[];
   public workerTypeOptionsMarathi: string[];
   public currentImage: any;
+  public geoImage: any;
 
+  public map: any;
+  public marker: any;
+  public longitude: any = "";
+  public latitude: any = "";
+  public timestamp: any = "";
 
   public uploadedImage: File;
   public uploadedImageUrl: string;
+  public uploadedWorkSiteImageUrl: string;
   public uploadedbankPassbook: string;
   public uploadedWorkCertificate: string;
   public uploadedSupportingDocument: string;
@@ -124,6 +135,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   public files: {
     applicantPhoto: File,
+    workSitePhoto: File,
     supportingDocuments: File,
     workCertificate: File,
     bankPassbook: File,
@@ -131,6 +143,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     aadharDeclaration: File,
   } = {
       applicantPhoto: null,
+      workSitePhoto: null,
       supportingDocuments: null,
       workCertificate: null,
       bankPassbook: null,
@@ -140,6 +153,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   public fileOptions: {
     applicantPhoto: any,
+    workSitePhoto: any,
     supportingDocuments: any,
     workCertificate: any,
     bankPassbook: any,
@@ -147,6 +161,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     aadharDeclaration: File,
   } = {
       applicantPhoto: null,
+      workSitePhoto: null,
       supportingDocuments: null,
       workCertificate: null,
       bankPassbook: null,
@@ -183,7 +198,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     private network: Network,
     private dialogs: Dialogs,
     private toast: Toast,
-    private fileChooser: FileChooser) {
+    private fileChooser: FileChooser,
+    private geolocation: Geolocation,
+    private platform: Platform) {
 
     // network subscribers check the status of network even its type
     this.network.onDisconnect().subscribe(() => { });
@@ -690,6 +707,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           case 'applicantPhoto':
             this.uploadedImageUrl = `${serverUrl}registration-and-renewal/getfile/${this.selectedApplicationData._id}/${docs[item]}?x-access-token=${localStorage.getItem('token')}`;
             break;
+          case 'workSitePhoto':
+            this.uploadedWorkSiteImageUrl = `${serverUrl}registration-and-renewal/getfile/${this.selectedApplicationData._id}/${docs[item]}?x-access-token=${localStorage.getItem('token')}`;
+            break;
           case 'bankPassbook':
             this.uploadedbankPassbook = `${serverUrl}registration-and-renewal/getfile/${this.selectedApplicationData._id}/${docs[item]}?x-access-token=${localStorage.getItem('token')}`;
             break;
@@ -1147,6 +1167,32 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
+  takeGeoPicture() {
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      targetHeight: 800,
+      targetWidth: 600
+    };
+    this.camera.getPicture(options).then((imageData) => {
+      this.geoImage = 'data:image/jpg;base64,' + imageData;
+      const fileImage = this.b64toFile(imageData);
+      this.files.workSitePhoto = fileImage;
+      this.fileOptions.workSitePhoto = `${uuidv4()}.${fileImage.name.split('.')[length]}.png`;
+    }, (err) => {
+      console.log("Camera issue:" + err);
+    });
+
+  this.geolocation.getCurrentPosition().then((resp) => {
+    this.siteLocation.setValue(JSON.stringify({latitude:resp.coords.latitude,longitude:resp.coords.longitude}));
+    console.log(this.siteLocation);
+  }).catch((error) => {
+    console.log('Error getting location', error);
+  });
+  }
+
   b64toFile = (b64Data, contentType = 'image/jpg', sliceSize = 512) => {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
@@ -1452,7 +1498,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       districtOfMunicipalCorporation: new FormControl(''),
       districtOfMunicipalCorporation_mr: new FormControl(''),
       talukaOfMunicipalCorporation: new FormControl(''),
-      talukaOfMunicipalCorporation_mr: new FormControl('')
+      talukaOfMunicipalCorporation_mr: new FormControl(''),
+      siteLocation: new FormControl(''),
     });
   }
 
@@ -1483,10 +1530,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       attachmentList: new FormArray([]),
       supportingDocuments: new FormControl('', Validators.required),
       applicantPhoto: new FormControl('',),
+      workSitePhoto: new FormControl('',),
       selfDeclarationDocuments: new FormControl('', Validators.required),
       aadharDeclaration: new FormControl('', Validators.required),
       bankPassbook: new FormControl('', Validators.required),
-      workCertificate: new FormControl('', Validators.required)
+      workCertificate: new FormControl('', Validators.required),
     });
   }
 
@@ -1927,6 +1975,7 @@ get familyDetails(){  return (this.registrationFormGroup.get('familyDetails') as
   get natureOfWorkEmp() { return this.registrationFormGroup.get('employerDetails').get('natureOfWorkEmp'); }
   get typeOfIssuer() { return this.registrationFormGroup.get('employerDetails').get('typeOfIssuer'); }
   get typeOfIssuer_mr() { return this.registrationFormGroup.get('employerDetails').get('typeOfIssuer_mr'); }
+  get siteLocation() { return this.registrationFormGroup.get('employerDetails').get('siteLocation'); }
 
   get registeredWith() {
     return this.registrationFormGroup.get('employerDetails').get('registeredWith');
@@ -2134,4 +2183,5 @@ get familyDetails(){  return (this.registrationFormGroup.get('familyDetails') as
   get bankPassbook() {
     return this.registrationFormGroup.get('supportingDocuments').get('bankPassbook');
   }
+
 }
