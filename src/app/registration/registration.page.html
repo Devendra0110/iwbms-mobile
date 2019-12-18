@@ -1567,7 +1567,7 @@
 
         <ion-item>
           <ion-label>Applicant Photo / अर्जदार फोटो<span style="color: Red">*</span><span class="text-danger"
-              *ngIf="supportingDocuments.invalid && supportingDocuments.touched">
+              *ngIf="supportingDocuments.invalid && supportingDocuments.touched" formControlName="applicantPhoto">
               <small *ngIf="!!supportingDocuments.errors?.required">Applicant Photo is Required</small>
             </span></ion-label>
           <ion-fab horizontal="end">
@@ -1580,7 +1580,7 @@
 
         <ion-item>
           <ion-label>Worksite Photo/ कामाचे स्थळ फोटो<span style="color: Red">*</span><span class="text-danger"
-              *ngIf="supportingDocuments.invalid && supportingDocuments.touched">
+              *ngIf="supportingDocuments.invalid && supportingDocuments.touched" formControlName="workSitePhoto">
               <small *ngIf="!!supportingDocuments.errors?.required">Worksite Photo is Required</small>
             </span>
           </ion-label>

@@ -200,8 +200,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     private dialogs: Dialogs,
     private toast: Toast,
     private fileChooser: FileChooser,
-    private geolocation: Geolocation,
-    private platform: Platform) {
+    private siteLocation: Geolocation,
+    ) {
 
     // network subscribers check the status of network even its type
     this.network.onDisconnect().subscribe(() => { });
@@ -1194,10 +1194,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }, (err) => {
       console.log("Camera issue:" + err);
     });
-
-  this.geolocation.getCurrentPosition().then((resp) => {
-    this.siteLocation.setValue(JSON.stringify({latitude:resp.coords.latitude,longitude:resp.coords.longitude}));
-    console.log(this.siteLocation);
+    
+    this.siteLocation.getCurrentPosition().then((resp) => {
+      this.geolocation.setValue(JSON.stringify({latitude:resp.coords.latitude,longitude:resp.coords.longitude}));
   }).catch((error) => {
     console.log('Error getting location', error);
   });
@@ -1509,7 +1508,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       districtOfMunicipalCorporation_mr: new FormControl(''),
       talukaOfMunicipalCorporation: new FormControl(''),
       talukaOfMunicipalCorporation_mr: new FormControl(''),
-      siteLocation: new FormControl(''),
+      geolocation: new FormControl(''),
     });
   }
 
@@ -2103,7 +2102,7 @@ get familyDetails(){  return (this.registrationFormGroup.get('familyDetails') as
   get natureOfWorkEmp() { return this.registrationFormGroup.get('employerDetails').get('natureOfWorkEmp'); }
   get typeOfIssuer() { return this.registrationFormGroup.get('employerDetails').get('typeOfIssuer'); }
   get typeOfIssuer_mr() { return this.registrationFormGroup.get('employerDetails').get('typeOfIssuer_mr'); }
-  get siteLocation() { return this.registrationFormGroup.get('employerDetails').get('siteLocation'); }
+  get geolocation() { return this.registrationFormGroup.get('employerDetails').get('geolocation'); }
 
   get registeredWith() {
     return this.registrationFormGroup.get('employerDetails').get('registeredWith');
@@ -2310,6 +2309,14 @@ get familyDetails(){  return (this.registrationFormGroup.get('familyDetails') as
 
   get bankPassbook() {
     return this.registrationFormGroup.get('supportingDocuments').get('bankPassbook');
+  }
+
+  get applicantPhoto() {
+    return this.registrationFormGroup.get('supportingDocuments').get('applicantPhoto');
+  }
+
+  get workSitePhoto() {
+    return this.registrationFormGroup.get('supportingDocuments').get('workSitePhoto');
   }
 
 }
