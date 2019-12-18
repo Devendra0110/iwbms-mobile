@@ -140,7 +140,7 @@
               <small *ngIf="!!dobPersonal.errors?.required">Please enter your Date Of Birth.</small>
             </div>
         </ion-item>
-       
+      
         <ion-item>
           <ion-label position="floating">Age<span style="color: Red"> *</span></ion-label>
           <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" readOnly="true"
@@ -708,8 +708,9 @@
             [class.is-invalid]="rationCardNumberPersonal.invalid && rationCardNumberPersonal.touched"
             id='personalDetails-rationCardNumberPersonal' clearInput autocapitalize="characters"></ion-input>
           <div class="text-danger" *ngIf="rationCardNumberPersonal.invalid && rationCardNumberPersonal.touched">
-            <small *ngIf="!!rationCardNumberPersonal.errors?.maxlength">You have exceeded the max length.</small>
-            <small *ngIf="!!rationCardNumberPersonal.errors?.minlength">Ration Card No.length should be greater than or
+            <small *ngIf="rationCardNumberPersonal.errors?.required">Please enter your ration card number.</small>
+            <small *ngIf="!!rationCardNumberPersonal.errors?.maxlength && !rationCardNumberPersonal.errors?.required">You have exceeded the max length.</small>
+            <small *ngIf="!!rationCardNumberPersonal.errors?.minlength && !rationCardNumberPersonal.errors?.required">Ration Card No.length should be greater than or
               equals
               to 8 characters</small>
             <small
@@ -728,6 +729,9 @@
               value="{{ rationCardType.key }}">
               {{ rationCardType.value }}</ion-select-option>
           </ion-select>
+          <div class="text-danger" *ngIf="rationCardTypePersonal.invalid && rationCardTypePersonal.touched">
+            <small *ngIf="!!rationCardTypePersonal.errors?.required">Please choose type of Ration Card.</small>
+          </div>
         </ion-item>
 
         <ion-item hidden="true">

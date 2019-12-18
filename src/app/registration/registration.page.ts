@@ -986,8 +986,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   addMoreFamilyDetails() {
-    const familyDetailsArray = this.registrationFormGroup.get('familyDetails') as FormArray;
-    this.showFamilyModal(familyDetailsArray.length, 'add');
+    if (this.registrationFormGroup.get('familyDetails').invalid ){
+      alert('Please flll all the essential details of previous family member.')
+    }else{
+      const familyDetailsArray = this.registrationFormGroup.get('familyDetails') as FormArray;
+      this.showFamilyModal(familyDetailsArray.length, 'add');
+    }
+    
   }
 
   editFamilyDetail(i: number) {
