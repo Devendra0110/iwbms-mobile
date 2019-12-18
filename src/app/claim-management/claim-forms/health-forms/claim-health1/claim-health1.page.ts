@@ -105,7 +105,8 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
         return eachFamily;
       }
     });
-    this.minDateOfDelivery = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
+    this.minDateOfDelivery = typeof this.user.registrationDatePersonal==='string'?moment(this.user.registrationDatePersonal).format('YYYY-MM-DD'):moment(this.getIonDate([this.user.registrationDatePersonal.day,this.user.registrationDatePersonal.month,this.user.registrationDatePersonal.year])).format('YYYY-MM-DD')
+  
     
     this.dateOfDeliveryHealth.valueChanges.subscribe((value) => {
       if (this.dateOfDeliveryHealth.errors) {

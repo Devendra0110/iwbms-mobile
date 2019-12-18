@@ -107,7 +107,8 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
         this.benefitAmount.patchValue(value);
       }
     });
-    this.minTreatmentDate  = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD')
+    this.minTreatmentDate  = typeof this.user.registrationDatePersonal==='string'?moment(this.user.registrationDatePersonal).format('YYYY-MM-DD'):moment(this.getIonDate([this.user.registrationDatePersonal.day,this.user.registrationDatePersonal.month,this.user.registrationDatePersonal.year])).format('YYYY-MM-DD')
+  
 
   }
 
