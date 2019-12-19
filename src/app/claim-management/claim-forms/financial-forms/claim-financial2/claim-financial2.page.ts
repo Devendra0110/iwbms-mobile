@@ -153,9 +153,8 @@ public nomineeCheck = false;
         this.formGroup.get('bankAddressBank').patchValue(bankDetails['ADDRESS']);
       }
     },
-    
       error => {
-        this.toast.show('IFSC code not found', '1000', 'bottom');
+        this.dialogs.alert('IFSC code not found', '1000', 'bottom');
         this.bankDetails = {
           BANK: '',
           BRANCH: '',

@@ -155,7 +155,7 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
     },
     
       error => {
-        this.toast.show('IFSC code not found', '1000', 'bottom');
+        this.dialogs.alert('IFSC code not found', '1000', 'bottom');
         this.bankDetails = {
           BANK: '',
           BRANCH: '',

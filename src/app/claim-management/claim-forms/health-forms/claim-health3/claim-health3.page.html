@@ -101,6 +101,7 @@
         </ion-label>
         <ion-input type="text"   (change)="searchByifscCodeBank()" formControlName="ifscCodeBank" id="ifscCodeBank" autocapitalize="characters"
           [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched"></ion-input>
+          <ion-button (click)="searchByifscCodeBank()">Search</ion-button>
         <div class="text-danger" *ngIf="ifscCodeBank.invalid && ifscCodeBank.touched">
           <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['required']">Please enter Your IFSC code </small>
           <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['maxlength']">You have reached your

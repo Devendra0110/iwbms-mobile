@@ -27,6 +27,7 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   public issuingAuthorityArray = [];
   public todaysDate: any;
   public isifscCodeBankCodeFound: boolean;
+  public ifIfscCodeBank: boolean;
   public bankDetails: any;
   public sortedArray = [];
   public maxTodaysDate: string;
@@ -102,9 +103,8 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
 
   ngOnInit() {
     this.getRelation();
-this.assignBenefits(true)
-this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
-
+    this.assignBenefits(true);
+    this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     this.sortedArray = this.familyDetailsArray.filter(data => {
       return data.nominee === "yes" || data.nominee === "Yes"
@@ -227,7 +227,7 @@ this.agePersonal.patchValue(age)
     },
     
       error => {
-        this.toast.show('IFSC code not found', '1000', 'bottom');
+        this.dialogs.alert('IFSC code not found', '1000', 'bottom');
         this.bankDetails = {
           BANK: '',
           BRANCH: '',
@@ -284,7 +284,7 @@ this.agePersonal.patchValue(age)
     });
   }
 
-
+  
   public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
       if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){

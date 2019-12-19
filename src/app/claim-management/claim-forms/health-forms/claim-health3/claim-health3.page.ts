@@ -99,6 +99,8 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
     })
   }
 
+
+
   //english getters
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get aadharNumber() { return this.formGroup.get('aadharNumber'); }
@@ -136,7 +138,7 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
       ADDRESS: ''
     };
     this.claimHttpService.callIfscCodeApi(this.ifscCodeBank.value).subscribe(bankDetails => {
-      if (bankDetails) {
+      if (!!bankDetails) {
         this.ifIfscCodeBank = true;
         this.formGroup.get('bankNameBank').patchValue(bankDetails['BANK']);
         this.formGroup.get('bankBranchBank').patchValue(bankDetails['BRANCH']);
@@ -144,7 +146,7 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
       }
     },
       error1 => {
-        this.toast.show('IFSC Code Not Found.Please fill bank details manually', '1000', 'bottom')
+        this.dialogs.alert('IFSC Code Not Found.Please fill bank details manually', '1000', 'bottom')
         this.bankDetails = {
           BANK: '',
           BRANCH: '',

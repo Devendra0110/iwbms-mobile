@@ -22,7 +22,7 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
   public isifscCodeBankCodeFound: boolean;
   public bankDetails: any;
   minDate: any;
-  public nomineeCheck=false;
+  public nomineeCheck = false;
 
   constructor(
     protected validationService: ClaimValidationService,
@@ -33,9 +33,9 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
     protected storage: Storage,
     protected toast: Toast,
     protected dialogs: Dialogs, ) {
-    super(transliterate, httpService, claimService, router, storage, toast,dialogs);
-    this.files = { deathCertificateDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '',selfDeclaration:'' };
-    this.fileOptions = { deathCertificateDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '',selfDeclaration:'' };
+    super(transliterate, httpService, claimService, router, storage, toast, dialogs);
+    this.files = { deathCertificateDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' };
+    this.fileOptions = { deathCertificateDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' };
 
 
     this.formGroup = new FormGroup({
@@ -64,7 +64,7 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       nomineeMobNumber: new FormControl('', this.validationService.createValidatorsArray('nomineeMobNumber')),
       verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
-  
+
 
 
 
@@ -105,7 +105,7 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
         //   };
         // }
         const formattedAge = moment(childSelected.dobFamily).format('YYYY-MM-DD');
-this.agePersonal.disable()
+        this.agePersonal.disable()
         this.dobPersonal.patchValue(formattedAge)
         this.agePersonal.patchValue(this.calculateAge(formattedAge))
 
@@ -164,7 +164,7 @@ this.agePersonal.disable()
     },
 
       error => {
-        this.toast.show('IFSC code not found', '1000', 'bottom');
+        this.dialogs.alert('IFSC code not found', '1000', 'bottom');
         this.bankDetails = {
           BANK: '',
           BRANCH: '',
@@ -182,7 +182,7 @@ this.agePersonal.disable()
   }
   public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
-      if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
+      if (typeof this.user.registrationDatePersonal === 'string' && typeof this.user.dobPersonal === 'string') {
         this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
         this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
       }
@@ -208,7 +208,7 @@ this.agePersonal.disable()
           benefitType: this.formGroup.getRawValue().benefitType,
           benefitAmount: this.formGroup.getRawValue().benefitAmount,
           placeOfDocIssue_mr: this.formGroup.getRawValue().placeOfDocIssue_mr,
-          nomineeCheck:this.nomineeCheck,
+          nomineeCheck: this.nomineeCheck,
 
           documents: {
             deathCertificateDoc: this.fileOptions['deathCertificateDoc'],
@@ -223,7 +223,7 @@ this.agePersonal.disable()
       this.saveClaimForm(postObj);
     } else {
       this.formGroup.markAllAsTouched();
-      
+
       this.dialogs.alert('Please Update the form.');
     }
   }
@@ -236,8 +236,8 @@ this.agePersonal.disable()
       this.dobPersonal.reset();
       this.relation.reset();
       this.aadharNumber.reset();
-this.fullName_mr.reset();
-this.agePersonal.reset();
+      this.fullName_mr.reset();
+      this.agePersonal.reset();
 
       this.nomineeCertificate.clearValidators();
 
@@ -245,40 +245,42 @@ this.agePersonal.reset();
 
       // this.patchNominee()
 
-      
+
       this.nomineeCertificate.setValidators([Validators.required]);
-this.agePersonal.reset();
+      this.agePersonal.reset();
       this.fullName.reset();
       this.dobPersonal.reset();
       this.relation.reset();
       this.aadharNumber.reset();
-this.fullName_mr.reset()
-this.relation.disable();
-this.aadharNumber.disable()
+      this.fullName_mr.reset()
+      this.relation.disable();
+      this.aadharNumber.disable()
 
     }
   }
   public calculateAgepatched(date: string): void {
-    if( typeof date === 'string'){
-    const dob = moment(date).format('YYYY-MM-DD');
-    const age = moment().diff(dob, 'years');
-this.agePersonal.patchValue(age)}}
-
-openOtherDetails(event: any) {
-  this.open = !this.open;
-  if (!this.open) {
-    this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
-    this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);
-    this.formGroup.get('bankAddressBank').patchValue(this.user['bankAddressBank']);
-    this.formGroup.get('accountNumberBank').patchValue(this.user['accountNumberBank']);
-    this.formGroup.get('ifscCodeBank').patchValue(this.user['ifscCodeBank']);
-
-  } else {
-    this.formGroup.get('bankNameBank').reset()
-    this.formGroup.get('bankBranchBank').reset()
-    this.formGroup.get('bankAddressBank').reset()
-    this.formGroup.get('accountNumberBank').reset()
-    this.formGroup.get('ifscCodeBank').reset()
+    if (typeof date === 'string') {
+      const dob = moment(date).format('YYYY-MM-DD');
+      const age = moment().diff(dob, 'years');
+      this.agePersonal.patchValue(age)
+    }
   }
-}
+
+  openOtherDetails(event: any) {
+    this.open = !this.open;
+    if (!this.open) {
+      this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
+      this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);
+      this.formGroup.get('bankAddressBank').patchValue(this.user['bankAddressBank']);
+      this.formGroup.get('accountNumberBank').patchValue(this.user['accountNumberBank']);
+      this.formGroup.get('ifscCodeBank').patchValue(this.user['ifscCodeBank']);
+
+    } else {
+      this.formGroup.get('bankNameBank').reset()
+      this.formGroup.get('bankBranchBank').reset()
+      this.formGroup.get('bankAddressBank').reset()
+      this.formGroup.get('accountNumberBank').reset()
+      this.formGroup.get('ifscCodeBank').reset()
+    }
+  }
 }
