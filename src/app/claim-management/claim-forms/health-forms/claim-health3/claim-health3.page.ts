@@ -143,6 +143,9 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
         this.formGroup.get('bankNameBank').patchValue(bankDetails['BANK']);
         this.formGroup.get('bankBranchBank').patchValue(bankDetails['BRANCH']);
         this.formGroup.get('bankAddressBank').patchValue(bankDetails['ADDRESS']);
+        this.bankNameBank.disable();
+        this.bankBranchBank.disable();
+        this.bankAddressBank.disable();
       }
     },
       error1 => {

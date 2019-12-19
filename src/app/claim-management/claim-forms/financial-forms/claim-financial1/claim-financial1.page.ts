@@ -222,6 +222,9 @@ this.agePersonal.patchValue(age)
         this.formGroup.get('bankNameBank').patchValue(bankDetails['BANK']);
         this.formGroup.get('bankBranchBank').patchValue(bankDetails['BRANCH']);
         this.formGroup.get('bankAddressBank').patchValue(bankDetails['ADDRESS']);
+        this.bankNameBank.disable();
+        this.bankBranchBank.disable();
+        this.bankAddressBank.disable();
       }    this.agePersonal.disable()
 
     },
