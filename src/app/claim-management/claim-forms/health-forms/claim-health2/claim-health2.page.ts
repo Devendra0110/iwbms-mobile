@@ -64,7 +64,6 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
       verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
-
       nameOfHospital_mr: new FormControl(''),
       nameOfDoctor_mr: new FormControl(''),
       locationOfHospital_mr: new FormControl(''),
@@ -109,8 +108,6 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
       }
     });
     this.minTreatmentDate  = typeof this.user.registrationDatePersonal==='string'?moment(this.user.registrationDatePersonal).format('YYYY-MM-DD'):moment(this.getIonDate([this.user.registrationDatePersonal.day,this.user.registrationDatePersonal.month,this.user.registrationDatePersonal.year])).format('YYYY-MM-DD')
-  
-
   }
 
    // english getters
@@ -130,7 +127,6 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
    get benefitAmount() { return this.formGroup.get('benefitAmount') }
    // get declaration() { return this.formGroup.get('declaration') }
 
- 
    // marathi getters
    get nameOfHospital_mr() { return this.formGroup.get('nameOfHospital_mr'); }
    get nameOfDoctor_mr() { return this.formGroup.get('nameOfDoctor_mr'); }
@@ -138,7 +134,6 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
  
    public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
-
       if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
         this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
       this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)

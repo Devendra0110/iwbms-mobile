@@ -49,7 +49,6 @@ export class ClaimHealth5Page extends ClaimBasePage implements OnInit {
   get verifyDocumentCheck() {return this.formGroup.get('verifyDocumentCheck'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
 
-
   public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
       if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
@@ -70,7 +69,6 @@ export class ClaimHealth5Page extends ClaimBasePage implements OnInit {
       this.saveClaimForm(postObj);
     }else {
       this.formGroup.markAllAsTouched();
-
       this.dialogs.alert('Please Update the form.');
     }
 }

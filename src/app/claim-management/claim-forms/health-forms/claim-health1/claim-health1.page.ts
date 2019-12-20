@@ -14,7 +14,6 @@ import * as moment from 'moment';
 import * as _ from 'lodash'
 import { TypeOfIssuer } from 'src/assets/common.interface';
 
-
 @Component({
   selector: 'app-claim-health1',
   templateUrl: './claim-health1.page.html',
@@ -107,7 +106,7 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
     });
     this.minDateOfDelivery = typeof this.user.registrationDatePersonal==='string'?moment(this.user.registrationDatePersonal).format('YYYY-MM-DD'):moment(this.getIonDate([this.user.registrationDatePersonal.day,this.user.registrationDatePersonal.month,this.user.registrationDatePersonal.year])).format('YYYY-MM-DD')
   
-    
+    //Childarray
     this.dateOfDeliveryHealth.valueChanges.subscribe((value) => {
       if (this.dateOfDeliveryHealth.errors) {
       this.toast.show('Child is born before registration date.', '2000', 'bottom')
@@ -152,7 +151,6 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
     this.birthCertificateNumber.setValue(this.birthCertificateNumber.value.toString().toUpperCase());
   }
 
-
   // english getters
   // get declaration() { return this.formGroup.get('declaration') }
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
@@ -184,7 +182,6 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
       this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
       // this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
       }
-
       const postObj = {
         userData: this.user,
         claimData: {

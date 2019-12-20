@@ -12,7 +12,6 @@ import { ClaimBasePage } from 'src/app/claim-management/claim-base/claim-form.ba
 import { Constants } from 'src/assets/constants';
 import * as moment from 'moment';
 
-
 @Component({
   selector: 'app-claim-health4',
   templateUrl: './claim-health4.page.html',
@@ -25,7 +24,6 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
    public maxTodaysDate: string;
    public minTreatmentDate: string;
    
-
   constructor(
     protected validationService: ClaimValidationService,
     protected transliterate: TransliterationService,
@@ -69,6 +67,7 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
     this.minTreatmentDate = typeof this.user.registrationDatePersonal==='string'?moment(this.user.registrationDatePersonal).format('YYYY-MM-DD'):moment(this.getIonDate([this.user.registrationDatePersonal.day,this.user.registrationDatePersonal.month,this.user.registrationDatePersonal.year])).format('YYYY-MM-DD')
   }
 
+  //english getters
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
   get nameOfMed() { return this.formGroup.get('nameOfMed'); }
   get typeOfDisability() { return this.formGroup.get('typeOfDisability'); }
@@ -76,11 +75,10 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
   get date() { return this.formGroup.get('date'); }
   get health4Form4Doc1() { return this.formGroup.get('health4Form4Doc1'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
-
+  //marathi getters
   get typeOfDisability_mr() { return this.formGroup.get('typeOfDisability_mr'); }
   get nameOfMed_mr() { return this.formGroup.get('nameOfMed_mr'); }
   get locationOfHospital_mr() { return this.formGroup.get('locationOfHospital_mr'); }
-
 
 
   public saveForm(): void {
@@ -89,7 +87,6 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
         this.user.registrationDatePersonal = this.convertDateToNGBDateFormat(this.user.registrationDatePersonal)
       this.user.dobPersonal = this.convertDateToNGBDateFormat(this.user.dobPersonal)
       }
-
       const postObj = {
         userData: this.user,
         claimData: {
@@ -111,7 +108,6 @@ export class ClaimHealth4Page extends ClaimBasePage implements OnInit {
       this.saveClaimForm(postObj);
     } else {
       this.formGroup.markAllAsTouched();
-
       this.dialogs.alert('Please Update the form.');
     }
   }

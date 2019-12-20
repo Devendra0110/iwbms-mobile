@@ -13,7 +13,6 @@ import { Constants } from 'src/assets/constants';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 
-
 @Component({
   selector: 'app-claim-health3',
   templateUrl: './claim-health3.page.html',
@@ -27,7 +26,6 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
   public familyArray: Array<string> = [];
   public ifIfscCodeBank: boolean;
   public childName:string;
- 
 
   bankDetails: any = {
     BANK: '',
@@ -72,8 +70,8 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
       bankBranchBank: new FormControl('', this.validationService.createValidatorsArray('bankBranchBank')),
       bankAddressBank: new FormControl('', this.validationService.createValidatorsArray('bankAddressBank')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
-
-    }); this.todaysDate = {
+    });
+     this.todaysDate = {
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
       day: new Date().getDate()
@@ -122,15 +120,8 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
   get nameOfDoctor_mr() { return this.formGroup.get('nameOfDoctor_mr'); }
   get locationOfHospital_mr() { return this.formGroup.get('locationOfHospital_mr'); }
 
-
-  capitaliseifscCodeBank() {
-    let value = this.ifscCodeBank.value;
-    value = value.toString().toUpperCase();
-    this.ifscCodeBank.setValue(value);
-  }
-
-
-  searchByifscCodeBank() {
+  
+    searchByifscCodeBank() {
     this.bankDetails = {
       BANK: '',
       BRANCH: '',
