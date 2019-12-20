@@ -1566,10 +1566,10 @@
         </ng-container>
 
         <ion-item>
-          <ion-label>Applicant Photo / अर्जदार फोटो<span style="color: Red">*</span><span class="text-danger"
-              *ngIf="supportingDocuments.invalid && supportingDocuments.touched" formControlName="applicantPhoto">
-              <small *ngIf="!!supportingDocuments.errors?.required">Applicant Photo is Required</small>
-            </span></ion-label>
+          <ion-label style="height: 48px;">Applicant Photo / अर्जदार फोटो<span style="color: Red">*</span><div class="text-danger"
+              *ngIf="applicantPhoto.invalid && applicantPhoto.touched">
+              <small *ngIf="!!applicantPhoto.errors?.required">Applicant Photo is Required</small>
+            </div></ion-label>
           <ion-fab horizontal="end">
             <ion-fab-button (click)="takePicture()">
               <ion-icon name="camera"></ion-icon>
@@ -1579,10 +1579,10 @@
         <img [src]="currentImage" *ngIf="currentImage">
 
         <ion-item>
-          <ion-label>Worksite Photo/ कामाचे स्थळ फोटो<span style="color: Red">*</span><span class="text-danger"
-              *ngIf="supportingDocuments.invalid && supportingDocuments.touched" formControlName="workSitePhoto">
-              <small *ngIf="!!supportingDocuments.errors?.required">Worksite Photo is Required</small>
-            </span>
+          <ion-label style="height: 48px;">Worksite Photo/ कामाचे स्थळ फोटो<span style="color: Red">*</span><div class="text-danger"
+              *ngIf="workSitePhoto.invalid && workSitePhoto.touched" >
+              <small *ngIf="!!workSitePhoto.errors?.required">Worksite Photo is Required</small>
+            </div>
           </ion-label>
           <ion-fab horizontal="end">
             <ion-fab-button (click)="takeGeoPicture()">
@@ -1593,30 +1593,30 @@
         <img [src]="geoImage" *ngIf="geoImage">
 
         <ion-item lines="none">
-          <ion-label floating> Supporting Document/ समर्थन दस्तऐवज<span style="color: Red">*</span><span
-              class="text-danger" *ngIf="supportingDocuments.invalid && supportingDocuments.touched">
+          <ion-label floating> Supporting Document/ समर्थन दस्तऐवज<span style="color: Red">*</span>
+            <div class="text-danger" *ngIf="supportingDocuments.invalid && supportingDocuments.touched">
               <small *ngIf="!!supportingDocuments.errors?.required">Document is required</small>
-            </span></ion-label><br>
+            </div></ion-label><br>
         </ion-item>
         <ion-item>
           <input id='supportingDocuments' formControlName="supportingDocuments" type="file" accept="application/pdf"
             (change)="uploadFile($event)">
         </ion-item>
         <ion-item lines="none">
-          <ion-label text-wrap floating> Self Declaration / हमीपत्र<span style="color: Red">*</span><span
-              class="text-danger" *ngIf="selfDeclarationDocuments.invalid && selfDeclarationDocuments.touched">
+          <ion-label text-wrap floating> Self Declaration / हमीपत्र<span style="color: Red">*</span>
+            <div class="text-danger" *ngIf="selfDeclarationDocuments.invalid && selfDeclarationDocuments.touched">
               <small *ngIf="!!selfDeclarationDocuments.errors?.required">Document is required</small>
-            </span></ion-label>
+            </div></ion-label>
         </ion-item>
         <ion-item>
           <input id='selfDeclarationDocuments' formControlName="selfDeclarationDocuments" type="file"
             accept="application/pdf" (change)="uploadFile($event)">
         </ion-item>
         <ion-item lines="none">
-          <ion-label text-wrap floating>Aadhar-Declaration / हमीपत्र<span style="color: Red">*</span><span
-              class="text-danger" *ngIf="aadharDeclaration.invalid && aadharDeclaration.touched">
+          <ion-label text-wrap floating>Aadhar-Declaration / हमीपत्र<span style="color: Red">*</span>
+            <div class="text-danger" *ngIf="aadharDeclaration.invalid && aadharDeclaration.touched">
               <small *ngIf="!!aadharDeclaration.errors?.required">Document is required</small>
-            </span></ion-label>
+            </div></ion-label>
         </ion-item>
         <ion-item>
           <input id='aadharDeclaration' formControlName="aadharDeclaration" type="file" accept="application/pdf"
@@ -1624,20 +1624,20 @@
         </ion-item>
         <ion-item lines="none">
           <ion-label text-wrap floating>90 Days Work Certificate / 90 दिवस कामाचे प्रमाणपत्र<span
-              style="color: Red">*</span><span class="text-danger"
+              style="color: Red">*</span><div class="text-danger"
               *ngIf="workCertificate.invalid && workCertificate.touched">
               <small *ngIf="!!workCertificate.errors?.required">Document is required</small>
-            </span></ion-label>
+            </div></ion-label>
         </ion-item>
         <ion-item>
           <input id='workCertificate' formControlName="workCertificate" type="file" accept="application/pdf"
             (change)="uploadFile($event)">
         </ion-item>
         <ion-item lines="none">
-          <ion-label text-wrap floating>Bank Passbook / बँक पासबुक<span style="color: Red">*</span><span
-              class="text-danger" *ngIf="bankPassbook.invalid && bankPassbook.touched">
+          <ion-label text-wrap floating>Bank Passbook / बँक पासबुक<span style="color: Red">*</span>
+            <div class="text-danger" *ngIf="bankPassbook.invalid && bankPassbook.touched">
               <small *ngIf="!!bankPassbook.errors?.required">Document is required</small>
-            </span></ion-label>
+            </div></ion-label>
         </ion-item>
         <ion-item>
           <input id='bankPassbook' formControlName="bankPassbook" type="file" accept="application/pdf"

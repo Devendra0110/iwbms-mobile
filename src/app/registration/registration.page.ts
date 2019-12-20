@@ -1315,7 +1315,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     } else {
       if (this.registrationFormGroup.valid) {
         if (!this.findNominee(this.registrationFormGroup.getRawValue().familyDetails)) {
-         this.dialogs.alert('Nominee Required.: Please select a nominee in family details to proceed.');
+        this.dialogs.alert('Nominee Required.: Please select a nominee in family details to proceed.');
           return;
         }
         const formData = new FormData();
@@ -1341,7 +1341,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
         this.httpService.saveData(formData, this.JWTToken).subscribe(
           (res: any) => {
-            this.dialogs.alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`);
             this.dialogs.alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
             this.router.navigate(['/dashboard']);
           },
@@ -1638,8 +1637,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       attachmentList: new FormArray([]),
       supportingDocuments: new FormControl('', Validators.required),
-      applicantPhoto: new FormControl('',),
-      workSitePhoto: new FormControl('',),
+      applicantPhoto: new FormControl('', Validators.required),
+      workSitePhoto: new FormControl('', Validators.required),
       selfDeclarationDocuments: new FormControl('', Validators.required),
       aadharDeclaration: new FormControl('', Validators.required),
       bankPassbook: new FormControl('', Validators.required),
