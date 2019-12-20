@@ -23,11 +23,11 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
   public maxTodaysDate : string;
   public isifscCodeBankCodeFound: boolean;
   public bankDetails: any;
-  minDate: string;
+  public minDate: string;
   public issuingAuthorityArray = [];
   public PreviousClaimDetails;
   public sortedPreviousClaimDetails;
-  parsedClaimData;
+  public parsedClaimData;
   public relation_type:string;
   constructor(
     private validationService: ClaimValidationService,
@@ -43,7 +43,7 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
     super(transliterate, httpService, claimService, router, storage, toast,dialogs);
     this.files = { deathCertificateDoc: '', marriageCertificateDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', selfDeclaration: '' };
     this.fileOptions = { deathCertificateDoc: '', marriageCertificateDoc: '', scannedPassbookDoc: '', aadharCardDoc: '', selfDeclaration: '' };
-
+      this.PreviousClaimDetails =[]
     this.formGroup = new FormGroup({
       //english values
 
@@ -87,10 +87,12 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
   }
 
   ngOnInit() {
-    this.claimHttpService.getPreviousClaims('F06', this.user.registration_no,this.JWTToken).subscribe(res => {
-      this.PreviousClaimDetails = res;
-      this.sortedPreviousClaimDetails = _.last(this.PreviousClaimDetails);
-      this.parsedClaimData = JSON.parse(this.sortedPreviousClaimDetails.claim_data)
+    this.claimHttpService.getPreviousClaims('F06', this.user.registration_no,this.JWTToken).subscribe((res:any)=> {
+      if(res.length>0){
+        this.PreviousClaimDetails = res;
+        this.sortedPreviousClaimDetails = _.last(this.PreviousClaimDetails);
+        this.parsedClaimData = JSON.parse(this.sortedPreviousClaimDetails.claim_data)
+      }
       this.patchClaimData();
 
     })
@@ -105,39 +107,51 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
     this.patchNominee()
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day, this.todaysDate.month, this.todaysDate.year])
   }
-  get issuingAuthority() { return this.formGroup.get('issuingAuthority') }
-  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
-
-  get deathCertificateIssueDate() { return this.formGroup.get('deathCertificateIssueDate'); }
-  get deathCertificateNo() { return this.formGroup.get('deathCertificateNo'); }
-  get fullName() { return this.formGroup.get('fullName'); }
-  get dobPersonal() { return this.formGroup.get('dobPersonal'); }
-  get agePersonal() { return this.formGroup.get('agePersonal'); }
-  get relation() { return this.formGroup.get('relation'); }
-  get placeOfDocIssue() { return this.formGroup.get('placeOfDocIssue'); }
-  get ifscCodeBank() { return this.formGroup.get('ifscCodeBank'); }
-  get bankNameBank() { return this.formGroup.get('bankNameBank'); }
-  get bankAddressBank() { return this.formGroup.get('bankAddressBank'); }
-  get bankBranchBank() { return this.formGroup.get('bankBranchBank'); }
-  get accountNumberBank() { return this.formGroup.get('accountNumberBank'); }
-  get deathCertificateDoc() { return this.formGroup.get('deathCertificateDoc'); }
-  get marriageCertificateDoc() { return this.formGroup.get('marriageCertificateDoc'); }
-  get scannedPassbookDoc() { return this.formGroup.get('scannedPassbookDoc'); }
-  // get declaration() { return this.formGroup.get('declaration'); }
-  // get aadharCardDoc() { return this.formGroup.get('scannedPassbookDoc'); }
-  get spouseMobNumber() { return this.formGroup.get('spouseMobNumber') }
-  get aadharNumber() { return this.formGroup.get('aadharNumber'); }
-  get selfDeclaration() { return this.formGroup.get('selfDeclaration') }
-  get deathDate() { return this.formGroup.get('deathDate') }
-  get aadharCardDoc() { return this.formGroup.get('aadharCardDoc') }
-
-  //  marathi getters
-  get fullName_mr() { return this.formGroup.get('fullName_mr'); }
-  get relation_mr() { return this.formGroup.get('relation_mr'); }
-  get placeOfDocIssue_mr() { return this.formGroup.get('placeOfDocIssue_mr'); }
-
-
-
+  
+  
+  patchClaimData() {
+    
+    this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
+    if ( this.parsedClaimData) {
+      this.formGroup.get('deathDate').patchValue(moment(this.parsedClaimData['deathDate']).format('YYYY-MM-DD'));
+      this.formGroup.get('placeOfDocIssue').patchValue(this.parsedClaimData['placeOfDocIssue']);
+      this.formGroup.get('spouseMobNumber').patchValue(this.parsedClaimData['spouseMobNumber']);
+      this.formGroup.get('deathCertificateNo').patchValue(this.parsedClaimData['deathCertificateNo']);
+      this.formGroup.get('aadharNumber').patchValue(this.parsedClaimData['aadharNumber']);
+      this.formGroup.get('deathCertificateIssueDate').patchValue(moment(this.parsedClaimData['deathCertificateIssueDate']).format('YYYY-MM-DD'));
+      this.formGroup.get('accountNumberBank').patchValue(this.parsedClaimData['accountNumberBank']);
+      this.formGroup.get('bankAddressBank').patchValue(this.parsedClaimData['bankAddressBank']);
+      this.formGroup.get('issuingAuthority').patchValue(this.parsedClaimData['issuingAuthority']);
+      
+      this.formGroup.get('bankBranchBank').patchValue(this.parsedClaimData['bankBranchBank']);
+      this.formGroup.get('bankNameBank').patchValue(this.parsedClaimData['bankNameBank']);
+      this.formGroup.get('ifscCodeBank').patchValue(this.parsedClaimData['ifscCodeBank']);
+      this.deathDate.disable()
+      this.placeOfDocIssue.disable()
+      this.spouseMobNumber.disable()
+      this.deathCertificateNo.disable()
+      this.aadharNumber.disable()
+      this.deathCertificateIssueDate.disable()
+      this.accountNumberBank.disable()
+      
+      this.bankAddressBank.disable()
+      this.bankBranchBank.disable()
+      this.bankNameBank.disable()
+      this.ifscCodeBank.disable()
+      // this.formGroup.get('deathCertificateDoc').patchValue(this.parsedClaimData.documents.deathCertificateDoc);
+      // this.formGroup.get('selfDeclaration').patchValue(this.parsedClaimData.documents.selfDeclaration);
+      // this.formGroup.get('marriageCertificateDoc').patchValue(this.parsedClaimData.documents.marriageCertificateDoc);
+      this.deathCertificateDoc.disable();
+      this.scannedPassbookDoc.disable()
+      this.marriageCertificateDoc.disable()
+      
+      this.formGroup.get('deathCertificateDoc').clearValidators();
+      this.formGroup.get('scannedPassbookDoc').clearValidators();
+      this.formGroup.get('marriageCertificateDoc').clearValidators();
+      
+    }
+  }
+  
   searchByifscCodeBankCode() {
     this.bankDetails = {
       BANK: '',
@@ -157,27 +171,27 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
       }
     },
     
-      error => {
-        this.dialogs.alert('IFSC code not found', '1000', 'bottom');
-        this.bankDetails = {
-          BANK: '',
-          BRANCH: '',
-          Address: ''
+    error => {
+      this.dialogs.alert('IFSC code not found', '1000', 'bottom');
+      this.bankDetails = {
+        BANK: '',
+        BRANCH: '',
+        Address: ''
         };
         this.isifscCodeBankCodeFound = false;
       });
-
-  }
-  capitaliseifscCodeBank() {
-   
+      
+    }
+    capitaliseifscCodeBank() {
+      
     let value = this.ifscCodeBank.value;
     value = value.toString().toUpperCase();
     this.ifscCodeBank.setValue(value);
   }
-
+  
   private patchNominee() {
     if(!this.parsedClaimData){
-    const fullNameNominee_mr = `${this.sortedArray[0].firstNameFamily_mr} ${this.sortedArray[0].fatherOrHusbandName_mr} ${this.sortedArray[0].surname_mr}`;
+      const fullNameNominee_mr = `${this.sortedArray[0].firstNameFamily_mr} ${this.sortedArray[0].fatherOrHusbandName_mr} ${this.sortedArray[0].surname_mr}`;
     const nomineeBirthDateArray = moment(this.sortedArray[0].dobFamily).format('YYYY-MM-DD');
     const fullNameNominee = `${this.sortedArray[0].firstNameFamily} ${this.sortedArray[0].fatherOrHusbandName} ${this.sortedArray[0].surname}`
     
@@ -192,17 +206,17 @@ export class ClaimFinancial6Page extends ClaimBasePage implements OnInit {
     this.fullName.disable();
     this.dobPersonal.disable()
     this.relation.disable()
-this.aadharNumber.disable()
+    this.aadharNumber.disable()
     if(this.sortedArray[0].relation==="4"){
       this.relation_type="Wife/पत्नी"
     }
     else{
       this.relation_type="Husband/पती"
-
+      
     }}
   }
-
-
+  
+  
   public saveForm(): void {
     if (this.formGroup.valid && this.user['eligibilityForScheme']) {
       if(typeof this.user.registrationDatePersonal==='string' && typeof this.user.dobPersonal==='string'){
@@ -235,76 +249,34 @@ this.aadharNumber.disable()
           // currentNumberOfClaim: this.PreviousClaimDetails.length+1,
           issuingAuthority: this.formGroup.getRawValue().issuingAuthority,
           currentNumberOfClaim: this.PreviousClaimDetails.length+1,
-
+          
           documents: {
             deathCertificateDoc: this.fileOptions['deathCertificateDoc'],
             marriageCertificateDoc: this.fileOptions['marriageCertificateDoc'],
             scannedPassbookDoc: this.fileOptions['scannedPassbookDoc'],
             selfDeclaration: this.fileOptions['selfDeclaration'],
             aadharCardDoc: this.fileOptions['aadharCardDoc'],
-
+            
           }
         }
       };
-
+      
       this.saveClaimForm(postObj);
     } else {
       this.formGroup.markAllAsTouched();
       this.dialogs.alert('Please Update the form.');
     }
   }
-  patchClaimData() {
-
-    this.minDate = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
-    if ( this.parsedClaimData) {
-      this.formGroup.get('deathDate').patchValue(moment(this.parsedClaimData['deathDate']).format('YYYY-MM-DD'));
-      this.formGroup.get('placeOfDocIssue').patchValue(this.parsedClaimData['placeOfDocIssue']);
-      this.formGroup.get('spouseMobNumber').patchValue(this.parsedClaimData['spouseMobNumber']);
-      this.formGroup.get('deathCertificateNo').patchValue(this.parsedClaimData['deathCertificateNo']);
-      this.formGroup.get('aadharNumber').patchValue(this.parsedClaimData['aadharNumber']);
-      this.formGroup.get('deathCertificateIssueDate').patchValue(moment(this.parsedClaimData['deathCertificateIssueDate']).format('YYYY-MM-DD'));
-      this.formGroup.get('accountNumberBank').patchValue(this.parsedClaimData['accountNumberBank']);
-      this.formGroup.get('bankAddressBank').patchValue(this.parsedClaimData['bankAddressBank']);
-      this.formGroup.get('issuingAuthority').patchValue(this.parsedClaimData['issuingAuthority']);
-
-      this.formGroup.get('bankBranchBank').patchValue(this.parsedClaimData['bankBranchBank']);
-      this.formGroup.get('bankNameBank').patchValue(this.parsedClaimData['bankNameBank']);
-      this.formGroup.get('ifscCodeBank').patchValue(this.parsedClaimData['ifscCodeBank']);
-      this.deathDate.disable()
-      this.placeOfDocIssue.disable()
-      this.spouseMobNumber.disable()
-      this.deathCertificateNo.disable()
-      this.aadharNumber.disable()
-      this.deathCertificateIssueDate.disable()
-      this.accountNumberBank.disable()
-
-      this.bankAddressBank.disable()
-      this.bankBranchBank.disable()
-      this.bankNameBank.disable()
-      this.ifscCodeBank.disable()
-      // this.formGroup.get('deathCertificateDoc').patchValue(this.parsedClaimData.documents.deathCertificateDoc);
-      // this.formGroup.get('selfDeclaration').patchValue(this.parsedClaimData.documents.selfDeclaration);
-      // this.formGroup.get('marriageCertificateDoc').patchValue(this.parsedClaimData.documents.marriageCertificateDoc);
-      this.deathCertificateDoc.disable();
-      this.scannedPassbookDoc.disable()
-      this.marriageCertificateDoc.disable()
-
-      this.formGroup.get('deathCertificateDoc').clearValidators();
-      this.formGroup.get('scannedPassbookDoc').clearValidators();
-      this.formGroup.get('marriageCertificateDoc').clearValidators();
-
-    }
-  }
   openOtherDetails(event: any) {
     this.open = !this.open;
-  
+    
     if (!this.open) {
       this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
       this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);
       this.formGroup.get('bankAddressBank').patchValue(this.user['bankAddressBank']);
       this.formGroup.get('accountNumberBank').patchValue(this.user['accountNumberBank']);
       this.formGroup.get('ifscCodeBank').patchValue(this.user['ifscCodeBank']);
-  
+      
     } else {
       this.formGroup.get('bankNameBank').reset()
       this.formGroup.get('bankBranchBank').reset()
@@ -313,4 +285,34 @@ this.aadharNumber.disable()
       this.formGroup.get('ifscCodeBank').reset()
     }
   }
+  get issuingAuthority() { return this.formGroup.get('issuingAuthority') }
+  get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
+  
+  get deathCertificateIssueDate() { return this.formGroup.get('deathCertificateIssueDate'); }
+  get deathCertificateNo() { return this.formGroup.get('deathCertificateNo'); }
+  get fullName() { return this.formGroup.get('fullName'); }
+  get dobPersonal() { return this.formGroup.get('dobPersonal'); }
+  get agePersonal() { return this.formGroup.get('agePersonal'); }
+  get relation() { return this.formGroup.get('relation'); }
+  get placeOfDocIssue() { return this.formGroup.get('placeOfDocIssue'); }
+  get ifscCodeBank() { return this.formGroup.get('ifscCodeBank'); }
+  get bankNameBank() { return this.formGroup.get('bankNameBank'); }
+  get bankAddressBank() { return this.formGroup.get('bankAddressBank'); }
+  get bankBranchBank() { return this.formGroup.get('bankBranchBank'); }
+  get accountNumberBank() { return this.formGroup.get('accountNumberBank'); }
+  get deathCertificateDoc() { return this.formGroup.get('deathCertificateDoc'); }
+  get marriageCertificateDoc() { return this.formGroup.get('marriageCertificateDoc'); }
+  get scannedPassbookDoc() { return this.formGroup.get('scannedPassbookDoc'); }
+  // get declaration() { return this.formGroup.get('declaration'); }
+  // get aadharCardDoc() { return this.formGroup.get('scannedPassbookDoc'); }
+  get spouseMobNumber() { return this.formGroup.get('spouseMobNumber') }
+  get aadharNumber() { return this.formGroup.get('aadharNumber'); }
+  get selfDeclaration() { return this.formGroup.get('selfDeclaration') }
+  get deathDate() { return this.formGroup.get('deathDate') }
+  get aadharCardDoc() { return this.formGroup.get('aadharCardDoc') }
+  
+  //  marathi getters
+  get fullName_mr() { return this.formGroup.get('fullName_mr'); }
+  get relation_mr() { return this.formGroup.get('relation_mr'); }
+  get placeOfDocIssue_mr() { return this.formGroup.get('placeOfDocIssue_mr'); }
 }
