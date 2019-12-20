@@ -96,6 +96,7 @@ export class ClaimHealth2Page extends ClaimBasePage implements OnInit {
       const FamilyMemberDetail: any = this.familyArray.find((eachFamily: any) => eachFamily.family_detail_id === Number(FamilyMemberId));
       this.familyName = FamilyMemberDetail.firstNameFamily+' '+FamilyMemberDetail.surname
       this.aadharNumber.patchValue(FamilyMemberDetail.aadharNoFamily);
+      this.aadharNumber.disable();
     });
 
 
