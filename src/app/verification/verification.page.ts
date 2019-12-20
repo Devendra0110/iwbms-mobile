@@ -108,6 +108,8 @@ export class VerificationPage implements OnInit {
               this.ECode = 'E1';
             } else if (err.error.message === 'Aadhar No. already Registered') {
               this.ECode = 'E2';
+            }else if(err.error.message === 'Mobile No. already Registered & Aadhar No. already Registered'){
+              this.ECode = 'E3';
             }
           }
         );

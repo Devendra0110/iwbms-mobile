@@ -136,13 +136,13 @@ export class ClaimVerificationPage implements OnInit {
           (res: any) => {
             this.loadingController.dismiss();
             if (res.message === 'OTP Sent') {
-              this.toast.show(`OTP sent`, '2000', 'bottom').subscribe(
-                toast => {
-                  console.log(toast);
-                }
-              );
               this.otpflag = true;
               this.unregisteredUser = false;
+                  this.toast.show(`OTP sent`, '2000', 'bottom').subscribe(
+                    toast => {
+                      console.log(toast);
+                    }
+                  );
               setInterval(()=>{
                 this.otpCountdown--;
                 this.resendOtpFlag = this.otpCountdown<1?false:true

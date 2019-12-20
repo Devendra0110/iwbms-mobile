@@ -1177,7 +1177,16 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
+  captureSiteLocation(){
+    this.siteLocation.getCurrentPosition().then((resp) => {
+      this.geolocation.setValue(JSON.stringify({latitude:resp.coords.latitude,longitude:resp.coords.longitude}));
+  }).catch((error) => {
+    console.log('Error getting location', error);
+  });
+  }
+
   takeGeoPicture() {
+    this.captureSiteLocation();
     const options: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -1195,11 +1204,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       console.log("Camera issue:" + err);
     });
     
-    this.siteLocation.getCurrentPosition().then((resp) => {
-      this.geolocation.setValue(JSON.stringify({latitude:resp.coords.latitude,longitude:resp.coords.longitude}));
-  }).catch((error) => {
-    console.log('Error getting location', error);
-  });
+   
   }
 
   b64toFile = (b64Data, contentType = 'image/jpg', sliceSize = 512) => {

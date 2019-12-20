@@ -87,13 +87,19 @@ export class ClaimEducation5Page extends ClaimBasePage implements OnInit {
   ngOnInit() {
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day,this.todaysDate.month,this.todaysDate.year]);
     this.assignBenefits(true);
+    
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
-      if (eachFamily.category === 'children' || (eachFamily.category === 'spouse' && eachFamily.relation === '4')) {
+      if (eachFamily.category === 'children') {
+        return eachFamily;
+      }else if(eachFamily.category === 'spouse' && eachFamily.relation === '4'){
+        return eachFamily;
+      }else if(eachFamily.relation === '1' && this.user.genderPersonal === '3') {
         return eachFamily;
       }
     });
     this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
+    
     this.familyRelation.valueChanges.subscribe((childName) => {
       this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
       this.aadharNumber.patchValue(this.childDetail.aadharNoFamily)
