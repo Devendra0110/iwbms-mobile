@@ -14,10 +14,12 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { TransliterationService } from 'src/app/services/transliteration.service';
+import { LoadingController } from '@ionic/angular';
 
 export abstract class ClaimBasePage {
 
     public formGroup: FormGroup;
+    public loadingController:LoadingController;
     public fileOptions: Object;
     public files: Object;
     protected getFile: boolean;
@@ -51,6 +53,7 @@ export abstract class ClaimBasePage {
         protected toast: Toast,
         protected dialogs: Dialogs,
     ) {
+        this.loadingController = new LoadingController();
         this.todaysDate = {
             year: new Date().getFullYear(),
             month: new Date().getMonth() + 1,
@@ -278,6 +281,11 @@ export abstract class ClaimBasePage {
     }
 
     protected async saveClaimForm(postObj: object) {
+        const loading = await this.loadingController.create({
+            message: 'Please Wait',
+            spinner: "crescent"
+        })
+        await loading.present();
         const formData = new FormData();
         const filesFormData = new FormData();
         for (const item in this.files) {
@@ -293,13 +301,18 @@ export abstract class ClaimBasePage {
             this.dialogs.alert('Application not saved. An error occured while saving documents.');
             return;
         }
-        this.claimHttpService.applyForClaim(formData, this.JWTToken).subscribe((res: any) => {
+        this.claimHttpService.applyForClaim(formData, this.JWTToken).subscribe(async (res: any) => {
             if (res) {
-                this.dialogs.alert(`Scheme Claimed Successfully. Your Acknowledgement Number is ${res.data.acknowledgementNo}. Please visit below WFC with original documents for verification : ${res.data.wfcDetail.office_name}`);
+                await loading.dismiss().then((result)=>{
+                    this.dialogs.alert(`Scheme Claimed Successfully. Your Acknowledgement Number is ${res.data.acknowledgementNo}. Please visit below WFC with original documents for verification : ${res.data.wfcDetail.office_name}`);
                 this.router.navigate(['/dashboard'])
+                })
+                
             }
-        }, (error: Error) => {
-            this.dialogs.alert(error['error'].message)
+        }, async (error: Error) => {
+            await loading.dismiss().then((result)=>{
+                this.dialogs.alert(error['error'].message)
+            })
 
         });
     }

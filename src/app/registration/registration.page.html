@@ -1555,8 +1555,7 @@
 
             <ion-select slot="end" formControlName="attachmentType" [required]="!!each.required"
               (ionChange)="selectAttachmentType($event,i)"
-              [class.is-invalid]="registrationFormGroup.get('supportingDocuments').get('attachmentList').get(i.toString()).get('attachmentType').invalid && registrationFormGroup.get('supportingDocuments').get('attachmentList').get(i.toString()).get('attachmentType').touched"
-              interface="action-sheet">
+              [class.is-invalid]="registrationFormGroup.get('supportingDocuments').get('attachmentList').get(i.toString()).get('attachmentType').invalid && registrationFormGroup.get('supportingDocuments').get('attachmentList').get(i.toString()).get('attachmentType').touched">
               <ion-select-option value="" selected>Select</ion-select-option>
               <ion-select-option *ngFor="let eachOption of each.attachmentType" [value]="eachOption.value">
                 {{eachOption.key}}</ion-select-option>

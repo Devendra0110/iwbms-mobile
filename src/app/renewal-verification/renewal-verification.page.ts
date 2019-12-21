@@ -70,19 +70,17 @@ export class RenewalVerificationPage implements OnInit {
       this.invalidRegNo=false;
   }
 
-  verify(){
+  async verify(){
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
+      const loading = await this.loadingController.create({
+        message: 'Please Wait',
+        spinner: "crescent"
+      })
       if (this.verificationForm.valid) {
-        const loading = this.loadingController.create({
-          message: 'Please Wait',
-          duration: 500,
-          spinner: "crescent"
-        }).then((res) => {
-          res.present();
-        });
-        this.renewalService.checkForRenewal(this.registrationNo.value, this.JWTToken).subscribe((res:any) => {
+        await loading.present();
+        this.renewalService.checkForRenewal(this.registrationNo.value, this.JWTToken).subscribe(async (res:any) => {
           if(res){
             this.mobileNo.setValue(res.mobilePersonal)
             this.passingResponse=res;
@@ -94,15 +92,16 @@ export class RenewalVerificationPage implements OnInit {
             this.dialogs.alert('Registration No is not registered.')
             this.unregisteredUser =true
           }
-          this.loadingController.dismiss();
+          await loading.dismiss();
           console.log(res)
         }, err => { console.log(); this.loadingController.dismiss();})
 
       } else {
-        this.dialogs.alert('Registration No. is not valid')
         this.unregisteredUser = true;
         this.invalidRegNo = true;
-        this.loadingController.dismiss();
+        await loading.dismiss().then((result)=>{
+          this.dialogs.alert('Registration No. is not valid')
+        });
       }
     }
     
@@ -157,15 +156,13 @@ export class RenewalVerificationPage implements OnInit {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
       const mobileNo = this.verificationForm.get('mobileNo').value;
-      const loading = this.loadingController.create({
+      const loading = await this.loadingController.create({
         message: 'Please Wait',
-        duration: 500,
         spinner: "crescent"
-      }).then((res)=>{
-        res.present();
       });
+      await loading.present()
       this.mobileVerification.validateOTP(mobileNo,otp).subscribe(
-        (res: any) => {
+        async (res: any) => {
           if (res.message === 'OTP Verified') {
             // otp verified
             const registrationNumber: NavigationExtras = {
@@ -176,17 +173,19 @@ export class RenewalVerificationPage implements OnInit {
             this.verificationForm.reset();
             this.allowOTP=false;
             this.otpflag = false;
-            this.loadingController.dismiss();
-            this.cardTitle = 'BOCW Registration No. Verification'
-            this.router.navigate(['/renewal'], registrationNumber);
+            await loading.dismiss().then((result)=>{
+              this.cardTitle = 'BOCW Registration No. Verification'
+              this.router.navigate(['/renewal'], registrationNumber);
+            });
 
           }
         },
-        (err: any) => {
-          this.loadingController.dismiss();
+        async (err: any) => {
           this.otpCountdown=0;
           this.resendOtpFlag=false;
-          this.dialogs.alert('Invalid OTP');
+          await loading.dismiss().then((result)=>{
+            this.dialogs.alert('Invalid OTP');
+          })
         }
       );
     }

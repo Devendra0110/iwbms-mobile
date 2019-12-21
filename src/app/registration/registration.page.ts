@@ -7,7 +7,7 @@ import { AfterViewInit, Component, ComponentRef, OnInit, QueryList, ViewChild, V
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { EmployerModalData, UserInfo, familyModalData } from '../../assets/common.interface';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, LoadingController } from '@ionic/angular';
 
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { EmployerModalPage } from '../employer-modal/employer-modal.page';
@@ -201,6 +201,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     private toast: Toast,
     private fileChooser: FileChooser,
     private siteLocation: Geolocation,
+    private loadingController:LoadingController
     ) {
 
     // network subscribers check the status of network even its type
@@ -345,93 +346,83 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
     this.attachmentDetails = [
       {
-        document_en: `Proof of age (Aadhar card / passport / PAN card / driver's license / birth certificate / school leaving certificate) One of these`,
-        document_mr: `वयाबाबतचा पुरावा (आधारकार्ड / पारपत्र / पॅनकार्ड / वाहनचालक परवाना / जन्माचा दाखला / शाळा सोडल्याचे प्रमाणपत्र) यापैकी एक`,
-        attachmentType: [],
+        document_en: `Photo ID Proof (Aadhar Card / Passport / Driver's License / PAN Card / Voter ID Card)`,
+        document_mr: `फोटो आयडी पुरावा (आधार कार्ड / पारपत्र / वाहनचालक परवाना / पॅनकार्ड / मतदाता ओळखपत्र) एकाकी एक`,
+        attachmentType: [
+          { key: `Aadhar card / आधारकार्ड`, value: 1 },
+          { key: `Passport / पारपत्र`, value: 2 },
+          { key: `Driving Licence / वाहनचालक परवाना`, value: 4 },
+          { key: `Pan Card / पॅनकार्ड`, value: 3 },
+          { key: `Election Card / मतदाता ओळखपत्र`, value: 14 }
+        ],
         uploaded: false,
         required: true
       },
       {
-        document_en: `Certificate of working 90 days or more in the previous year (Authorized by the owner / village worker / M / s.
-         Certificate of Authority made) one of these`,
-        document_mr: `मागील वर्षात ९० किंवा अधिक दिवस काम केल्याचे प्रमाणपत्र (मालकाचे / ग्रामसेवक / म.न .पा./ न. पा. ने प्राधिकृत
-          केलेल्या अधिकाऱ्याचे प्रमाणपत्र) यापैकी एक`,
-        attachmentType: [],
-        uploaded: false,
-        required: true
-      },
-      {
-        document_en: `Resident Evidence (Aadhar Card / Passport / Driver's License / Credit Card / Electricity Payment of the previous month /
+        document_en: `Residential Proof (Aadhar Card / Passport / Driver's License / Credit Card / Electricity Payment of the previous month /
          Gram Panchayat Certificate) One of these`,
         document_mr: `रहिवासी पुरावा (आधारकार्ड / पारपत्र / वाहनचालक परवाना / शिधापत्रिका / मागील महिन्याचे विद्युत देयक /
           ग्रामपंचायत दाखला ) यापैकी एक`,
-        attachmentType: [],
+        attachmentType: [
+          { key: `Aadhar card / आधारकार्ड`, value: 1 },
+          { key: `Passport / पारपत्र`, value: 2 },
+          { key: `Driving Licence / वाहनचालक परवाना`, value: 4 },
+          { key: `Ration Card / शिधापत्रिका`, value: 11 },
+          {
+            key: `Last two month Light Bill / मागील महिन्याचे विद्युत देयक`,
+            value: 12
+          },
+          { key: `Grampanchayat Certificate / ग्रामपंचायत दाखला`, value: 13 }
+        ],
         uploaded: false,
         required: true
       },
       {
-        document_en: `Photo ID Proof (Aadhar Card / Passport / Driver's License / PAN Card / Voter ID Card)`,
-        document_mr: `फोटो आयडी पुरावा (आधार कार्ड / पारपत्र / वाहनचालक परवाना / पॅनकार्ड / मतदाता ओळखपत्र) एकाकी एक`,
-        attachmentType: [],
+        document_en: `Proof of Age (Aadhar Card / Passport / PAN Card / Driver's License / Birth Certificate / School Leaving Certificate) One of these`,
+        document_mr: `वयाबाबतचा पुरावा (आधारकार्ड / पारपत्र / पॅनकार्ड / वाहनचालक परवाना / जन्माचा दाखला / शाळा सोडल्याचे प्रमाणपत्र) यापैकी एक`,
+        attachmentType: [
+          { key: `Aadhar card / आधारकार्ड`, value: 1 },
+          { key: `Passport / पारपत्र`, value: 2 },
+          { key: `PAN Card / पॅनकार्ड`, value: 3 },
+          { key: `Driving Licence / वाहनचालक परवाना`, value: 4 },
+          { key: `Birth Certificate / जन्माचा दाखला`, value: 5 },
+          {
+            key: `School Leaving Certificate / शाळा सोडल्याचे प्रमाणपत्र`,
+            value: 6
+          }
+        ],
         uploaded: false,
         required: true
       },
       {
-        document_en: `Xerox of bank passbook`,
+        document_en: `Photocopy of Bank Passbook`,
         document_mr: `बँक पासबुक ची झेरॉक्स`,
-        attachmentType: [],
+        attachmentType: [
+          { key: `Bank Passbook Xerox / बँक पासबुक ची छायाप्रती`, value: 15 }
+        ],
+        uploaded: false,
+        required: true
+      },
+      {
+        document_en: `Certificate of working 90 days or more in the previous year (Authorized by the owner / village worker / M/s. Certificate of Authority made) one of these`,
+        document_mr: `मागील वर्षात ९० किंवा अधिक दिवस काम केल्याचे प्रमाणपत्र (मालकाचे / ग्रामसेवक / म.न .पा./ न. पा. ने प्राधिकृत
+          केलेल्या अधिकाऱ्याचे प्रमाणपत्र) यापैकी एक`,
+        attachmentType: [
+          { key: `Contractor/Developer / ठेकेदार/विकासक`, value: 7 },
+          { key: `Gramsevak Certificate / ग्रामसेवक`, value: 8 },
+          {
+            key: `Person with authorization by municipality or municipal corporation / नगरपालिका अथवा महानगरपालिकेद्वारे अधिकृतता असलेले व्यक्ती`,
+            value: 9
+          },
+          {
+            key: `Others / इतर`,
+            value: 10
+          }
+        ],
         uploaded: false,
         required: true
       }
     ];
-
-
-
-    this.httpService.getDocumentTypes().subscribe((attDetailsArrObj: any) => {
-      for (const i of attDetailsArrObj) {
-        switch (i.document_types_id) {
-          case 1: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 2: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 3: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 4: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 5: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 6: this.attachmentDetails[0].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 7: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 8: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 9: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 10: this.attachmentDetails[1].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 11: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 12: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 13: this.attachmentDetails[2].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 14: this.attachmentDetails[3].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-          case 15: this.attachmentDetails[4].attachmentType.push({ key: i.document_title_en + '/' + i.document_title_mr, value: i.document_types_id });
-            break;
-        }
-
-      }
-    }, err => console.log(err));
-
     const attachmentList = this.registrationFormGroup.get('supportingDocuments').get('attachmentList') as FormArray;
     for (const i in this.attachmentDetails) {
       attachmentList.push(this.attachmentListFormGroup());
@@ -1168,6 +1159,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     };
     this.camera.getPicture(options).then((imageData) => {
       this.currentImage = 'data:image/jpg;base64,' + imageData;
+      this.applicantPhoto.setValue(this.currentImage)
       const fileImage = this.b64toFile(imageData);
       this.files.applicantPhoto = fileImage;
       this.fileOptions.applicantPhoto = `${uuidv4()}.${fileImage.name.split('.')[length]}.png`;
@@ -1197,6 +1189,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     };
     this.camera.getPicture(options).then((imageData) => {
       this.geoImage = 'data:image/jpg;base64,' + imageData;
+      this.workSitePhoto.setValue(this.geoImage)
       const fileImage = this.b64toFile(imageData);
       this.files.workSitePhoto = fileImage;
       this.fileOptions.workSitePhoto = `${uuidv4()}.${fileImage.name.split('.')[length]}.png`;
@@ -1320,7 +1313,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         }
         const formData = new FormData();
         // tslint:disable-next-line: forin
-
+        const loading = await this.loadingController.create({
+          message: 'Please Wait',
+          spinner: "crescent"
+        })
+        await loading.present();
         const filesFormData = new FormData();
         for (const item in this.files) {
           if (this.files[item]) {
@@ -1340,11 +1337,18 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         }
 
         this.httpService.saveData(formData, this.JWTToken).subscribe(
-          (res: any) => {
-            this.dialogs.alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
-            this.router.navigate(['/dashboard']);
+          async (res: any) => {
+            await loading.dismiss().then((result) => {
+              this.dialogs.alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
+              this.router.navigate(['/dashboard']);
+            })
           },
-          (err: any) => console.error(err)
+          async (err: any) => {
+            console.error(err)
+            await loading.dismiss().then((result)=>{
+              this.dialogs.alert('Server Problem. Try after some time.')
+            })
+          }
         );
       } else{
         if(this.registrationFormGroup.get('familyDetails').status==="INVALID"){

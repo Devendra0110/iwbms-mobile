@@ -13,7 +13,7 @@
 
       <ion-item>
         <ion-label position="floating">Amount of Loan / कर्जाची रक्कम<span class="text-danger">*</span></ion-label>
-        <ion-input type="number" [class.is-invalid]="amtOfLoan.invalid && amtOfLoan.touched"
+        <ion-input type="tel" maxlength="8" [class.is-invalid]="amtOfLoan.invalid && amtOfLoan.touched"
           formControlName="amtOfLoan">
         </ion-input>
         <div class="text-danger" *ngIf="amtOfLoan.invalid && amtOfLoan.touched">
@@ -23,7 +23,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Rate of Interest / व्याज दर<span class="text-danger">*</span></ion-label>
-        <ion-input type="number" [class.is-invalid]="interestRate.invalid && interestRate.touched"
+        <ion-input type="tel" maxlength="3" [class.is-invalid]="interestRate.invalid && interestRate.touched"
           formControlName="interestRate">
         </ion-input>
         <div class="text-danger" *ngIf="interestRate.invalid && interestRate.touched">
@@ -33,7 +33,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Bank Name / बँकेचे नाव<span class="text-danger">*</span></ion-label>
-        <ion-input (ionBlur)="transliterateValue($event)" [class.is-invalid]="bankNameBank.invalid && bankNameBank.touched" formControlName="bankNameBank"
+        <ion-input maxlength="120" (ionBlur)="transliterateValue($event)" [class.is-invalid]="bankNameBank.invalid && bankNameBank.touched" formControlName="bankNameBank"
           id="bankNameBank" clearInput></ion-input>
         <div class="text-danger" *ngIf="bankNameBank.invalid && bankNameBank.touched">
           <small *ngIf="bankNameBank.errors && bankNameBank.errors['required']">Please enter Bank Name.</small>
@@ -46,7 +46,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Bank Branch / बँक शाखा<span class="text-danger">*</span></ion-label>
-        <ion-input  (ionBlur)="transliterateValue($event)" [class.is-invalid]="bankBranchBank.invalid && bankBranchBank.touched"
+        <ion-input maxlength="120" (ionBlur)="transliterateValue($event)" [class.is-invalid]="bankBranchBank.invalid && bankBranchBank.touched"
           formControlName="bankBranchBank" id="bankBranchBank" clearInput></ion-input>
         <div class="text-danger" *ngIf="bankBranchBank.invalid && bankBranchBank.touched">
           <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['required']">Please enter Bank Address.</small>
@@ -70,7 +70,7 @@
       <ion-item>
         <ion-label position="floating">Loan Period (months) / कर्जाचा कालावधी (महिने)<span class="text-danger">*</span>
         </ion-label>
-        <ion-input type="number" [class.is-invalid]="loanPeriod.invalid && loanPeriod.touched"
+        <ion-input type="tel" maxlength="3" [class.is-invalid]="loanPeriod.invalid && loanPeriod.touched"
           formControlName="loanPeriod">
         </ion-input>
         <div class="text-danger" *ngIf="loanPeriod.invalid && loanPeriod.touched">

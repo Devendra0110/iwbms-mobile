@@ -5,7 +5,7 @@ import * as uuidv4 from 'uuid/v4';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, LoadingController } from '@ionic/angular';
 
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { EmployerModalData } from '../../assets/common.interface';
@@ -86,6 +86,7 @@ export class RenewalPage implements OnInit {
     private dialogs: Dialogs,
     private toast: Toast,
     private httpService: HttpService,
+    private loadingController:LoadingController
   ) {
     // network subscribers check the status of network even its type
     this.network.onDisconnect().subscribe(() => { });
@@ -734,7 +735,12 @@ console.log(this.registrationNoOfIssuer)
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
+      const loading = await this.loadingController.create({
+        message: 'Please Wait',
+        spinner: "crescent"
+      })
       if (this.renewalFormGroup.valid) {
+        await loading.present()
         const formData = new FormData();
         // tslint:disable-next-line: forin
         const filesFormData = new FormData();
@@ -754,15 +760,19 @@ console.log(this.registrationNoOfIssuer)
           return;
         }
         this.httpService.saveRenewalData(formData, this.JWTToken).subscribe(
-          (res: any) => {
-            this.dialogs.alert(`Renewal Form is saved successfully. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res)}`)
-            this.router.navigate(['/dashboard']);
+          async (res: any) => {
+            await loading.dismiss().then((result)=>{
+              this.dialogs.alert(`Renewal Form is saved successfully. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res)}`)
+              this.router.navigate(['/dashboard']);
+            })
           },
           (err: any) => console.error(err)
         );
       } else {
-        this.renewalFormGroup.markAllAsTouched();
-        this.dialogs.alert('Form is not valid yet!');
+        await loading.dismiss().then((result)=>{
+          this.renewalFormGroup.markAllAsTouched();
+          this.dialogs.alert('Form is not valid yet!');
+        })
       }
     }
   }
