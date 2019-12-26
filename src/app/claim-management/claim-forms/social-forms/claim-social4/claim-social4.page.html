@@ -17,10 +17,11 @@
       <input type="file" formControlName="selfDeclaration"
       [class.is-invalid]="selfDeclaration.invalid && selfDeclaration.touched" class="form-control-file"
       accept="application/pdf" (change)="getFileDetails($event)" id="selfDeclaration">
-      <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
-        <small>Please upload required document.</small>
-      </div>
     </ion-item>
+        <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
+          <small>Please upload required document.</small>
+        </div>
+        
     <ion-item>
       <ion-checkbox checked="false" slot="start" formControlName="verifyDocumentCheck"></ion-checkbox>
       <ion-label>Documents Verified / कागदपत्र पडताळले</ion-label>

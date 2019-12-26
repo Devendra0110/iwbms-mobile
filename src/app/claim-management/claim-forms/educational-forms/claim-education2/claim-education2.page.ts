@@ -63,7 +63,7 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
       rationCardDoc: new FormControl('', this.validationService.createValidatorsArray('rationCardDoc')),
       benefitType: new FormControl('', this.validationService.createValidatorsArray('benefitType')),
       benefitAmount: new FormControl(''),
-    verifyDocumentCheck : new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      verifyDocumentCheck : new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
       // marathi form controls
@@ -104,6 +104,8 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
       this.getEducationArray = data.slice(9, 12);
       this.sortedStandard = this.getEducationArray.filter((el: any) => el.education_level_id !== 11);
     });
+
+    this.percentage.disable();
   }
 
   // marathi getters
@@ -146,6 +148,7 @@ export class ClaimEducation2Page extends ClaimBasePage implements OnInit {
         } else {
             this.toast.show('Marks obtained cannot be more than total marks', '1000', 'bottom').subscribe(() => { })
             this.formGroup.get('percentage').setValue(0);
+            // this.percentage.disable();
             this.formGroup.get('marksObtained').reset();
             this.formGroup.get('totalMarks').reset();
         }

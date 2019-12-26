@@ -21,6 +21,7 @@
         <small *ngIf=" ifscCode.errors && ifscCode.errors['maxlength']">Please enter appropriate IFSC code.</small>
       </div>
     </ion-item>
+
     <ion-item>
       <ion-label position="floating">Bank Name / बँकेचे नाव</ion-label>
       <ion-input id='bankName' type="text" [readonly]="isIfscCodeFound"   maxlength="40" [class.is-invalid]="bankName.invalid && bankName.touched" formControlName="bankName"></ion-input>
@@ -29,6 +30,7 @@
         <small *ngIf="bankName.errors && bankName.errors['maxlength']">Please enter appropriate Bank Name.</small>
       </div>
     </ion-item>
+    
     <ion-item>
       <ion-label position="floating">Bank Branch / बँक शाखा</ion-label>
       <ion-input id='bankBranch' type="text" [readonly]="isIfscCodeFound"  [class.is-invalid]="bankBranch.invalid && bankBranch.touched" formControlName="bankBranch"></ion-input>
@@ -37,6 +39,7 @@
         <small *ngIf="bankBranch.errors && bankBranch.errors['maxlength']">Please enter appropriate Bank Branch.</small>
       </div>
     </ion-item>
+
     <ion-item>
       <ion-label position="floating">Bank Address / बँकेचा पत्ता</ion-label>
       <ion-input id='bankAddress' type="text" [readonly]="isIfscCodeFound" maxlength="200" [class.is-invalid]="bankAddress.invalid && bankAddress.touched" formControlName="bankAddress"></ion-input>
@@ -45,6 +48,7 @@
         <small *ngIf="bankAddress.errors && bankAddress.errors['maxlength']">Please enter appropriate Bank Address.</small>
       </div>
     </ion-item>
+
     <ion-item>
       <ion-label position="floating">MICR Code / एमआयसीआर कोड</ion-label>
       <ion-input minlength="9" maxlength="9" [class.is-invalid]="micrCode.invalid && micrCode.touched" formControlName="micrCode" id='micrCode'></ion-input>
@@ -52,6 +56,7 @@
         <small *ngIf=" micrCode.errors && micrCode.errors['required']">MICR Code should be of 9 digits.</small>
       </div>
     </ion-item>
+
     <ion-item>
       <ion-label position="floating">Account Number / खाते क्रमांक.</ion-label>
       <ion-input minlength="9" maxlength="18" [class.is-invalid]="accountNumber.invalid && accountNumber.touched" formControlName="accountNumber" id='accountNumber'></ion-input>
@@ -60,6 +65,7 @@
         <small *ngIf="accountNumber.errors && accountNumber.errors['maxlength']">Please enter appropriate Account Number.</small>
       </div>
     </ion-item>
+
     <ion-item>
       <ion-label>Documents Required</ion-label>
     </ion-item>
@@ -68,19 +74,21 @@
     </ion-item>
     <ion-item>
       <input type="file" formControlName="socialForm6Doc1"  [class.is-invalid]="socialForm6Doc1.invalid && socialForm6Doc1.touched"  accept="application/pdf" (change)="getFileDetails($event)" id="socialForm6Doc1">
-      <div class="text-danger" *ngIf="socialForm6Doc1.invalid && socialForm6Doc1.touched">
-        <small>Please upload required document.</small>
-      </div>
     </ion-item>
+        <div class="text-danger" *ngIf="socialForm6Doc1.invalid && socialForm6Doc1.touched">
+          <small>Please upload required document.</small>
+        </div>
+
     <ion-item>
       <ion-label>2.Certificate from Bank / बँकेकडून प्रमाणपत्र</ion-label>
     </ion-item>
     <ion-item>
       <input type="file" formControlName="socialForm6Doc2" [class.is-invalid]="socialForm6Doc2.invalid && socialForm6Doc2.touched" accept="application/pdf" (change)="getFileDetails($event)" id="socialForm6Doc2">
-      <div class="text-danger" *ngIf="socialForm6Doc2.invalid && socialForm6Doc2.touched">
-        <small>Please upload required document.</small>
-      </div>
     </ion-item>
+        <div class="text-danger" *ngIf="socialForm6Doc2.invalid && socialForm6Doc2.touched">
+          <small>Please upload required document.</small>
+        </div>
+
     <ion-item>
       <ion-label>3. Demand letter in prescribed format / विहित नमुन्यात मागणी पत्र .</ion-label>
     </ion-item>
@@ -88,10 +96,11 @@
     <input type="file" formControlName="socialForm6Doc3"
       [class.is-invalid]="socialForm6Doc3.invalid && socialForm6Doc3.touched" class="form-control-file"
       accept="application/pdf" (change)="getFileDetails($event)" id="socialForm6Doc3">
-      <div class="text-danger" *ngIf="socialForm6Doc3.invalid && socialForm6Doc3.touched">
-        <small>Please upload required document.</small>
-      </div>
     </ion-item>
+        <div class="text-danger" *ngIf="socialForm6Doc3.invalid && socialForm6Doc3.touched">
+          <small>Please upload required document.</small>
+        </div>
+
     <ion-item>
       <ion-label>4. Self Declaration /हमीपत्र .</ion-label>
     </ion-item>
@@ -99,10 +108,11 @@
     <input type="file" formControlName="selfDeclaration"
       [class.is-invalid]="selfDeclaration.invalid && selfDeclaration.touched" class="form-control-file"
       accept="application/pdf" (change)="getFileDetails($event)" id="selfDeclaration">
-      <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
-        <small>Please upload required document.</small>
-      </div>  
     </ion-item>
+        <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
+          <small>Please upload required document.</small>
+        </div> 
+         
     <ion-item>
       <ion-checkbox checked="false" slot="start" formControlName="verifyDocumentCheck"></ion-checkbox>
       <ion-label>Documents Verified / कागदपत्र पडताळले</ion-label>

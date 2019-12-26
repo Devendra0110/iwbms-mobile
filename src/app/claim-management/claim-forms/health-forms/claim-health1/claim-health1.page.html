@@ -53,7 +53,7 @@
           <ion-datetime [max]="maxTodaysDate" [min]="minDateOfDelivery" displayFormat="DD MMMM, YYYY"  formControlName="dateOfDeliveryHealth" id="dateOfDeliveryHealth"
             [class.is-invalid]="dateOfDeliveryHealth.invalid && dateOfDeliveryHealth.touched">
           </ion-datetime>
-          <div class="text-danger" *ngIf="dateError">
+          <div class="text-danger" *ngIf="dateOfDeliveryHealth.invalid && dateOfDeliveryHealth.touched">
             <small>Child is born before registration date.</small>
           </div>
         </ion-item>

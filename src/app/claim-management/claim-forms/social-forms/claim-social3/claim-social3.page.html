@@ -61,6 +61,7 @@
         Maximum.</small>
     </div>
     </ion-item>
+    
     <ion-item>
       <ion-label>Documents Required </ion-label>
     </ion-item>
@@ -71,10 +72,11 @@
       <input type="file" formControlName="socialForm4Doc1"
         [class.is-invalid]="socialForm4Doc1.invalid && socialForm4Doc1.touched" class="form-control-file"
         accept="application/pdf" (change)="getFileDetails($event)" id="socialForm4Doc1">
-        <div class="text-danger" *ngIf="socialForm4Doc1.invalid && socialForm4Doc1.touched">
-          <small>Please upload required document.</small>
-        </div>
-    </ion-item>
+      </ion-item>
+          <div class="text-danger" *ngIf="socialForm4Doc1.invalid && socialForm4Doc1.touched">
+            <small>Please upload required document.</small>
+          </div>
+
     <ion-item>
       <ion-label>2. Self Declaration<br>/हमीपत्र .</ion-label>
     </ion-item>
@@ -82,10 +84,11 @@
       <input type="file" accept="application/pdf" (change)="getFileDetails($event)"
         formControlName="selfDeclaration" [class.is-invalid]="selfDeclaration.invalid && selfDeclaration.touched"
         id="selfDeclaration">
-      <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
-        <small>Please upload required document.</small>
-      </div>
-    </ion-item>
+      </ion-item>
+        <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
+          <small>Please upload required document.</small>
+        </div>
+
     <ion-item>
       <ion-label>3. Aadhar card of the Child<br>मुलांची आधार कार्ड</ion-label>
     </ion-item>
@@ -93,10 +96,11 @@
       <input type="file"   accept="application/pdf" (change)="getFileDetails($event)"
         formControlName="aadharCardDoc" [class.is-invalid]="aadharCardDoc.invalid && aadharCardDoc.touched"
         id="aadharCardDoc">
-        <div class="text-danger" *ngIf="aadharCardDoc.invalid && aadharCardDoc.touched">
-          <small>Please upload required document.</small>
-        </div>
-    </ion-item>
+      </ion-item>
+      <div class="text-danger" *ngIf="aadharCardDoc.invalid && aadharCardDoc.touched">
+        <small>Please upload required document.</small>
+      </div>
+
   <ion-item>
     <ion-checkbox checked="false" slot="start" formControlName="verifyDocumentCheck"></ion-checkbox>
     <ion-label>Documents Verified / कागदपत्र पडताळले</ion-label>

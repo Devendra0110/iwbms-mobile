@@ -589,6 +589,13 @@ export class ClaimValidationService {
         break;
       }
 
+      case 'yearOFDegree': {
+        validatorsArr = [
+          Validators.required
+        ];
+        break;
+      }
+
       case 'dateOfAdmission': {
         validatorsArr = [
           Validators.required
@@ -635,7 +642,7 @@ export class ClaimValidationService {
         validatorsArr = [
           Validators.required,
           Validators.minLength(1),
-          Validators.maxLength(5),
+          Validators.maxLength(4),
           Validators.pattern('^[0-9]*\.?[0-9]{0,2}$')
         ];
         break;
@@ -645,7 +652,7 @@ export class ClaimValidationService {
         validatorsArr = [
           Validators.required,
           Validators.minLength(1),
-          Validators.maxLength(5),
+          Validators.maxLength(4),
           Validators.pattern('^[0-9]*\.?[0-9]{0,2}$')
         ];
         break;
@@ -653,7 +660,7 @@ export class ClaimValidationService {
 
       case 'percentage': {
         validatorsArr = [
-          Validators.maxLength(6),
+          Validators.maxLength(5),
           Validators.pattern('^[0-9]*\.?[0-9]{0,2}$')
         ];
         break;

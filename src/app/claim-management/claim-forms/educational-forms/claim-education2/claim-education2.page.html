@@ -165,7 +165,7 @@
 
     <ion-item>
       <ion-label position="floating">Percentage / टक्केवारी<span class="text-danger">*</span></ion-label>
-      <ion-input type="tel" formControlName="percentage" id="percentage" clearInput
+      <ion-input type="tel" formControlName="percentage" id="percentage" clearInput maxlength="5"
         [class.is-invalid]="percentage.invalid && percentage.touched">
       </ion-input>
       <div class="text-danger" *ngIf="percentage.invalid && percentage.touched">

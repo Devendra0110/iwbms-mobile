@@ -49,7 +49,7 @@
         <ion-input maxlength="120" (ionBlur)="transliterateValue($event)" [class.is-invalid]="bankBranchBank.invalid && bankBranchBank.touched"
           formControlName="bankBranchBank" id="bankBranchBank" clearInput></ion-input>
         <div class="text-danger" *ngIf="bankBranchBank.invalid && bankBranchBank.touched">
-          <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['required']">Please enter Bank Address.</small>
+          <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['required']">Please enter Bank branchs.</small>
           <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['maxlength']">You Have Reached Your
             Maximum.</small>
         </div>
