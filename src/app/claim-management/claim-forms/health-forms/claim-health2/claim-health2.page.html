@@ -20,7 +20,7 @@
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="familyDetail.invalid && familyDetail.touched">
-          <small *ngIf="familyDetail.errors && familyDetail.errors['required']">Please select a Family member.</small>
+          <small *ngIf="familyDetail.errors && familyDetail.errors['required']">Please select a family member.</small>
         </div>
       </ion-item>
 
@@ -30,7 +30,7 @@
           [class.is-invalid]="nameOfHospital.invalid && nameOfHospital.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="nameOfHospital.invalid && nameOfHospital.touched">
           <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['required']">Please enter name of
-            Hospital</small>
+            hHospital</small>
           <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['maxlength']">You have reached your
             maximum</small>
         </div>
@@ -46,7 +46,7 @@
           [class.is-invalid]="locationOfHospital.invalid && locationOfHospital.touched"></ion-input>
         <div class="text-danger" *ngIf="locationOfHospital.invalid && locationOfHospital.touched">
           <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['required']">Please enter address of
-            Hospital </small>
+            hospital </small>
           <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['maxlength']">You have reached your
             maximum</small>
         </div>
@@ -73,7 +73,7 @@
           formControlName="nameOfDoctor" maxlength="120">
         </ion-input>
         <div class="text-danger" *ngIf="nameOfDoctor.invalid && nameOfDoctor.touched">
-          <small *ngIf="nameOfDoctor.errors && nameOfDoctor.errors['required']">Please enter Name of Doctor </small>
+          <small *ngIf="nameOfDoctor.errors && nameOfDoctor.errors['required']">Please enter name of doctor </small>
           <small *ngIf="nameOfDoctor.errors  && nameOfDoctor.errors['maxlength']">You have reached your maximum</small>
           <small *ngIf="nameOfDoctor.errors  && nameOfDoctor.errors['pattern']">Please enter proper name</small>
 
@@ -88,9 +88,8 @@
         <ion-input readonly type="tel" [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" maxlength="12"
           minlength="12" formControlName="aadharNumber" id="aadharNumber"></ion-input>
         <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
-          <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your Aadhar Number.</small>
-          <small *ngIf="aadharNumber.errors && aadharNumber.errors['pattern']">Please enter appropriate Aadhar
-            Number.</small>
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your aadhar number.</small>
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['pattern']">Please enter appropriate aadhar number.</small>
         </div>
       </ion-item>
 
@@ -101,7 +100,7 @@
           <ion-select-option *ngFor="let list of illness" [value]="list.type">{{ list.type }}</ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="typeOfIllness.invalid && typeOfIllness.touched">
-          <small *ngIf="typeOfIllness.errors && typeOfIllness.errors['required']">Please select type of Illness</small>
+          <small *ngIf="typeOfIllness.errors && typeOfIllness.errors['required']">Please select type of illness</small>
         </div>
       </ion-item>
 
@@ -135,7 +134,7 @@
         <input id='health2Form2Doc1' (change)="getFileDetails($event)" formControlName="health2Form2Doc1" type="file" accept="application/pdf">
       </ion-item>
         <div class="text-danger" *ngIf="health2Form2Doc1.invalid && health2Form2Doc1.touched">
-          <small> Please Upload Required Document</small>
+          <small>Please upload required document.</small>
         </div>
 
 
@@ -146,7 +145,7 @@
         <input id='health2Form2Doc2' (change)="getFileDetails($event)" formControlName="health2Form2Doc2" type="file" accept="application/pdf">
       </ion-item>
         <div class="text-danger" *ngIf="health2Form2Doc2.invalid && health2Form2Doc2.touched">
-          <small> Please Upload Required Document</small>
+          <small>Please upload required document.</small>
         </div>
 
 
@@ -157,7 +156,7 @@
         <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" accept="application/pdf">
       </ion-item>
         <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
-          <small> Please Upload Required Document</small>
+          <small>Please upload required document.</small>
         </div>
 
 
@@ -168,7 +167,7 @@
         <input id='aadharCardDoc' (change)="getFileDetails($event)" formControlName="aadharCardDoc" type="file" accept="application/pdf">
       </ion-item>
         <div class="text-danger" *ngIf="aadharCardDoc.invalid && aadharCardDoc.touched">
-          <small> Please Upload Required Document</small>
+          <small>Please upload required document.</small>
         </div>
 
       <ion-item>

@@ -13,7 +13,7 @@
         <ion-select-option *ngFor="let childObject of childArray; let i = index" [disabled]='i > 1' [value]="childObject['firstNameFamily']">{{childObject['firstNameFamily']}} {{childObject['surname']}} /{{childObject['firstNameFamily_mr']}} {{childObject['surname_mr']}}</ion-select-option>
       </ion-select>
       <div class="text-danger" *ngIf="childName.invalid && childName.touched">
-        <small *ngIf="childName.errors && childName.errors['required']">Please select a Child.</small>
+        <small *ngIf="childName.errors && childName.errors['required']">Please select a child.</small>
       </div>
     </ion-item>
     <ion-item>
@@ -23,16 +23,16 @@
       </ion-select>
       <div class="text-danger" *ngIf="standard.invalid && standard.touched">
         <small *ngIf="standard.errors && standard.errors['required']">Enter your standard.</small>
-        <small *ngIf="standard.errors && standard.errors['maxlength']">You Have Reached Your Maximum.</small>
+        <small *ngIf="standard.errors && standard.errors['maxlength']">You have reached your maximum.</small>
       </div>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Institute Name / संस्थेचे नाव <span class="text-danger">*</span></ion-label>
       <ion-input type="text" minlength="5" maxlength="200" id="schoolName" [class.is-invalid]="schoolName.invalid && schoolName.touched" formControlName="schoolName" class="transliterate" (ionBlur)="transliterateValue($event)"></ion-input>
       <div class="text-danger" *ngIf="schoolName.invalid && schoolName.touched">
-        <small *ngIf="schoolName.errors && schoolName.errors['required']">Enter your Institute name.</small>
-        <small *ngIf="schoolName.errors && schoolName.errors['maxlength']">You Have Reached Your
-          Maximum.</small>
+        <small *ngIf="schoolName.errors && schoolName.errors['required']">Enter your institute name.</small>
+        <small *ngIf="schoolName.errors && schoolName.errors['maxlength']">You have reached your
+          maximum.</small>
       </div>
     </ion-item>
     <ion-item *ngIf="schoolName_mr.value">
@@ -42,12 +42,13 @@
       <ion-label position="floating">Institute Address / संस्थेचे पत्ता<span class="text-danger">*</span></ion-label>
       <ion-input type="text" id="schoolLocation" maxlength="120" [class.is-invalid]="schoolLocation.invalid && schoolLocation.touched" formControlName="schoolLocation" (ionBlur)="transliterateValue($event)" class="transliterate"></ion-input>
       <div class="text-danger" *ngIf="schoolLocation.invalid && schoolLocation.touched">
-        <small *ngIf="schoolLocation.errors && schoolLocation.errors['required']">Please Enter your
-          Institute Address.</small>
-        <small *ngIf="schoolLocation.errors && schoolLocation.errors['maxlength']">You Have Reached Your
-          Maximum.</small>
+        <small *ngIf="schoolLocation.errors && schoolLocation.errors['required']">Please enter your
+          institute address.</small>
+        <small *ngIf="schoolLocation.errors && schoolLocation.errors['maxlength']">You have reached your
+          maximum.</small>
       </div>
     </ion-item>
+
     <ion-item *ngIf="schoolLocation_mr.value">
       <ion-label>{{schoolLocation_mr.value}}</ion-label>
     </ion-item>
@@ -55,10 +56,8 @@
       <ion-label position="floating">Aadhar Number / आधार क्रमांक<span class="text-danger">*</span></ion-label>
       <ion-input type="number" [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" formControlName="aadharNumber" minlength="12" maxlength="12" id="aadharNumber"></ion-input>
     <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
-      <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please Enter Your AADHAR
-        number.</small>
-      <small *ngIf="aadharNumber.errors && aadharNumber.errors['maxlength']">You Have Reached Your
-        Maximum.</small>
+      <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your aadhar number.</small>
+      <small *ngIf="aadharNumber.errors && aadharNumber.errors['maxlength']">You have reached your maximum.</small>
     </div>
     </ion-item>
     

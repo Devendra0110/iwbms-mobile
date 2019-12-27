@@ -94,7 +94,7 @@
 
     <ion-item>
       <ion-label position="floating">Board of Education / शिक्षण मंडळ</ion-label>
-      <ion-input formControlName="boardOfEducation" id="boardOfEducation" minlength="100" maxlength="3"
+      <ion-input formControlName="boardOfEducation" id="boardOfEducation" minlength="3" maxlength="100"
         [class.is-invalid]="boardOfEducation.invalid && boardOfEducation.touched" clearInput>
       </ion-input>
       <div class="text-danger" *ngIf="boardOfEducation.invalid && boardOfEducation.touched">

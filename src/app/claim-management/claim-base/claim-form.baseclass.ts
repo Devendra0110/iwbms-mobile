@@ -9,12 +9,12 @@ import { Component, Input } from '@angular/core';
 import { ClaimService } from 'src/app/services/claim.service';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { HttpService } from 'src/app/services/http.service';
+import { LoadingController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { TransliterationService } from 'src/app/services/transliteration.service';
-import { LoadingController } from '@ionic/angular';
 
 export abstract class ClaimBasePage {
 
@@ -304,7 +304,7 @@ export abstract class ClaimBasePage {
         this.claimHttpService.applyForClaim(formData, this.JWTToken).subscribe(async (res: any) => {
             if (res) {
                 await loading.dismiss().then((result)=>{
-                    this.dialogs.alert(`Scheme Claimed Successfully. Your Acknowledgement Number is ${res.data.acknowledgementNo}. Please visit below WFC with original documents for verification : ${res.data.wfcDetail.office_name}`);
+                    this.dialogs.alert(`Scheme Claimed Successfully. Your Acknowledgement Number is ${res.data.acknowledgementNo}. Please visit the nearest WFC with original documents for verification.`);
                 this.router.navigate(['/dashboard'])
                 })
                 

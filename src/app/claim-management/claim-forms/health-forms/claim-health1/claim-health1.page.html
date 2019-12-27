@@ -27,9 +27,8 @@
         <ion-input type="tel" [class.is-invalid]="aadharNumber.invalid && aadharNumber.touched" maxlength="12"
           minlength="12" formControlName="aadharNumber" id="aadharNumber" readonly></ion-input>
         <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
-          <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your Aadhar Number.</small>
-          <small *ngIf="aadharNumber.errors && aadharNumber.errors['pattern']">Please enter appropriate Aadhar
-            Number.</small>
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['required']">Please enter your aadhar number.</small>
+          <small *ngIf="aadharNumber.errors && aadharNumber.errors['pattern']">Please enter appropriate aadhar number.</small>
         </div>
       </ion-item>
 
@@ -79,7 +78,7 @@
           [class.is-invalid]="nameOfHospital.invalid && nameOfHospital.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="nameOfHospital.invalid && nameOfHospital.touched">
           <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['required']">Please enter name of
-            Hospital</small>
+            hospital.</small>
           <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['maxlength']">You have reached your
             maximum</small>
           <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['pattern']">Please enter proper name of
@@ -96,8 +95,8 @@
         <ion-input class="transliterate" (ionBlur)="transliterateValue($event)" type="text" formControlName="addressOfDelivery" id="addressOfDelivery"
           [class.is-invalid]="addressOfDelivery.invalid && addressOfDelivery.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="addressOfDelivery.invalid && addressOfDelivery.touched">
-          <small *ngIf="addressOfDelivery.errors &&addressOfDelivery.errors['required']">Please enter Address of
-            delivery</small>
+          <small *ngIf="addressOfDelivery.errors &&addressOfDelivery.errors['required']">Please enter address of
+            delivery.</small>
           <small *ngIf="addressOfDelivery.errors && addressOfDelivery.errors['maxlength']">You have reached your
             maximum.</small>
         </div>
@@ -115,7 +114,7 @@
         </ion-select>
         <div class="text-danger" *ngIf="typeOfDelivery.invalid && typeOfDelivery.touched">
           <small *ngIf="typeOfDelivery.errors && typeOfDelivery.errors['required']">Please select method of
-            Delivery</small>
+            delivery.</small>
         </div>
       </ion-item>
 
@@ -128,11 +127,11 @@
           formControlName="birthCertificateNumber"> </ion-input>
         <div class="text-danger" *ngIf="birthCertificateNumber.invalid && birthCertificateNumber.touched">
           <small *ngIf="birthCertificateNumber.errors && birthCertificateNumber.errors['required']">Please enter your
-            Birth certificate Registration Number.</small>
+            birth certificate registration number.</small>
           <small *ngIf="birthCertificateNumber.errors && birthCertificateNumber.errors['maxlength']">You have reached
             your maximum.</small>
           <small *ngIf="birthCertificateNumber.errors && birthCertificateNumber.errors['pattern']">Please enter
-            appropriate Birth certificate Registration Number.</small>
+            appropriate birth certificate registration number.</small>
         </div>
       </ion-item>
 
@@ -147,7 +146,7 @@
         </ion-select>
         <div class="text-danger" *ngIf="birthCertificateIssuedBy.invalid && birthCertificateIssuedBy.touched">
           <small *ngIf="birthCertificateIssuedBy.errors && birthCertificateIssuedBy.errors['required']">Please select
-            type of Issuer</small>
+            type of issuer.</small>
             <small *ngIf="birthCertificateIssuedBy.errors && birthCertificateIssuedBy.errors['pattern']">Please enter proper value</small>
         </div>
       </ion-item>
@@ -160,7 +159,7 @@
         </ion-input>
         <div class="text-danger" *ngIf="nameOfCertificateIssuer.invalid && nameOfCertificateIssuer.touched">
           <small *ngIf="nameOfCertificateIssuer.errors && nameOfCertificateIssuer.errors['required']">Please enter name
-              Birth Certificate Issuer </small>
+              birth certificate issuer </small>
           <small *ngIf="nameOfCertificateIssuer.errors && nameOfCertificateIssuer.errors['maxlength']">You have reached
             your maximum</small>
             <small *ngIf="nameOfCertificateIssuer.errors && nameOfCertificateIssuer.errors['pattern']">Please enter proper value</small>
