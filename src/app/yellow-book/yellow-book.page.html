@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>yellow-book</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="registrationFormGroup.get('familyDetails')">
+    <ion-list>
+      <ion-list-header color="primary" style="font-size:20px;">Family Details</ion-list-header>
+      <div style="overflow-x: scroll">
+        <ion-grid style='width: 1511px;' border="1">
+          <ion-row>
+            <ion-col style="width: 15px">
+              <ion-card-header>Sr No.</ion-card-header>
+            </ion-col>
+            <ion-col style="width: 15px;margin-left: -59px;">
+              <ion-card-header>Receipt No.</ion-card-header>
+            </ion-col>
+            <ion-col style="width: 15px;">
+              <ion-card-header>Purpose<span style="color: Red">*</span></ion-card-header>
+            </ion-col>
+            <ion-col style="width: 15px">
+              <ion-card-header>Registration/Renewal Date<span style="color: Red">*</span></ion-card-header>
+            </ion-col>
+            <ion-col style="width: 15px">
+              <ion-card-header>Cash Receipt Date</ion-card-header>
+            </ion-col>
+            <ion-col style="width: 15px">
+              <ion-card-header>Total Amount</ion-card-header>
+            </ion-col>
+          </ion-row>
+
+          <ng-container formArrayName="cashReceiptEntries"
+            *ngFor="let eachCashReceipt of cashReceiptEntries['controls'];let i = index;">
+            <ion-row [formGroupName]="i" align-items-center>
+              <ion-col style="width: 15px">
+                <ion-card-header>{{i + 1}}.</ion-card-header>
+              </ion-col>
+              <form style="width: 15px">
+                <ion-col>
+                  <ion-item>
+                    <ion-input type="text"
+                      [class.is-invalid]="cashReceiptEntries.get(i.toString()).get('receiptNo').invalid && cashReceiptEntries.get(i.toString()).get('receiptNo').touched"
+                      maxlength="12" formControlName="receiptNo" class='form-control'>
+                    </ion-input>
+                    <div class="text-danger"
+                      *ngIf="cashReceiptEntries.get(i.toString()).get('receiptNo').invalid && cashReceiptEntries.get(i.toString()).get('receiptNo').touched">
+                      <small *ngIf="cashReceiptEntries.get(i.toString()).get('receiptNo').errors?.required">Please
+                        enter Receipt No.</small>
+                      <small *ngIf="cashReceiptEntries.get(i.toString()).get('receiptNo').errors?.maxlength">You
+                        have exceeded the max length.</small>
+                      <small *ngIf="cashReceiptEntries.get(i.toString()).get('receiptNo').errors?.minlength">
+                        Cash Receipt No. length should be more than 9
+                      </small>
+                    </div>
+                  </ion-item>
+                </ion-col>
+
+                <!-- select purpose -->
+
+                <ion-col>
+                  <ion-item>
+                    <ion-select
+                      [class.is-invalid]="cashReceiptEntries.get(i.toString()).get('purpose').invalid && cashReceiptEntries.get(i.toString()).get('purpose').touched"
+                      class="form-control" formControlName="purpose">
+                      <ion-select-option *ngIf="i === 0" [value]="'Registration'">Registration</ion-select-option>
+                      <ion-select-option *ngIf="i !== 0" [value]="'Renewal'">Renewal</ion-select-option>
+                    </ion-select>
+                    <div class="text-danger"
+                      *ngIf="cashReceiptEntries.get(i.toString()).get('purpose').invalid && cashReceiptEntries.get(i.toString()).get('purpose').touched">
+                      <small *ngIf="cashReceiptEntries.get(i.toString()).get('purpose').errors?.required">Please
+                        select Purpose</small>
+                    </div>
+                  </ion-item>
+                </ion-col>
+
+                <!-- Select Registration Or Renewal Date -->
+                <ion-col>
+                  <ion-item>
+                    <ion-datetime displayFormat="DD MMMM, YYYY" [min]="minDate(i)" picker-format="DD MMMM YYYY"
+                       id='familyDetails-{{i}}-dobFamily' formControlName="dobFamily"
+                      [class.is-invalid]="cashReceiptEntries.get(i.toString()).get('regOrRenewalDate').invalid && cashReceiptEntries.get(i.toString()).get('regOrRenewalDate').touched">
+                    </ion-datetime>
+                    <div class="text-danger"
+                      *ngIf="cashReceiptEntries.get(i.toString()).get('regOrRenewalDate').invalid && cashReceiptEntries.get(i.toString()).get('regOrRenewalDate').touched">
+                      <small
+                        *ngIf="cashReceiptEntries.get(i.toString()).get('regOrRenewalDate').errors?.required">Please
+                        enter Registration Or Renewal Date.</small>
+                    </div>
+                  </ion-item>
+                </ion-col>
+
+
+                <ion-col>
+                  <ion-item>
+                    <ion-datetime displayFormat="DD MMMM, YYYY" [max]="todaysDate"
+                      [min]="minDate(i, 'registrationDate')"
+                      [class.is-invalid]="cashReceiptEntries.get(i.toString()).get('cashReceiptDate').invalid && cashReceiptEntries.get(i.toString()).get('cashReceiptDate').touched"
+                      formControlName="cashReceiptDate" class='form-control' placement="'bottom'">
+                    </ion-datetime>
+                    <div class="text-danger"
+                      *ngIf="cashReceiptEntries.get(i.toString()).get('cashReceiptDate').invalid && cashReceiptEntries.get(i.toString()).get('cashReceiptDate').touched">
+                      <small *ngIf="cashReceiptEntries.get(i.toString()).get('cashReceiptDate').errors?.required">Please
+                        enter Cash Receipt Date.</small>
+                    </div>
+                  </ion-item>
+
+
+                <ion-col>
+                  <ion-item>
+                   <ion-input type="number" min="12" max="85"
+                   [class.is-invalid]="cashReceiptEntries.get(i.toString()).get('amount').invalid && cashReceiptEntries.get(i.toString()).get('amount').touched"
+                   maxlength="2" formControlName="amount" class='form-control'>
+                   </ion-input> 
+                   <div class="text-danger"
+                     *ngIf="cashReceiptEntries.get(i.toString()).get('amount').invalid && cashReceiptEntries.get(i.toString()).get('amount').touched">
+                  <small *ngIf="cashReceiptEntries.get(i.toString()).get('amount').errors?.required">Please
+                    enter Total Receipt Amount</small>
+                  <small *ngIf="cashReceiptEntries.get(i.toString()).get('amount').errors?.maxlength">You
+                    have exceeded the max length.</small>
+                  <small *ngIf="cashReceiptEntries.get(i.toString()).get('amount').errors?.max">
+                    Total Receipt Amount should not be more than 85.
+                  </small>
+                </div>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col>
+                  <ion-button class="close px-3 text-danger" [disabled]='i === 0' (click)="deleteCashReceiptEntry(i)"> x
+                  </ion-button>
+                </ion-col>
+
+                </ion-col>
+              </form>
+            </ion-row>
+          </ng-container>
+        </ion-grid>
+      </div>
+    </ion-list>
+  </form>
+</ion-content>
