@@ -2,6 +2,9 @@ import * as _ from 'lodash';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators , FormArray } from '@angular/forms';
 import * as moment from 'moment';
+import { ClaimService } from '../services/claim.service';
+import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-yellow-book',
@@ -14,6 +17,7 @@ export class YellowBookPage implements OnInit, OnChanges {
   public schemes: any;
   public filteredSchemes: any;
   public todaysDate: any;
+  public JWTToken:any
   @Input() applicationMode: string;
   @Input() registrationDate: any;
   @Input() registrationFormGroup: FormGroup;
@@ -22,7 +26,16 @@ export class YellowBookPage implements OnInit, OnChanges {
     { purpose: 'Renewal' }
   ];
 
-  constructor() {
+  constructor(private claimsService:ClaimService,
+    private storage:Storage,
+    private router: Router) {
+    // re-route to homepage if not logged-in
+    this.storage.get('token').then((val) => {
+      if (val === null)
+        this.router.navigate(['/home']);
+      else
+        this.JWTToken = val;
+    });
     this.filteredSchemes = {};
     this.yellowBookFormGroup = new FormGroup({
       cashReceiptEntries: new FormArray([this.cashReceiptFormGroup()]),
@@ -69,7 +82,7 @@ export class YellowBookPage implements OnInit, OnChanges {
   }
 
   getClaimCategories() {
-    this.claimsService.getSchemeCat().subscribe(
+    this.claimsService.getSchemeCat(this.JWTToken).subscribe(
       (res: any) => {
         this.schemeCategories = res;
       },
@@ -78,7 +91,7 @@ export class YellowBookPage implements OnInit, OnChanges {
   }
 
   getSchemes() {
-    this.claimsService.getSchemeDetail().subscribe(
+    this.claimsService.getSchemeDetail(this.JWTToken).subscribe(
       (res: any) => {
         this.schemes = res;
       },
