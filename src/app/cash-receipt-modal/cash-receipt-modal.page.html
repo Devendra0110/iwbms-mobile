@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Past Cash Receipt</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="cashReceiptFormGroup">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Receipt No.</ion-label>
+        <ion-input type="text" [class.is-invalid]="receiptNo.invalid && receiptNo.touched" maxlength="12" formControlName="receiptNo"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Purpose</ion-label>
+        <ion-select [class.is-invalid]="purpose.invalid && purpose.touched" formControlName="purpose" interface="action-sheet">
+          <ion-select-option *ngIf="modalData.index === 0" [value]="'Registration'">Registration</ion-select-option>
+          <ion-select-option *ngIf="modalData.index !== 0" [value]="'Renewal'">Renewal</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label  position="floating">Registration/Renewal Date</ion-label>
+        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="regOrRenewalDate.invalid && regOrRenewalDate.touched" formControlName="regOrRenewalDate" [min]="minFromDate" [max]="cashReceiptDate.value || maxFromDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label  position="floating">Cash Receipt Date</ion-label>
+        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="cashReceiptDate.invalid && cashReceiptDate.touched" formControlName="cashReceiptDate" [min]="regOrRenewalDate.value" [max]="maxToDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label  position="floating">Total Amount</ion-label>
+        <ion-input type="tel" min="12" max="85" [class.is-invalid]="amount.invalid && amount.touched"  formControlName="amount"></ion-input>
+      </ion-item>
+    </ion-list>
+
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-fab horizontal="start">
+      <ion-fab-button (click)="dismissModal()" color="danger" class="fabicon">
+        <ion-icon name="close"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab *ngIf="addFlag" horizontal="end">
+      <ion-fab-button (click)="saveModal()" class="fabicon">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab *ngIf="!addFlag" horizontal="end">
+      <ion-fab-button color="success" (click)="saveModal()" class="fabicon">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-toolbar>
+</ion-footer>

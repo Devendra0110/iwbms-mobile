@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RegistrationPage } from './registration.page';
-import { YellowBookPage } from '../yellow-book/yellow-book.page';
+import { CashReceiptModalPage } from './cash-receipt-modal.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: RegistrationPage
+    component: CashReceiptModalPage
   }
 ];
 
@@ -23,6 +22,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [RegistrationPage, YellowBookPage]
+  declarations: [CashReceiptModalPage],
+  entryComponents:[CashReceiptModalPage],
+  exports:[CashReceiptModalPage]
 })
-export class RegistrationPageModule {}
+export class CashReceiptModalPageModule {}

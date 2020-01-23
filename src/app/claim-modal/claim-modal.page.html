@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Past Claims</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="pastClaimFormGroup">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Claim Date</ion-label>
+        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="claimDate.invalid && claimDate.touched" formControlName="claimDate" [min]="minFromDate" [max]="maxFromDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Scheme Category</ion-label>
+        <ion-select [class.is-invalid]="schemeCategory.invalid && schemeCategory.touched" formControlName="schemeCategory" (ionChange)="filterSchemesForCategory($event, i)" interface="action-sheet">
+          <ion-select-option *ngFor="let eachCategory of schemeCategories" [value]="eachCategory.category_id"> {{eachCategory.scheme_category}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Scheme Name</ion-label>
+        <ion-select [class.is-invalid]="schemeName.invalid && schemeName.touched" formControlName="schemeName">
+          <ion-select-option *ngFor="let eachScheme of filteredSchemes[i]" [value]="eachScheme.scheme_number">
+            {{eachScheme.scheme_number}} - {{eachScheme.scheme_name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" >Benefit Type</ion-label>
+        <ion-select formControlName="benefitType" [class.is-invalid]="benefitType.invalid && benefitType.touched" interface="action-sheet">
+          <ion-select-option value="cash">Cash</ion-select-option>
+          <ion-select-option value="kind">Kind</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Benefit Amount</ion-label>
+        <ion-input formControlName="benefitAmount" [class.is-invalid]="benefitAmount.invalid && benefitAmount.touched"></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-fab horizontal="start">
+      <ion-fab-button (click)="dismissModal()" color="danger" class="fabicon">
+        <ion-icon name="close"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab *ngIf="addFlag" horizontal="end">
+      <ion-fab-button (click)="saveModal()" class="fabicon">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab *ngIf="!addFlag" horizontal="end">
+      <ion-fab-button color="success" (click)="saveModal()" class="fabicon">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-toolbar>
+</ion-footer>

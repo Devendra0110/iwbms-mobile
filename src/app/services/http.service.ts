@@ -22,6 +22,13 @@ export class HttpService {
     return this.http.post(`${serverUrl}bocw-registration`, formData, {headers});
   }
 
+  saveLegacyData(formData,JWTToken:any) {
+    const headers = appendTokenToHeaderObject(
+      new HttpHeaders(), JWTToken
+    );
+    return this.http.post(`${serverUrl}bocw-registration/legacy`, formData, { headers });
+  }
+
   uploadFiles(filesFormData: FormData) {
     return this.http.post(`${storageServerUrl}upload`, filesFormData);
   }

@@ -28,7 +28,10 @@ const routes: Routes = [
   { path: 'renewal-verification', loadChildren: './renewal-verification/renewal-verification.module#RenewalVerificationPageModule' },
   { path: 'claim-management', loadChildren: './claim-management/claim-management.module#ClaimManagementPageModule' },
   { path: 'claim-management/claim-verification', loadChildren: './claim-management/claim-verification/claim-verification.module#ClaimVerificationPageModule'},
-  { path: 'yellow-book', loadChildren: './yellow-book/yellow-book.module#YellowBookPageModule' }
+  { path: 'yellow-book', loadChildren: './yellow-book/yellow-book.module#YellowBookPageModule' },
+  { path: 'redata-verification', loadChildren: './redata-verification/redata-verification.module#RedataVerificationPageModule' },
+  { path: 'cash-receipt-modal', loadChildren: './cash-receipt-modal/cash-receipt-modal.module#CashReceiptModalPageModule' },
+  { path: 'claim-modal', loadChildren: './claim-modal/claim-modal.module#ClaimModalPageModule' }
 ];
 
 @NgModule({

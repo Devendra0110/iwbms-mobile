@@ -10,11 +10,16 @@
       <ion-list>
         <ion-list-header color="primary" style="font-size:20px;">Personal Details</ion-list-header>
 
-        <ion-item hidden="true">
+        <ion-item [hidden]="!reDataEntry">
           <ion-label position="floating"> Registration Date</ion-label>
-          <ion-datetime readonly formControlName="registrationDatePersonal"
+          <ion-datetime formControlName="registrationDatePersonal"
             id="personalDetails-registrationDatePersonal" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
             value="{{ todaysDate.month }}/{{ todaysDate.day }}/{{todaysDate.year}}"></ion-datetime>
+        </ion-item>
+
+        <ion-item [hidden]="!reDataEntry">
+          <ion-label position="floating"> Old Registration No./ जुना नोंदणी क्रमांक<span style="color: Red">*</span></ion-label>
+          <ion-input readonly formControlName="oldRegistrationNo" id="personalDetails-oldRegistrationNo" ></ion-input>
         </ion-item>
 
         <ion-item hidden="true">
@@ -745,7 +750,7 @@
       </ion-list>
     </form>
 
-    <fo rm [formGroup]="registrationFormGroup.get('familyDetails')">
+    <form [formGroup]="registrationFormGroup.get('familyDetails')">
       <ion-list>
         <ion-list-header color="primary" style="font-size:20px;">Family Details</ion-list-header>
         <div style="overflow-x: scroll">
@@ -950,7 +955,6 @@
             </ng-container>
           </ion-grid>
         </div>
-
         <ion-button style="margin-left: 11px;margin-top: 8px;" (click)="addMoreFamilyDetails()">Add More </ion-button>
       </ion-list>
     </form>
@@ -1652,22 +1656,15 @@
     <ion-item>
       <ion-checkbox slot="start" formControlName="selfDeclaration" checked="false"></ion-checkbox>
       <ion-label text-wrap><span style="color: Red">*</span>I hereby declare that the information provided in above form
-        is
-        true & correct to the best of my
-        knowledge and belief
-        and nothing has been falsely stated. In case any of the above information is found to be false or untrue or
-        misleading
-        or misrepresenting, I am aware that I may be held liable for it.
+        is true & correct to the best of my
+        knowledge and belief and nothing has been falsely stated. In case any of the above information is found to be false or untrue or misleading or misrepresenting, I am aware that I may be held liable for it. 
         <br>
-        मी याद्वारे असे जाहीर करतो / करते की, वरील सर्व माहिती माझी व्यक्तिगत माहिती व समजूतीनुसार खरी आहे. दिलेली
-        माहिती
-        खोटी
-        असल्याचे आढळून आल्यास, भारतीय दंड किंवा संबंधित कायद्यानुसार माझ्यावर खटला भरला जाईल व त्यानुसार मी शिक्षेस
-        पात्र
-        राहीन
-        याची मला पूर्ण जाणीव आहे.</ion-label>
+        मी याद्वारे असे जाहीर करतो / करते की, वरील सर्व माहिती माझी व्यक्तिगत माहिती व समजूतीनुसार खरी आहे. दिलेली माहिती खोटी असल्याचे आढळून आल्यास, भारतीय दंड किंवा संबंधित कायद्यानुसार माझ्यावर खटला भरला जाईल व त्यानुसार मी शिक्षेस पात्र राहीन याची मला पूर्ण जाणीव आहे.
+      </ion-label>     
     </ion-item>
-    <ion-button mode="ios" expand="block" (click)="save()">Save</ion-button>
+    <app-yellow-book [registrationFormGroup]="registrationFormGroup" ></app-yellow-book>
+    <ion-button *ngIf="!reDataEntry" mode="ios" expand="block" (click)="save()">Save</ion-button>
+    <ion-button *ngIf="reDataEntry" mode="ios" expand="block" (click)="saveLegacyData()">Save Legacy Data</ion-button>
 
   </form>
   

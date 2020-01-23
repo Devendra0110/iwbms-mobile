@@ -9,19 +9,18 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-verification',
-  templateUrl: './verification.page.html',
-  styleUrls: ['./verification.page.scss'],
+  selector: 'app-redata-verification',
+  templateUrl: './redata-verification.page.html',
+  styleUrls: ['./redata-verification.page.scss'],
 })
-export class VerificationPage implements OnInit {
-
+export class RedataVerificationPage implements OnInit {
 
   public verificationForm: FormGroup;
   public unverifiedUser = false;
   public ECode: string;
   public otpflag = false;
-  public resendOtpFlag=true;
-  public otpCountdown:number;
+  public resendOtpFlag = true;
+  public otpCountdown: number;
   // E0 : unregistered mobile no and aadhar
   // E1 : already registered mobile no
   // E2 : already registered aadhar
@@ -33,15 +32,16 @@ export class VerificationPage implements OnInit {
     private mobileVerification: MobileVerificationService,
     private dialogs: Dialogs,
     private network: Network,
-    private loadingController:LoadingController,
+    private loadingController: LoadingController,
     private toast: Toast) {
-      this.otpCountdown=32;
-      this.network.onDisconnect().subscribe(() => { });
-      this.network.onConnect().subscribe(() => { });
-      this.verificationForm = new FormGroup({
-        mobileNo: new FormControl('', this.validationService.createValidatorsArray('mobile')),
-        aadharNo: new FormControl('', this.validationService.createValidatorsArray('aadharNo'))
-      });
+    this.otpCountdown = 32;
+    this.network.onDisconnect().subscribe(() => { });
+    this.network.onConnect().subscribe(() => { });
+    this.verificationForm = new FormGroup({
+      mobileNo: new FormControl('', this.validationService.createValidatorsArray('mobile')),
+      aadharNo: new FormControl('', this.validationService.createValidatorsArray('aadharNo')),
+      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^\\d{12}$')]),
+    });
   }
 
   ngOnInit() {
@@ -59,9 +59,13 @@ export class VerificationPage implements OnInit {
   get aadharNo() {
     return this.verificationForm.get('aadharNo');
   }
+  get registrationNo() { return this.verificationForm.get('registrationNo'); }
 
-  resetMobileNo(){
-    this.unverifiedUser=false;
+  resetMobileNo() {
+    this.unverifiedUser = false;
+  }
+
+  clearErrors() {
   }
 
   async sendOTP() {
@@ -90,10 +94,10 @@ export class VerificationPage implements OnInit {
                 }
               );
               this.unverifiedUser = false;
-              setInterval(()=>{
+              setInterval(() => {
                 this.otpCountdown--;
-                this.resendOtpFlag = this.otpCountdown<1?false:true
-              },1000)
+                this.resendOtpFlag = this.otpCountdown < 1 ? false : true
+              }, 1000)
             }
           },
           async (err: any) => {
@@ -105,13 +109,13 @@ export class VerificationPage implements OnInit {
               this.ECode = 'E1';
             } else if (err.error.message === 'Aadhar No. already Registered') {
               this.ECode = 'E2';
-            }else if(err.error.message === 'Mobile No. already Registered & Aadhar No. already Registered'){
+            } else if (err.error.message === 'Mobile No. already Registered & Aadhar No. already Registered') {
               this.ECode = 'E3';
             }
           }
         );
       } else {
-        await loading.dismiss().then((result) => { 
+        await loading.dismiss().then((result) => {
           this.dialogs.alert('Details are not valid.');
         })
       }
@@ -128,32 +132,34 @@ export class VerificationPage implements OnInit {
         spinner: "crescent"
       });
       await loading.present()
-      this.mobileVerification.validateOTP(mobileNo,otp).subscribe(
+      this.mobileVerification.validateOTP(mobileNo, otp).subscribe(
         async (res: any) => {
           if (res.message === 'OTP Verified') {
             // otp verified
             const mobileAndAadhar: NavigationExtras = {
               state: {
                 mobile: this.verificationForm.get('mobileNo').value,
-                aadhar: this.verificationForm.get('aadharNo').value
+                aadhar: this.verificationForm.get('aadharNo').value,
+                oldRegNo: this.verificationForm.get('registrationNo').value
               }
             };
             this.verificationForm.reset();
             this.otpflag = false;
-            await loading.dismiss().then((result)=>{
+            await loading.dismiss().then((result) => {
               this.router.navigate(['/registration'], mobileAndAadhar);
             });
           }
         },
         async (err: any) => {
-          await loading.dismiss().then((result)=>{
+          await loading.dismiss().then((result) => {
             this.dialogs.alert('Invalid OTP');
           })
-          this.otpCountdown=0;
-          this.resendOtpFlag=false;
-          
+          this.otpCountdown = 0;
+          this.resendOtpFlag = false;
+
         }
       );
     }
   }
+
 }

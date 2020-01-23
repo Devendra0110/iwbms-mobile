@@ -28,6 +28,7 @@ import { UserManagementService } from '../services/user-management.service';
 import { ValidationService } from '../services/validation.service';
 import { serverUrl } from '../../assets/config';
 import { states } from '../models/states';
+import { YellowBookPage } from '../yellow-book/yellow-book.page';
 
 declare var google;
 
@@ -39,7 +40,7 @@ declare var google;
 export class RegistrationPage implements OnInit, AfterViewInit {
 
   @ViewChildren(FormControlDirective) listOfControlRefs: QueryList<any>;
-
+  @ViewChild(YellowBookPage, {static: false}) yellowBookInformation:YellowBookPage ;
   @ViewChild('suggestionbox', { read: ViewContainerRef, static: true }) suggestionBoxRef: ViewContainerRef;
   public parentViewContainer: ViewContainerRef;
   public registrationFormGroup: FormGroup;
@@ -184,6 +185,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   public mobileNo: number;
   public aadharNo: number;
+  public reDataEntry=false
 
   constructor(
     private validationService: ValidationService,
@@ -215,6 +217,11 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
         this.familyAaadhar.push(this.router.getCurrentNavigation().extras.state.aadhar)
         this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+        if (this.router.getCurrentNavigation().extras.state.oldRegNo) {
+          this.oldRegistrationNo.setValue(this.router.getCurrentNavigation().extras.state.oldRegNo);
+          this.oldRegistrationNo.disable();
+          this.reDataEntry =true
+        }
       } else {
         this.router.navigate(['/verification']);
       }
@@ -1367,8 +1374,77 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
+   async saveLegacyData() {
+    if (this.network.type === 'none' || this.network.type === 'NONE') {
+      this.dialogs.alert('Please check your internet connectivity.');
+    } else {
+      if (this.registrationFormGroup.valid && this.yellowBookInformation.yellowBookFormGroup.valid) {
+        if (!this.findNominee(this.registrationFormGroup.getRawValue().familyDetails)) {
+        this.dialogs.alert('Nominee Required.: Please select a nominee in family details to proceed.');
+          return;
+        }
+        const formData = new FormData();
+        // tslint:disable-next-line: forin
+        const loading = await this.loadingController.create({
+          message: 'Please Wait',
+          spinner: "crescent"
+        })
+        await loading.present();
+        const filesFormData = new FormData();
+        for (const item in this.files) {
+          if (this.files[item]) {
+            filesFormData.append('files', this.files[item], this.fileOptions[item]);
+          }
+        }
+          formData.append('files', JSON.stringify(this.registrationFormGroup.get('supportingDocuments').value));
+          formData.append('fileOptions', JSON.stringify(this.fileOptions));
+          formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
+          formData.append('yellowBookData', JSON.stringify(this.yellowBookInformation.yellowBookFormGroup.getRawValue()));
+          formData.append('modeOfApplication', 'Re-data Entry By Field Agent');
+          formData.append('origin', 'legacy_data_entry');
+
+        try {
+          await this.httpService.uploadFiles(filesFormData).toPromise();
+        } catch (error) {
+          this.dialogs.alert( 'Application not saved. An error occured while saving documents.');
+          return;
+        }
+
+        this.httpService.saveLegacyData(formData, this.JWTToken).subscribe(
+          async (res: any) => {
+            await loading.dismiss().then((result) => {
+              this.dialogs.alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
+              this.router.navigate(['/dashboard']);
+            })
+          },
+          async (err: any) => {
+            console.error(err)
+            await loading.dismiss().then((result)=>{
+              this.dialogs.alert('Server Problem. Try after some time.')
+            })
+          }
+        );
+      } else{
+        if(this.registrationFormGroup.get('familyDetails').status==="INVALID"){
+        this.registrationFormGroup.markAllAsTouched();
+        this.checkValidationErrors(this.registrationFormGroup.get('familyDetails')['controls'][0]);
+        this.registrationFormGroup.valueChanges.subscribe(() => {
+          this.checkValidationErrors( this.registrationFormGroup.get('familyDetails')['controls'][0]);
+        });
+      this.dialogs.alert(this.errorMsgList +' is required' )
+  }
+ this.dialogs.alert('Form is not Valid')
+
+          // familyDetailsFormGroup()
+      }
+  
+    }
+  }
+
+
   personalDetailsFormFroup(): FormGroup {
     return new FormGroup({
+      oldRegistrationNo: new FormControl(''),
       firstNamePersonal: new FormControl('', this.validationService.createValidatorsArray('firstName')),
       firstNamePersonal_mr: new FormControl(''),
       middleNamePersonal: new FormControl('', this.validationService.createValidatorsArray('middleName')),
@@ -1641,8 +1717,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       attachmentList: new FormArray([]),
       supportingDocuments: new FormControl('', Validators.required),
-      applicantPhoto: new FormControl('', Validators.required),
-      workSitePhoto: new FormControl('', Validators.required),
+      applicantPhoto: new FormControl(''),
+      workSitePhoto: new FormControl(''),
       selfDeclarationDocuments: new FormControl('', Validators.required),
       aadharDeclaration: new FormControl('', Validators.required),
       bankPassbook: new FormControl('', Validators.required),
@@ -2012,6 +2088,7 @@ get familyDetails(){  return (this.registrationFormGroup.get('familyDetails') as
 
 
   // personal getters
+  get oldRegistrationNo() {    return this.registrationFormGroup.get('personalDetails').get('oldRegistrationNo');  }
   get firstNamePersonal() { return this.registrationFormGroup.get('personalDetails').get('firstNamePersonal'); }
   get firstNamePersonal_mr() { return this.registrationFormGroup.get('personalDetails').get('firstNamePersonal_mr'); }
   get middleNamePersonal() { return this.registrationFormGroup.get('personalDetails').get('middleNamePersonal'); }

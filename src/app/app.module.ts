@@ -32,6 +32,8 @@ import { Toast } from '@ionic-native/toast/ngx';
 import {TransliterationService} from './services/transliteration.service';
 import { UserManagementService } from './services/user-management.service';
 import {ValidationService} from './services/validation.service';
+import { CashReceiptModalPageModule } from './cash-receipt-modal/cash-receipt-modal.module';
+import { ClaimModalPageModule } from './claim-modal/claim-modal.module';
 
 @NgModule({
   declarations: [AppComponent, FormControlDirective, SuggestionBoxComponent],
@@ -47,6 +49,8 @@ import {ValidationService} from './services/validation.service';
     AppRoutingModule,
     FamilyModalPageModule,
     EmployerModalPageModule,
+    CashReceiptModalPageModule,
+    ClaimModalPageModule,
   ],
   providers: [
     StatusBar,

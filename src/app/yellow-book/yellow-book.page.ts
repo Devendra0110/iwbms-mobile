@@ -1,84 +1,61 @@
+import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators , FormArray } from '@angular/forms';
-import * as moment from 'moment';
 import { ClaimService } from '../services/claim.service';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
+import { ModalController, } from '@ionic/angular';
+import { CashReceiptModalPage } from '../cash-receipt-modal/cash-receipt-modal.page';
+import { ClaimModalPage } from '../claim-modal/claim-modal.page';
 
 @Component({
   selector: 'app-yellow-book',
   templateUrl: './yellow-book.page.html',
   styleUrls: ['./yellow-book.page.scss'],
 })
-export class YellowBookPage implements OnInit, OnChanges {
+export class YellowBookPage implements OnInit {
   public yellowBookFormGroup: FormGroup;
   public schemeCategories: any;
   public schemes: any;
   public filteredSchemes: any;
   public todaysDate: any;
-  public JWTToken:any
-  @Input() applicationMode: string;
-  @Input() registrationDate: any;
+  public JWTToken:any;
+  public registrationDate: any;
   @Input() registrationFormGroup: FormGroup;
+  // public registrationDate = '1993-10-31T13:04:17.092+05:30'
   public purpose = [
     { purpose: 'Registration' },
     { purpose: 'Renewal' }
   ];
 
-  constructor(private claimsService:ClaimService,
+  constructor(
+    private claimsService:ClaimService,
     private storage:Storage,
-    private router: Router) {
-    // re-route to homepage if not logged-in
-    this.storage.get('token').then((val) => {
-      if (val === null)
-        this.router.navigate(['/home']);
-      else
-        this.JWTToken = val;
-    });
+    private mdlController: ModalController,) {
     this.filteredSchemes = {};
+    this.storage.get('token').then((val) => {
+      this.JWTToken = val;
+      this.getClaimCategories();
+      this.getSchemes();
+    });
     this.yellowBookFormGroup = new FormGroup({
       cashReceiptEntries: new FormArray([this.cashReceiptFormGroup()]),
-      // renewalEntries: new FormArray([this.renewalFormGroup()]),
       schemeClaimsEntries: new FormArray([this.schemeClaimFormGroup()])
-    });
-    this.getClaimCategories();
-    this.getSchemes();
-
-    this.todaysDate = {
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-      day: new Date().getDate()
-    };
-
-    this.cashReceiptEntries.get('0').get('purpose').setValue('Registration');
-
-   }
-   get renewalEntries() {
-    return this.yellowBookFormGroup.get('renewalEntries');
-  }
-
-  get schemeClaimsEntries() {
-    return this.yellowBookFormGroup.get('schemeClaimsEntries');
-  }
-
-  get cashReceiptEntries() {
-    return this.yellowBookFormGroup.get('cashReceiptEntries');
-  }
-
-  ngOnInit() {
-    this.cashReceiptEntries.get('0').get('regOrRenewalDate').disable();
-    this.registrationFormGroup.valueChanges.subscribe((value) => {
-      if(value.personalDetails) {
-        if (value.personalDetails.registrationDatePersonal) {
-          this.cashReceiptEntries.get('0').get('regOrRenewalDate').setValue(value.personalDetails.registrationDatePersonal);
-        }
-      }
     });
   }
   
-  ngOnChanges(){
 
+  ngOnInit() {
+    // this.cashReceiptEntries.get('0').get('regOrRenewalDate').disable();
+    this.registrationFormGroup.valueChanges.subscribe((value) => {
+      if (value.personalDetails) {
+        if (value.personalDetails.registrationDatePersonal) {
+          this.cashReceiptEntries.get('0').get('regOrRenewalDate').setValue(value.personalDetails.registrationDatePersonal);
+          this.registrationDate = value.personalDetails.registrationDatePersonal
+        }
+      }
+    });
   }
 
   getClaimCategories() {
@@ -109,17 +86,18 @@ export class YellowBookPage implements OnInit, OnChanges {
 
     this.filteredSchemes[index] = filteredValues;
   }
-
-  public renewalFormGroup(): FormGroup {
+  
+  
+  public cashReceiptFormGroup(index?: number): FormGroup {
     return new FormGroup({
-      renewalDate: new FormControl(null, [Validators.required]),
-      // renewalForYears: new FormControl(''),
-      // renewalAmount: new FormControl(''),
-      renewalCashDeposit: new FormControl('', [Validators.required, Validators.maxLength(10)]),
-      receiptNo: new FormControl('', [Validators.required, Validators.maxLength(12)])
+      cashReceiptDate: new FormControl(null, [Validators.required]),
+      regOrRenewalDate: new FormControl(null, [Validators.required]),
+      purpose: new FormControl(null, [Validators.required]),
+      receiptNo: new FormControl('', [Validators.required, Validators.maxLength(12), Validators.minLength(9)]),
+      amount: new FormControl('', [Validators.required, Validators.max(85), Validators.min(0)])
     });
   }
-
+  
   public schemeClaimFormGroup(): FormGroup {
     return new FormGroup({
       schemeCategory: new FormControl(null, [Validators.required]),
@@ -129,23 +107,12 @@ export class YellowBookPage implements OnInit, OnChanges {
       benefitAmount: new FormControl('')
     });
   }
-
-  public cashReceiptFormGroup(index?: number): FormGroup {
-    // let purpose;
-    // if (index === 0 ) {
-    //     purpose = 'Registration';
-    // } else {
-    //   purpose = 'Renewal';
-    // }
+  
+  public renewalFormGroup(): FormGroup {
     return new FormGroup({
-      cashReceiptDate: new FormControl(null, [Validators.required]),
-      regOrRenewalDate: new FormControl(null, [Validators.required]),
-      purpose: new FormControl(null, [Validators.required]),
-      receiptNo: new FormControl('', [Validators.required, Validators.maxLength(12), Validators.minLength(9)]),
-      amount: new FormControl('', [Validators.required, Validators.max(85), Validators.min(0)])
-      // subscription: new FormControl(''),
-      // renewalAmount: new FormControl(''),
-      // totalFee: new FormControl('')
+      renewalDate: new FormControl(null, [Validators.required]),
+      renewalCashDeposit: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+      receiptNo: new FormControl('', [Validators.required, Validators.maxLength(12)])
     });
   }
 
@@ -154,126 +121,141 @@ export class YellowBookPage implements OnInit, OnChanges {
     renewalEntries.push(this.renewalFormGroup());
   }
 
+  public addCashReceipt(): void {
+    if (this.yellowBookFormGroup.get('cashReceiptEntries').invalid) {
+      alert('Please flll all the essential details of previous cash receipt.')
+    } else {
+      const cashReceiptEntries = this.yellowBookFormGroup.get('cashReceiptEntries') as FormArray;
+      this.showCashReceiptModal(cashReceiptEntries.length,'add')
+    }
+  }
+  
   public addSchemeClaimEntry(): void {
-    const schemeClaimsEntries = this.yellowBookFormGroup.get('schemeClaimsEntries') as FormArray;
-    schemeClaimsEntries.push(this.schemeClaimFormGroup());
+    if (this.yellowBookFormGroup.get('schemeClaimsEntries').invalid){
+      alert('Please flll all the essential details of previous claim receipt.')
+    }else{
+      const schemeClaimsEntries = this.yellowBookFormGroup.get('schemeClaimsEntries') as FormArray;
+      this.showClaimModal(schemeClaimsEntries.length,'add')
+    }
   }
 
-  public addCashReceipt(): void {
-    const cashReceiptEntries = this.yellowBookFormGroup.get('cashReceiptEntries') as FormArray;
-    cashReceiptEntries.push(this.cashReceiptFormGroup());
+  public editCashReceipt(i:number){
+    this.showCashReceiptModal(i, 'update', this.yellowBookFormGroup.get('cashReceiptEntries').get(`${i}`))
+  }
+
+  public editClaimReceipt(i:number){
+    this.showClaimModal(i, 'update', this.yellowBookFormGroup.get('schemeClaimsEntries').get(`${i}`))
+  }
+
+  async showCashReceiptModal(index: number, mode: string, receiptForm?: any){
+    const receiptDetail = {
+      index,
+      mode,
+      receipt: receiptForm,
+      fromDate: index > 0 ? this.yellowBookFormGroup.get('cashReceiptEntries').get(`${index - 1}`).get('cashReceiptDate').value : this.registrationDate,
+    };
+    const cashReceiptModal = await this.mdlController.create({
+      component: CashReceiptModalPage,
+      componentProps: {
+        modalData: receiptDetail
+      }
+    });
+    const receiptDetailsArray = this.yellowBookFormGroup.get('cashReceiptEntries') as FormArray;
+    await cashReceiptModal.present();
+    cashReceiptModal.onDidDismiss()
+      .then(res => {
+        if (res.data.formState === 'add') {
+          receiptDetailsArray.push(this.cashReceiptFormGroup());
+          this.yellowBookFormGroup.get('cashReceiptEntries').get(`${index}`).patchValue(res.data.formData.value);
+        } 
+        else if (res.data.formState === 'delete') this.deleteCashReceiptEntry(index);
+        else {
+          this.yellowBookFormGroup.get('cashReceiptEntries').get(`${index}`).patchValue(res.data.formData.value);
+        }
+      }
+      );
+  }
+
+  async showClaimModal(index: number, mode: string, claimReceiptForm?: any) {
+    const claimReceiptDetail = {
+      index,
+      mode,
+      claimReceipt: claimReceiptForm,
+      fromDate: index > 0 ? this.yellowBookFormGroup.get('schemeClaimsEntries').get(`${index - 1}`).get('claimDate').value : this.yellowBookFormGroup.get('cashReceiptEntries').get(`${0}`).get('cashReceiptDate').value || moment(this.registrationDate).format('YYYY-MM-DD'),
+    };
+    const cashReceiptModal = await this.mdlController.create({
+      component: ClaimModalPage,
+      componentProps: {
+        modalData: claimReceiptDetail
+      }
+    });
+    const claimReceiptsArray = this.yellowBookFormGroup.get('schemeClaimsEntries') as FormArray;
+    await cashReceiptModal.present();
+    cashReceiptModal.onDidDismiss()
+      .then(res => {
+        if (res.data.formState === 'add') {
+          claimReceiptsArray.push(this.schemeClaimFormGroup());
+          this.yellowBookFormGroup.get('schemeClaimsEntries').get(`${index}`).patchValue(res.data.formData.value);
+        }
+        else if (res.data.formState === 'delete') this.deleteSchemeClaimEntry(index);
+        else {
+          this.yellowBookFormGroup.get('schemeClaimsEntries').get(`${index}`).patchValue(res.data.formData.value);
+        }
+      }
+      );
   }
 
   public deleteRenewalEntry(index: number): void {
-    const renewalEntries = this.yellowBookFormGroup.get('renewalEntries') as FormArray;
-    renewalEntries.removeAt(index);
+    if(index===0) return;
+    else{
+      const renewalEntries = this.yellowBookFormGroup.get('renewalEntries') as FormArray;
+      renewalEntries.removeAt(index);
+    }
   }
 
   public deleteSchemeClaimEntry(index: number): void {
-    const schemeClaimsEntries = this.yellowBookFormGroup.get('schemeClaimsEntries') as FormArray;
-    schemeClaimsEntries.removeAt(index);
+    if (index === 0) return;
+    else {
+      const schemeClaimsEntries = this.yellowBookFormGroup.get('schemeClaimsEntries') as FormArray;
+      schemeClaimsEntries.removeAt(index);
+    }
   }
 
   public deleteCashReceiptEntry(index: number): void {
-    const cashReceiptEntries = this.yellowBookFormGroup.get('cashReceiptEntries') as FormArray;
-    cashReceiptEntries.removeAt(index);
-  }
-
-  calculateRenewalAmount(event: any, index: number, formArray: string) {
-    const value = event.target.value;
-    const renewalFee = 12;
-    let calculatedFee;
-    switch (value) {
-      case '1': {
-        calculatedFee = renewalFee;
-        break;
-      }
-      case '2': {
-        calculatedFee = 2 * renewalFee;
-        break;
-      }
-      case '3': {
-        calculatedFee = 3 * renewalFee;
-        break;
-      }
-      case '4': {
-        calculatedFee = 4 * renewalFee;
-        break;
-      }
-      case '5': {
-        calculatedFee = 5 * renewalFee;
-        break;
-      }
-    }
-    if (formArray === 'Cash Receipt') {
-      this.cashReceiptEntries.get(index.toString()).get('renewalAmount').setValue(calculatedFee);
-    }
-    if (formArray === 'Renewal') {
-      this.renewalEntries.get(index.toString()).get('renewalAmount').setValue(calculatedFee);
-    }
-  }
-
-  calculateTotalFeeForCashReceipt(index: number) {
-    const cashReceiptObj = this.cashReceiptEntries.get(index.toString());
-    const registrationFee = cashReceiptObj.get('registrationFee').value;
-    const renewalFee = cashReceiptObj.get('renewalAmount').value;
-    const totalFee = registrationFee + renewalFee;
-    this.cashReceiptEntries.get(index.toString()).get('totalFee').setValue(totalFee);
-  }
-
-  minDate(index: number, type?: string) {
-    // if (type === 'renewal') {
-    //   const regDate = _.cloneDeep(this.registrationDate);
-    //   // if (!regDate || regDate.year + index + 1 >= new Date().getFullYear()) {
-    //   if (!regDate) {
-    //     return {
-    //       year: new Date().getFullYear(),
-    //       month: new Date().getMonth() + 1,
-    //       day: new Date().getDate()
-    //     }
-    //   }
-    //   regDate.year = regDate.year + index + 1;
-    //   return regDate;
-    // } else if (type === 'registrationDate') {
-    //   if (!this.registrationDate) {
-    //     return {
-    //       year: new Date().getFullYear(),
-    //       month: new Date().getMonth() + 1,
-    //       day: new Date().getDate()
-    //     }
-    //   }
-    //   return this.registrationDate;
-    // }
-    // if (index === 0) {
-    //   return {
-    //     day: 1,
-    //     month: 1,
-    //     year: 2000
-    //   };
-    // } else {
-    //   return {
-    //     day: 1,
-    //     month: 1,
-    //     year: 2000
-    //   };
-    // }
-    if (index === 0) {
-      // return this.registrationDate;
-    }
+    if (index === 0) return;
     else {
-      const regAndRenewalDate = this.cashReceiptEntries.get((index - 1).toString()).get('regOrRenewalDate').value;
-      const date = moment(new Date(
-        regAndRenewalDate.year,
-        regAndRenewalDate.month - 1,
-        regAndRenewalDate.day
-      )).add(1, 'y').add(1, 'd').format('DD/MM/YYYY');
-      const splittedDate = date.split('/');
-      return {
-        year: Number(splittedDate[2]),
-        month: Number(splittedDate[1]),
-        day: Number(splittedDate[0])
-      };
+      const cashReceiptEntries = this.yellowBookFormGroup.get('cashReceiptEntries') as FormArray;
+      cashReceiptEntries.removeAt(index);
     }
   }
 
+  minFDate(i: number) {
+    return i === 0 ? moment(this.registrationDate).format('YYYY-MM-DD') : this.yellowBookFormGroup.get('cashReceiptEntries').get((i - 1).toString()).get('regOrRenewalDate').value;
+  }
+
+  maxFDate(i: number) {
+    return i === 0 ? moment(this.registrationDate).format('YYYY-MM-DD'):moment().format('YYYY-MM-DD');
+  }
+
+  minReceiptDate(i:number){
+    return this.yellowBookFormGroup.get('cashReceiptEntries').get((i).toString()).get('regOrRenewalDate').value
+  }
+
+  maxReceiptDate(i:number){
+    return moment().format('YYYY-MM-DD')
+  }
+
+
+  get renewalEntries() {
+    return this.yellowBookFormGroup.get('renewalEntries');
+  }
+
+  get schemeClaimsEntries() {
+    return this.yellowBookFormGroup.get('schemeClaimsEntries');
+  }
+
+  get cashReceiptEntries() {
+    return this.yellowBookFormGroup.get('cashReceiptEntries');
+  }
+  
 }

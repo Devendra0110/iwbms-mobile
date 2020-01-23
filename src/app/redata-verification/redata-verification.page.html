@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Re-data Entry Verification</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- Verification Form -->
+  <ion-card *ngIf="!otpflag">
+    <ion-card-header>
+      <ion-card-title>
+        Mobile &amp; Aadhar Verification
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="verificationForm">
+        <ion-item>
+          <ion-label position="floating"> Old BOCW Registration No. </ion-label>
+          <ion-input autocapitalize="characters" maxlength='12' formControlName="registrationNo"
+            clearInput>
+          </ion-input>
+          <div class="text-danger" *ngIf="registrationNo.invalid && registrationNo.touched">
+            <small *ngIf="!!registrationNo.errors?.required">Please enter your registration number.</small>
+          </div>
+          <div class="text-danger" *ngIf="registrationNo.invalid && registrationNo.touched">
+            <small *ngIf="!!registrationNo.errors?.pattern">Please enter valid registration number.</small>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Mobile Number / दूरध्वनी क्रमांक</ion-label>
+          <ion-input type="tel" maxlength='10' id="mobileNo" formControlName="mobileNo" (ionInput)="resetMobileNo()"
+            clearInput></ion-input>
+          <div class="text-danger" *ngIf="mobileNo.invalid && mobileNo.touched">
+            <small *ngIf="!!mobileNo.errors?.required">Please enter your Mobile No.</small>
+            <small *ngIf="!!mobileNo.errors?.pattern">Please enter appropriate Mobile Number.</small>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Aadhar Number / आधार क्रमांक</ion-label>
+          <ion-input type="tel" maxlength='12' id="aadharNo" formControlName="aadharNo" clearInput></ion-input>
+          <div class="text-danger" *ngIf="aadharNo.invalid && aadharNo.touched">
+            <small *ngIf="!!aadharNo.errors?.required">Please enter your Aadhar Number.</small>
+            <small *ngIf="!!aadharNo.errors?.pattern">Please enter appropriate Aadhar Number.</small>
+          </div>
+        </ion-item>
+      </form>
+      <ion-button style="margin-top: 16px;" [disabled]="aadharNo.invalid || mobileNo.invalid" (click)="sendOTP()"
+        mode="ios" expand="block">
+        <ion-icon mode="ios" name="paper-plane" slot="start"></ion-icon>Send OTP
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+  <!-- Error Block-->
+  <ion-card *ngIf="unverifiedUser">
+    <ion-card-content>
+      <div [ngSwitch]='ECode'>
+        <div class="error-code" *ngSwitchCase="'E1'">
+          <ion-icon slot="end" name="alert"></ion-icon>{{mobileNo.value}} is already registered.
+        </div>
+        <div class="error-code" *ngSwitchCase="'E2'">
+          <ion-icon slot="end" name="alert"></ion-icon>{{aadharNo.value}} is already registered.
+        </div>
+        <div class="error-code" *ngSwitchCase="'E3'">
+          <ion-icon slot="end" name="alert"></ion-icon>Mobile No.{{mobileNo.value}} and {{aadharNo.value}} both are
+          already registered
+        </div>
+        <div class="error-code" *ngSwitchCase="'E4'">
+          <ion-icon slot="end" name="alert"></ion-icon>{{mobileNo.value}} and {{aadharNo.value}} both are already
+          registered with different users.
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <!--  OTP Verification -->
+  <ion-card *ngIf="otpflag">
+    <ion-card-header>
+      <ion-card-title>Verify OTP</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">OTP</ion-label>
+        <ion-input type="tel" maxlength="6" #otp></ion-input>
+      </ion-item>
+      <ion-button style="margin-top: 16px;" mode="ios" [disabled]="!otp.value" expand="block"
+        (click)="validateOTP(otp.value)">Verify</ion-button>
+      <ion-button style="margin-top: 16px;" mode="ios" [disabled]="resendOtpFlag" (click)="sendOTP()" expand="block">
+        <ion-icon mode="ios" name="paper-plane" slot="start"></ion-icon>Resend OTP&nbsp;<p *ngIf="otpCountdown>0">in
+          {{otpCountdown}}sec</p>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
