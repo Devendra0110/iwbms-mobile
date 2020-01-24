@@ -1,10 +1,9 @@
+import { AuthenticationService } from './services/authentication.service';
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AuthenticationService } from './services/authentication.service';
-import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-root',
@@ -38,13 +37,13 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.styleLightContent();
       this.statusBar.backgroundColorByHexString('#000000');
-      this.authService.authenticationState.subscribe((state) => {
-      if (state) {
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.router.navigate(['/home']);
-      }
-      });
+      // this.authService.authenticationState.subscribe((state) => {
+      // if (state) {
+      //   this.router.navigate(['/dashboard']);
+      // } else {
+      //   this.router.navigate(['/home']);
+      // }
+      // });
     });
   }
 }

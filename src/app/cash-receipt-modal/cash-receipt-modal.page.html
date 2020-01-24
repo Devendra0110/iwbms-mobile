@@ -8,27 +8,56 @@
   <form [formGroup]="cashReceiptFormGroup">
     <ion-list>
       <ion-item>
-        <ion-label position="floating">Receipt No.</ion-label>
-        <ion-input type="text" [class.is-invalid]="receiptNo.invalid && receiptNo.touched" maxlength="12" formControlName="receiptNo"></ion-input>
+        <ion-label position="floating">Receipt No.<span class="text-danger">*</span></ion-label>
+        <ion-input type="text" [class.is-invalid]="receiptNo.invalid && receiptNo.touched" maxlength="12"
+          formControlName="receiptNo"></ion-input>
+          <div class="text-danger" *ngIf="receiptNo.invalid && receiptNo.touched">
+            <small *ngIf="receiptNo.errors && receiptNo.errors['required']">Please enter your receipt number.</small>
+            <small *ngIf="receiptNo.errors && receiptNo.errors['maxlength']">You have reached your maximum.</small>
+          </div>
       </ion-item>
+
       <ion-item>
-        <ion-label position="floating">Purpose</ion-label>
-        <ion-select [class.is-invalid]="purpose.invalid && purpose.touched" formControlName="purpose" interface="action-sheet">
+        <ion-label position="floating">Purpose<span class="text-danger">*</span></ion-label>
+        <ion-select [class.is-invalid]="purpose.invalid && purpose.touched" formControlName="purpose"
+          interface="action-sheet">
           <ion-select-option *ngIf="modalData.index === 0" [value]="'Registration'">Registration</ion-select-option>
           <ion-select-option *ngIf="modalData.index !== 0" [value]="'Renewal'">Renewal</ion-select-option>
         </ion-select>
+        <div class="text-danger" *ngIf="purpose.invalid && purpose.touched">
+          <small *ngIf="purpose.errors && purpose.errors['required']">Please select your purpose.</small>
+        </div>
       </ion-item>
+
       <ion-item>
-        <ion-label  position="floating">Registration/Renewal Date</ion-label>
-        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="regOrRenewalDate.invalid && regOrRenewalDate.touched" formControlName="regOrRenewalDate" [min]="minFromDate" [max]="cashReceiptDate.value || maxFromDate"></ion-datetime>
+        <ion-label position="floating">Registration/Renewal Date<span class="text-danger">*</span></ion-label>
+        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
+          [class.is-invalid]="regOrRenewalDate.invalid && regOrRenewalDate.touched" formControlName="regOrRenewalDate"
+          [min]="minFromDate" [max]="cashReceiptDate.value || maxFromDate"></ion-datetime>
+          <div class="text-danger" *ngIf="regOrRenewalDate.invalid && regOrRenewalDate.touched">
+            <small *ngIf="regOrRenewalDate.errors && regOrRenewalDate.errors['required']">Please enter your registration/renewal date.</small>
+          </div>
       </ion-item>
+
       <ion-item>
-        <ion-label  position="floating">Cash Receipt Date</ion-label>
-        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="cashReceiptDate.invalid && cashReceiptDate.touched" formControlName="cashReceiptDate" [min]="regOrRenewalDate.value" [max]="maxToDate"></ion-datetime>
+        <ion-label position="floating">Cash Receipt Date<span class="text-danger">*</span></ion-label>
+        <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
+          [class.is-invalid]="cashReceiptDate.invalid && cashReceiptDate.touched" formControlName="cashReceiptDate"
+          [min]="regOrRenewalDate.value" [max]="maxToDate"></ion-datetime>
+          <div class="text-danger" *ngIf="cashReceiptDate.invalid && cashReceiptDate.touched">
+            <small *ngIf="cashReceiptDate.errors && cashReceiptDate.errors['required']">Please enter your cash receipt date.</small>
+          </div>
       </ion-item>
+
       <ion-item>
-        <ion-label  position="floating">Total Amount</ion-label>
-        <ion-input type="tel" min="12" max="85" [class.is-invalid]="amount.invalid && amount.touched"  formControlName="amount"></ion-input>
+        <ion-label position="floating">Total Amount<span class="text-danger">*</span></ion-label>
+        <ion-input type="tel" min="12" max="85" [class.is-invalid]="amount.invalid && amount.touched"
+          formControlName="amount"></ion-input>
+          <div class="text-danger" *ngIf="amount.invalid && amount.touched">
+            <small *ngIf="amount.errors && amount.errors['required']">Please enter your amount.</small>
+            <small *ngIf="amount.errors && amount.errors['minlength']">Please enter an appropriate amount.</small>
+            <small *ngIf="amount.errors && amount.errors['maxlength']">You have reached your maximum.</small>
+          </div>
       </ion-item>
     </ion-list>
 

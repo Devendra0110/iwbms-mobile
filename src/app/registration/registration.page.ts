@@ -7,7 +7,7 @@ import { AfterViewInit, Component, ComponentRef, OnInit, QueryList, ViewChild, V
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { EmployerModalData, UserInfo, familyModalData } from '../../assets/common.interface';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, Platform, LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController, Platform } from '@ionic/angular';
 
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { EmployerModalPage } from '../employer-modal/employer-modal.page';
@@ -26,9 +26,9 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { TransliterationService } from '../services/transliteration.service';
 import { UserManagementService } from '../services/user-management.service';
 import { ValidationService } from '../services/validation.service';
+import { YellowBookPage } from '../yellow-book/yellow-book.page';
 import { serverUrl } from '../../assets/config';
 import { states } from '../models/states';
-import { YellowBookPage } from '../yellow-book/yellow-book.page';
 
 declare var google;
 
@@ -1413,7 +1413,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         this.httpService.saveLegacyData(formData, this.JWTToken).subscribe(
           async (res: any) => {
             await loading.dismiss().then((result) => {
-              this.dialogs.alert(`Data Captured. Your Acknowledgement Number is ${res[1][0].acknowledgement_no}. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res[0])}`)
+              this.dialogs.alert(res.subscriptionData.message)
               this.router.navigate(['/dashboard']);
             })
           },

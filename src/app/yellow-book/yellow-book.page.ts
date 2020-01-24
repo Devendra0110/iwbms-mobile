@@ -1,13 +1,15 @@
-import * as moment from 'moment';
 import * as _ from 'lodash';
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormControl, FormGroup, Validators , FormArray } from '@angular/forms';
-import { ClaimService } from '../services/claim.service';
-import { Storage } from '@ionic/storage';
-import { Router } from '@angular/router';
-import { ModalController, } from '@ionic/angular';
+import * as moment from 'moment';
+
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { CashReceiptModalPage } from '../cash-receipt-modal/cash-receipt-modal.page';
 import { ClaimModalPage } from '../claim-modal/claim-modal.page';
+import { ClaimService } from '../services/claim.service';
+import { ModalController, } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-yellow-book',
@@ -21,9 +23,9 @@ export class YellowBookPage implements OnInit {
   public filteredSchemes: any;
   public todaysDate: any;
   public JWTToken:any;
-  public registrationDate: any;
-  @Input() registrationFormGroup: FormGroup;
-  // public registrationDate = '1993-10-31T13:04:17.092+05:30'
+  // public registrationDate: any;
+  // @Input() registrationFormGroup: FormGroup;
+  public registrationDate = '1993-10-31T13:04:17.092+05:30'
   public purpose = [
     { purpose: 'Registration' },
     { purpose: 'Renewal' }
@@ -48,14 +50,14 @@ export class YellowBookPage implements OnInit {
 
   ngOnInit() {
     // this.cashReceiptEntries.get('0').get('regOrRenewalDate').disable();
-    this.registrationFormGroup.valueChanges.subscribe((value) => {
-      if (value.personalDetails) {
-        if (value.personalDetails.registrationDatePersonal) {
-          this.cashReceiptEntries.get('0').get('regOrRenewalDate').setValue(value.personalDetails.registrationDatePersonal);
-          this.registrationDate = value.personalDetails.registrationDatePersonal
-        }
-      }
-    });
+    // this.registrationFormGroup.valueChanges.subscribe((value) => {
+    //   if (value.personalDetails) {
+    //     if (value.personalDetails.registrationDatePersonal) {
+    //       this.cashReceiptEntries.get('0').get('regOrRenewalDate').setValue(value.personalDetails.registrationDatePersonal);
+    //       this.registrationDate = value.personalDetails.registrationDatePersonal
+    //     }
+    //   }
+    // });
   }
 
   getClaimCategories() {

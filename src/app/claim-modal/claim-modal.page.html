@@ -8,36 +8,53 @@
   <form [formGroup]="pastClaimFormGroup">
     <ion-list>
       <ion-item>
-        <ion-label position="floating">Claim Date</ion-label>
+        <ion-label position="floating">Claim Date<span class="text-danger">*</span></ion-label>
         <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="claimDate.invalid && claimDate.touched" formControlName="claimDate" [min]="minFromDate" [max]="maxFromDate"></ion-datetime>
+        <div class="text-danger" *ngIf="claimDate.invalid && claimDate.touched">
+          <small *ngIf="claimDate.errors && claimDate.errors['required']">Please enter your claim date.</small>
+        </div>
       </ion-item>
+
       <ion-item>
-        <ion-label position="floating">Scheme Category</ion-label>
+        <ion-label position="floating">Scheme Category<span class="text-danger">*</span></ion-label>
         <ion-select [class.is-invalid]="schemeCategory.invalid && schemeCategory.touched" formControlName="schemeCategory" (ionChange)="filterSchemesForCategory($event, i)" interface="action-sheet">
           <ion-select-option *ngFor="let eachCategory of schemeCategories" [value]="eachCategory.category_id"> {{eachCategory.scheme_category}}</ion-select-option>
         </ion-select>
+        <div class="text-danger" *ngIf="schemeCategory.invalid && schemeCategory.touched">
+          <small *ngIf="schemeCategory.errors && schemeCategory.errors['required']">Please select your scheme category.</small>
+        </div>
       </ion-item>
+
       <ion-item>
-        <ion-label position="floating">Scheme Name</ion-label>
+        <ion-label position="floating">Scheme Name<span class="text-danger">*</span></ion-label>
         <ion-select [class.is-invalid]="schemeName.invalid && schemeName.touched" formControlName="schemeName">
           <ion-select-option *ngFor="let eachScheme of filteredSchemes[i]" [value]="eachScheme.scheme_number">
             {{eachScheme.scheme_number}} - {{eachScheme.scheme_name}}</ion-select-option>
         </ion-select>
+        <div class="text-danger" *ngIf="schemeName.invalid && schemeName.touched">
+          <small *ngIf="schemeName.errors && schemeName.errors['required']">Please select your scheme name.</small>
+        </div>
       </ion-item>
+
       <ion-item>
-        <ion-label position="floating" >Benefit Type</ion-label>
+        <ion-label position="floating" >Benefit Type<span class="text-danger">*</span></ion-label>
         <ion-select formControlName="benefitType" [class.is-invalid]="benefitType.invalid && benefitType.touched" interface="action-sheet">
           <ion-select-option value="cash">Cash</ion-select-option>
           <ion-select-option value="kind">Kind</ion-select-option>
         </ion-select>
+        <div class="text-danger" *ngIf="benefitType.invalid && benefitType.touched">
+          <small *ngIf="benefitType.errors && benefitType.errors['required']">Please select your benefit type.</small>
+        </div>
       </ion-item>
+
       <ion-item>
-        <ion-label position="floating">Benefit Amount</ion-label>
+        <ion-label position="floating">Benefit Amount<span class="text-danger">*</span></ion-label>
         <ion-input formControlName="benefitAmount" [class.is-invalid]="benefitAmount.invalid && benefitAmount.touched"></ion-input>
       </ion-item>
     </ion-list>
   </form>
 </ion-content>
+
 <ion-footer>
   <ion-toolbar>
     <ion-fab horizontal="start">

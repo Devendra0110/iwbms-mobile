@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
+import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-
+import { NgModule } from '@angular/core';
 import { YellowBookPage } from './yellow-book.page';
 
 const routes: Routes = [
@@ -22,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: []
+  declarations: [YellowBookPage]
 })
 export class YellowBookPageModule {}
