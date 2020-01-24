@@ -332,7 +332,7 @@ export class ValidationService {
       case 'profession': {
         validatorsArr = [
           Validators.maxLength(20),
-          Validators.pattern('^[A-Za-z]+$')
+          Validators.pattern('^[A-Za-z\\s]+$')
         ];
         break;
       }
