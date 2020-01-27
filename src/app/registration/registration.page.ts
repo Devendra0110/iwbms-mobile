@@ -1717,8 +1717,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       attachmentList: new FormArray([]),
       supportingDocuments: new FormControl('', Validators.required),
-      applicantPhoto: new FormControl(''),
-      workSitePhoto: new FormControl(''),
+      applicantPhoto: new FormControl('', Validators.required),
+      workSitePhoto: new FormControl('', Validators.required),
       selfDeclarationDocuments: new FormControl('', Validators.required),
       aadharDeclaration: new FormControl('', Validators.required),
       bankPassbook: new FormControl('', Validators.required),

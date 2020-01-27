@@ -33,7 +33,7 @@ export class ClaimValidationService {
         ];
         break;
       }
-      
+
       case 'benefitType': {
         validatorsArr = [
           Validators.required
@@ -44,7 +44,6 @@ export class ClaimValidationService {
       case 'registration_no': {
         validatorsArr = [
           Validators.required,
-          Validators.maxLength(12),
         ];
         break;
       }
@@ -119,7 +118,7 @@ export class ClaimValidationService {
         break;
       }
 
-// **********************************************************************************
+      // **********************************************************************************
 
       // FINANCIAL VALIDATIONS
       case 'issuerType': {
@@ -294,7 +293,7 @@ export class ClaimValidationService {
         break;
       }
 
-     
+
 
       case 'rationCardNumber': {
         validatorsArr = [
@@ -510,7 +509,7 @@ export class ClaimValidationService {
         break;
       }
 
-// *******************************************************************************************
+      // *******************************************************************************************
 
       // EDUCATIONAL VALIDATIONS
       case 'childrenDetail': {
@@ -779,7 +778,7 @@ export class ClaimValidationService {
         break;
       }
 
-// *********************************************************************************************
+      // *********************************************************************************************
 
 
 
@@ -855,7 +854,7 @@ export class ClaimValidationService {
           Validators.required,
           Validators.maxLength(240),
           Validators.pattern('^[a-zA-Z0-9 ]*$'),
-         // Validators.pattern('[^0-9]+$')
+          // Validators.pattern('[^0-9]+$')
         ];
         break;
       }
@@ -1212,7 +1211,7 @@ export class ClaimValidationService {
         ];
         break;
       }
-      case 'aadharCardDoc' : {
+      case 'aadharCardDoc': {
         validatorsArr = [
           Validators.required
         ];

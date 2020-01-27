@@ -25,6 +25,7 @@ export class ClaimVerificationPage implements OnInit {
   public allowOTP=false
   public otpflag = false;
   public resendOtpFlag=true;
+  public redataEntry = false;
   public otpCountdown:number;
   public ECode: string;
   public passingResponse:any;
@@ -45,7 +46,7 @@ export class ClaimVerificationPage implements OnInit {
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
     this.claimVerificationForm = new FormGroup({
-      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^(MH)\\d{12}$')]),
+      registrationNo: new FormControl('', [Validators.required]),
       mobileNo: new FormControl('',this.validationService.createValidatorsArray('mobile'))
     });
 
@@ -92,7 +93,7 @@ export class ClaimVerificationPage implements OnInit {
         });
         this.claimService.checkRegistrationAndRenewalValidity(tokenObj, this.JWTToken).subscribe(
           (res: any) => {
-            
+            this.redataEntry = false;
             if (res.subscription === 'active') {
               this.passingResponse=res;
               this.allowOTP=true;
@@ -105,7 +106,8 @@ export class ClaimVerificationPage implements OnInit {
             }
           }, err => {
             this.unregisteredUser = true;
-            this.dialogs.alert('Registered does not exist');
+            this.redataEntry = true;
+            this.dialogs.alert('Your BOCW Registration Number is not registered. Please enter registered Registration Number or re-enter your data by clicking on the Re-data Entry button. आपला BOCW नोंदणी क्रमांक नोंदणीकृत नाही. कृपया नोंदणीकृत नोंदणी क्रमांक प्रविष्ट करा किंवा री-डेटा एन्ट्री बटणावर क्लिक करुन आपला डेटा पुन्हा प्रविष्ट करा.');
           }
         )
       } else {
@@ -115,6 +117,15 @@ export class ClaimVerificationPage implements OnInit {
         this.loadingController.dismiss();
       }
     }
+  }
+
+  redataVerification() {
+    const registrationNumber: NavigationExtras = {
+      state: {
+        registrationNo: this.registrationNo.value
+      }
+    }
+    this.router.navigate(['/redata-verification'], registrationNumber)
   }
   
   sendOTP() {

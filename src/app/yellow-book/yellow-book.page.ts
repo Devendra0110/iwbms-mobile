@@ -23,9 +23,9 @@ export class YellowBookPage implements OnInit {
   public filteredSchemes: any;
   public todaysDate: any;
   public JWTToken:any;
-  // public registrationDate: any;
-  // @Input() registrationFormGroup: FormGroup;
-  public registrationDate = '1993-10-31T13:04:17.092+05:30'
+  public registrationDate: any;
+  @Input() registrationFormGroup: FormGroup;
+  // public registrationDate = '1993-10-31T13:04:17.092+05:30'
   public purpose = [
     { purpose: 'Registration' },
     { purpose: 'Renewal' }
@@ -49,15 +49,15 @@ export class YellowBookPage implements OnInit {
   
 
   ngOnInit() {
-    // this.cashReceiptEntries.get('0').get('regOrRenewalDate').disable();
-    // this.registrationFormGroup.valueChanges.subscribe((value) => {
-    //   if (value.personalDetails) {
-    //     if (value.personalDetails.registrationDatePersonal) {
-    //       this.cashReceiptEntries.get('0').get('regOrRenewalDate').setValue(value.personalDetails.registrationDatePersonal);
-    //       this.registrationDate = value.personalDetails.registrationDatePersonal
-    //     }
-    //   }
-    // });
+    this.cashReceiptEntries.get('0').get('regOrRenewalDate').disable();
+    this.registrationFormGroup.valueChanges.subscribe((value) => {
+      if (value.personalDetails) {
+        if (value.personalDetails.registrationDatePersonal) {
+          this.cashReceiptEntries.get('0').get('regOrRenewalDate').setValue(value.personalDetails.registrationDatePersonal);
+          this.registrationDate = value.personalDetails.registrationDatePersonal
+        }
+      }
+    });
   }
 
   getClaimCategories() {

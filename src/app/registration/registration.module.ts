@@ -22,6 +22,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [RegistrationPage]
+  declarations: [RegistrationPage,YellowBookPage]
 })
 export class RegistrationPageModule {}

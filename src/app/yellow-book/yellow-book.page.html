@@ -108,10 +108,13 @@
                   </ion-select>
               </ion-col>
               <ion-col style="max-width: 18%;">
-                  <ion-select [attr.disabled]="true" [class.is-invalid]="schemeClaimsEntries.get(i.toString()).get('schemeName').invalid && schemeClaimsEntries.get(i.toString()).get('schemeName').touched" formControlName="schemeName" >
+                  <!-- <ion-select [attr.disabled]="true" [class.is-invalid]="schemeClaimsEntries.get(i.toString()).get('schemeName').invalid && schemeClaimsEntries.get(i.toString()).get('schemeName').touched" formControlName="schemeName" >
                     <ion-select-option value="" disabled selected></ion-select-option>
                     <ion-select-option *ngFor="let eachScheme of filteredSchemes[i]" [value]="eachScheme.scheme_number">{{eachScheme.scheme_number}} - {{eachScheme.scheme_name}}</ion-select-option>
-                  </ion-select>
+                  </ion-select> -->
+                  <ion-input [attr.disabled]="true" [class.is-invalid]="schemeClaimsEntries.get(i.toString()).get('schemeName').invalid && schemeClaimsEntries.get(i.toString()).get('schemeName').touched" formControlName="schemeName">
+
+                  </ion-input>
               </ion-col>
               <ion-col style="max-width: 17%;">
                   <ion-select [attr.disabled]="true" formControlName="benefitType" [class.is-invalid]="schemeClaimsEntries.get(i.toString()).get('benefitType').invalid && schemeClaimsEntries.get(i.toString()).get('schemeName').touched">

@@ -1,9 +1,11 @@
 import * as moment from 'moment'
-import { Component, OnInit, Input } from '@angular/core';
+
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
-import { Dialogs } from '@ionic-native/dialogs/ngx';
+
 import { ClaimService } from '../services/claim.service';
+import { Dialogs } from '@ionic-native/dialogs/ngx';
+import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -34,7 +36,8 @@ export class ClaimModalPage implements OnInit {
     private dialogs: Dialogs,
   ) {
     this.addFlag = true;
-    this.filteredSchemes = {};
+    this.filteredSchemes = [];
+    this.schemes=[]
     this.storage.get('token').then((val) => {
       this.JWTToken = val;
       this.getClaimCategories();
@@ -77,14 +80,14 @@ export class ClaimModalPage implements OnInit {
     );
   }
 
-  filterSchemesForCategory(event: any, index: number) {
+  filterSchemesForCategory(event: any) {
     const value = parseInt(event.target.value);
     const filteredValues = this.schemes.filter((eachSchemeObj: any) => {
       if (eachSchemeObj.category_id === value) {
         return eachSchemeObj;
       }
     });
-    this.filteredSchemes[index] = filteredValues;
+    this.filteredSchemes = filteredValues;
   }
 
   async dismissModal() {
