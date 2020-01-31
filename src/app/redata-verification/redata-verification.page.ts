@@ -50,7 +50,7 @@ export class RedataVerificationPage implements OnInit {
     this.verificationForm = new FormGroup({
       mobileNo: new FormControl('', this.validationService.createValidatorsArray('mobile')),
       aadharNo: new FormControl('', this.validationService.createValidatorsArray('aadharNo')),
-      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^\\d+$')]),
+      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9_]*$/ig'), Validators.maxLength(14)]),
     });
   }
 

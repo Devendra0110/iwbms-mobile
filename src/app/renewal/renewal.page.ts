@@ -5,7 +5,7 @@ import * as uuidv4 from 'uuid/v4';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, Platform, LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController, Platform } from '@ionic/angular';
 
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { EmployerModalData } from '../../assets/common.interface';
@@ -617,7 +617,7 @@ console.log(this.registrationNoOfIssuer)
 
       case '1': {
           
-          this.registrationNoOfIssuer.setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9]{4,10}$'), ]);
+        this.registrationNoOfIssuer.setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9]{4,10}$'), ]);
         this.registeredWith.setValidators([Validators.required]);
         this.dispatchDate.setValidators([Validators.required]);
         this.dispatchDate.updateValueAndValidity()

@@ -1687,9 +1687,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.registeredWith.reset();
     this.registrationNoOfIssuer.reset();
 
-    this.registrationFormGroup.valueChanges.subscribe(() => {
-      this.checkValidationErrors(this.registrationFormGroup);
-    });
+    // this.registrationFormGroup.valueChanges.subscribe(() => {
+    //   this.checkValidationErrors(this.registrationFormGroup);
+    // });
   }
   employerWorkDetailsFormFroup(): FormGroup {
     return new FormGroup({

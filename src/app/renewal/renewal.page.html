@@ -52,7 +52,7 @@
         <ion-label position="floating">Type of Work / कामाचा प्रकार<span style="color: Red">*</span></ion-label>
         <ion-select formControlName="typeOfWorkEmp" [class.is-invalid]="typeOfWorkEmp.invalid && typeOfWorkEmp.touched"
           id='typeOfWorkEmp' (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
-          <ion-select-option class="ion-padding-top ion-padding-bottom" text-justify
+          <ion-select-option class="ion-padding-top ion-padding-bottom" class="ion-text-justify"
             *ngFor="let typeOfWork of typeOfWorkOptions|keyvalue" value="{{ typeOfWork.key }}">{{ typeOfWork.value }}
           </ion-select-option>
         </ion-select>
@@ -185,7 +185,7 @@
         <ion-select formControlName="natureOfWorkEmp"
           [class.is-invalid]="natureOfWorkEmp.invalid && natureOfWorkEmp.touched" id='natureOfWorkEmp'
           (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
-          <ion-select-option class="ion-padding-top ion-padding-bottom" text-justify
+          <ion-select-option class="ion-padding-top ion-padding-bottom" class="ion-text-justify"
             *ngFor="let natureOfWork of natureOfWorkOptions|keyvalue" value="{{ natureOfWork.key }}">
             {{ natureOfWork.value }}
           </ion-select-option>
@@ -532,7 +532,7 @@
       </form>
 
       <ion-item lines="none">
-        <ion-label text-wrap floating>90 Days Work Certificate<span style="color: Red">*</span></ion-label>
+        <ion-label class="ion-text-wrap" floating>90 Days Work Certificate<span style="color: Red">*</span></ion-label>
       </ion-item>
       <ion-item>
         <input id='workCertificate' formControlName="workCertificate" type="file" accept="application/pdf"
@@ -543,7 +543,7 @@
       </div>
 
       <ion-item lines="none">
-        <ion-label text-wrap floating>Yellow Book<span style="color: Red">*</span></ion-label>
+        <ion-label class="ion-text-wrap" floating>Yellow Book<span style="color: Red">*</span></ion-label>
       </ion-item>
       <ion-item>
         <input id='yellowBook' formControlName="yellowBook" type="file" accept="application/pdf"
@@ -554,7 +554,7 @@
       </div>
 
       <ion-item lines="none">
-        <ion-label text-wrap floating>Self Declaration Certificate<span style="color: Red">*</span></ion-label>
+        <ion-label class="ion-text-wrap" floating>Self Declaration Certificate<span style="color: Red">*</span></ion-label>
       </ion-item>
       <ion-item>
         <input id='selfDeclarationFile' formControlName="selfDeclarationFile" type="file" accept="application/pdf"
@@ -570,7 +570,7 @@
       </ion-item>
       <ion-item>
         <ion-checkbox formControlName="selfDeclaration" slot="start" checked="false"></ion-checkbox>
-        <ion-label text-wrap>I hereby declare that the information provided in above form is true & correct to the best
+        <ion-label class="ion-text-wrap">I hereby declare that the information provided in above form is true & correct to the best
           of my knowledge and belief
           and nothing has been falsely stated. In case any of the above information is found to be false or untrue or
           misleading

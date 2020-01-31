@@ -218,7 +218,7 @@
                 </ion-header>
           
                 <ion-item lines="none">
-                  <ion-label text-wrap floating>1. Death certificate issued by competent Medical officer / सक्षम वैद्यकीय
+                  <ion-label class="ion-text-wrap" floating>1. Death certificate issued by competent Medical officer / सक्षम वैद्यकीय
                     अधिका-यांनी दिलेला मृत्यू प्रमाणपत्र.<span style="color: Red">*</span></ion-label>
                 </ion-item>
                 <ion-item>
@@ -230,7 +230,7 @@
                     </div>
 
                 <ion-item lines="none">
-                    <ion-label text-wrap floating>2. Scanned Copy of bank passbook of applicant./ अर्जदाराचे बँक पासबुकची स्कॅन केलेली
+                    <ion-label class="ion-text-wrap" floating>2. Scanned Copy of bank passbook of applicant./ अर्जदाराचे बँक पासबुकची स्कॅन केलेली
                         प्रत.<span style="color: Red">*</span></ion-label>
                   </ion-item>
                   <ion-item>
@@ -242,7 +242,7 @@
                     </div>
 
                   <ion-item lines="none">
-                      <ion-label text-wrap floating>3. Aadhar card of the applicant / अर्जदाराचे आधार कार्ड<span style="color: Red">*</span></ion-label>
+                      <ion-label class="ion-text-wrap" floating>3. Aadhar card of the applicant / अर्जदाराचे आधार कार्ड<span style="color: Red">*</span></ion-label>
                     </ion-item>
                     <ion-item>
                       <input id='aadharCardDoc' (change)="getFileDetails($event)" formControlName="aadharCardDoc" type="file" accept="application/pdf">
@@ -253,7 +253,7 @@
                     </div>
 
                     <ion-item lines="none">
-                        <ion-label text-wrap floating>4. Self declaration/ हमीपत्र<span style="color: Red">*</span></ion-label>
+                        <ion-label class="ion-text-wrap" floating>4. Self declaration/ हमीपत्र<span style="color: Red">*</span></ion-label>
                       </ion-item>
                       <ion-item>
                         <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" accept="application/pdf">
@@ -264,7 +264,7 @@
                           </div>
 
                       <ion-item lines="none">
-                          <ion-label text-wrap floating>5.Successor Certificate if nominee is not available./नामनिर्देशित व्यक्ती उपलब्ध नसल्यास उत्तराधिकारी प्रमाणपत्र.<span style="color: Red">*</span></ion-label>
+                          <ion-label class="ion-text-wrap" floating>5.Successor Certificate if nominee is not available./नामनिर्देशित व्यक्ती उपलब्ध नसल्यास उत्तराधिकारी प्रमाणपत्र.<span style="color: Red">*</span></ion-label>
                         </ion-item>
                         <ion-item>
                           <input id='nomineeCertificate' (change)="getFileDetails($event)" formControlName="nomineeCertificate" type="file" accept="application/pdf">

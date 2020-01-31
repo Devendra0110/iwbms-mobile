@@ -193,7 +193,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Select Scheme / योजना निवडा</ion-label>
-          <ion-select text-wrap [class.is-invalid]="selectScheme.invalid && selectScheme.touched"
+          <ion-select class="ion-text-wrap" [class.is-invalid]="selectScheme.invalid && selectScheme.touched"
             formControlName="selectScheme" id="selectScheme">
             <ion-select-option *ngFor="let each of commonClaimArray" [disabled]="!each.eligibility"
               class="select-scheme" [value]="each.scheme_number">
