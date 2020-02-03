@@ -43,7 +43,7 @@ export class RenewalVerificationPage implements OnInit {
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
     this.verificationForm = new FormGroup({
-      registrationNo: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_]*$/ig)]),
+      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
       mobileNo: new FormControl()
     });
 

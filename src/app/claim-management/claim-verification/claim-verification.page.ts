@@ -46,7 +46,7 @@ export class ClaimVerificationPage implements OnInit {
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
     this.claimVerificationForm = new FormGroup({
-      registrationNo: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_]*$/ig)]),
+      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
       mobileNo: new FormControl('', this.validationService.createValidatorsArray('mobile'))
     });
 
