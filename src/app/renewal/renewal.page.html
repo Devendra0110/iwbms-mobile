@@ -11,9 +11,11 @@
         <ion-label position="floating">Registration No. / नोंदणी क्रमांक</ion-label>
         <ion-input disabled formControlName="registrationNo"></ion-input>
       </ion-item>
+
       <ion-list-header color="secondary" style="margin-top: 10px; text-align: center; font-size: 18px;color:white;">
         Present
         Employer Details / सध्याच्या नियोक्त्याचा तपशील</ion-list-header>
+
       <ion-item>
         <ion-label position="floating">Name of Contractor / Developer ठेकेदार / विकसक<span style="color: Red">*</span>
         </ion-label>
@@ -232,7 +234,7 @@
         <div class="text-danger" *ngIf="registrationNoOfIssuer.invalid && registrationNoOfIssuer.touched">
           <small *ngIf="!!registrationNoOfIssuer.errors?.required">Please enter registration number of issuer.</small>
           <small *ngIf="!!registrationNoOfIssuer.errors?.pattern">Please enter appropriate name.</small>
-      
+
         </div>
       </ion-item>
       <ion-item>
@@ -249,9 +251,9 @@
         <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
           [class.is-invalid]="dispatchDate.invalid && dispatchDate.touched" formControlName='dispatchDate'
           id='dispatchDate'></ion-datetime>
-          <div class="text-danger" *ngIf="dispatchDate.invalid && dispatchDate.touched">
-            <small *ngIf="!!dispatchDate.errors?.required">Please enter date of dispatch.</small>
-          </div>
+        <div class="text-danger" *ngIf="dispatchDate.invalid && dispatchDate.touched">
+          <small *ngIf="!!dispatchDate.errors?.required">Please enter date of dispatch.</small>
+        </div>
       </ion-item>
       <ion-item *ngIf="typeOfIssuer.value==='1'">
         <ion-label position="floating">Name of Contractor / Developer<span style="color: red">*</span></ion-label>
@@ -554,7 +556,8 @@
       </div>
 
       <ion-item lines="none">
-        <ion-label class="ion-text-wrap" floating>Self Declaration Certificate<span style="color: Red">*</span></ion-label>
+        <ion-label class="ion-text-wrap" floating>Self Declaration Certificate<span style="color: Red">*</span>
+        </ion-label>
       </ion-item>
       <ion-item>
         <input id='selfDeclarationFile' formControlName="selfDeclarationFile" type="file" accept="application/pdf"
@@ -570,7 +573,8 @@
       </ion-item>
       <ion-item>
         <ion-checkbox formControlName="selfDeclaration" slot="start" checked="false"></ion-checkbox>
-        <ion-label class="ion-text-wrap">I hereby declare that the information provided in above form is true & correct to the best
+        <ion-label class="ion-text-wrap">I hereby declare that the information provided in above form is true & correct
+          to the best
           of my knowledge and belief
           and nothing has been falsely stated. In case any of the above information is found to be false or untrue or
           misleading

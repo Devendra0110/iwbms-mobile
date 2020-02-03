@@ -14,7 +14,7 @@
       <form [formGroup]="verificationForm">
         <ion-item>
           <ion-label position="floating">BOCW Registration No.</ion-label>
-          <ion-input (ionChange)="clearErrors()" autocapitalize="characters" maxlength='14'
+          <ion-input (ionChange)="clearErrors()" autocapitalize="characters"
             formControlName="registrationNo" clearInput>
           </ion-input>
           <div class="text-danger" *ngIf="registrationNo.invalid && registrationNo.touched">

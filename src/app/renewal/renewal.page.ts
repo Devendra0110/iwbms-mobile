@@ -86,7 +86,7 @@ export class RenewalPage implements OnInit {
     private dialogs: Dialogs,
     private toast: Toast,
     private httpService: HttpService,
-    private loadingController:LoadingController
+    private loadingController: LoadingController
   ) {
     // network subscribers check the status of network even its type
     this.network.onDisconnect().subscribe(() => { });
@@ -116,7 +116,7 @@ export class RenewalPage implements OnInit {
       workCertificate: new FormControl('', [Validators.required]),
       yellowBook: new FormControl('', [Validators.required]),
       employerWorkDetails: new FormArray([this.employerWorkDetailsFormFroup()]),
-      registrationNo: new FormControl('', this.validationService.createValidatorsArray('regNo')),
+      registrationNo: new FormControl(''),
       contractorPhoneEmp: new FormControl('', this.validationService.createValidatorsArray('contractorPhoneEmp')),
       workPlaceEmp: new FormControl('', this.validationService.createValidatorsArray('workPlaceEmp')),
       townEmp: new FormControl('', this.validationService.createValidatorsArray('city')),
@@ -137,7 +137,7 @@ export class RenewalPage implements OnInit {
       typeOfIssuer: new FormControl('', [Validators.required]),
       typeOfIssuer_mr: new FormControl(''),
       registeredWith: new FormControl(''),
-      registrationNoOfIssuer: new FormControl('' ),
+      registrationNoOfIssuer: new FormControl(''),
       dispatchNo: new FormControl('', this.validationService.createValidatorsArray('dispatchNo')),
       dispatchDate: new FormControl(''),
       nameOfEmployer: new FormControl(''),
@@ -164,7 +164,6 @@ export class RenewalPage implements OnInit {
       typeOfWorkEmp_mr: new FormControl(''),
       moreThan90Days: new FormControl('', [Validators.required])
     });
-    this.registrationNo.setValue('MH323240000002');
     this.fileOptions = { workCertificate: null, yellowBook: null, selfDeclarationFile: null };
     this.files = { workCertificate: null, yellowBook: null, selfDeclarationFile: null };
 
@@ -210,7 +209,7 @@ export class RenewalPage implements OnInit {
   }
 
   ngOnInit() {
-console.log(this.registrationNoOfIssuer)
+    console.log(this.registrationNoOfIssuer)
     this.httpService.getDistricts(21).subscribe((districtsArrObj: any) => {
       // create district-name:district-id key-value in district
       for (const i of districtsArrObj) this.districts[i.district_name] = i.district_id;
@@ -616,8 +615,8 @@ console.log(this.registrationNoOfIssuer)
     switch (this.typeOfIssuer.value) {
 
       case '1': {
-          
-        this.registrationNoOfIssuer.setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9]{4,10}$'), ]);
+
+        this.registrationNoOfIssuer.setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9]{4,10}$'),]);
         this.registeredWith.setValidators([Validators.required]);
         this.dispatchDate.setValidators([Validators.required]);
         this.dispatchDate.updateValueAndValidity()
@@ -761,7 +760,7 @@ console.log(this.registrationNoOfIssuer)
         }
         this.httpService.saveRenewalData(formData, this.JWTToken).subscribe(
           async (res: any) => {
-            await loading.dismiss().then((result)=>{
+            await loading.dismiss().then((result) => {
               this.dialogs.alert(`Renewal Form is saved successfully. Please visit below WFC with original documents for verification : ${this.joinWfcNames(res)}`)
               this.router.navigate(['/dashboard']);
             })
@@ -769,7 +768,7 @@ console.log(this.registrationNoOfIssuer)
           (err: any) => console.error(err)
         );
       } else {
-        await loading.dismiss().then((result)=>{
+        await loading.dismiss().then((result) => {
           this.renewalFormGroup.markAllAsTouched();
           this.dialogs.alert('Form is not valid yet!');
         })

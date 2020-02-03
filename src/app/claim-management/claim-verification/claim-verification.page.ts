@@ -19,16 +19,16 @@ import { ValidationService } from '../../services/validation.service';
 export class ClaimVerificationPage implements OnInit {
 
   public claimVerificationForm: FormGroup;
-  public cardTitle:string;
+  public cardTitle: string;
   public ineligible: boolean;
   public unregisteredUser: boolean;
-  public allowOTP=false
+  public allowOTP = false
   public otpflag = false;
-  public resendOtpFlag=true;
+  public resendOtpFlag = true;
   public redataEntry = false;
-  public otpCountdown:number;
+  public otpCountdown: number;
   public ECode: string;
-  public passingResponse:any;
+  public passingResponse: any;
   public JWTToken: any;
 
   constructor(
@@ -46,8 +46,8 @@ export class ClaimVerificationPage implements OnInit {
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
     this.claimVerificationForm = new FormGroup({
-      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9_]*$/ig'), Validators.maxLength(14)]),
-      mobileNo: new FormControl('',this.validationService.createValidatorsArray('mobile'))
+      registrationNo: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_]*$/ig)]),
+      mobileNo: new FormControl('', this.validationService.createValidatorsArray('mobile'))
     });
 
     this.storage.get('token').then((val) => {
@@ -59,8 +59,8 @@ export class ClaimVerificationPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
   ionViewDidEnter() {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
@@ -71,14 +71,14 @@ export class ClaimVerificationPage implements OnInit {
     this.ineligible = false;
   }
 
-  deadWorker(){
+  deadWorker() {
     this.mobileNo.enable()
   }
 
   verify() {
-    const tokenObj ={
-      registrationNo:this.claimVerificationForm.getRawValue().registrationNo,
-      mobileNo:this.claimVerificationForm.getRawValue().mobileNo,
+    const tokenObj = {
+      registrationNo: this.claimVerificationForm.getRawValue().registrationNo,
+      mobileNo: this.claimVerificationForm.getRawValue().mobileNo,
     }
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
@@ -95,12 +95,12 @@ export class ClaimVerificationPage implements OnInit {
           (res: any) => {
             this.redataEntry = false;
             if (res.subscription === 'active') {
-              this.passingResponse=res;
-              this.allowOTP=true;
+              this.passingResponse = res;
+              this.allowOTP = true;
               this.cardTitle = "Registered Worker Mobile Verification"
-             
+
             } else {
-              this.allowOTP=false;
+              this.allowOTP = false;
               this.dialogs.alert('Worker is not eligible.')
               this.ineligible = true
             }
@@ -127,7 +127,7 @@ export class ClaimVerificationPage implements OnInit {
     }
     this.router.navigate(['/redata-verification'], registrationNumber)
   }
-  
+
   sendOTP() {
     this.resendOtpFlag = true;
     this.otpCountdown = 32
@@ -138,9 +138,9 @@ export class ClaimVerificationPage implements OnInit {
         const mobileNo = this.claimVerificationForm.get('mobileNo').value;
         const loading = this.loadingController.create({
           message: 'Please Wait',
-          duration:500,
+          duration: 500,
           spinner: "crescent"
-        }).then((res)=>{
+        }).then((res) => {
           res.present();
         });
         this.mobileVerification.sendClaimOTP(this.registrationNo.value, this.mobileNo.value).subscribe(
@@ -149,15 +149,15 @@ export class ClaimVerificationPage implements OnInit {
             if (res.message === 'OTP Sent') {
               this.otpflag = true;
               this.unregisteredUser = false;
-                  this.toast.show(`OTP sent`, '2000', 'bottom').subscribe(
-                    toast => {
-                      console.log(toast);
-                    }
-                  );
-              setInterval(()=>{
+              this.toast.show(`OTP sent`, '2000', 'bottom').subscribe(
+                toast => {
+                  console.log(toast);
+                }
+              );
+              setInterval(() => {
                 this.otpCountdown--;
-                this.resendOtpFlag = this.otpCountdown<1?false:true
-              },1000)
+                this.resendOtpFlag = this.otpCountdown < 1 ? false : true
+              }, 1000)
             }
           },
           (err: any) => {
@@ -181,20 +181,20 @@ export class ClaimVerificationPage implements OnInit {
         message: 'Please Wait',
         duration: 500,
         spinner: "crescent"
-      }).then((res)=>{
+      }).then((res) => {
         res.present();
       });
-      this.mobileVerification.validateOTP(mobileNo,otp).subscribe(
+      this.mobileVerification.validateOTP(mobileNo, otp).subscribe(
         (res: any) => {
           if (res.message === 'OTP Verified') {
             // otp verified
-            this.passingResponse['JWTToken']=this.JWTToken;
+            this.passingResponse['JWTToken'] = this.JWTToken;
             delete this.passingResponse.agePersonal
             const userObject: NavigationExtras = {
               state: this.passingResponse
             }
             this.claimVerificationForm.reset();
-            this.allowOTP=false;
+            this.allowOTP = false;
             this.otpflag = false;
             this.loadingController.dismiss();
             this.cardTitle = 'BOCW Registration No. Verification'
@@ -203,8 +203,8 @@ export class ClaimVerificationPage implements OnInit {
         },
         (err: any) => {
           this.loadingController.dismiss();
-          this.otpCountdown=0;
-          this.resendOtpFlag=false;
+          this.otpCountdown = 0;
+          this.resendOtpFlag = false;
           this.dialogs.alert('Invalid OTP');
         }
       );

@@ -786,7 +786,7 @@
             </ion-row>
 
             <ng-container *ngFor="let each of registrationFormGroup.get('familyDetails')['controls']; let i = index">
-              <ion-row [formGroupName]="i" align-items-center>
+              <ion-row [formGroupName]="i" class="ion-align-items-center">
                 <ion-col style="width: 15px">
                   <ion-card-header>{{i + 1}}.</ion-card-header>
                 </ion-col>

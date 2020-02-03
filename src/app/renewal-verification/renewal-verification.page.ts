@@ -43,7 +43,7 @@ export class RenewalVerificationPage implements OnInit {
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
     this.verificationForm = new FormGroup({
-      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9_]*$/ig'), Validators.maxLength(14)]),
+      registrationNo: new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9_]*$/ig)]),
       mobileNo: new FormControl()
     });
 
@@ -59,7 +59,7 @@ export class RenewalVerificationPage implements OnInit {
   }
 
   ngOnInit() { }
-  
+
   ionViewDidEnter() {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
