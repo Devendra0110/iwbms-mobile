@@ -1657,10 +1657,9 @@
         शिक्षेस पात्र राहीन याची मला पूर्ण जाणीव आहे.
       </ion-label>
     </ion-item>
-    <app-yellow-book [registrationFormGroup]="registrationFormGroup"></app-yellow-book>
+    <app-yellow-book *ngIf='reDataEntry' [registrationFormGroup]="registrationFormGroup"></app-yellow-book>
     <ion-button *ngIf="!reDataEntry" mode="ios" expand="block" (click)="save()">Save</ion-button>
     <ion-button *ngIf="reDataEntry" mode="ios" expand="block" (click)="saveLegacyData()">Save Legacy Data</ion-button>
-
   </form>
 
 
