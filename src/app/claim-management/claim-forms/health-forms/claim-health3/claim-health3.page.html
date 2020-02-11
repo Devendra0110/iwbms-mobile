@@ -96,54 +96,71 @@
         </div>
       </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">IFSC Code / आयएफएससी कोड <span style="color: Red">*</span>
-        </ion-label>
-        <ion-input type="text"   (change)="searchByifscCodeBank()" formControlName="ifscCodeBank" id="ifscCodeBank" autocapitalize="characters"
-          [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched"></ion-input>
-          <ion-button (click)="searchByifscCodeBank()">Search</ion-button>
-        <div class="text-danger" *ngIf="ifscCodeBank.invalid && ifscCodeBank.touched">
-          <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['required']">Please enter Your IFSC code </small>
-          <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['maxlength']">You have reached your
-            maximum</small>
-        </div>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Bank Name / बँकेचे नाव <span style="color: Red">*</span>
-        </ion-label>
-        <ion-input type="text" id="bankNameBank" formControlName="bankNameBank" [class.is-invalid]="bankNameBank.invalid && bankNameBank.touched">
-        </ion-input>
-        <div class="text-danger" *ngIf="bankNameBank.invalid && bankNameBank.touched">
-          <small *ngIf="bankNameBank.errors && bankNameBank.errors['required']">Please enter your Bank Name </small>
-          <small *ngIf="bankNameBank.errors && bankNameBank.errors['maxlength']">You have reached your
-            maximum</small>
-        </div>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Bank Branch / बँक शाखा<span style="color: Red">*</span>
-        </ion-label>
-        <ion-input type="text" formControlName="bankBranchBank" id="bankBranchBank"
-          [class.is-invalid]="bankBranchBank.invalid && bankBranchBank.touched"></ion-input>
-        <div class="text-danger" *ngIf="bankBranchBank.invalid && bankBranchBank.touched">
-          <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['required']">Please enter your Bank Branch </small>
-          <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['maxlength']">You have reached your
-            maximum</small>
-        </div>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Bank Address / बँकेचा पत्ता<span style="color: Red">*</span>
-        </ion-label>
-        <ion-input type="text" formControlName="bankAddressBank" id="bankAddressBank"
-          [class.is-invalid]="bankAddressBank.invalid && bankAddressBank.touched"></ion-input>
-        <div class="text-danger" *ngIf="bankAddressBank.invalid && bankAddressBank.touched">
-          <small *ngIf="bankAddressBank.errors && bankAddressBank.errors['required']">Please enter Address of Bank</small>
-          <small *ngIf="bankAddressBank.errors && bankAddressBank.errors['maxlength']">You have reached your
-            maximum</small>
-        </div>
-      </ion-item>
+    
+    <div class="col-lg-9 form-check mb-3" *ngIf="!filledFormData">
+      <ion-toggle id="open" slot="start"   (ionChange)="openOtherDetails($event)" >Check to Change the Nominee. / नामनिर्देशन बदलण्यासाठी खूण करा.</ion-toggle>
+    <ion-label>Check if the applicant and registered worker have an account. / <br> अर्जदार आणि नोंदणीकृत कामगार यांचे खाते असेल तर खूण करा.</ion-label>
+    </div>
+    <ion-list *ngIf="open">
+        <ion-header class="ml-2" style="font-size:18px">BANK DETAILS: / बँक तपशील:
+        </ion-header>
+  
+        <ion-item>
+          <ion-label position="floating">IFSC Code / आयएफएससी कोड<span class="text-danger">*</span></ion-label>
+          <ion-input  autocapitalize="characters"  [class.is-invalid]="ifscCodeBank.invalid && ifscCodeBank.touched" formControlName="ifscCodeBank"   (change)="searchByifscCodeBank()"
+            id="ifscCodeBank" clearInput></ion-input>
+            <ion-button (click)="searchByifscCodeBank()">Search</ion-button>
+          <div class="text-danger" *ngIf="ifscCodeBank.invalid && ifscCodeBank.touched">
+            <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['required']">Please enter IFSC Code.</small>
+            <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['maxlength']">You Have Reached Your
+              Maximum.</small>
+            <small *ngIf="ifscCodeBank.errors && ifscCodeBank.errors['minlength']">Please enter appropriate IFSC
+              Code.</small> </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Bank Name / बँकेचे नाव<span class="text-danger">*</span></ion-label>
+          <ion-input [class.is-invalid]="bankNameBank.invalid && bankNameBank.touched" formControlName="bankNameBank"
+            id="bankNameBank" clearInput></ion-input>
+          <div class="text-danger" *ngIf="bankNameBank.invalid && bankNameBank.touched">
+            <small *ngIf="bankNameBank.errors && bankNameBank.errors['required']">Please enter Bank Name.</small>
+            <small *ngIf="bankNameBank.errors && bankNameBank.errors['maxlength']">You Have Reached Your
+              Maximum.</small>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Bank Branch / बँक शाखा<span class="text-danger">*</span></ion-label>
+          <ion-input [class.is-invalid]="bankBranchBank.invalid && bankBranchBank.touched"
+            formControlName="bankBranchBank" id="bankBranchBank" clearInput></ion-input>
+          <div class="text-danger" *ngIf="bankBranchBank.invalid && bankBranchBank.touched">
+            <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['required']">Please enter Bank branch.</small>
+            <small *ngIf="bankBranchBank.errors && bankBranchBank.errors['maxlength']">You Have Reached Your
+              Maximum.</small>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Bank Address / बँकेचा पत्ता<span class="text-danger">*</span></ion-label>
+          <ion-input [class.is-invalid]="bankAddressBank.invalid && bankAddressBank.touched"
+            formControlName="bankAddressBank" id="bankAddressBank" clearInput></ion-input>
+          <div class="text-danger" *ngIf="bankAddressBank.invalid && bankAddressBank.touched">
+            <small *ngIf="bankAddressBank.errors && bankAddressBank.errors['required']">Please enter Bank
+              Address.</small>
+            <small *ngIf="bankAddressBank.errors && bankAddressBank.errors['maxlength']">You Have Reached Your
+              Maximum.</small>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Account Number / खाते क्रमांक<span class="text-danger">*</span></ion-label>
+          <ion-input [class.is-invalid]="accountNumberBank.invalid && accountNumberBank.touched"
+            formControlName="accountNumberBank" id="accountNumberBank" clearInput></ion-input>
+          <div class="text-danger" *ngIf="accountNumberBank.invalid && accountNumberBank.touched">
+            <small *ngIf="accountNumberBank.errors && accountNumberBank.errors['required']">Please enter Account
+              Number.</small>
+            <small *ngIf="accountNumberBank.errors && accountNumberBank.errors['minlength']">Enter valid Account
+              Number.</small>
+          </div>
+        </ion-item>
+  
+      </ion-list>
       <br>
       <ion-header class="ml-2"><b><u>DOCUMENTS REQUIRED:-</u></b></ion-header>
       <ion-item lines="none">
@@ -184,7 +201,11 @@
 
 
       <ion-item lines="none">
+<<<<<<< Updated upstream
         <ion-label class="ion-text-wrap" floating>4. Self-Declaration / स्वयंघोषणापत्र </ion-label>
+=======
+        <ion-label class="ion-text-wrap" floating>4. Self Declaration / स्वयंघोषणापत्र </ion-label>
+>>>>>>> Stashed changes
       </ion-item>
       <ion-item>
         <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" accept="application/pdf">

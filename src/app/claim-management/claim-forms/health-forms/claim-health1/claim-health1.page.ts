@@ -47,8 +47,8 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
     super(transliterate, httpService, claimService, router, storage, toast,dialogs);
     this.issuedBy = Constants.TYPE_OF_ISSUER;
     this.childAgeFlag = false
-    this.fileOptions = { health1Form1Doc1: '', rationCardDoc: '', selfDeclaration: '' };
-    this.files = { health1Form1Doc1: '', rationCardDoc: '', selfDeclaration: '' };
+    this.fileOptions = { health1Form1Doc1: '', rationCardDoc: '', selfDeclaration: '', dischargeSum:''};
+    this.files = { health1Form1Doc1: '', rationCardDoc: '', selfDeclaration: '', dischargeSum:'' };
 
 
 
@@ -71,6 +71,8 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
       birthCertificateIssuedBy: new FormControl('', this.validationService.createValidatorsArray('birthCertificateIssuedBy')),
       benefitAmount: new FormControl(''),
       verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      dischargeSum: new FormControl(null, this.validationService.createValidatorsArray('dischargeSum')),
+
 
       // marathi Formcontrols
       nameOfHospital_mr: new FormControl(''),
@@ -168,6 +170,8 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
   get rationCardDoc() { return this.formGroup.get('rationCardDoc') }
   get birthCertificateNumber() { return this.formGroup.get('birthCertificateNumber') }
   get birthCertificateIssuedBy() { return this.formGroup.get('birthCertificateIssuedBy') }
+  get dischargeSum() { return this.formGroup.get('dischargeSum') }
+
 
   // marathi getters
   get nameOfHospital_mr() { return this.formGroup.get('nameOfHospital_mr'); }
@@ -205,6 +209,8 @@ export class ClaimHealth1Page extends ClaimBasePage implements OnInit {
             health1Form1Doc1: this.fileOptions['health1Form1Doc1'],
             selfDeclaration :  this.fileOptions['selfDeclaration'],
             rationCardDoc: this.fileOptions['rationCardDoc'],
+            dischargeSum: this.fileOptions['dischargeSum'],
+
           }
         }
       };

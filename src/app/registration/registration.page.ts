@@ -649,6 +649,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }, err => console.log(err));
 
     this.isBocwRegistered(0);
+    // this.registeredWith.valueChanges.subscribe((registeredWith_id)=>{
+    //   if(registeredWith_id==='1'){
+    //     this.dispatchNo.setValidators([]);
+    //   }else{
+    //     this.dispatchNo.setValidators([Validators.required]);
+    //   }
+    //   this.dispatchNo.reset();
+    // })
   }
 
   ngAfterViewInit() {

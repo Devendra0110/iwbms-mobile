@@ -45,7 +45,7 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
   ) {
     super(transliterate, httpService, claimService, router, storage, toast,dialogs);
     this.familyArray = [];
-    this.fileOptions = { health3Form3Doc1: '', health3Form3Doc2: '', aadharCardDoc: '', selfDeclaration: '' };
+    this.fileOptions = { health3Form3Doc1: '', health3Form3Doc2: '', aadharCardDoc: '', selfDeclaration: '',  };
     this.files = { health3Form3Doc1: '', health3Form3Doc2: '', aadharCardDoc: '', selfDeclaration: '' };
 
     this.formGroup = new FormGroup({
@@ -69,6 +69,8 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
       bankNameBank: new FormControl('', this.validationService.createValidatorsArray('bankNameBank')),
       bankBranchBank: new FormControl('', this.validationService.createValidatorsArray('bankBranchBank')),
       bankAddressBank: new FormControl('', this.validationService.createValidatorsArray('bankAddressBank')),
+      accountNumberBank: new FormControl('', this.validationService.createValidatorsArray('accountNumberBank')),
+
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
     });
      this.todaysDate = {
@@ -114,6 +116,9 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
   get bankNameBank() { return this.formGroup.get('bankNameBank'); }
   get bankAddressBank() { return this.formGroup.get('bankAddressBank'); }
   get bankBranchBank() { return this.formGroup.get('bankBranchBank'); }
+  get accountNumberBank() { return this.formGroup.get('accountNumberBank'); }
+
+
 
   //marathi getters
   get nameOfHospital_mr() { return this.formGroup.get('nameOfHospital_mr'); }
@@ -172,6 +177,8 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
           bankNameBank: this.formGroup.getRawValue().bankNameBank,
           bankBranchBank: this.formGroup.getRawValue().bankBranchBank,
           bankAddressBank: this.formGroup.getRawValue().bankAddressBank,
+          accountNumberBank: this.formGroup.getRawValue().accountNumberBank.toString(),
+
           benefitType: this.benefitType.value,
           benefitAmount: this.benefitAmount.value,
           documents: {
@@ -186,6 +193,24 @@ export class ClaimHealth3Page extends ClaimBasePage implements OnInit {
     } else {
       this.formGroup.markAllAsTouched();
       this.dialogs.alert('Please Update the form.');
+    }
+  }
+
+  openOtherDetails(event: any) {
+    this.open = !this.open;
+    if (!this.open) {
+      this.formGroup.get('bankNameBank').patchValue(this.user['bankNameBank']);
+      this.formGroup.get('bankBranchBank').patchValue(this.user['bankBranchBank']);
+      this.formGroup.get('bankAddressBank').patchValue(this.user['bankAddressBank']);
+      this.formGroup.get('accountNumberBank').patchValue(this.user['accountNumberBank']);
+      this.formGroup.get('ifscCodeBank').patchValue(this.user['ifscCodeBank']);
+
+    } else {
+      this.formGroup.get('bankNameBank').reset()
+      this.formGroup.get('bankBranchBank').reset()
+      this.formGroup.get('bankAddressBank').reset()
+      this.formGroup.get('accountNumberBank').reset()
+      this.formGroup.get('ifscCodeBank').reset()
     }
   }
 }
