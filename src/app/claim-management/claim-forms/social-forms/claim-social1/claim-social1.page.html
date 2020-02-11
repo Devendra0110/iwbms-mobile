@@ -54,7 +54,7 @@
       </ion-item>
     </ion-list>
     <ion-list>
-      <ion-list-header style="font-size:20px;">APPLICANT'S SPOUSE DETAILS / अर्जदाराचे स्पष्टीकरण तपशील</ion-list-header>
+      <ion-list-header style="font-size:20px;">APPLICANT'S SPOUSE DETAILS / अर्जदाराच्या जोडीदाराचा तपशील</ion-list-header>
       <ion-item>
         <ion-label position="floating">Full Name / पूर्ण नाव<span class="text-danger">*</span></ion-label>
         <ion-input [class.is-invalid]="fullNameSpouse.invalid && fullNameSpouse.touched" maxlength="120" minlength="3" formControlName="fullNameSpouse" id="fullNameSpouse"></ion-input>
@@ -138,11 +138,7 @@
           </div>
 
       <ion-item>
-<<<<<<< Updated upstream
         <ion-label class="ion-text-wrap"> 4. Self-Declaration / स्वयंघोषणापत्र .</ion-label>
-=======
-        <ion-label class="ion-text-wrap"> 4. Self Declaration / स्वयंघोषणापत्र.</ion-label>
->>>>>>> Stashed changes
       </ion-item>
       <ion-item>
         <input  type="file" (change)="getFileDetails($event)"  [class.is-invalid]="selfDeclaration.invalid && selfDeclaration.touched" formControlName="selfDeclaration" id="selfDeclaration" accept="application/pdf">
