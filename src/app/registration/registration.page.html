@@ -1136,7 +1136,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Town/City गाव / शहर<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Town/City / गाव/शहर<span style="color: Red">*</span></ion-label>
           <ion-input class="transliterate" id='employerDetails-townEmp' formControlName="townEmp"
             [class.is-invalid]="townEmp.invalid && townEmp.touched" class="transliterate"
             (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
@@ -1182,7 +1182,7 @@
           </div>
         </ion-item>
 
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="floating">Wages per day / दिवसा मजुरी<span style="color: Red">*</span></ion-label>
           <ion-input formControlName="remunerationPerDayEmp" maxlength="8" type="tel"
             [class.is-invalid]="remunerationPerDayEmp.invalid && remunerationPerDayEmp.touched"
@@ -1190,10 +1190,10 @@
           <div class="text-danger" *ngIf="remunerationPerDayEmp.invalid && remunerationPerDayEmp.touched">
             <small *ngIf="!!remunerationPerDayEmp.errors?.required">Please enter your Remuneration per day.</small>
           </div>
-        </ion-item>
+        </ion-item> -->
 
         <ion-item>
-          <ion-label position="floating">Nature of work<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Nature of work / कामाचे स्वरूप<span style="color: Red">*</span></ion-label>
           <ion-select formControlName="natureOfWorkEmp"
             [class.is-invalid]="natureOfWorkEmp.invalid && natureOfWorkEmp.touched" id='employerDetails-natureOfWorkEmp'
             (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
@@ -1208,10 +1208,11 @@
         <ion-item hidden *ngIf="natureOfWorkEmp.value">
           {{natureOfWorkOptionsMarathi[natureOfWorkEmp.value]}}
         </ion-item>
+
         <ion-list-header color="secondary" style="margin-top: 10px; text-align: center; font-size: 18px;color:white;">
           Details of the person who issued the 90 days working certificate</ion-list-header>
         <ion-item>
-          <ion-label position="floating">Type of Issuer<span style="color: red">*</span></ion-label>
+          <ion-label position="floating">Type of Issuer / जारी करणार्‍याचा प्रकार<span style="color: red">*</span></ion-label>
           <ion-select [class.is-invalid]="typeOfIssuer.invalid && typeOfIssuer.touched" interface="action-sheet"
             formControlName="typeOfIssuer" id='employerDetails-typeOfIssuer'>
             <ion-select-option *ngFor="let issuerType of typeOfIssuerOptions|keyvalue" [value]="issuerType.key">
@@ -1221,8 +1222,9 @@
             <small *ngIf="!!typeOfIssuer.errors?.required">Please select type of certificate issuer.</small>
           </div>
         </ion-item>
+
         <ion-item *ngIf="typeOfIssuer.value==='1'">
-          <ion-label position="floating">Registered With<span style="color: red">*</span></ion-label>
+          <ion-label position="floating">Registered With / सह नोंदणीकृत<span style="color: red">*</span></ion-label>
           <ion-select [class.is-invalid]="registeredWith.invalid && registeredWith.touched" interface="action-sheet"
             formControlName='registeredWith' id='employerDetails-registeredWith'>
             <ion-select-option *ngFor="let registrationType of registrationTypeOptions|keyvalue"
@@ -1232,8 +1234,9 @@
             <small *ngIf="!!registeredWith.errors?.required">Please select type of registration of employer.</small>
           </div>
         </ion-item>
+
         <ion-item *ngIf="typeOfIssuer.value==='1'">
-          <ion-label position="floating">Registration No. Of Issuer<span style="color: red">*</span></ion-label>
+          <ion-label position="floating">Registration No. Of Issuer /<br>जारी करणार्‍याची नोंदणी क्रमांक<span style="color: red">*</span></ion-label>
           <ion-input [class.is-invalid]="registrationNoOfIssuer.invalid && registrationNoOfIssuer.touched"
             maxlength="50" formControlName='registrationNoOfIssuer' class='transliterate'
             id='employerDetails-registrationNoOfIssuer'></ion-input>
@@ -1241,16 +1244,18 @@
             <small *ngIf="!!registrationNoOfIssuer.errors?.required">Please enter registration number of issuer.</small>
           </div>
         </ion-item>
+
         <ion-item>
-          <ion-label position="floating">Dispatch Number<span style="color: red">*</span></ion-label>
+          <ion-label position="floating">Registration Certificate issue Date /<br>नोंदणी प्रमाणपत्र जारी तारीख<span style="color: red">*</span></ion-label>
           <ion-input maxlength="50" [class.is-invalid]="dispatchNo.invalid && dispatchNo.touched" type="tel"
             formControlName='dispatchNo' id='employerDetails-dispatchNo' class='transliterate'></ion-input>
           <div class="text-danger" *ngIf="dispatchNo.invalid && dispatchNo.touched">
             <small *ngIf="!!dispatchNo.errors?.required">Please enter your dispatch number.</small>
           </div>
         </ion-item>
+
         <ion-item>
-          <ion-label position="floating">Dispatch Date<span style="color: red">*</span></ion-label>
+          <ion-label position="floating">Dispatch Date / पाठविण्याची तारीख<span style="color: red">*</span></ion-label>
           <ion-icon slot="end" name="calendar"></ion-icon>
           <ion-datetime [min]="appointmentDate" [max]="maxTodaysDate" displayFormat="DD MMMM, YYYY"
             picker-format="DD MMMM YYYY" [class.is-invalid]="dispatchDate.invalid && dispatchDate.touched"
@@ -1259,8 +1264,9 @@
             <small *ngIf="!!dispatchDate.errors?.required">Please enter date of dispatch.</small>
           </div>
         </ion-item>
+
         <ion-item *ngIf="typeOfIssuer.value ==='1'">
-          <ion-label position="floating">Name of Contractor / Developer<span style="color: red">*</span></ion-label>
+          <ion-label position="floating">Name of Contractor/Developer /<br>ठेकेदार / विकसकाचे नाव<span style="color: red">*</span></ion-label>
           <ion-input formControlName='nameOfEmployer' id='employerDetails-nameOfEmployer'
             [class.is-invalid]="nameOfEmployer.invalid && nameOfEmployer.touched" class='transliterate'
             (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
@@ -1271,8 +1277,9 @@
         <ion-item *ngIf="nameOfEmployer_mr.value">
           <ion-label>{{nameOfEmployer_mr.value}}</ion-label>
         </ion-item>
+
         <ion-item *ngIf="typeOfIssuer.value ==='1'">
-          <ion-label position="floating">District of Employer</ion-label>
+          <ion-label position="floating">District of Employer / नियोक्ता जिल्हा</ion-label>
           <ion-select (ionChange)="transliterateDTP($event)" class="transliterate" formControlName="districtOfEmployer"
             id='employerDetails-districtOfEmployer' interface="action-sheet"
             [class.is-invalid]="districtOfEmployer.invalid && districtOfEmployer.touched">
@@ -1286,8 +1293,9 @@
         <ion-item *ngIf="districtOfEmployer_mr.value">
           <ion-label>{{districtOfEmployer_mr.value}}</ion-label>
         </ion-item>
+
         <ion-item *ngIf="typeOfIssuer.value ==='1'">
-          <ion-label position="floating">Taluka of Employer<span style="color: red">*</span></ion-label>
+          <ion-label position="floating">Taluka of Employer / मालकाचा तालुका<span style="color: red">*</span></ion-label>
           <ion-select (ionChange)="transliterateDTP($event)" class="transliterate" formControlName="talukaOfEmployer"
             id='employerDetails-talukaOfEmployer' interface="action-sheet"
             [class.is-invalid]="talukaOfEmployer.invalid && talukaOfEmployer.touched">
@@ -1301,8 +1309,9 @@
         <ion-item *ngIf="talukaOfEmployer_mr.value">
           <ion-label>{{talukaOfEmployer_mr.value}}</ion-label>
         </ion-item>
+
         <ion-item *ngIf="typeOfIssuer.value==='2'">
-          <ion-label position="floating">Name of Gram Panchayat<span style="color: red">*</span></ion-label>
+          <ion-label position="floating">Name of Gram Panchayat / ग्रामपंचायतीचे नाव<span style="color: red">*</span></ion-label>
           <ion-input formControlName='nameOfGramPanchayat' id='employerDetails-nameOfGramPanchayat'
             [class.is-invalid]="nameOfGramPanchayat.invalid && nameOfGramPanchayat.touched" class='transliterate'
             (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
@@ -1315,7 +1324,7 @@
         </ion-item>
 
         <ion-item *ngIf="typeOfIssuer.value==='2'">
-          <ion-label position="floating">District of Gram Panchayat<span style="color: red">*</span></ion-label>
+          <ion-label position="floating">District of Gram Panchayat / ग्रामपंचायत जिल्हा<span style="color: red">*</span></ion-label>
           <ion-select (ionChange)="transliterateDTP($event)" class="transliterate"
             formControlName="districtOfGramPanchayat" id='employerDetails-districtOfGramPanchayat'
             [class.is-invalid]="districtOfGramPanchayat.invalid && districtOfGramPanchayat.touched">
@@ -1329,8 +1338,9 @@
         <ion-item *ngIf="districtOfGramPanchayat_mr.value">
           <ion-label>{{districtOfGramPanchayat_mr.value}}</ion-label>
         </ion-item>
+
         <ion-item *ngIf="typeOfIssuer.value==='2'">
-          <ion-label position="floating">Taluka of Gram Panchayat<span style="color: red">*</span></ion-label>
+          <ion-label position="floating">Taluka of Gram Panchayat / ग्रामपंचायतीचा तालुका<span style="color: red">*</span></ion-label>
           <ion-select (ionChange)="transliterateDTP($event)" class="transliterate"
             formControlName="talukaOfGramPanchayat" id='employerDetails-talukaOfGramPanchayat'
             [class.is-invalid]="talukaOfGramPanchayat.invalid && talukaOfGramPanchayat.touched">
@@ -1344,6 +1354,7 @@
         <ion-item *ngIf="talukaOfGramPanchayat_mr.value">
           <ion-label>{{talukaOfGramPanchayat_mr.value}}</ion-label>
         </ion-item>
+
         <ion-item *ngIf="typeOfIssuer.value==='5'">
           <ion-label position="floating">Name of Municipal Corporation / महानगरपालिकेचे नाव <span
               style="color: red">*</span></ion-label>
@@ -1358,6 +1369,7 @@
         <ion-item *ngIf="nameOfMunicipalCorporation_mr.value">
           <ion-label>{{nameOfMunicipalCorporation_mr.value}}</ion-label>
         </ion-item>
+
         <ion-item *ngIf="typeOfIssuer.value==='5'">
           <ion-label position="floating">District of Municipal Corporation / महानगरपालिकेचे जिल्हा <span
               style="color: red">*</span></ion-label>
@@ -1375,6 +1387,7 @@
         <ion-item *ngIf="districtOfMunicipalCorporation_mr.value">
           <ion-label>{{districtOfMunicipalCorporation_mr.value}}</ion-label>
         </ion-item>
+
         <ion-item *ngIf="typeOfIssuer.value==='5'">
           <ion-label position="floating">Taluka of Municipal Corporation / महानगरपालिकेचा तालुका <span
               style="color: red">*</span></ion-label>
@@ -1416,21 +1429,21 @@
                 <ion-card-header>Edit</ion-card-header>
               </ion-col>
               <ion-col style="width: 15px;margin-left: -71px;">
-                <ion-card-header>Type of Issuer<span style="color: Red">*</span></ion-card-header>
+                <ion-card-header>Type of Issuer/जारी करणार्‍याचा प्रकार<span style="color: Red">*</span></ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header>Full Name<span style="color: Red">*</span></ion-card-header>
-              </ion-col>
-
-              <ion-col style="width: 15px">
-                <ion-card-header>Mobile number<span style="color: Red">*</span></ion-card-header>
+                <ion-card-header>Full Name/पूर्ण नाव<span style="color: Red">*</span></ion-card-header>
               </ion-col>
 
               <ion-col style="width: 15px">
-                <ion-card-header>From Date<span style="color: Red">*</span></ion-card-header>
+                <ion-card-header>Mobile number/मोबाइल नंबर<span style="color: Red">*</span></ion-card-header>
+              </ion-col>
+
+              <ion-col style="width: 15px">
+                <ion-card-header>From Date/या तारखेपासून<span style="color: Red">*</span></ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header>To Date<span style="color: Red">*</span></ion-card-header>
+                <ion-card-header>To Date/आजपर्यंत<span style="color: Red">*</span></ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
                 <ion-card-header>Delete</ion-card-header>
@@ -1593,7 +1606,7 @@
             (change)="uploadFile($event)">
         </ion-item>
         <ion-item lines="none">
-          <ion-label class="ion-text-wrap" floating> Self-Declaration / स्वयंघोषणापत्र<span style="color: Red">*</span>
+          <ion-label class="ion-text-wrap" floating> Self Declaration / स्वयंघोषणापत्र<span style="color: Red">*</span>
             <div class="text-danger" *ngIf="selfDeclarationDocuments.invalid && selfDeclarationDocuments.touched">
               <small *ngIf="!!selfDeclarationDocuments.errors?.required">Document is required</small>
             </div>
