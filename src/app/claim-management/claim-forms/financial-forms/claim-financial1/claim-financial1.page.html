@@ -357,6 +357,17 @@
                   document.</small>
               </div>
 
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap" floating>7.Panchnama / पंचनामा .<span style="color: Red">*</span></ion-label>
+              </ion-item>
+              <ion-item>
+                <input id='panchnamaDoc'  (change)="getFileDetails($event)" formControlName="panchnamaDoc" type="file" accept="application/pdf">
+              </ion-item>
+              <div class="text-danger" *ngIf="panchnamaDoc.invalid && panchnamaDoc.touched">
+                <small *ngIf="panchnamaDoc.errors && panchnamaDoc.errors['required']">Please upload required
+                  document.</small>
+              </div>
+
               <ion-item>
                   <ion-checkbox formControlName="verifyDocumentCheck"  checked="false" color="dark"  slot="start"></ion-checkbox>
                   <ion-label>Documents Verified</ion-label>

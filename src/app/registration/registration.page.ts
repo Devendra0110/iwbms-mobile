@@ -891,8 +891,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       // alert('select date');
     }
     this.minAppointmentDate = moment(this.dobPersonal.value,'YYYY-MM-DD').add(18,'years').format('YYYY-MM-DD')
-    
   }
+
+
+
 
   getter(formGroup) {
     const formValue = formGroup.value;
@@ -961,7 +963,10 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       index,
       mode,
       familyDetail: familyForm,
-      familyAadhar:this.familyAaadhar
+      familyAadhar:this.familyAaadhar,
+      maritialStatus: this.maritalStatusPersonal.value,
+      gender: this.genderPersonal.value
+
     };
     const familyModal = await this.mdlController.create({
       component: FamilyModalPage,

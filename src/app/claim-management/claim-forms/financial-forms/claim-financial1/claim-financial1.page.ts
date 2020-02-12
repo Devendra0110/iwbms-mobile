@@ -86,6 +86,8 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
       FIRNo: new FormControl('', this.validationService.createValidatorsArray('FIRNo')),
       policeStationAdd: new FormControl('', this.validationService.createValidatorsArray('policeStationAdd')),
       verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      panchnamaDoc: new FormControl(null, this.validationService.createValidatorsArray('panchnamaDoc')),
+
 
 
       // marathi values
@@ -147,6 +149,7 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   get issuingAuthority() { return this.formGroup.get('issuingAuthority') }
   get policeStationAdd() { return this.formGroup.get('policeStationAdd') }
   get policeStationAdd_mr() { return this.formGroup.get('policeStationAdd_mr') }
+  get panchnamaDoc() { return this.formGroup.get('panchnamaDoc'); }
 
   get FIRNo() { return this.formGroup.get('FIRNo') }
   get dateOfFir() { return this.formGroup.get('dateOfFir') }

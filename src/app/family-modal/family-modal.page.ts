@@ -34,6 +34,10 @@ export class FamilyModalPage implements OnInit {
   public educationOptions: string[] = [];
   public educationOptionsMarathi: string[] = [];
   public adultFlag:boolean;
+  public maritialStatus: string;
+  public gender: string;
+
+
 
   constructor(
     private validationService: ValidationService,
@@ -67,12 +71,12 @@ export class FamilyModalPage implements OnInit {
         bocwRegistrationNo: new FormControl('')
     });
 
-      this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
-      for (const i of familyRelationArrObj) {
-        this.familyRelationOptions[Number(i.family_relation_id)] = i.relation_title_en;
-        this.familyRelationOptionsMarathi[Number(i.family_relation_id)] = i.relation_title_mr;
-      }
-    });
+      // this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
+      // for (const i of familyRelationArrObj) {
+      //   this.familyRelationOptions[Number(i.family_relation_id)] = i.relation_title_en;
+      //   this.familyRelationOptionsMarathi[Number(i.family_relation_id)] = i.relation_title_mr;
+      // }
+    // });
 
       this.httpService.getEducation().subscribe((educationArrObj: any) => {
       for (const i of educationArrObj) {
@@ -83,6 +87,9 @@ export class FamilyModalPage implements OnInit {
     }
 
   ngOnInit() {
+    this.maritialStatus = this.modalData.maritialStatus;
+    this.gender = this.modalData.gender;
+    this.getRelation();
     this.familyAadhar = this.modalData.familyAadhar
     if (this.modalData.mode === 'update') {
       this.familyFormGroup.patchValue(this.modalData.familyDetail.getRawValue());
@@ -101,6 +108,36 @@ export class FamilyModalPage implements OnInit {
       this.isRegisteredInBOCW.setValue(false);
       this.bocwValidatorsChange();
     })
+  }
+
+
+  public getRelation(): void {
+    if(this.maritialStatus === '1' && this.gender === '1'){
+      this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
+        for (const i of familyRelationArrObj) {
+          this.familyRelationOptions[Number(i.family_relation_id)] = i.relation_title_en;
+          this.familyRelationOptionsMarathi[Number(i.family_relation_id)] = i.relation_title_mr;
+        } 
+        delete this.familyRelationOptions[4]
+        delete this.familyRelationOptions[5] ;
+      });
+  }else if(this.maritialStatus=== '1' && this.gender === '3'){
+    this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
+      for (const i of familyRelationArrObj) {
+        this.familyRelationOptions[Number(i.family_relation_id)] = i.relation_title_en;
+          this.familyRelationOptionsMarathi[Number(i.family_relation_id)] = i.relation_title_mr;
+      }
+      delete this.familyRelationOptions[4]
+      delete this.familyRelationOptions[5] ;
+    });
+  }else{
+    this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
+      for (const i of familyRelationArrObj) {
+        this.familyRelationOptions[Number(i.family_relation_id)] = i.relation_title_en;
+        this.familyRelationOptionsMarathi[Number(i.family_relation_id)] = i.relation_title_mr;
+      }
+    });
+  }
   }
 
   transliterateDirect(event) {

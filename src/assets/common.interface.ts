@@ -19,7 +19,9 @@ export interface familyModalData {
     index: number;
     mode: string;
     familyDetail?: FormGroup;
-    familyAadhar:string[]
+    familyAadhar:string[],
+    maritialStatus: string,
+    gender: string
 }
 
 export interface EmployerModalData {

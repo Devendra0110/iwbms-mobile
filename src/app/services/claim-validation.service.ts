@@ -833,6 +833,12 @@ export class ClaimValidationService {
         ];
         break;
       }
+      case 'panchnamaDoc': {
+        validatorsArr = [
+          Validators.required
+        ];
+        break;
+      }
 
       case 'typeOfDelivery': {
         validatorsArr = [
