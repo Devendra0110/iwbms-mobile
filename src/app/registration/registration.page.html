@@ -1074,10 +1074,10 @@
         <ion-item>
           <ion-label position="floating">Workplace / Site Address कामाची जागा / साइट पत्ता<span
               style="color: Red">*</span></ion-label>
-          <ion-input class="transliterate" type="text" maxlength="50"
+              <ion-textarea class="transliterate" rows="1" type="text" maxlength="150"
             [class.is-invalid]="workPlaceEmp.invalid && workPlaceEmp.touched" formControlName="workPlaceEmp"
             id='employerDetails-workPlaceEmp' class="transliterate" (ionBlur)="transliterateDirect($event)"
-            autocapitalize="words" clearInput></ion-input>
+            autocapitalize="words" clearInput> </ion-textarea>    
           <div class="text-danger" *ngIf="workPlaceEmp.invalid && workPlaceEmp.touched">
             <small *ngIf="!!workPlaceEmp.errors?.required">Please enter workplace</small>
             <small *ngIf="!!workPlaceEmp.errors?.maxlength">You have exceeded max length.</small>

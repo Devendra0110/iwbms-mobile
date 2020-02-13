@@ -112,23 +112,40 @@ export class FamilyModalPage implements OnInit {
 
 
   public getRelation(): void {
-    if(this.maritialStatus === '1' && this.gender === '1'){
+    if(this.maritialStatus === '1'){
       this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
         for (const i of familyRelationArrObj) {
           this.familyRelationOptions[Number(i.family_relation_id)] = i.relation_title_en;
           this.familyRelationOptionsMarathi[Number(i.family_relation_id)] = i.relation_title_mr;
         } 
-        delete this.familyRelationOptions[4]
-        delete this.familyRelationOptions[5] ;
+        delete this.familyRelationOptions[4];
+        delete this.familyRelationOptions[5];
+
+
+        // delete this.familyRelationOptions[8];
+        // delete this.familyRelationOptions[9];
+        // delete this.familyRelationOptions[12];
+        // delete this.familyRelationOptions[13];
+        // delete this.familyRelationOptions[16];
+        // delete this.familyRelationOptions[17];
+        // delete this.familyRelationOptions[18];
       });
+
   }else if(this.maritialStatus=== '1' && this.gender === '3'){
     this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {
       for (const i of familyRelationArrObj) {
         this.familyRelationOptions[Number(i.family_relation_id)] = i.relation_title_en;
           this.familyRelationOptionsMarathi[Number(i.family_relation_id)] = i.relation_title_mr;
       }
-      delete this.familyRelationOptions[4]
-      delete this.familyRelationOptions[5] ;
+      delete this.familyRelationOptions[4];
+      delete this.familyRelationOptions[5];
+      // delete this.familyRelationOptions[8];
+        // delete this.familyRelationOptions[9];
+        // delete this.familyRelationOptions[12];
+        // delete this.familyRelationOptions[13];
+        // delete this.familyRelationOptions[16];
+        // delete this.familyRelationOptions[17];
+        // delete this.familyRelationOptions[18];
     });
   }else{
     this.httpService.getFamilyRelations().subscribe((familyRelationArrObj: any) => {

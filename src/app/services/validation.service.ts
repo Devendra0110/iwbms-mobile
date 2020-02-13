@@ -241,7 +241,7 @@ export class ValidationService {
         validatorsArr = [
           Validators.required,
           Validators.pattern('^([A-Za-z]+\\s*)+$'),
-          Validators.maxLength(50)
+          Validators.maxLength(150)
         ];
         break;
       }
