@@ -66,8 +66,8 @@ export class RenewalPage implements OnInit {
     english: ['Male', 'Female', 'Other', 'Single', 'Married', 'Divorced', 'Widow', 'Widower', 'SC', 'ST', 'NT', 'OBC', 'Open', 'Contractor/Developer', 'Gramsevak', 'Person with authorization by municipality or municipal corporation', 'others', 'BOCW Act', 'Contract Act', 'Migrant', 'Local Resident', 'Buildings', 'Streets', 'Roads', 'Railways', 'Tramways', 'Airfields', 'Irrigation', 'Drainage', 'Embankment And Navigation Works', 'Flood Control Works (Including Storm Water Drainage Works)', 'Generation', 'Transmission And Distribution Of Power', 'Water Works (Including Channels For Distribution Of Water)', 'Oil And Gas Installations', 'Electric Lines', 'Wireless', 'Radio', 'Television', 'Telephone', 'Telegraph and Overseas Communications', 'Dams', 'Canals', 'Reservoirs', 'Watercourses', 'Tunnels', 'Bridges', 'Viaducts', 'Aquaducts', 'Pipelines', 'Towers', 'Cooling Towers', 'Transmission Towers and Such Other Work', 'Cutting the stone, breaking it and crushing the stone finely', 'Cutting and polishing of tiles or tiles', 'Carpentry with paint, varnish, etc', 'Gutter and plumbing works', 'Electrical works including wiring, distribution, tensioning, etc', 'Installation and repair of fire extinguishers', 'Installation and repair of air conditioning equipment', 'Installation of automatic lifts, etc', 'Installation of security doors and equipment', 'Preparation and installation of iron or metal grills, windows, doors', 'Construction of irrigation infrastructure', 'Interior work (including decorative) including carpentry, virtual ceilings, lighting, plaster of Paris', 'Cutting glass, plastering glass and installing glass panels', 'Preparation of bricks, roofs, etc., not covered under the Factories Act, 1948', 'Installation of energy efficient equipment like solar panels etc', 'Installation of modular units for use in places like cooking', 'Preparation and installation of cement concrete material etc', 'Construction of sports or recreational facilities including swimming pool, golf course etc', 'Construction or erection of information panels, road furniture, passenger shelters or bus stations, signal systems', 'Construction of Rotaries, Installation of Fountains etc', 'Construction of public parks, sidewalks, picturesque terrain etc', 'Yellow Card (below the poverty line)', 'Antyodaya food scheme card', 'Annapurna food scheme card', 'Orange Ration Card', 'None of these', 'Self', 'Father', 'Mother', 'Wife', 'Husband', 'Brother', 'Sister', 'Sister In Law(Brother Wife)', 'Sister In Law(Husband Sister)', 'Son', 'Daughter', 'Daughter In Law', 'Brother In Law', 'Grandson', 'Granddaughter', 'Mother in law', 'Father in law', 'Post Graduate', 'Medical Graduate', 'Engineering Graduate', 'Phd', 'Graduate', 'Diploma', 'ITI', 'HSC', '11th', 'SSC', '9th', '8th', '7th', '6th', '5th', '4th', '3rd', '2nd', '1st', 'Not Educated'],
     marathi: ['पुरुष', 'स्त्री', 'इतर', 'अविवाहित', 'विवाहित', 'घटस्फोटित', 'विधवा', 'विधुर', 'अनुसूचित जाती', 'अनुसूचित जमाती', 'एनटी', 'इमाव', 'खुला', 'ठेकेदार/विकासक', 'ग्रामसेवक', 'नगरपालिका अथवा महानगरपालिकेद्वारे अधिकृतता असलेले व्यक्ती', 'इतर', 'बीओसीडब्ल्यू कायदा', 'कॉन्ट्रॅक्ट कायदा', 'स्थलांतरीत', 'स्थानिक निवासी', 'इमारती', 'रस्त्यावर', 'रस्ते', 'रेल्वे', 'ट्रामवे', 'एअरफील्ड', 'सिंचन', 'ड्रेनेज', 'तटबंध आणि नेव्हिगेशन वर्क्स', 'स्टॉर्म वॉटर ड्रेनेज वर्क्ससह', 'निर्मिती', 'पारेषण आणि पॉवर वितरण', 'पाणी वितरणासाठी चॅनल समाविष्ट करण', 'तेल आणि गॅसची स्थापना', 'इलेक्ट्रिक लाईन्स', 'वायरलेस', 'रेडिओ', 'दूरदर्शन', 'दूरध्वनी', 'टेलीग्राफ आणि ओव्हरसीज कम्युनिकेशन्स', 'डॅम', 'नद्या', 'रक्षक', 'पाणीपुरवठा', 'टनेल', 'पुल', 'पदवीधर', 'जलविद्युत', 'पाइपलाइन', 'टावर्स', 'कूलिंग टॉवर्स', 'ट्रान्समिशन टावर्स आणि अशा इतर कार्य', 'दगड कापणे, फोडणे व दगडाचा बारीक चुरा करणे', 'लादी किंवा टाईल्स कापणे व पॉलिश करणे', 'रंग, वॉर्निश लावणे, इत्यादीसह सुतारकाम', 'गटार व नळजोडणीची कामे', 'वायरिंग, वितरण, तावदान बसविणे इत्यादीसहित विद्युत कामे', 'अग्निशमन यंत्रणा बसविणे व तिची दुरुस्ती करणे', 'वातानुकूलित यंत्रणा बसविणे व तिची दुरुस्ती करणे', 'उद्वाहने, स्वयंचलित जिने इत्यादी बसविणे', 'सुरक्षा दरवाजे उपकरणे इत्यादी बसविणे', 'लोखंडाच्या किंवा धातुच्या ग्रिल्स, खिडक्या, दरवाजे तयार करणे व बसविणे', 'जलसंचयन संरचनेचे बांधकाम करणे', 'सुतारकाम करणे, आभाशी छत, प्रकाश व्यवस्था, प्लास्टर ऑफ पेरीस यांसहित अंतर्गत (सजावटीचे) काम', 'काच कापणे, काचरोगण लावणे व काचेची तावदाने बसविणे', 'कारखाना अधिनियम, 1948 खाली समावेश नसलेल्या विटा, छप्परांवरील कौल इत्यादी तयार करणे', 'सौर तावदाने इत्यादींसारखी ऊर्जाक्षम उपकरण बसविणे', 'स्वयंपाकखोली सारख्या ठिकाणी वापरण्यासाठी मोडुलर (आधुनिक) युनिट बसविणे', 'सिमेन्ट काँक्रिटच्या साचेबद्ध वस्तू इत्यादी तयार करणे व बसविणे', 'जलतरण तलाव, गोल्फचे मैदान इत्यादीसह खेळ किंवा मनोरंजनाच्या सुविधांचे बांधकाम करणे', 'माहिती फलक, रोड फर्निचर, प्रवाशी निवारे किंवा बसस्थानके, सिग्नल यंत्रणा इत्यादी बांधणे किंवा उभारणे', 'रोटरीजचे बांधकाम करणे, कारंजे बसविणे इत्यादी', 'सार्वजनिक उद्याने, पदपथ, रमणीय भू-प्रदेश इत्यादींचे बांधकाम', 'दारिद्र रेषेखालील पिवळे', 'अंत्योदय अन्न योजना', 'अन्नपूर्णा शिधापत्रिका', 'केशरी शिधापत्रिका (रु. १ लाखापर्यंत वार्षिक उत्पन्न असलेली)', 'यापैकी एकही नाही', 'स्वतः', 'वडील', 'आई', 'पत्नी', 'पती', 'भाऊ', 'बहीण', 'वहिनी', 'ननंद', 'मुलगा', 'मुलगी', 'सून', 'देवर', 'नातु', 'नात', 'सासू', 'सासरा', 'पदव्युत्तर पदवी', 'वैद्यकीय पदवीधर', 'अभियांत्रिकी पदवी', 'पीएचडी', 'पदवीधर', 'डिप्लोमा', 'आय.टी.आय', 'एचएससी', '११ वी', 'एसएससी', '९ वी', '८ वी', '७ वी', '६ वी', '५ वी', '४ थी', '३ री', '२ री', '१ ली', 'अशिक्षित']
   };
-  public files: { workCertificate: File, yellowBook: File, selfDeclarationFile: File };
-  public fileOptions: { workCertificate: string, yellowBook: string, selfDeclarationFile: string };
+  public files: { workCertificate: File, yellowBook: File, selfDeclarationFile: File, graceFile: File };
+  public fileOptions: { workCertificate: string, yellowBook: string, selfDeclarationFile: string, graceFile: string };
   public mode: any = {
     create: false,
     read: false,
@@ -82,6 +82,7 @@ export class RenewalPage implements OnInit {
     private renewalService: RenewalService,
     private mdlController: ModalController,
     private storage: Storage,
+    public regDet: string;
     private network: Network,
     private dialogs: Dialogs,
     private toast: Toast,
@@ -114,6 +115,7 @@ export class RenewalPage implements OnInit {
       contractorCompanyNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorCompanyNameEmp')),
       selfDeclarationFile: new FormControl('', [Validators.required]),
       workCertificate: new FormControl('', [Validators.required]),
+      graceFile: new FormControl(''),
       yellowBook: new FormControl('', [Validators.required]),
       employerWorkDetails: new FormArray([this.employerWorkDetailsFormFroup()]),
       registrationNo: new FormControl(''),
@@ -164,8 +166,8 @@ export class RenewalPage implements OnInit {
       typeOfWorkEmp_mr: new FormControl(''),
       moreThan90Days: new FormControl('', [Validators.required])
     });
-    this.fileOptions = { workCertificate: null, yellowBook: null, selfDeclarationFile: null };
-    this.files = { workCertificate: null, yellowBook: null, selfDeclarationFile: null };
+    this.fileOptions = { workCertificate: null, yellowBook: null, selfDeclarationFile: null, graceFile: null };
+    this.files = { workCertificate: null, yellowBook: null, selfDeclarationFile: null, graceFile: null };
 
     this.todaysDate = {
       year: new Date().getFullYear(),
@@ -893,7 +895,16 @@ export class RenewalPage implements OnInit {
     return this.renewalFormGroup.get('talukaOfMunicipalCorporation_mr');
   }
 
-
+  regDetails(regno){
+    this.httpService.getBocwWorkerByRegistrationNumber(regno).subscribe((res) => {
+      this.regDet =res[0]['subscription'];
+      if(this.regDet === 'ceased') {
+        this.graceFile.setValidators([Validators.required]);
+      } else {
+        this.graceFile.setValidators(null);
+      }
+    })
+  }
 
   get typeOfEmployerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp'); }
   get fullNameOfIssuerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp'); }
@@ -905,6 +916,7 @@ export class RenewalPage implements OnInit {
 
 
   get workCertificate() { return this.renewalFormGroup.get('workCertificate'); }
+  get graceFile() { return this.renewalFormGroup.get('graceFile'); }
   get verifyDocumentCheck() { return this.renewalFormGroup.get('verifyDocumentCheck'); }
   get typeOfWorkEmp() { return this.renewalFormGroup.get('typeOfWorkEmp'); }
   get typeOfWorkEmp_mr() { return this.renewalFormGroup.get('typeOfWorkEmp_mr'); }

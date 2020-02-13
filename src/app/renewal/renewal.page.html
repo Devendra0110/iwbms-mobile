@@ -544,6 +544,17 @@
         <small *ngIf="!!workCertificate.errors?.required">Please upload required document.</small>
       </div>
 
+      <ion-item lines="none" *ngIf="this.regDet && this.regDet === 'ceased'">
+        <ion-label class="ion-text-wrap" floating>Previous Year Working Certificate<span style="color: Red">*</span></ion-label>
+      </ion-item>
+      <ion-item *ngIf="this.regDet && this.regDet === 'ceased'">
+        <input id='graceFile' formControlName="graceFile" type="file" accept="application/pdf"
+          (change)="uploadFile($event)">
+      </ion-item>
+      <div class="text-danger" *ngIf="graceFile.invalid && graceFile.touched">
+        <small *ngIf="!!graceFile.errors?.required">Please upload required document.</small>
+      </div>
+
       <ion-item lines="none">
         <ion-label class="ion-text-wrap" floating>Yellow Book<span style="color: Red">*</span></ion-label>
       </ion-item>

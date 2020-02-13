@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { serverUrl,storageServerUrl } from '../../assets/config';
-import { appendTokenToHeaderObject, } from '../../assets/token-helper';
+import { serverUrl, storageServerUrl } from '../../assets/config';
+
+import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { appendTokenToHeaderObject, } from '../../assets/token-helper';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,12 @@ export class HttpService {
     return this.http.post(`${serverUrl}bocw-renewal`, renewalDetails, { headers });
   }
 
+  getRegistrationByBocwId(bocw_id) {
+    const headers = appendTokenToHeaderObject(
+      new HttpHeaders()
+    );
+    return this.http.post(`${serverUrl}bocw-registration/getregistrationbybocwid`, { bocw_id }, { headers });
+  }
 
   // getAllEntries() {
   //   const headers = appendTokenToHeaderObject(
