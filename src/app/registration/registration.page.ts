@@ -1589,6 +1589,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       registrationNoOfIssuer: new FormControl(''),
       dispatchNo: new FormControl('', [Validators.required]),
       dispatchDate: new FormControl('',[Validators.required]),
+      nameOfGramsevak: new FormControl(''),
+      nameOfGramsevak_mr: new FormControl(''),
       nameOfEmployer: new FormControl(''),
       nameOfEmployer_mr: new FormControl(''),
       districtOfEmployer: new FormControl(''),
@@ -2046,6 +2048,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         label = 'Name Of Gram Panchayat';
         break;
       }
+
       case 'districtOfGramPanchayat': {
         label = 'District Of Gram Panchayat';
         break;
@@ -2246,6 +2249,14 @@ get familyDetails(){  return (this.registrationFormGroup.get('familyDetails') as
 
   get nameOfGramPanchayat() {
     return this.registrationFormGroup.get('employerDetails').get('nameOfGramPanchayat');
+  }
+
+  get nameOfGramsevak() {
+    return this.registrationFormGroup.get('employerDetails').get('nameOfGramsevak');
+  }
+
+  get nameOfGramsevak_mr() {
+    return this.registrationFormGroup.get('employerDetails').get('nameOfGramsevak_mr');
   }
 
   get nameOfGramPanchayat_mr() {
