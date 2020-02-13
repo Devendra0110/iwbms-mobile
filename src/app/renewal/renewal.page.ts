@@ -118,7 +118,7 @@ export class RenewalPage implements OnInit {
       graceFile: new FormControl(''),
       yellowBook: new FormControl('', [Validators.required]),
       employerWorkDetails: new FormArray([this.employerWorkDetailsFormFroup()]),
-      registrationNo: new FormControl(''),
+      registrationNo: new FormControl('', [Validators.required, Validators.maxLength(14), Validators.pattern('^[a-zA-Z0-9]*$')]),
       contractorPhoneEmp: new FormControl('', this.validationService.createValidatorsArray('contractorPhoneEmp')),
       workPlaceEmp: new FormControl('', this.validationService.createValidatorsArray('workPlaceEmp')),
       townEmp: new FormControl('', this.validationService.createValidatorsArray('city')),
@@ -322,8 +322,6 @@ export class RenewalPage implements OnInit {
     return this.dispatchDateEmp.value;
   }
 
-
-
   changeToIonDateTime(diff: any, timeUnit: string) {
     const date = moment(
       new Date(this.todaysDate.year, this.todaysDate.month - 1, this.todaysDate.day))
@@ -355,7 +353,6 @@ export class RenewalPage implements OnInit {
     const minAppointmentDate = moment(dob).add(18, 'years').format('DD/MM/YYYY').split('/');
     this.minAppointmentDate = this.getIonDate(minAppointmentDate);
   }
-
 
   throw90DaysError() {
     if (this.workingDay <= 90) {
@@ -542,7 +539,6 @@ export class RenewalPage implements OnInit {
     const workerDetailsArray = this.renewalFormGroup.get('employerWorkDetails') as FormArray;
     this.showEmployerModal(workerDetailsArray.length, 'add');
   }
-
 
   editWorkerDetail(i: number) {
     if (this.dispatchDateFlag || this.appointmentDateEmp.value === null || this.dispatchDateEmp.value === null) return;

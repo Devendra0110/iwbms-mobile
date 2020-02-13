@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { Injectable } from '@angular/core';
 import { serverUrl } from '../../assets/config';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +22,7 @@ export class MobileVerificationService {
 
   sendRenewalOTP(registrationNo: string,mobileNo: string,) {
     const headers = new HttpHeaders().append('Content-Type', 'application/json');
-    return this.http.post(`${serverUrl}otp/generate-otp`, { registrationNo, mobileNo,purpose:'Update Registration' }, { headers });
+    return this.http.post(`${serverUrl}otp/generate-otp`, { registrationNo, mobileNo,purpose:'Renewal' }, { headers });
   }
 
   // /purpose === 'Update Registration'
