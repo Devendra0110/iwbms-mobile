@@ -54,6 +54,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
       institute: new FormControl('', this.validationService.createValidatorsArray('institute')),
       standard: new FormControl('', this.validationService.createValidatorsArray('standard')),
       placeInstitute: new FormControl('', this.validationService.createValidatorsArray('placeInstitute')),
+      universityName: new FormControl('', this.validationService.createValidatorsArray('universityName')),
       dateOfAdmission: new FormControl('', this.validationService.createValidatorsArray('dateOfAdmission')),
       certificates: new FormControl('', this.validationService.createValidatorsArray('certificates')),
       receipt: new FormControl('', this.validationService.createValidatorsArray('receipt')),
@@ -75,6 +76,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
 
       // marathi form controls
       placeInstitute_mr: new FormControl(''),
+      universityName_mr: new FormControl(''),
       institute_mr: new FormControl(''),
       degreeName_mr: new FormControl(''),
     });
@@ -124,6 +126,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
 
   // marathi getters
   get institute_mr(): AbstractControl { return this.formGroup.get('institute_mr'); }
+  get universityName_mr(): AbstractControl { return this.formGroup.get('universityName_mr'); }
   get degreeName_mr(): AbstractControl { return this.formGroup.get('degreeName_mr'); }
   get placeInstitute_mr(): AbstractControl { return this.formGroup.get('placeInstitute_mr'); }
 
@@ -136,6 +139,7 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
   get placeInstitute() { return this.formGroup.get('placeInstitute'); }
   get yearOfDegree() { return this.formGroup.get('yearOfDegree'); }
   get dateOfAdmission() { return this.formGroup.get('dateOfAdmission'); }
+  get universityName() { return this.formGroup.get('universityName'); }
   get certificates() { return this.formGroup.get('certificates'); }
   get receipt() { return this.formGroup.get('receipt'); }
   get aadharCardDoc() { return this.formGroup.get('aadharCardDoc'); }
@@ -167,6 +171,8 @@ export class ClaimEducation6Page extends ClaimBasePage implements OnInit {
           institute: this.formGroup.getRawValue().institute,
           standard: `${this.formGroup.getRawValue().standard}`,
           placeInstitute: this.formGroup.getRawValue().placeInstitute,
+          universityName: this.formGroup.getRawValue().universityName,
+          universityName_mr: this.formGroup.getRawValue().universityName_mr,
           institute_mr: this.formGroup.getRawValue().institute_mr,
           placeInstitute_mr: this.formGroup.getRawValue().placeInstitute_mr,
           yearOfDegree: this.formGroup.getRawValue().yearOfDegree,
