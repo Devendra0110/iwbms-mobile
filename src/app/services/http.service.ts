@@ -46,11 +46,18 @@ export class HttpService {
     return this.http.post(`${serverUrl}bocw-renewal`, renewalDetails, { headers });
   }
 
-  getRegistrationByBocwId(bocw_id) {
+  getRegistrationByBocwId(bocw_id, JWTToken: any) {
     const headers = appendTokenToHeaderObject(
-      new HttpHeaders()
+      new HttpHeaders(),JWTToken
     );
     return this.http.post(`${serverUrl}bocw-registration/getregistrationbybocwid`, { bocw_id }, { headers });
+  }
+
+  getBocwWorkerByRegistrationNumber(registrationNo, JWTToken: any) {
+    const headers = appendTokenToHeaderObject(
+      new HttpHeaders(), JWTToken
+    );
+    return this.http.get(`${serverUrl}bocw-registration/getworkerbyregnumber/${registrationNo}`, { headers });
   }
 
   // getAllEntries() {

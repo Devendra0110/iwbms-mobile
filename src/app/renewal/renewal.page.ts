@@ -45,6 +45,7 @@ export class RenewalPage implements OnInit {
   public talukasMuncipal: any[] = [];
   public natureOfWorkEmpArray: any[];
   public issuers: any[];
+  public regDet: string;
   public issuersRegistrationTypes: any[];
   public statewiseListArray = states;
   public token_id: any;
@@ -82,7 +83,6 @@ export class RenewalPage implements OnInit {
     private renewalService: RenewalService,
     private mdlController: ModalController,
     private storage: Storage,
-    public regDet: string;
     private network: Network,
     private dialogs: Dialogs,
     private toast: Toast,
@@ -896,7 +896,7 @@ export class RenewalPage implements OnInit {
   }
 
   regDetails(regno){
-    this.httpService.getBocwWorkerByRegistrationNumber(regno).subscribe((res) => {
+    this.httpService.getBocwWorkerByRegistrationNumber(regno,this.JWTToken).subscribe((res) => {
       this.regDet =res[0]['subscription'];
       if(this.regDet === 'ceased') {
         this.graceFile.setValidators([Validators.required]);
