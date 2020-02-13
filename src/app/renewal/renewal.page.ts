@@ -125,7 +125,7 @@ export class RenewalPage implements OnInit {
       pinCodeEmp: new FormControl('', this.validationService.createValidatorsArray('pinCodeEmp')),
       appointmentDateEmp: new FormControl(null, this.validationService.createValidatorsArray('appointmentDateEmp')),
       dispatchDateEmp: new FormControl(null, this.validationService.createValidatorsArray('dispatchDateEmp')),
-      remunerationPerDayEmp: new FormControl('', this.validationService.createValidatorsArray('remunerationPerDayEmp')),
+      // remunerationPerDayEmp: new FormControl('', this.validationService.createValidatorsArray('remunerationPerDayEmp')),
       natureOfWorkEmp: new FormControl('', this.validationService.createValidatorsArray('natureOfWorkEmp')),
       contractorNameEmp_mr: new FormControl(''),
       contractorCompanyNameEmp_mr: new FormControl(''),
@@ -792,7 +792,7 @@ export class RenewalPage implements OnInit {
   get districtEmp() { return this.renewalFormGroup.get('districtEmp'); }
   get pinCodeEmp() { return this.renewalFormGroup.get('pinCodeEmp'); }
   get appointmentDateEmp() { return this.renewalFormGroup.get('appointmentDateEmp'); }
-  get remunerationPerDayEmp() { return this.renewalFormGroup.get('remunerationPerDayEmp'); }
+  // get remunerationPerDayEmp() { return this.renewalFormGroup.get('remunerationPerDayEmp'); }
   get natureOfWorkEmp() { return this.renewalFormGroup.get('natureOfWorkEmp'); }
   get dispatchDateEmp() { return this.renewalFormGroup.get('dispatchDateEmp'); }
   get MNREGACardNumberEmp() { return this.renewalFormGroup.get('MNREGACardNumberEmp'); }

@@ -526,12 +526,12 @@ export class ClaimValidationService {
         break;
       }
 
-      case 'receipt': {
-        validatorsArr = [
-          Validators.required,
-        ];
-        break;
-      }
+      // case 'receipt': {
+      //   validatorsArr = [
+      //     Validators.required,
+      //   ];
+      //   break;
+      // }
 
       case 'admission': {
         validatorsArr = [
@@ -540,12 +540,12 @@ export class ClaimValidationService {
         break;
       }
 
-      case 'bookReceipt': {
-        validatorsArr = [
-          Validators.required
-        ];
-        break;
-      }
+      // case 'bookReceipt': {
+      //   validatorsArr = [
+      //     Validators.required
+      //   ];
+      //   break;
+      // }
 
       case 'fileSelect': {
         validatorsArr = [

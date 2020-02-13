@@ -422,7 +422,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
             value: 9
           },
           {
-            key: `Others / इतर`,
+            key: `MNREGA / मनरेगा`,
             value: 10
           }
         ],
@@ -1567,7 +1567,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       pinCodeEmp: new FormControl('', [Validators.required, Validators.pattern('^\\d{6}$')]),
       appointmentDateEmp: new FormControl(null, [Validators.required]),
       dispatchDateEmp: new FormControl('',[Validators.required]),
-      remunerationPerDayEmp: new FormControl('', [Validators.required,Validators.maxLength(8)]),
+      // remunerationPerDayEmp: new FormControl('', [Validators.required,Validators.maxLength(8)]),
       natureOfWorkEmp: new FormControl('', [Validators.required]),
       migrant: new FormControl(''),
       migrant_mr: new FormControl(''),
@@ -1730,8 +1730,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       attachmentList: new FormArray([]),
       supportingDocuments: new FormControl('', Validators.required),
-      applicantPhoto: new FormControl(''),
-      workSitePhoto: new FormControl(''),
+      applicantPhoto: new FormControl('', Validators.required),
+      workSitePhoto: new FormControl('', Validators.required),
       selfDeclarationDocuments: new FormControl('', Validators.required),
       aadharDeclaration: new FormControl('', Validators.required),
       bankPassbook: new FormControl('', Validators.required),

@@ -41,8 +41,8 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
     protected dialogs: Dialogs
   ) {
     super(transliterate, httpService, claimHttpService, router, storage, toast,dialogs);
-    this.fileOptions = { certificates: '', receipt: '', bookReceipt: '',schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
-    this.files = { certificates: '', receipt: '', bookReceipt: '',schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.fileOptions = { certificates: '',schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
+    this.files = { certificates: '',schoolIdDoc: '', rationCardDoc: '', bonafideDoc: '', selfDeclaration: '', aadharCardDoc: '' };
     this.formGroup = new FormGroup ({
       // english form controls
       familyRelation: new FormControl('', this.validationService.createValidatorsArray('familyRelation')),
@@ -52,11 +52,9 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
       placeCollege: new FormControl('', this.validationService.createValidatorsArray('placeCollege')),
       dateOfAdmission: new FormControl('', this.validationService.createValidatorsArray('dateOfAdmission')),
       certificates: new FormControl('', this.validationService.createValidatorsArray('certificates')),
-      receipt: new FormControl('', this.validationService.createValidatorsArray('receipt')),
       standard: new FormControl('', this.validationService.createValidatorsArray('standard')),
       selfDeclaration: new FormControl('', this.validationService.createValidatorsArray('selfDeclaration')),
       rationCardDoc: new FormControl('', this.validationService.createValidatorsArray('rationCardDoc')),
-      bookReceipt: new FormControl('', this.validationService.createValidatorsArray('bookReceipt')),
       aadharCardDoc: new FormControl('', this.validationService.createValidatorsArray('aadharCardDoc')),
       bonafideDoc: new FormControl('', this.validationService.createValidatorsArray('bonafideDoc')),
       degreeName: new FormControl('', this.validationService.createValidatorsArray('degreeName')),
@@ -68,6 +66,8 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
       benefitAmount: new FormControl(''),
       category: new FormControl('', this.validationService.createValidatorsArray('category')),
       verifyDocumentCheck: new FormControl('', this.validationService.createValidatorsArray('verifyDocumentCheck')),
+      // receipt: new FormControl('', this.validationService.createValidatorsArray('receipt')),
+      // bookReceipt: new FormControl('', this.validationService.createValidatorsArray('bookReceipt')),
       // declaration: new FormControl('', this.validationService.createValidatorsArray('declaration')),
 
       // marathi form controls
@@ -127,7 +127,6 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
   get placeCollege() { return this.formGroup.get('placeCollege'); }
   get dateOfAdmission() { return this.formGroup.get('dateOfAdmission'); }
   get certificates() { return this.formGroup.get('certificates'); }
-  get receipt() { return this.formGroup.get('receipt'); }
   get aadharCardDoc() { return this.formGroup.get('aadharCardDoc'); }
   get insEmail() { return this.formGroup.get('insEmail'); }
   get insPhNo() { return this.formGroup.get('insPhNo'); }
@@ -136,9 +135,10 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
   get category() { return this.formGroup.get('category'); }
   get degreeName() { return this.formGroup.get('degreeName'); }
   get rationCardDoc() { return this.formGroup.get('rationCardDoc'); }
-  get bookReceipt() { return this.formGroup.get('bookReceipt'); }
   get selfDeclaration() { return this.formGroup.get('selfDeclaration'); }
   get verifyDocumentCheck() { return this.formGroup.get('verifyDocumentCheck'); }
+  // get bookReceipt() { return this.formGroup.get('bookReceipt'); }
+  // get receipt() { return this.formGroup.get('receipt'); }
   // get declaration() { return this.formGroup.get('declaration'); }
 
   public saveForm(): void {
@@ -171,11 +171,11 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
             certificates: this.fileOptions['certificates'],
             schoolIdDoc: this.fileOptions['schoolIdDoc'],
             bonafideDoc: this.fileOptions['bonafideDoc'],
-            receipt: this.fileOptions['receipt'],
             aadharCardDoc: this.fileOptions['aadharCardDoc'],
-            bookReceipt: this.fileOptions['bookReceipt'],
             rationCardDoc: this.fileOptions['rationCardDoc'],
             selfDeclaration: this.fileOptions['selfDeclaration'],
+            // receipt: this.fileOptions['receipt'],
+            // bookReceipt: this.fileOptions['bookReceipt'],
           }
         }
       };

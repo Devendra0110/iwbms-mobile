@@ -111,18 +111,18 @@ export class ValidationService {
         ];
         break;
       }
-      case 'remunerationPerDayEmp': {
-        validatorsArr = [
-          Validators.required,
-          Validators.maxLength(8),
-          Validators.pattern('^[0-9]*$')
-        ];
-        break;
-      }
+      // case 'remunerationPerDayEmp': {
+      //   validatorsArr = [
+      //     Validators.required,
+      //     Validators.maxLength(8),
+      //     Validators.pattern('^[0-9]*$')
+      //   ];
+      //   break;
+      // }
       case 'houseNo': {
         validatorsArr = [
-          Validators.required,
-          Validators.maxLength(40)
+          // Validators.required,
+          // Validators.maxLength(40)
         ];
         break;
       }
