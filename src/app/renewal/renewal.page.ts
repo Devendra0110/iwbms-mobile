@@ -107,6 +107,7 @@ export class RenewalPage implements OnInit {
         this.router.navigate(['/home']);
       } else {
         this.JWTToken = val;
+        this.regDetails(this.registrationNo.value);
       }
     });
 
@@ -292,6 +293,8 @@ export class RenewalPage implements OnInit {
       this.renewalFormGroup.get('dispatchDateEmp').patchValue(this.maxToDate, { emitEvent: false });
       this.dispatchDateFlag = moment(this.maxToDate, 'YYYY-MM-DD').diff(moment(this.minDispatchDate, 'YYYY-MM-DD'), 'days') < 0 ? true : false;
     }, err => console.log(err));
+
+    
 
   }
 

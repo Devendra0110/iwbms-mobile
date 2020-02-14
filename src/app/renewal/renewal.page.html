@@ -233,7 +233,7 @@
         </ion-input>
         <div class="text-danger" *ngIf="registrationNoOfIssuer.invalid && registrationNoOfIssuer.touched">
           <small *ngIf="!!registrationNoOfIssuer.errors?.required">Please enter registration number of issuer.</small>
-          <small *ngIf="!!registrationNoOfIssuer.errors?.pattern">Please enter appropriate name.</small>
+          <small *ngIf="!!registrationNoOfIssuer.errors?.pattern">Please enter appropriate number.</small>
 
         </div>
       </ion-item>
@@ -544,7 +544,7 @@
         <small *ngIf="!!workCertificate.errors?.required">Please upload required document.</small>
       </div>
 
-      <ion-item *ngIf="this.regDet && this.regDet === 'ceased'">
+      <div *ngIf="this.regDet && this.regDet === 'ceased'">
         <ion-item lines="none">
           <ion-label class="ion-text-wrap" floating>Previous Year Working Certificate<span style="color: Red">*</span>
           </ion-label>
@@ -556,7 +556,7 @@
         <div class="text-danger" *ngIf="graceFile.invalid && graceFile.touched">
           <small *ngIf="!!graceFile.errors?.required">Please upload required document.</small>
         </div>
-      </ion-item>
+      </div>
 
       <ion-item lines="none">
         <ion-label class="ion-text-wrap" floating>Yellow Book<span style="color: Red">*</span></ion-label>
