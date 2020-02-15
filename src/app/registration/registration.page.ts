@@ -40,7 +40,7 @@ declare var google;
 export class RegistrationPage implements OnInit, AfterViewInit {
 
   @ViewChildren(FormControlDirective) listOfControlRefs: QueryList<any>;
-  @ViewChild(YellowBookPage, {static: false}) yellowBookInformation:YellowBookPage ;
+  @ViewChild(YellowBookPage, { static: false }) yellowBookInformation: YellowBookPage;
   @ViewChild('suggestionbox', { read: ViewContainerRef, static: true }) suggestionBoxRef: ViewContainerRef;
   public parentViewContainer: ViewContainerRef;
   public registrationFormGroup: FormGroup;
@@ -52,9 +52,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public endDate: any;
   public maxAppointmentDate: any;
   public minAppointmentDate: any;
-  public minDispatchDate:any;
-  public dispatchDateFlag:boolean;
-  public readableDispatchDate:string;
+  public minDispatchDate: any;
+  public dispatchDateFlag: boolean;
+  public readableDispatchDate: string;
   public appointmentDate: any;
   public minFromDate: string;
   public maxToDate: string;
@@ -81,9 +81,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public postOfficeArrayPer: any[] = [];
   public pincodeArrayPer: any[] = [];
   public talukasEmp: any[] = [];
-  public talukasIssuerEmp:any[] = [];
-  public talukasIssuerGram:any[]=[];
-  public talukasMuncipal:any[]=[];
+  public talukasIssuerEmp: any[] = [];
+  public talukasIssuerGram: any[] = [];
+  public talukasMuncipal: any[] = [];
 
   public genderOptions: string[] = [];
   public genderOptionsMarathi: string[] = [];
@@ -118,7 +118,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public workerTypeOptionsMarathi: string[];
   public currentImage: any;
   public geoImage: any;
-  public familyAaadhar:string[]=[];
+  public familyAaadhar: string[] = [];
 
   public map: any;
   public marker: any;
@@ -195,7 +195,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   public mobileNo: number;
   public aadharNo: number;
-  public reDataEntry=false
+  public reDataEntry = false
 
   constructor(
     private validationService: ValidationService,
@@ -213,8 +213,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     private toast: Toast,
     private fileChooser: FileChooser,
     private siteLocation: Geolocation,
-    private loadingController:LoadingController
-    ) {
+    private loadingController: LoadingController
+  ) {
 
     // network subscribers check the status of network even its type
     this.network.onDisconnect().subscribe(() => { });
@@ -230,7 +230,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         if (this.router.getCurrentNavigation().extras.state.oldRegNo) {
           this.oldRegistrationNo.setValue(this.router.getCurrentNavigation().extras.state.oldRegNo);
           this.oldRegistrationNo.disable();
-          this.reDataEntry =true
+          this.reDataEntry = true
         }
       } else {
         this.router.navigate(['/verification']);
@@ -358,8 +358,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.maxTodaysDate = this.changeToIonDateTime(0, 'years');
     this.minFromDate = this.changeToIonDateTime(1, 'years')
     this.minDispatchDate = moment().subtract(1, 'years').add(90, 'days').format('YYYY-MM-DD')
-    this.readableDispatchDate = moment(this.minDispatchDate,'YYYY-MM-DD').format('DD/MM/YYYY')
-    this.dispatchDateFlag=false;
+    this.readableDispatchDate = moment(this.minDispatchDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
+    this.dispatchDateFlag = false;
 
     this.attachmentDetails = [
       {
@@ -521,7 +521,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         this.migrant_mr.patchValue(true);
         rationCardNoControl.setErrors(null);
         rationCardNoControl.setValidators([]);
-  
+
         rationCardTypeControl.setErrors(null);
         rationCardTypeControl.setValidators([]);
       }
@@ -593,7 +593,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }, err => console.log(err));
     });
 
-    this.typeOfIssuer.valueChanges.subscribe((typeOfIssuerId)=>{
+    this.typeOfIssuer.valueChanges.subscribe((typeOfIssuerId) => {
       this.nameOfGramPanchayat.reset();
       this.nameOfGramPanchayat_mr.reset();
       this.districtOfGramPanchayat.reset();
@@ -643,9 +643,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
 
     this.appointmentDateEmp.valueChanges.subscribe(value => {
-      if (moment(value).diff(moment(this.minFromDate,'YYYY-MM-DD'), 'days') > 0) {
+      if (moment(value).diff(moment(this.minFromDate, 'YYYY-MM-DD'), 'days') > 0) {
         this.minFromDate = moment(value).format('YYYY-MM-DD');
-      }else{
+      } else {
         this.minFromDate = this.changeToIonDateTime(1, 'years')
       }
       this.appointmentDate = moment(value).format('YYYY-MM-DD');
@@ -655,16 +655,16 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.dispatchDateEmp.valueChanges.subscribe(value => {
       this.maxToDate = moment(value).format('YYYY-MM-DD');
       this.registrationFormGroup.get('employerDetails').get('dispatchDateEmp').patchValue(this.maxToDate, { emitEvent: false });
-        this.dispatchDateFlag = moment(this.maxToDate,'YYYY-MM-DD').diff(moment(this.minDispatchDate,'YYYY-MM-DD'),'days')<0?true:false;
+      this.dispatchDateFlag = moment(this.maxToDate, 'YYYY-MM-DD').diff(moment(this.minDispatchDate, 'YYYY-MM-DD'), 'days') < 0 ? true : false;
     }, err => console.log(err));
 
     this.isBocwRegistered(0);
 
     //bocw act dispatch number not required.
-    this.registeredWith.valueChanges.subscribe((registeredWith_id)=>{
-      if(registeredWith_id==='1'){
+    this.registeredWith.valueChanges.subscribe((registeredWith_id) => {
+      if (registeredWith_id === '1') {
         this.dispatchNo.setValidators([]);
-      }else{
+      } else {
         this.dispatchNo.setValidators([Validators.required]);
       }
       this.dispatchNo.reset();
@@ -686,7 +686,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
   capitaliseifscCodeBank() {
-   
+
     let value = this.ifscCode.value;
     value = value.toString().toUpperCase();
     this.ifscCode.setValue(value);
@@ -744,8 +744,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
             this.uploadedAgeProofDoc = `${serverUrl}registration-and-renewal/getfile/${this.selectedApplicationData._id}/${docs[item]}?x-access-token=${localStorage.getItem('token')}`;
             break;
           case 'photoIdProofDoc':
-          this.uploadedPhotoIdProofDoc = `${serverUrl}registration-and-renewal/getfile/${this.selectedApplicationData._id}/${docs[item]}?x-access-token=${localStorage.getItem('token')}`;
-          break;
+            this.uploadedPhotoIdProofDoc = `${serverUrl}registration-and-renewal/getfile/${this.selectedApplicationData._id}/${docs[item]}?x-access-token=${localStorage.getItem('token')}`;
+            break;
         }
       }
     }
@@ -774,7 +774,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     let target: any;
     let DTPObject: any;
     // choose if it is district/taluka/postoffice
-    if (targetsArray[2] === 'district' || targetsArray[1] === 'districtEmp' || targetsArray[1] === 'districtOfEmployer' || targetsArray[1] === 'districtOfGramPanchayat' || targetsArray[1] ==='districtOfMunicipalCorporation')
+    if (targetsArray[2] === 'district' || targetsArray[1] === 'districtEmp' || targetsArray[1] === 'districtOfEmployer' || targetsArray[1] === 'districtOfGramPanchayat' || targetsArray[1] === 'districtOfMunicipalCorporation')
       DTPObject = this.districts;
     else if (targetsArray[2] === 'taluka')
       DTPObject = this.talukasRes;
@@ -908,7 +908,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     } else {
       // alert('select date');
     }
-    this.minAppointmentDate = moment(this.dobPersonal.value,'YYYY-MM-DD').add(18,'years').format('YYYY-MM-DD')
+    this.minAppointmentDate = moment(this.dobPersonal.value, 'YYYY-MM-DD').add(18, 'years').format('YYYY-MM-DD')
   }
 
 
@@ -981,7 +981,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       index,
       mode,
       familyDetail: familyForm,
-      familyAadhar:this.familyAaadhar,
+      familyAadhar: this.familyAaadhar,
       maritialStatus: this.maritalStatusPersonal.value,
       gender: this.genderPersonal.value
 
@@ -1015,13 +1015,13 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   addMoreFamilyDetails() {
-    if (this.registrationFormGroup.get('familyDetails').invalid ){
+    if (this.registrationFormGroup.get('familyDetails').invalid) {
       alert('Please flll all the essential details of previous family member.')
-    }else{
+    } else {
       const familyDetailsArray = this.registrationFormGroup.get('familyDetails') as FormArray;
       this.showFamilyModal(familyDetailsArray.length, 'add');
     }
-    
+
   }
 
   editFamilyDetail(i: number) {
@@ -1110,7 +1110,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   addMoreWorkerDetails() {
-    if (this.dispatchDateFlag || this.appointmentDateEmp.value === null|| this.dispatchDateEmp.value === null) return;
+    if (this.dispatchDateFlag || this.appointmentDateEmp.value === null || this.dispatchDateEmp.value === null) return;
     const workerDetailsArray = this.registrationFormGroup.get('employerWorkDetails') as FormArray;
     this.showEmployerModal(workerDetailsArray.length, 'add');
   }
@@ -1207,12 +1207,12 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
-  captureSiteLocation(){
+  captureSiteLocation() {
     this.siteLocation.getCurrentPosition().then((resp) => {
-      this.geolocation.setValue(JSON.stringify({latitude:resp.coords.latitude,longitude:resp.coords.longitude}));
-  }).catch((error) => {
-    console.log('Error getting location', error);
-  });
+      this.geolocation.setValue(JSON.stringify({ latitude: resp.coords.latitude, longitude: resp.coords.longitude }));
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 
   takeGeoPicture() {
@@ -1234,8 +1234,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }, (err) => {
       console.log("Camera issue:" + err);
     });
-    
-   
+
+
   }
 
   b64toFile = (b64Data, contentType = 'image/jpg', sliceSize = 512) => {
@@ -1301,18 +1301,18 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     // this.files[event.target.id] = file;
     // this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
 
-    if (event.target.files[0].size > 2097152 ) {
+    if (event.target.files[0].size > 2097152) {
       this.registrationFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
       this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
       });
-      
-    } else if (file.type !== 'application/pdf' && file.type!=="application/wps-office.pdf" && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
+
+    } else if (file.type !== 'application/pdf' && file.type !== "application/wps-office.pdf" && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
       this.registrationFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
       this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
       });
 
     } else {
-      
+
       this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
       });
       this.files[event.target.id] = file;
@@ -1346,7 +1346,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     } else {
       if (this.registrationFormGroup.valid) {
         if (!this.findNominee(this.registrationFormGroup.getRawValue().familyDetails)) {
-        this.dialogs.alert('Nominee Required.: Please select a nominee in family details to proceed.');
+          this.dialogs.alert('Nominee Required.: Please select a nominee in family details to proceed.');
           return;
         }
         const formData = new FormData();
@@ -1362,15 +1362,15 @@ export class RegistrationPage implements OnInit, AfterViewInit {
             filesFormData.append('files', this.files[item], this.fileOptions[item]);
           }
         }
-          formData.append('files', JSON.stringify(this.registrationFormGroup.get('supportingDocuments').value));
-          formData.append('fileOptions', JSON.stringify(this.fileOptions));
-          formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
-          formData.append('modeOfApplication', 'By Field Agent');
+        formData.append('files', JSON.stringify(this.registrationFormGroup.get('supportingDocuments').value));
+        formData.append('fileOptions', JSON.stringify(this.fileOptions));
+        formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
+        formData.append('modeOfApplication', 'By Field Agent');
 
         try {
           await this.httpService.uploadFiles(filesFormData).toPromise();
         } catch (error) {
-          this.dialogs.alert( 'Application not saved. An error occured while saving documents.');
+          this.dialogs.alert('Application not saved. An error occured while saving documents.');
           return;
         }
 
@@ -1383,35 +1383,34 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           },
           async (err: any) => {
             console.error(err)
-            await loading.dismiss().then((result)=>{
+            await loading.dismiss().then((result) => {
               this.dialogs.alert('Server Problem. Try after some time.')
             })
           }
         );
-      } else{
-        if(this.registrationFormGroup.get('familyDetails').status==="INVALID"){
-        this.registrationFormGroup.markAllAsTouched();
-        this.checkValidationErrors(this.registrationFormGroup.get('familyDetails')['controls'][0]);
-        this.registrationFormGroup.valueChanges.subscribe(() => {
-          this.checkValidationErrors( this.registrationFormGroup.get('familyDetails')['controls'][0]);
-        });
-      this.dialogs.alert(this.errorMsgList +' is required' )
-  }
- this.dialogs.alert('Form is not Valid')
+      } else {
+        if (this.registrationFormGroup.get('familyDetails').status === "INVALID") {
+          this.registrationFormGroup.markAllAsTouched();
+          this.checkValidationErrors(this.registrationFormGroup.get('familyDetails')['controls'][0]);
+          this.registrationFormGroup.valueChanges.subscribe(() => {
+            this.checkValidationErrors(this.registrationFormGroup.get('familyDetails')['controls'][0]);
+          });
+          this.dialogs.alert(this.errorMsgList + ' is required')
+        }
+        this.dialogs.alert('Form is not Valid')
 
-          // familyDetailsFormGroup()
+        // familyDetailsFormGroup()
       }
-  
     }
   }
 
-   async saveLegacyData() {
+  async saveLegacyData() {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     } else {
       if (this.registrationFormGroup.valid && this.yellowBookInformation.yellowBookFormGroup.valid) {
         if (!this.findNominee(this.registrationFormGroup.getRawValue().familyDetails)) {
-        this.dialogs.alert('Nominee Required.: Please select a nominee in family details to proceed.');
+          this.dialogs.alert('Nominee Required.: Please select a nominee in family details to proceed.');
           return;
         }
         const formData = new FormData();
@@ -1427,17 +1426,17 @@ export class RegistrationPage implements OnInit, AfterViewInit {
             filesFormData.append('files', this.files[item], this.fileOptions[item]);
           }
         }
-          formData.append('files', JSON.stringify(this.registrationFormGroup.get('supportingDocuments').value));
-          formData.append('fileOptions', JSON.stringify(this.fileOptions));
-          formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
-          formData.append('yellowBookData', JSON.stringify(this.yellowBookInformation.yellowBookFormGroup.getRawValue()));
-          formData.append('modeOfApplication', 'Re-data Entry By Field Agent');
-          formData.append('origin', 'legacy_data_entry');
+        formData.append('files', JSON.stringify(this.registrationFormGroup.get('supportingDocuments').value));
+        formData.append('fileOptions', JSON.stringify(this.fileOptions));
+        formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
+        formData.append('yellowBookData', JSON.stringify(this.yellowBookInformation.yellowBookFormGroup.getRawValue()));
+        formData.append('modeOfApplication', 'Re-data Entry By Field Agent');
+        formData.append('origin', 'legacy_data_entry');
 
         try {
           await this.httpService.uploadFiles(filesFormData).toPromise();
         } catch (error) {
-          this.dialogs.alert( 'Application not saved. An error occured while saving documents.');
+          this.dialogs.alert('Application not saved. An error occured while saving documents.');
           return;
         }
 
@@ -1450,25 +1449,25 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           },
           async (err: any) => {
             console.error(err)
-            await loading.dismiss().then((result)=>{
+            await loading.dismiss().then((result) => {
               this.dialogs.alert('Server Problem. Try after some time.')
             })
           }
         );
-      } else{
-        if(this.registrationFormGroup.get('familyDetails').status==="INVALID"){
-        this.registrationFormGroup.markAllAsTouched();
-        this.checkValidationErrors(this.registrationFormGroup.get('familyDetails')['controls'][0]);
-        this.registrationFormGroup.valueChanges.subscribe(() => {
-          this.checkValidationErrors( this.registrationFormGroup.get('familyDetails')['controls'][0]);
-        });
-      this.dialogs.alert(this.errorMsgList +' is required' )
-  }
- this.dialogs.alert('Form is not Valid')
+      } else {
+        if (this.registrationFormGroup.get('familyDetails').status === "INVALID") {
+          this.registrationFormGroup.markAllAsTouched();
+          this.checkValidationErrors(this.registrationFormGroup.get('familyDetails')['controls'][0]);
+          this.registrationFormGroup.valueChanges.subscribe(() => {
+            this.checkValidationErrors(this.registrationFormGroup.get('familyDetails')['controls'][0]);
+          });
+          this.dialogs.alert(this.errorMsgList + ' is required')
+        }
+        this.dialogs.alert('Form is not Valid')
 
-          // familyDetailsFormGroup()
+        // familyDetailsFormGroup()
       }
-  
+
     }
   }
 
@@ -1537,7 +1536,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       education: new FormControl('', this.validationService.createValidatorsArray('education')),
       education_mr: new FormControl(''),
       nominee: new FormControl('', this.validationService.createValidatorsArray('nominee')),
-      aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$'),Validators.required]),
+      aadharNoFamily: new FormControl('', [Validators.maxLength(12), Validators.pattern('^[0-9]{12}$'), Validators.required]),
       isRegisteredInBOCW: new FormControl(''),
       bocwRegistrationNo: new FormControl('', [Validators.maxLength(12), Validators.minLength(12)])
     });
@@ -1577,14 +1576,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       contractorNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorNameEmp')),
       contractorCompanyNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorCompanyNameEmp')),
-      contractorPhoneEmp: new FormControl('', [Validators.required,  Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
-      workPlaceEmp: new FormControl('', [Validators.required,Validators.maxLength(150)]),
+      contractorPhoneEmp: new FormControl('', [Validators.required, Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
+      workPlaceEmp: new FormControl('', [Validators.required, Validators.maxLength(150)]),
       townEmp: new FormControl('', [Validators.required]),
       talukaEmp: new FormControl('', [Validators.required]),
       districtEmp: new FormControl('', [Validators.required]),
       pinCodeEmp: new FormControl('', [Validators.required, Validators.pattern('^\\d{6}$')]),
       appointmentDateEmp: new FormControl(null, [Validators.required]),
-      dispatchDateEmp: new FormControl('',[Validators.required]),
+      dispatchDateEmp: new FormControl('', [Validators.required]),
       // remunerationPerDayEmp: new FormControl('', [Validators.required,Validators.maxLength(8)]),
       natureOfWorkEmp: new FormControl('', [Validators.required]),
       migrant: new FormControl(''),
@@ -1604,7 +1603,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       registeredWith: new FormControl(''),
       registrationNoOfIssuer: new FormControl(''),
       dispatchNo: new FormControl('', [Validators.required]),
-      dispatchDate: new FormControl('',[Validators.required]),
+      dispatchDate: new FormControl('', [Validators.required]),
       nameOfGramsevak: new FormControl(''),
       nameOfGramsevak_mr: new FormControl(''),
       nameOfEmployer: new FormControl(''),
@@ -1649,7 +1648,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     switch (this.typeOfIssuer.value) {
 
       case '1': {
-        this.registrationNoOfIssuer.setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9]{4,10}$'), ]);
+        this.registrationNoOfIssuer.setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9]{4,10}$'),]);
         this.registeredWith.setValidators([Validators.required]);
         this.dispatchDate.setValidators([Validators.required]);
         this.dispatchDate.updateValueAndValidity()
@@ -1728,7 +1727,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       typeOfEmployerEmp: new FormControl('', [Validators.required]),
       fullNameOfIssuerEmp: new FormControl('', [Validators.required, Validators.pattern('[a-zA-z\\s]{8,50}')]),
-      mobileNumberOfIssuerEmp: new FormControl('', [Validators.required,  Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
+      mobileNumberOfIssuerEmp: new FormControl('', [Validators.required, Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
       fromDateEmp: new FormControl(null, [Validators.required]),
       toDateEmp: new FormControl(null, [Validators.required]),
       typeOfEmployerEmp_mr: new FormControl(''),
@@ -1760,9 +1759,9 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       photoIdProofDoc: new FormControl(''),
     });
   }
- 
+
   // private checkForAadharFamilyUniqueness(index: number) {
-    
+
   //   const familyDetails = this.registrationFormGroup.getRawValue()['familyDetails'].filter((eachFamilyDetail: any) => {
   //     if (eachFamilyDetail.aadharNoFamily !== aadharNo.value) {
   //       return eachFamilyDetail;
@@ -1781,7 +1780,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   //       // })
   //       alert('Aadhar no. should be unique for every family member')
   //         aadharNo.reset();
-        
+
   //     }
   //   }
   // }
@@ -1800,7 +1799,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
               if (_.isArray(subFormControls)) {
                 if (subFormControls[j]['controls']) {
                   const formArrayControls = subFormControls[j]['controls'];
-                      for (const k in formArrayControls) {
+                  for (const k in formArrayControls) {
                     if (formArrayControls[k].invalid) {
                       if (formArrayControls[k].errors) {
                         this.filterErrorForErrorMessages(formArrayControls[k].errors, k);
@@ -1847,7 +1846,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           message = `${label}`;
         }
         this.errorMsgList.push(message);
-      
+
       }
       if (error === 'pattern') {
         const message = `${label} is not appropriate`;
@@ -1861,7 +1860,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         const message = `${label} length should be less than ${errors[error].requiredLength}`;
         this.errorMsgList.push(message);
       }
-    
+
     }
   }
 
@@ -2115,16 +2114,16 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return this.registrationFormGroup.get('selfDeclaration');
   }
 
-  get moreThan90Days(){
+  get moreThan90Days() {
     return this.registrationFormGroup.get('moreThan90Days');
   }
 
-get familyDetails(){  return (this.registrationFormGroup.get('familyDetails') as FormArray).controls;}
+  get familyDetails() { return (this.registrationFormGroup.get('familyDetails') as FormArray).controls; }
 
 
 
   // personal getters
-  get oldRegistrationNo() {    return this.registrationFormGroup.get('personalDetails').get('oldRegistrationNo');  }
+  get oldRegistrationNo() { return this.registrationFormGroup.get('personalDetails').get('oldRegistrationNo'); }
   get firstNamePersonal() { return this.registrationFormGroup.get('personalDetails').get('firstNamePersonal'); }
   get firstNamePersonal_mr() { return this.registrationFormGroup.get('personalDetails').get('firstNamePersonal_mr'); }
   get middleNamePersonal() { return this.registrationFormGroup.get('personalDetails').get('middleNamePersonal'); }
@@ -2326,16 +2325,16 @@ get familyDetails(){  return (this.registrationFormGroup.get('familyDetails') as
     return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp');
   }
 
-  get typeOfEmployerEmp_mr() { 
-    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp_mr'); 
+  get typeOfEmployerEmp_mr() {
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp_mr');
   }
 
   get fullNameOfIssuerEmp() {
     return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp');
   }
 
-  get fullNameOfIssuerEmp_mr() { 
-    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp_mr'); 
+  get fullNameOfIssuerEmp_mr() {
+    return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp_mr');
   }
 
   get mobileNumberOfIssuerEmp() {
