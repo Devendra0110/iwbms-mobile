@@ -131,6 +131,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public uploadedWorkSiteImageUrl: string;
   public uploadedbankPassbook: string;
   public uploadedWorkCertificate: string;
+  public uploadedAgeProofDoc: string;
+  public uploadedPhotoIdProofDoc: string;
   public uploadedSupportingDocument: string;
 
   public selectedApplicationData: any;
@@ -140,6 +142,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     workSitePhoto: File,
     supportingDocuments: File,
     workCertificate: File,
+    ageProofDoc: File,
+    photoIdProofDoc: File,
     bankPassbook: File,
     selfDeclarationDocuments: File,
     aadharDeclaration: File,
@@ -148,6 +152,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       workSitePhoto: null,
       supportingDocuments: null,
       workCertificate: null,
+      ageProofDoc: null,
+      photoIdProofDoc: null,
       bankPassbook: null,
       selfDeclarationDocuments: null,
       aadharDeclaration: null
@@ -158,6 +164,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     workSitePhoto: any,
     supportingDocuments: any,
     workCertificate: any,
+    ageProofDoc: any,
+    photoIdProofDoc: any,
     bankPassbook: any,
     selfDeclarationDocuments: File,
     aadharDeclaration: File,
@@ -166,6 +174,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       workSitePhoto: null,
       supportingDocuments: null,
       workCertificate: null,
+      ageProofDoc: null,
+      photoIdProofDoc: null,
       bankPassbook: null,
       selfDeclarationDocuments: null,
       aadharDeclaration: null
@@ -730,6 +740,12 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           case 'workCertificate':
             this.uploadedWorkCertificate = `${serverUrl}registration-and-renewal/getfile/${this.selectedApplicationData._id}/${docs[item]}?x-access-token=${localStorage.getItem('token')}`;
             break;
+          case 'ageProofDoc':
+            this.uploadedAgeProofDoc = `${serverUrl}registration-and-renewal/getfile/${this.selectedApplicationData._id}/${docs[item]}?x-access-token=${localStorage.getItem('token')}`;
+            break;
+          case 'photoIdProofDoc':
+          this.uploadedPhotoIdProofDoc = `${serverUrl}registration-and-renewal/getfile/${this.selectedApplicationData._id}/${docs[item]}?x-access-token=${localStorage.getItem('token')}`;
+          break;
         }
       }
     }
@@ -1740,6 +1756,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       aadharDeclaration: new FormControl('', Validators.required),
       bankPassbook: new FormControl('', Validators.required),
       workCertificate: new FormControl('', Validators.required),
+      ageProofDoc: new FormControl(''),
+      photoIdProofDoc: new FormControl(''),
     });
   }
  
@@ -2428,6 +2446,14 @@ get familyDetails(){  return (this.registrationFormGroup.get('familyDetails') as
 
   get workSitePhoto() {
     return this.registrationFormGroup.get('supportingDocuments').get('workSitePhoto');
+  }
+
+  get ageProofDoc() {
+    return this.registrationFormGroup.get('supportingDocuments').get('ageProofDoc');
+  }
+
+  get photoIdProofDoc() {
+    return this.registrationFormGroup.get('supportingDocuments').get('photoIdProofDoc');
   }
 
 }
