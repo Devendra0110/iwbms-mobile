@@ -294,7 +294,15 @@ export class RenewalPage implements OnInit {
       this.dispatchDateFlag = moment(this.maxToDate, 'YYYY-MM-DD').diff(moment(this.minDispatchDate, 'YYYY-MM-DD'), 'days') < 0 ? true : false;
     }, err => console.log(err));
 
-    
+      //bocw act dispatch number not required.
+      this.registeredWith.valueChanges.subscribe((registeredWith_id)=>{
+        if(registeredWith_id==='1'){
+          this.dispatchNo.setValidators([]);
+        }else{
+          this.dispatchNo.setValidators([Validators.required]);
+        }
+        this.dispatchNo.reset();
+      })
 
   }
 
