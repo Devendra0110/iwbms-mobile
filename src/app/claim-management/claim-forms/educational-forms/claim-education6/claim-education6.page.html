@@ -197,7 +197,7 @@
   </ion-item>
   <ion-item>
     <input (change)="getFileDetails($event)" formControlName="certificates" id="certificates" type="file"
-      accept="application/pdf/png/jpeg/jpg" [class.is-invalid]="certificates.invalid && certificates.touched">
+       [class.is-invalid]="certificates.invalid && certificates.touched">
   </ion-item>
   <div class="text-danger" *ngIf="certificates.invalid && certificates.touched">
     <small *ngIf="certificates.errors && certificates.errors['required']">Please upload required
@@ -209,7 +209,7 @@
   </ion-item>
   <ion-item>
     <input (change)="getFileDetails($event)" formControlName="schoolIdDoc" id="schoolIdDoc" type="file"
-      accept="application/pdf/png/jpeg/jpg" [class.is-invalid]="schoolIdDoc.invalid && schoolIdDoc.touched">
+       [class.is-invalid]="schoolIdDoc.invalid && schoolIdDoc.touched">
   </ion-item>
   <div class="text-danger" *ngIf="schoolIdDoc.invalid && schoolIdDoc.touched">
     <small *ngIf="schoolIdDoc.errors && schoolIdDoc.errors['required']">Please upload required
@@ -223,7 +223,7 @@
   </ion-item>
   <ion-item>
     <input (change)="getFileDetails($event)" formControlName="bonafideDoc" id="bonafideDoc" type="file"
-      accept="application/pdf/png/jpeg/jpg" [class.is-invalid]="bonafideDoc.invalid && bonafideDoc.touched">
+       [class.is-invalid]="bonafideDoc.invalid && bonafideDoc.touched">
   </ion-item>
   <div class="text-danger" *ngIf="bonafideDoc.invalid && bonafideDoc.touched">
     <small *ngIf="bonafideDoc.errors && bonafideDoc.errors['required']">Please upload required
@@ -236,7 +236,7 @@
   </ion-item>
   <ion-item>
     <input (change)="getFileDetails($event)" formControlName="aadharCardDoc" id="aadharCardDoc" type="file"
-      accept="application/pdf/png/jpeg/jpg" [class.is-invalid]="aadharCardDoc.invalid && aadharCardDoc.touched">
+       [class.is-invalid]="aadharCardDoc.invalid && aadharCardDoc.touched">
   </ion-item>
   <div class="text-danger" *ngIf="aadharCardDoc.invalid && aadharCardDoc.touched">
     <small *ngIf="aadharCardDoc.errors && aadharCardDoc.errors['required']">Please upload required
@@ -248,7 +248,7 @@
   </ion-item>
   <ion-item>
     <input (change)="getFileDetails($event)" formControlName="selfDeclaration" id="selfDeclaration" type="file"
-      accept="application/pdf/png/jpeg/jpg" [class.is-invalid]="selfDeclaration.invalid && selfDeclaration.touched">
+       [class.is-invalid]="selfDeclaration.invalid && selfDeclaration.touched">
   </ion-item>
   <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
     <small *ngIf="selfDeclaration.errors && selfDeclaration.errors['required']">Please upload required
@@ -260,7 +260,7 @@
   </ion-item>
   <ion-item>
     <input (change)="getFileDetails($event)" formControlName="rationCardDoc" id="rationCardDoc" type="file"
-      accept="application/pdf/png/jpeg/jpg" [class.is-invalid]="rationCardDoc.invalid && rationCardDoc.touched">
+       [class.is-invalid]="rationCardDoc.invalid && rationCardDoc.touched">
   </ion-item>
   <div class="text-danger" *ngIf="rationCardDoc.invalid && rationCardDoc.touched">
     <small *ngIf="rationCardDoc.errors && rationCardDoc.errors['required']">Please upload required

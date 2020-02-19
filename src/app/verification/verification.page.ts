@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, NavigationExtras } from '@angular/router';
-import { ValidationService } from '../services/validation.service';
-import { MobileVerificationService } from '../services/mobile-verification.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavigationExtras, Router } from '@angular/router';
+
 import { Dialogs } from '@ionic-native/dialogs/ngx';
+import { LoadingController } from '@ionic/angular';
+import { MobileVerificationService } from '../services/mobile-verification.service';
 import { Network } from '@ionic-native/network/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
-import { LoadingController } from '@ionic/angular';
+import { ValidationService } from '../services/validation.service';
 
 @Component({
   selector: 'app-verification',
@@ -107,6 +108,9 @@ export class VerificationPage implements OnInit {
               this.ECode = 'E2';
             }else if(err.error.message === 'Mobile No. already Registered & Aadhar No. already Registered'){
               this.ECode = 'E3';
+            }else{
+              this.ECode =undefined;
+              this.dialogs.alert('Server is unreachable at this moment.Please try again later.')
             }
           }
         );

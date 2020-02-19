@@ -168,7 +168,7 @@
           / सक्षम वैद्यकीय अधिकाऱ्यांनी दिलेले कुटुंबनियोजन शास्त्रक्रियेबाबतचे प्रमाणपत्र </ion-label>
       </ion-item>
       <ion-item>
-        <input id='health3Form3Doc1' (change)="getFileDetails($event)" formControlName="health3Form3Doc1" type="file" accept="application/pdf/png/jpeg/jpg">
+        <input id='health3Form3Doc1' (change)="getFileDetails($event)" formControlName="health3Form3Doc1" type="file" >
       </ion-item>
         <div class="text-danger" *ngIf="health3Form3Doc1.invalid && health3Form3Doc1.touched">
           <small> Please Upload Required Document</small>
@@ -181,7 +181,7 @@
           अर्जदारास एक कन्या अपत्यापेक्षा जास्त अपत्य नसल्याचा पुरावा - शपथपत्र </ion-label>
       </ion-item>
       <ion-item>
-        <input id='health3Form3Doc2' (change)="getFileDetails($event)" formControlName="health3Form3Doc2" type="file" accept="application/pdf/png/jpeg/jpg">
+        <input id='health3Form3Doc2' (change)="getFileDetails($event)" formControlName="health3Form3Doc2" type="file" >
       </ion-item>
         <div class="text-danger" *ngIf="health3Form3Doc2.invalid && health3Form3Doc2.touched">
           <small> Please Upload Required Document</small>
@@ -193,7 +193,7 @@
         </ion-label>
       </ion-item>
       <ion-item>
-        <input id='aadharCardDoc' (change)="getFileDetails($event)" formControlName="aadharCardDoc" type="file" accept="application/pdf/png/jpeg/jpg">
+        <input id='aadharCardDoc' (change)="getFileDetails($event)" formControlName="aadharCardDoc" type="file" >
       </ion-item>
         <div class="text-danger" *ngIf="aadharCardDoc.invalid && aadharCardDoc.touched">
           <small> Please Upload Required Document</small>
@@ -204,7 +204,7 @@
         <ion-label class="ion-text-wrap" floating>4. Self Declaration / स्वयंघोषणापत्र </ion-label>
       </ion-item>
       <ion-item>
-        <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" accept="application/pdf/png/jpeg/jpg">
+        <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" >
       </ion-item>
         <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
           <small> Please Upload Required Document</small>

@@ -35,12 +35,12 @@
   </ion-card>
   <!-- Error Block-->
     <ion-card *ngIf="unverifiedUser">
-      <ion-card-content >
+      <ion-card-content *ngIf="ECode" >
         <div  [ngSwitch]='ECode'>
           <div class="error-code" *ngSwitchCase="'E1'"><ion-icon slot="end"  name="alert" ></ion-icon>{{mobileNo.value}} is already registered.</div>
           <div class="error-code" *ngSwitchCase="'E2'"><ion-icon slot="end"  name="alert" ></ion-icon>{{aadharNo.value}} is already registered.</div>
           <div class="error-code" *ngSwitchCase="'E3'"><ion-icon slot="end"  name="alert" ></ion-icon>Mobile No.{{mobileNo.value}} and {{aadharNo.value}} both are already registered</div>
-          <div class="error-code" *ngSwitchCase="'E4'" ><ion-icon slot="end"  name="alert" ></ion-icon>{{mobileNo.value}} and {{aadharNo.value}} both are already registered with different users.</div>
+          <div class="error-code" *ngSwitchCase="'E4'" ><ion-icon slot="end"  name="alert" ></ion-icon></div>
         </div>
       </ion-card-content>
     </ion-card>

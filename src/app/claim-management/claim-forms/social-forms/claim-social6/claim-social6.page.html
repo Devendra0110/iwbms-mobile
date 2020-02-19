@@ -77,7 +77,7 @@
     </ion-item>
     <ion-item>
       <input type="file" formControlName="socialForm7Doc1"
-        [class.is-invalid]="socialForm7Doc1.invalid && socialForm7Doc1.touched" accept="application/pdf/png/jpeg/jpg"
+        [class.is-invalid]="socialForm7Doc1.invalid && socialForm7Doc1.touched" 
         (change)="getFileDetails($event)" id="socialForm7Doc1">
       <div class="text-danger" *ngIf="socialForm7Doc1.invalid && socialForm7Doc1.touched">
         <small>Please upload required document.</small>
@@ -88,7 +88,7 @@
     </ion-item>
     <ion-item>
       <input type="file" formControlName="socialForm7Doc2"
-        [class.is-invalid]="socialForm7Doc2.invalid && socialForm7Doc2.touched" accept="application/pdf/png/jpeg/jpg"
+        [class.is-invalid]="socialForm7Doc2.invalid && socialForm7Doc2.touched" 
         (change)="getFileDetails($event)" id="socialForm7Doc2">
       <div class="text-danger" *ngIf="socialForm7Doc2.invalid && socialForm7Doc2.touched">
         <small>Please upload required document.</small>
@@ -100,22 +100,18 @@
     <ion-item>
       <input type="file" formControlName="socialForm7Doc3"
         [class.is-invalid]="socialForm7Doc3.invalid && socialForm7Doc3.touched" class="form-control-file"
-        accept="application/pdf/png/jpeg/jpg" (change)="getFileDetails($event)" id="socialForm7Doc3">
+         (change)="getFileDetails($event)" id="socialForm7Doc3">
       <div class="text-danger" *ngIf="socialForm7Doc3.invalid && socialForm7Doc3.touched">
         <small>Please upload required document.</small>
       </div>
     </ion-item>
     <ion-item>
-<<<<<<< Updated upstream
-      <ion-label>4. Self-Declaration / स्वयंघोषणापत्र .</ion-label>
-=======
       <ion-label>4. Self Declaration / स्वयंघोषणापत्र.</ion-label>
->>>>>>> Stashed changes
     </ion-item>
     <ion-item>
       <input type="file" formControlName="selfDeclaration"
         [class.is-invalid]="selfDeclaration.invalid && selfDeclaration.touched" class="form-control-file"
-        accept="application/pdf/png/jpeg/jpg" (change)="getFileDetails($event)" id="selfDeclaration">
+         (change)="getFileDetails($event)" id="selfDeclaration">
       <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
         <small>Please upload required document.</small>
       </div>
