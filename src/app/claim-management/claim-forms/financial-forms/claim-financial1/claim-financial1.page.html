@@ -291,7 +291,7 @@
           अधिका-यांनी दिलेला मृत्यू प्रमाणपत्र.<span style="color: Red">*</span></ion-label>
       </ion-item>
       <ion-item>
-        <input id='deathCertificateDoc' (change)="getFileDetails($event)" formControlName="deathCertificateDoc" type="file" accept="application/pdf">
+        <input id='deathCertificateDoc' (change)="getFileDetails($event)" formControlName="deathCertificateDoc" type="file" accept="application/pdf/png/jpeg/jpg">
       </ion-item>
           <div class="text-danger" *ngIf="deathCertificateDoc.invalid && deathCertificateDoc.touched">
             <small *ngIf="deathCertificateDoc.errors && deathCertificateDoc.errors['required']">Please upload required
@@ -303,7 +303,7 @@
           certificate./ एफआयआर प्रमाणपत्र<span style="color: Red">*</span></ion-label>
       </ion-item>
       <ion-item>
-        <input id='firCertificate' (change)="getFileDetails($event)" formControlName="firCertificate" type="file" accept="application/pdf">
+        <input id='firCertificate' (change)="getFileDetails($event)" formControlName="firCertificate" type="file" accept="application/pdf/png/jpeg/jpg">
       </ion-item>
           <div class="text-danger" *ngIf="firCertificate.invalid && firCertificate.touched">
             <small *ngIf="firCertificate.errors && firCertificate.errors['required']">Please upload required
@@ -315,7 +315,7 @@
               प्रत.<span style="color: Red">*</span></ion-label>
         </ion-item>
         <ion-item>
-          <input id='scannedPassbookDoc' (change)="getFileDetails($event)" formControlName="scannedPassbookDoc" type="file" accept="application/pdf">
+          <input id='scannedPassbookDoc' (change)="getFileDetails($event)" formControlName="scannedPassbookDoc" type="file" accept="application/pdf/png/jpeg/jpg">
         </ion-item>
             <div class="text-danger" *ngIf="scannedPassbookDoc.invalid && scannedPassbookDoc.touched">
               <small *ngIf="scannedPassbookDoc.errors && scannedPassbookDoc.errors['required']">Please upload required
@@ -326,7 +326,7 @@
             <ion-label class="ion-text-wrap" floating>4. Aadhar card of the applicant / अर्जदाराचे आधार कार्ड<span style="color: Red">*</span></ion-label>
           </ion-item>
           <ion-item>
-            <input id='aadharCardDoc' (change)="getFileDetails($event)" formControlName="aadharCardDoc" type="file" accept="application/pdf">
+            <input id='aadharCardDoc' (change)="getFileDetails($event)" formControlName="aadharCardDoc" type="file" accept="application/pdf/png/jpeg/jpg">
           </ion-item>
               <div class="text-danger" *ngIf="aadharCardDoc.invalid && aadharCardDoc.touched">
                 <small *ngIf="aadharCardDoc.errors && aadharCardDoc.errors['required']">Please upload required
@@ -338,7 +338,7 @@
               <ion-label class="ion-text-wrap" floating>5. Self-Declaration / स्वयंघोषणापत्र<span style="color: Red">*</span></ion-label>
             </ion-item>
             <ion-item>
-              <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" accept="application/pdf">
+              <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" accept="application/pdf/png/jpeg/jpg">
             </ion-item>
             <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
               <small *ngIf="selfDeclaration.errors && selfDeclaration.errors['required']">Please upload required
@@ -350,7 +350,7 @@
                 <ion-label class="ion-text-wrap" floating>6.Successor Certificate if nominee is not available./नामनिर्देशित व्यक्ती उपलब्ध नसल्यास उत्तराधिकारी प्रमाणपत्र.<span style="color: Red">*</span></ion-label>
               </ion-item>
               <ion-item>
-                <input id='nomineeCertificate'  (change)="getFileDetails($event)" formControlName="nomineeCertificate" type="file" accept="application/pdf">
+                <input id='nomineeCertificate'  (change)="getFileDetails($event)" formControlName="nomineeCertificate" type="file" accept="application/pdf/png/jpeg/jpg">
               </ion-item>
               <div class="text-danger" *ngIf="nomineeCertificate.invalid && nomineeCertificate.touched">
                 <small *ngIf="nomineeCertificate.errors && nomineeCertificate.errors['required']">Please upload required
@@ -361,7 +361,7 @@
                 <ion-label class="ion-text-wrap" floating>7.Panchnama / पंचनामा .<span style="color: Red">*</span></ion-label>
               </ion-item>
               <ion-item>
-                <input id='panchnamaDoc'  (change)="getFileDetails($event)" formControlName="panchnamaDoc" type="file" accept="application/pdf">
+                <input id='panchnamaDoc'  (change)="getFileDetails($event)" formControlName="panchnamaDoc" type="file" accept="application/pdf/png/jpeg/jpg">
               </ion-item>
               <div class="text-danger" *ngIf="panchnamaDoc.invalid && panchnamaDoc.touched">
                 <small *ngIf="panchnamaDoc.errors && panchnamaDoc.errors['required']">Please upload required

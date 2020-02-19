@@ -35,7 +35,7 @@
                       /प्रधानमंत्री आवास योजनेत पात्र असल्याबाबत सक्षम अधिकाऱ्याचे पत्र / प्रमाणित यादी<span style="color: Red">*</span></ion-label>
                 </ion-item>
                 <ion-item>
-                  <input id='pmAwaasCertificate' (change)="getFileDetails($event)" formControlName="pmAwaasCertificate" type="file" accept="application/pdf">
+                  <input id='pmAwaasCertificate' (change)="getFileDetails($event)" formControlName="pmAwaasCertificate" type="file" accept="application/pdf/png/jpeg/jpg">
                   <div class="text-danger" *ngIf="pmAwaasCertificate.invalid && pmAwaasCertificate.touched">
                     <small *ngIf="pmAwaasCertificate.errors && pmAwaasCertificate.errors['required']">Please upload required
                       document.</small>
@@ -47,7 +47,7 @@
                         नाव<span style="color: Red">*</span></ion-label>
                   </ion-item>
                   <ion-item>
-                    <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" accept="application/pdf">
+                    <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file" accept="application/pdf/png/jpeg/jpg">
                     <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
                       <small *ngIf="selfDeclaration.errors && selfDeclaration.errors['required']">Please upload required
                         document.</small>

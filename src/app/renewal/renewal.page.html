@@ -537,7 +537,7 @@
         <ion-label class="ion-text-wrap" floating>90 Days Work Certificate<span style="color: Red">*</span></ion-label>
       </ion-item>
       <ion-item>
-        <input id='workCertificate' formControlName="workCertificate" type="file" accept="application/pdf"
+        <input id='workCertificate' formControlName="workCertificate" type="file" accept="application/pdf/png/jpeg/jpg"
           (change)="uploadFile($event)">
       </ion-item>
       <div class="text-danger" *ngIf="workCertificate.invalid && workCertificate.touched">
@@ -550,7 +550,7 @@
           </ion-label>
         </ion-item>
         <ion-item>
-          <input id='graceFile' formControlName="graceFile" type="file" accept="application/pdf"
+          <input id='graceFile' formControlName="graceFile" type="file" accept="application/pdf/png/jpeg/jpg"
             (change)="uploadFile($event)">
         </ion-item>
         <div class="text-danger" *ngIf="graceFile.invalid && graceFile.touched">
@@ -562,7 +562,7 @@
         <ion-label class="ion-text-wrap" floating>Yellow Book<span style="color: Red">*</span></ion-label>
       </ion-item>
       <ion-item>
-        <input id='yellowBook' formControlName="yellowBook" type="file" accept="application/pdf"
+        <input id='yellowBook' formControlName="yellowBook" type="file" accept="application/pdf/png/jpeg/jpg"
           (change)="uploadFile($event)">
       </ion-item>
       <div class="text-danger" *ngIf="yellowBook.invalid && yellowBook.touched">
@@ -575,7 +575,7 @@
         </ion-label>
       </ion-item>
       <ion-item>
-        <input id='selfDeclarationFile' formControlName="selfDeclarationFile" type="file" accept="application/pdf"
+        <input id='selfDeclarationFile' formControlName="selfDeclarationFile" type="file" accept="application/pdf/png/jpeg/jpg"
           (change)="uploadFile($event)">
       </ion-item>
       <div class="text-danger" *ngIf="selfDeclarationFile.invalid && selfDeclarationFile.touched">

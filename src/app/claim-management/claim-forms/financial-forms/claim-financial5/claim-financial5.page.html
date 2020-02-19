@@ -230,7 +230,7 @@
     </ion-item>
     <ion-item>
       <input id='deathCertificateDoc' (change)="getFileDetails($event)" formControlName="deathCertificateDoc"
-        type="file" accept="application/pdf">
+        type="file" accept="application/pdf/png/jpeg/jpg">
     </ion-item>
     <div class="text-danger" *ngIf="deathCertificateDoc.invalid && deathCertificateDoc.touched">
       <small *ngIf="deathCertificateDoc.errors && deathCertificateDoc.errors['required']">Please upload required
@@ -244,7 +244,7 @@
     </ion-item>
     <ion-item>
       <input id='scannedPassbookDoc' (change)="getFileDetails($event)" formControlName="scannedPassbookDoc" type="file"
-        accept="application/pdf">
+        accept="application/pdf/png/jpeg/jpg">
     </ion-item>
     <div class="text-danger" *ngIf="scannedPassbookDoc.invalid && scannedPassbookDoc.touched">
       <small *ngIf="scannedPassbookDoc.errors && scannedPassbookDoc.errors['required']">Please upload required
@@ -257,7 +257,7 @@
     </ion-item>
     <ion-item>
       <input id='aadharCardDoc' (change)="getFileDetails($event)" formControlName="aadharCardDoc" type="file"
-        accept="application/pdf">
+        accept="application/pdf/png/jpeg/jpg">
     </ion-item>
     <div class="text-danger" *ngIf="aadharCardDoc.invalid && aadharCardDoc.touched">
       <small *ngIf="aadharCardDoc.errors && aadharCardDoc.errors['required']">Please upload required
@@ -274,7 +274,7 @@
     </ion-item>
     <ion-item>
       <input id='selfDeclaration' (change)="getFileDetails($event)" formControlName="selfDeclaration" type="file"
-        accept="application/pdf">
+        accept="application/pdf/png/jpeg/jpg">
     </ion-item>
     <div class="text-danger" *ngIf="selfDeclaration.invalid && selfDeclaration.touched">
       <small *ngIf="selfDeclaration.errors && selfDeclaration.errors['required']">Please upload required
@@ -287,7 +287,7 @@
     </ion-item>
     <ion-item>
       <input id='nomineeCertificate' (change)="getFileDetails($event)" formControlName="nomineeCertificate" type="file"
-        accept="application/pdf">
+        accept="application/pdf/png/jpeg/jpg">
     </ion-item>
     <div class="text-danger" *ngIf="nomineeCertificate.invalid && nomineeCertificate.touched">
       <small *ngIf="nomineeCertificate.errors && nomineeCertificate.errors['required']">Please upload required
