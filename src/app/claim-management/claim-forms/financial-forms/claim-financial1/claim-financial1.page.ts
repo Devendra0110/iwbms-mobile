@@ -51,8 +51,8 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
 
   ) {
     super(transliterate, httpService, claimService, router, storage, toast,dialogs);
-    this.files = { deathCertificateDoc: '', firCertificate: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' };
-    this.fileOptions = { deathCertificateDoc: '', firCertificate: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' };
+    this.files = { deathCertificateDoc: '', firCertificate: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '',panchnamaDoc: '' };
+    this.fileOptions = { deathCertificateDoc: '', firCertificate: '', scannedPassbookDoc: '', aadharCardDoc: '', nomineeCertificate: '', selfDeclaration: '' ,panchnamaDoc: '' };
 
     this.formGroup = new FormGroup({
       deathCertificateIssueDate: new FormControl('', this.validationService.createValidatorsArray('deathCertificateIssueDate')),

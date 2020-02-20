@@ -31,4 +31,8 @@ export class MobileVerificationService {
     const headers = new HttpHeaders().append('Content-Type', 'application/json');
     return this.http.post(`${serverUrl}otp/verify-otp`, { mobileNo,otp }, { headers });
   }
+  checkForRegistrationNumber(registrationNo: any) {
+    const headers = new HttpHeaders().append('Content-Type', 'application/json');
+    return this.http.get(`${serverUrl}otp/check-registration-number/${registrationNo}`, { headers });
+  }
 }

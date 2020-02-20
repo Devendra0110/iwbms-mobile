@@ -69,6 +69,7 @@ export class ClaimMainFormPage implements OnInit {
   public mode: any;
   public rejectReason: boolean;
   public claimId: string;
+  public deathWorker:boolean;
   public claimData: any;
   public applicantRegistrationDetails: any;
   public ackNo: any;
@@ -98,6 +99,7 @@ export class ClaimMainFormPage implements OnInit {
         const userData = this.router.getCurrentNavigation().extras.state;
         this.claimMainForm.patchValue(userData);
         this.BocwID = userData.bocw_id;
+        this.deathWorker = userData.deathWorker;
         this.JWTToken = userData.JWTToken;
         this.setInputDetails();
         this.calculateAge();
@@ -321,10 +323,20 @@ export class ClaimMainFormPage implements OnInit {
     for (const each in this.schemeObj) {
       if (Number(this.schemeObj[each].category_id) === Number(schemeId)) {
         const scheme_number = this.schemeObj[each].scheme_number;
-        this.schemeObj[each]['eligibility'] = this.claimEligibilityObject ? this.claimEligibilityObject[scheme_number] : false;
-                  this.commonClaimArray.push(this.schemeObj[each]);
-        
-        
+        if (this.deathWorker) {
+          if (this.schemeObj[each]['scheme_number'] === 'F01' || this.schemeObj[each]['scheme_number'] === 'F02' || this.schemeObj[each]['scheme_number'] === 'F05' || this.schemeObj[each]['scheme_number'] === 'F06') {
+            this.schemeObj[each]['eligibility'] = this.claimEligibilityObject ? this.claimEligibilityObject[scheme_number] : false;
+          } else {
+            this.schemeObj[each]['eligibility'] = false;
+          }
+        } else {
+          if (this.schemeObj[each]['scheme_number'] === 'F01' || this.schemeObj[each]['scheme_number'] === 'F02' || this.schemeObj[each]['scheme_number'] === 'F05' || this.schemeObj[each]['scheme_number'] === 'F06') {
+            this.schemeObj[each]['eligibility'] = false;
+          } else {
+            this.schemeObj[each]['eligibility'] = this.claimEligibilityObject ? this.claimEligibilityObject[scheme_number] : false;
+          }
+        }
+        this.commonClaimArray.push(this.schemeObj[each]);
       }
     }
   }

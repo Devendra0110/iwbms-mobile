@@ -1,3 +1,4 @@
+import { UserManagementService } from 'src/app/services/user-management.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
@@ -27,12 +28,14 @@ export class ClaimVerificationPage implements OnInit {
   public resendOtpFlag = true;
   public redataEntry = false;
   public otpCountdown: number;
+  public deathToggle = true;
   public ECode: string;
   public passingResponse: any;
   public JWTToken: any;
 
   constructor(
     private validationService: ValidationService,
+    private userManagement:UserManagementService,
     private router: Router,
     private dialogs: Dialogs,
     private storage: Storage,
@@ -91,7 +94,8 @@ export class ClaimVerificationPage implements OnInit {
         }).then((res) => {
           res.present();
         });
-        this.claimService.checkRegistrationAndRenewalValidity(tokenObj, this.JWTToken).subscribe(
+        if(this.deathToggle){
+          this.claimService.checkRegistrationAndRenewalValidity(tokenObj, this.JWTToken).subscribe(
           (res: any) => {
             this.redataEntry = false;
             if (res.subscription === 'active') {
@@ -110,6 +114,24 @@ export class ClaimVerificationPage implements OnInit {
             this.dialogs.alert('Your BOCW Registration Number is not registered. Please enter registered Registration Number or re-enter your data by clicking on the Re-data Entry button. आपला BOCW नोंदणी क्रमांक नोंदणीकृत नाही. कृपया नोंदणीकृत नोंदणी क्रमांक प्रविष्ट करा किंवा री-डेटा एन्ट्री बटणावर क्लिक करुन आपला डेटा पुन्हा प्रविष्ट करा.');
           }
         )
+        }else{
+          this.userManagement.getUserById(this.registrationNo.value,this.JWTToken).subscribe((res:any)=>{
+            this.passingResponse = res[0];
+            this.passingResponse['deathWorker'] = !this.deathToggle;
+            this.passingResponse['JWTToken'] = this.JWTToken;
+            delete this.passingResponse.agePersonal
+            const userObject: NavigationExtras = {
+              state: this.passingResponse
+            }
+            this.claimVerificationForm.reset();
+            this.allowOTP = false;
+            this.otpflag = false;
+            this.loadingController.dismiss();
+            this.cardTitle = 'BOCW Registration No. Verification'
+            this.router.navigate(['/claim-management/claim-main-form'], userObject);
+          },err=>console.log(err))
+        }
+        
       } else {
         this.dialogs.alert('Registration No. is not valid')
         this.ineligible = true;
@@ -117,6 +139,18 @@ export class ClaimVerificationPage implements OnInit {
         this.loadingController.dismiss();
       }
     }
+  }
+
+  
+
+  checkFcn(event) {
+    this.deathToggle = !this.deathToggle;
+    if(this.deathToggle){
+      this.mobileNo.setValidators([Validators.required])
+    }else{
+      this.mobileNo.setValidators([]);
+    }
+    this.mobileNo.updateValueAndValidity();
   }
 
   redataVerification() {
@@ -189,6 +223,7 @@ export class ClaimVerificationPage implements OnInit {
           if (res.message === 'OTP Verified') {
             // otp verified
             this.passingResponse['JWTToken'] = this.JWTToken;
+            this.passingResponse['deathWorker'] = !this.deathToggle;
             delete this.passingResponse.agePersonal
             const userObject: NavigationExtras = {
               state: this.passingResponse

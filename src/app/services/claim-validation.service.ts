@@ -827,6 +827,10 @@ export class ClaimValidationService {
         ];
         break;
       }
+      case 'verifyCheck': {
+        validatorsArr = [ ];
+        break;
+      }
       case 'dischargeSum': {
         validatorsArr = [
           Validators.required

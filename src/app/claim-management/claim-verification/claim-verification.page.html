@@ -22,16 +22,24 @@
             <small *ngIf="!!registrationNo.errors?.pattern">Please enter appropriate registration number.</small>
           </div>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="deathToggle">
           <ion-label position="floating" >Mobile Number / दूरध्वनी क्रमांक</ion-label>
-          <ion-input (ionChange)="clearErrors()" [disabled]="allowOTP"  type="tel" maxlength='10' id="mobileNo" formControlName="mobileNo" clearInput>
+          <ion-input  (ionChange)="clearErrors()" [disabled]="allowOTP"  type="tel" maxlength='10' id="mobileNo" formControlName="mobileNo" clearInput>
           </ion-input>
           <div class="text-danger" *ngIf="mobileNo.invalid && mobileNo.touched">
             <small *ngIf="!!mobileNo.errors?.required">Please enter your Mobile Number.</small>
             <small *ngIf="!!mobileNo.errors?.pattern">Please enter appropriate Mobile Number.</small>
           </div>
         </ion-item>
-        <ion-button style="margin-top: 16px;" *ngIf="!allowOTP" mode="ios" expand="block" (click)="verify()">Verify</ion-button>
+        <br>
+        <ion-item>
+          <ion-checkbox id="verifyCheck"  (click)="checkFcn($event)">           
+          </ion-checkbox>
+          <ion-label>Click if applying for any Death related Scheme / मृत्यू संबंधित लाभासाठी अर्ज करत असल्यास येथे खूण करा
+          </ion-label>
+        </ion-item>
+
+        <ion-button style="margin-top: 16px;" *ngIf="!allowOTP " mode="ios" expand="block" (click)="verify()">Verify</ion-button>
         <ion-button style="margin-top: 16px;" *ngIf="redataEntry" mode="ios" expand="block"
           (click)="redataVerification()">Re-data Entry
         </ion-button>
