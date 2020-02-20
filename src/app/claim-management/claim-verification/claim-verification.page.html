@@ -15,7 +15,8 @@
       <form [formGroup]="claimVerificationForm">
         <ion-item>
           <ion-label position="floating"> BOCW Registration No.</ion-label>
-          <ion-input (ionChange)="clearErrors()" autocapitalize="characters" [disabled]="allowOTP" formControlName="registrationNo" clearInput>
+          <ion-input (ionChange)="clearErrors()" autocapitalize="characters" maxlength="14"
+          [disabled]="allowOTP" formControlName="registrationNo" clearInput>
           </ion-input>
           <div class="text-danger" *ngIf="registrationNo.invalid && registrationNo.touched">
             <small *ngIf="!!registrationNo.errors?.required">Please enter your BOCW Registration Number.</small>

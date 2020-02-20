@@ -11,6 +11,7 @@ import { Network } from '@ionic-native/network/ngx';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
 import { ValidationService } from '../../services/validation.service';
+import { states } from './../../models/states';
 
 @Component({
   selector: 'app-claim-verification',
@@ -49,7 +50,7 @@ export class ClaimVerificationPage implements OnInit {
     this.network.onDisconnect().subscribe(() => { });
     this.network.onConnect().subscribe(() => { });
     this.claimVerificationForm = new FormGroup({
-      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
+      registrationNo: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$'), Validators.maxLength(14)]),
       mobileNo: new FormControl('', this.validationService.createValidatorsArray('mobile'))
     });
 
@@ -102,7 +103,6 @@ export class ClaimVerificationPage implements OnInit {
               this.passingResponse = res;
               this.allowOTP = true;
               this.cardTitle = "Registered Worker Mobile Verification"
-
             } else {
               this.allowOTP = false;
               this.dialogs.alert('Worker is not eligible.')
@@ -237,12 +237,15 @@ export class ClaimVerificationPage implements OnInit {
           }
         },
         (err: any) => {
-          this.loadingController.dismiss();
-          this.otpCountdown = 0;
+          if(err.statusText === 'Unknown Error'){
+            this.loadingController.dismiss();
+            this.otpCountdown = 0;
+            this.dialogs.alert('Server is unreachable at the moment. Please try again.');
+          }else{
           this.resendOtpFlag = false;
           this.dialogs.alert('Invalid OTP');
         }
-      );
+        });
     }
   }
 

@@ -97,8 +97,15 @@ export class RenewalVerificationPage implements OnInit {
           }
           await loading.dismiss();
           console.log(res)
-        }, err => { console.log(); this.loadingController.dismiss(); })
-
+        }, err => {
+        if(err.statusText==='Unknown Error'){
+          this.dialogs.alert('Server is unreachable at the moment. Please try again.');
+        }else{}
+        if(err.statusText==='Not Found'){
+          console.log(); this.loadingController.dismiss();
+          this.dialogs.alert('Please enter valid registration number or fill the re-data entry form.');
+        }else{}
+        })
       } else {
         this.unregisteredUser = true;
         this.invalidRegNo = true;
@@ -154,7 +161,10 @@ export class RenewalVerificationPage implements OnInit {
           (err: any) => {
             this.loadingController.dismiss();
             console.log(err);
-            this.unregisteredUser = true;
+            if(err.statusText === 'Unknown Error'){
+              this.dialogs.alert('Server is unreachable at this moment. Please try again.');
+              this.unregisteredUser = true;
+            }
           }
         );
       } else {
@@ -189,12 +199,12 @@ export class RenewalVerificationPage implements OnInit {
               this.cardTitle = 'BOCW Registration No. Verification'
               this.router.navigate(['/renewal'], registrationNumber);
             });
-
           }
         },
         async (err: any) => {
           this.otpCountdown = 0;
           this.resendOtpFlag = false;
+          this.dialogs.alert('Server is unreachable at this moment. Please try again.');
           await loading.dismiss().then((result) => {
             this.dialogs.alert('Invalid OTP');
           })

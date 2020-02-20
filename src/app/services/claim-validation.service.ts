@@ -326,6 +326,8 @@ export class ClaimValidationService {
       case 'ifscCodeBank': {
         validatorsArr = [
           Validators.required,
+          Validators.minLength(11),
+          Validators.maxLength(11)
         ];
         break;
       }

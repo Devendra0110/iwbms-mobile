@@ -110,7 +110,7 @@ export class VerificationPage implements OnInit {
               this.ECode = 'E3';
             }else{
               this.ECode =undefined;
-              this.dialogs.alert('Server is unreachable at this moment.Please try again later.')
+              this.dialogs.alert('Server is unreachable at this moment. Please try again later.')
             }
           }
         );

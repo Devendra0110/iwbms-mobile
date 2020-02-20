@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Storage } from '@ionic/storage';
+import { LoadingController, Platform } from '@ionic/angular';
+
+import { AuthenticationService } from '../services/authentication.service';
+import { Component } from '@angular/core';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { Network } from '@ionic-native/network/ngx';
-import { Platform, LoadingController } from '@ionic/angular';
-import { ValidationService } from '../services/validation.service';
-import { AuthenticationService } from '../services/authentication.service';
-import { UserManagementService } from '../services/user-management.service';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 import { Subscription } from 'rxjs';
-
+import { UserManagementService } from '../services/user-management.service';
+import { ValidationService } from '../services/validation.service';
 
 @Component({
   selector: 'app-home',
@@ -75,12 +75,15 @@ export class HomePage {
           this.wrongUser = true;
         }
       }, err => {
-        console.log(err);
+        if(err.statusText==='Not Found'){
+         console.log(err);
         this.loadingController.dismiss();
         this.wrongUser = true;
         this.dialogs.alert('You have entered wrong email or password');
+      }else{
+        this.dialogs.alert('Server is unreachable at this moment. Please try again.');
+      }
       });
-
 
     }
   }
