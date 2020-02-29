@@ -544,9 +544,9 @@
         <small *ngIf="!!workCertificate.errors?.required">Please upload required document.</small>
       </div>
 
-      <div *ngIf="this.regDet && this.regDet === 'ceased'">
+      <div *ngIf="checkCeasedSubscription()">
         <ion-item lines="none">
-          <ion-label class="ion-text-wrap" floating>Previous Year Working Certificate<span style="color: Red">*</span>
+          <ion-label class="ion-text-wrap" floating>Last 2 Years Working Certificate<span style="color: Red">*</span>
           </ion-label>
         </ion-item>
         <ion-item>

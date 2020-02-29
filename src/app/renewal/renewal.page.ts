@@ -45,7 +45,6 @@ export class RenewalPage implements OnInit {
   public talukasMuncipal: any[] = [];
   public natureOfWorkEmpArray: any[];
   public issuers: any[];
-  public regDet: string;
   public issuersRegistrationTypes: any[];
   public statewiseListArray = states;
   public token_id: any;
@@ -74,6 +73,8 @@ export class RenewalPage implements OnInit {
     read: false,
     update: false
   };
+  public subscription: string;
+  public next_renewal_date:string;
 
   constructor(
     private validationService: ValidationService,
@@ -96,6 +97,8 @@ export class RenewalPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.registrationNo.setValue(this.router.getCurrentNavigation().extras.state.registrationNo);
+        this.subscription = this.router.getCurrentNavigation().extras.state.subscription;
+        this.next_renewal_date = this.router.getCurrentNavigation().extras.state.next_renewal_date
       } else {
         this.router.navigate(['/verification']);
       }
@@ -107,7 +110,6 @@ export class RenewalPage implements OnInit {
         this.router.navigate(['/home']);
       } else {
         this.JWTToken = val;
-        this.regDetails(this.registrationNo.value);
       }
     });
 
@@ -902,16 +904,27 @@ export class RenewalPage implements OnInit {
     return this.renewalFormGroup.get('talukaOfMunicipalCorporation_mr');
   }
 
-  regDetails(regno){
-    this.httpService.getBocwWorkerByRegistrationNumber(regno,this.JWTToken).subscribe((res) => {
-      this.regDet =res[0]['subscription'];
-      if(this.regDet === 'ceased') {
+  checkCeasedSubscription() {
+      const nextRenewalDate = this.next_renewal_date;
+      const timeDiff: number = moment().diff(nextRenewalDate, 'years');
+      if (this.subscription === 'ceased' || timeDiff >= 2) {
         this.graceFile.setValidators([Validators.required]);
+        return true;
       } else {
-        this.graceFile.setValidators(null);
+        return false;
       }
-    })
   }
+
+  // regDetails(regno){
+  //   this.httpService.getBocwWorkerByRegistrationNumber(regno,this.JWTToken).subscribe((res) => {
+  //     this.regDet =res[0]['subscription'];
+  //     if(this.regDet === 'ceased') {
+  //       this.graceFile.setValidators([Validators.required]);
+  //     } else {
+  //       this.graceFile.setValidators(null);
+  //     }
+  //   })
+  // }
 
   get typeOfEmployerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp'); }
   get fullNameOfIssuerEmp() { return this.renewalFormGroup.get('employerWorkDetails')['controls'][0].get('fullNameOfIssuerEmp'); }

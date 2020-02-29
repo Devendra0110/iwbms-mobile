@@ -8,6 +8,7 @@ import { MobileVerificationService } from './../services/mobile-verification.ser
 import { Network } from '@ionic-native/network/ngx';
 import { RenewalService } from '../services/renewal.service';
 import { Storage } from '@ionic/storage';
+import { Subscription } from 'rxjs';
 import { Toast } from '@ionic-native/toast/ngx';
 
 @Component({
@@ -29,6 +30,8 @@ export class RenewalVerificationPage implements OnInit {
   public resendOtpFlag = true;
   public redataEntry = false;
   public otpCountdown: number;
+  public subscription: string;
+  public next_renewal_date:string;
   constructor(
     private router: Router,
     private network: Network,
@@ -84,6 +87,8 @@ export class RenewalVerificationPage implements OnInit {
         this.renewalService.checkForRenewal(this.registrationNo.value, this.JWTToken).subscribe(async (res: any) => {
           if (res) {
             this.mobileNo.setValue(res.mobilePersonal)
+            this.subscription =res.subscription;
+            this.next_renewal_date = res.next_renewal_date;
             this.passingResponse = res;
             this.allowOTP = true;
             this.cardTitle = "Registered Worker Mobile Verification"
@@ -189,7 +194,9 @@ export class RenewalVerificationPage implements OnInit {
             // otp verified
             const registrationNumber: NavigationExtras = {
               state: {
-                registrationNo: this.registrationNo.value
+                registrationNo: this.registrationNo.value,
+                subscription: this.subscription,
+                next_renewal_date: this.next_renewal_date
               }
             }
             this.verificationForm.reset();
