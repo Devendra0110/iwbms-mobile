@@ -1,7 +1,7 @@
 {
-  "name": "newApp",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
+	"name": "IWBMS",
+	"integrations": {
+		"cordova": {}
+	},
+	"type": "angular"
 }
