@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="in.mahabocw.iwbms" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>IWBMS</name>
     <description>IWBMS app for Maharashtra Building and Other Construction Workers Welfare Board</description>
     <author email="bocwwboardmaha@gmail.com" href="https://mahabocw.in/">Maharashtra Building and Other Construction Workers Welfare Board</author>
