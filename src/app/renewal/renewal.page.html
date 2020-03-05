@@ -12,6 +12,17 @@
         <ion-input disabled formControlName="registrationNo" maxlength="14"></ion-input>
       </ion-item>
 
+      <ion-item>
+        <ion-label position="floating">BOCW Registration Status / नोंदणी स्थिती :</ion-label><br>
+        <span class="text-danger" *ngIf="subscription === 'dead'">Inactive</span>
+        <span class="text-success" *ngIf="subscription === 'inactive'">Inactive</span>
+        <span class="text-success" *ngIf="subscription === 'expired'">Expired</span>
+        <span class="text-success" *ngIf="subscription === 'ceased'">Ceased</span>
+        <span class="text-danger" *ngIf="subscription === 'ceased' || subscription === 'expired'">
+          Note: Grace period has expired. Please upload and review the Last 2 Years Working Certificate.
+        </span>
+      </ion-item>
+
       <ion-list-header color="secondary" style="margin-top: 10px; text-align: center; font-size: 18px;color:white;">
         Present
         Employer Details / सध्याच्या नियोक्त्याचा तपशील</ion-list-header>
@@ -537,8 +548,7 @@
         <ion-label class="ion-text-wrap" floating>90 Days Work Certificate<span style="color: Red">*</span></ion-label>
       </ion-item>
       <ion-item>
-        <input id='workCertificate' formControlName="workCertificate" type="file" 
-          (change)="uploadFile($event)">
+        <input id='workCertificate' formControlName="workCertificate" type="file" (change)="uploadFile($event)">
       </ion-item>
       <div class="text-danger" *ngIf="workCertificate.invalid && workCertificate.touched">
         <small *ngIf="!!workCertificate.errors?.required">Please upload required document.</small>
@@ -550,8 +560,7 @@
           </ion-label>
         </ion-item>
         <ion-item>
-          <input id='graceFile' formControlName="graceFile" type="file" 
-            (change)="uploadFile($event)">
+          <input id='graceFile' formControlName="graceFile" type="file" (change)="uploadFile($event)">
         </ion-item>
         <div class="text-danger" *ngIf="graceFile.invalid && graceFile.touched">
           <small *ngIf="!!graceFile.errors?.required">Please upload required document.</small>
@@ -562,8 +571,7 @@
         <ion-label class="ion-text-wrap" floating>Yellow Book<span style="color: Red">*</span></ion-label>
       </ion-item>
       <ion-item>
-        <input id='yellowBook' formControlName="yellowBook" type="file" 
-          (change)="uploadFile($event)">
+        <input id='yellowBook' formControlName="yellowBook" type="file" (change)="uploadFile($event)">
       </ion-item>
       <div class="text-danger" *ngIf="yellowBook.invalid && yellowBook.touched">
         <small *ngIf="!!yellowBook.errors?.required">Please upload required document.</small>
@@ -575,8 +583,7 @@
         </ion-label>
       </ion-item>
       <ion-item>
-        <input id='selfDeclarationFile' formControlName="selfDeclarationFile" type="file" 
-          (change)="uploadFile($event)">
+        <input id='selfDeclarationFile' formControlName="selfDeclarationFile" type="file" (change)="uploadFile($event)">
       </ion-item>
       <div class="text-danger" *ngIf="selfDeclarationFile.invalid && selfDeclarationFile.touched">
         <small *ngIf="!!selfDeclarationFile.errors?.required">Please upload required document.</small>
