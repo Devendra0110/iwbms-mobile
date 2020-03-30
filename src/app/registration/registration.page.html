@@ -31,7 +31,8 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">First Name<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">First Name / पहिले नाव
+            <span style="color: Red">*</span></ion-label>
           <ion-input maxlength="20" [class.is-invalid]="firstNamePersonal.invalid && firstNamePersonal.touched"
             formControlName="firstNamePersonal" clearInput id="personalDetails-firstNamePersonal" class="transliterate"
             (ionBlur)="transliterateDirect($event)" autocapitalize="words"></ion-input>
@@ -46,7 +47,8 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Middle Name</ion-label>
+          <ion-label position="floating">Middle Name / मधले नाव
+          </ion-label>
           <ion-input maxlength="20" formControlName="middleNamePersonal"
             [class.is-invalid]="middleNamePersonal.invalid && middleNamePersonal.touched" class="transliterate"
             id='personalDetails-middleNamePersonal' (ionBlur)="transliterateDirect($event)" autocapitalize="words"
@@ -61,7 +63,8 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Last Name<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Last Name / आडनाव
+            <span style="color: Red">*</span></ion-label>
           <ion-input maxlength="20" formControlName="lastNamePersonal"
             [class.is-invalid]="lastNamePersonal.invalid && lastNamePersonal.touched"
             id='personalDetails-lastNamePersonal' (ionBlur)="transliterateDirect($event)" class="transliterate"
@@ -77,7 +80,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Aadhar Number<span style="color: Red"> *</span></ion-label>
+          <ion-label position="floating">Aadhar Number / आधार क्रमांक<span style="color: Red"> *</span></ion-label>
           <ion-input [class.is-invalid]="
               aadharNoPersonal.invalid && aadharNoPersonal.touched
             " type="tel" maxlength="12" minlength="12" formControlName="aadharNoPersonal" clearInput
@@ -133,7 +136,8 @@
 
         <ion-item>
           <ion-icon slot="end" name="calendar"></ion-icon>
-          <ion-label class="ion-text-wrap">Date Of Birth<span style="color: Red">*</span> - As Per Aadhar or PAN Card
+          <ion-label class="ion-text-wrap">Date Of Birth / जन्म तारीख
+            <span style="color: Red">*</span> - As Per Aadhar or PAN Card
           </ion-label>
           <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [min]="startDate" [max]="endDate"
             formControlName="dobPersonal" [class.is-invalid]="dobPersonal.invalid && dobPersonal.touched"
@@ -144,7 +148,8 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Age<span style="color: Red"> *</span></ion-label>
+          <ion-label position="floating">Age / वय
+            <span style="color: Red"> *</span></ion-label>
           <ion-input maxlength="2" minlength="2" max="60" min="18" type="number" readOnly="true"
             formControlName="agePersonal" [class.is-invalid]="agePersonal.invalid && agePersonal.touched"></ion-input>
           <div class="text-danger" *ngIf="agePersonal.invalid && agePersonal.touched">
@@ -153,12 +158,13 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Mobile No.<span style="color: Red"> *</span></ion-label>
+          <ion-label position="floating">Mobile Number / 
+            मोबाइल नंबर<span style="color: Red"> *</span></ion-label>
           <ion-input maxlength="10" minlength="10" type="tel" formControlName="mobilePersonal"
             [class.is-invalid]="mobilePersonal.invalid && mobilePersonal.touched" id='personalDetails-mobilePersonal'
             clearInput></ion-input>
           <div class="text-danger" *ngIf="mobilePersonal.invalid && mobilePersonal.touched">
-            <small *ngIf="!!mobilePersonal.errors?.required">Please enter your Mobile No.</small>
+            <small *ngIf="!!mobilePersonal.errors?.required">Please enter your Mobile Number.</small>
             <small *ngIf="!!mobilePersonal.errors?.pattern">Please enter appropriate Mobile Number.</small>
           </div>
         </ion-item>
@@ -403,19 +409,20 @@
             </ion-item>
 
             <ion-item>
-              <ion-label position="floating">Pincode<span style="color: Red">*</span></ion-label>
+              <ion-label position="floating">Pincode / पिन कोड
+                <span style="color: Red">*</span></ion-label>
               <ion-input required type="tel" id='personalDetails-residentialAddress-pincode'
                 [class.is-invalid]="pincode.invalid && pincode.touched" maxlength="6" minlength="6"
                 formControlName="pincode" interface="action-sheet"></ion-input>
               <div class="text-danger" *ngIf="pincode.invalid && pincode.touched">
-                <small *ngIf="!!pincode.errors?.required">Pin Code is required.</small>
-                <small *ngIf="!!pincode.errors?.minlength || !!pincode.errors?.maxlength">Pin Code should be a 6 digit
+                <small *ngIf="!!pincode.errors?.required">Pincode is required.</small>
+                <small *ngIf="!!pincode.errors?.minlength || !!pincode.errors?.maxlength">Pincode should be a 6 digit
                   no.</small>
               </div>
             </ion-item>
 
             <ion-item>
-              <ion-label position="floating">STD code</ion-label>
+              <ion-label position="floating">STD Code / एसटीडी कोड</ion-label>
               <ion-input id='personalDetails-residentialAddress-stdcode' type="tel" maxlength="5" minlength="2"
                 formControlName="stdcode"></ion-input>
               <div class="text-danger" *ngIf="stdcode.invalid && stdcode.touched">
@@ -425,7 +432,8 @@
             </ion-item>
 
             <ion-item>
-              <ion-label position="floating">Landline Phone No</ion-label>
+              <ion-label position="floating">Landline Phone No / 
+                लँडलाईन फोन नंबर</ion-label>
               <ion-input type="tel" maxlength="8" minlength="5" id='personalDetails-residentialAddress-phone'
                 formControlName="phone"></ion-input>
               <div class="text-danger" *ngIf="phone.invalid && phone.touched">
@@ -646,7 +654,7 @@
             </ion-item>
 
             <ion-item>
-              <ion-label position="floating">Pincode<span style="color: Red">*</span></ion-label>
+              <ion-label position="floating">Pincode / पिन कोड<span style="color: Red">*</span></ion-label>
               <ion-input required type="tel" [class.is-invalid]="pincode.invalid && pincode.touched" maxlength="6"
                 minlength="6" formControlName="pincode" id='personalDetails-permanentAddress-pincode'></ion-input>
               <div class="text-danger" *ngIf="pincode.invalid && pincode.touched">
@@ -656,7 +664,7 @@
             </ion-item>
 
             <ion-item>
-              <ion-label position="floating">STD code</ion-label>
+              <ion-label position="floating">STD code / एसटीडी कोड</ion-label>
               <ion-input type="tel" maxlength="5" minlength="2" formControlName="stdcode"
                 id='personalDetails-permanentAddress-stdcode'></ion-input>
               <div class="text-danger" *ngIf="stdcode.invalid && stdcode.touched">
@@ -667,7 +675,7 @@
             </ion-item>
 
             <ion-item>
-              <ion-label position="floating">Landline Phone No</ion-label>
+              <ion-label position="floating">Landline Phone No / लँडलाईन फोन नंबर</ion-label>
               <ion-input type="tel" id='personalDetails-permanentAddress-phone' maxlength="8" minlength="5"
                 formControlName="phone"></ion-input>
               <div class="text-danger" *ngIf="phone.invalid && phone.touched">
@@ -680,7 +688,7 @@
         </form>
 
         <ion-item>
-          <ion-label position="floating">Ration Card Number<span *ngIf="statePer.value===21" style="color: Red">
+          <ion-label position="floating">Ration Card Number / रेशन कार्ड क्रमांक<span *ngIf="statePer.value===21" style="color: Red">
               *</span></ion-label>
           <ion-input type="tel" minlength="8" maxlength="12" formControlName="rationCardNumberPersonal"
             [class.is-invalid]="rationCardNumberPersonal.invalid && rationCardNumberPersonal.touched"
@@ -743,40 +751,44 @@
                 <ion-card-header>Edit</ion-card-header>
               </ion-col>
               <ion-col style="width: 15px;">
-                <ion-card-header>First Name<span style="color: Red">*</span></ion-card-header>
+                <ion-card-header>First Name/
+                  पहिले नाव<span style="color: Red">*</span></ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header>Surname<span style="color: Red">*</span></ion-card-header>
+                <ion-card-header>Surnam/आडनाव<span style="color: Red">*</span></ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header>Father/ Husband Name</ion-card-header>
+                <ion-card-header>Father/Husband Name/
+                  वडिलांचे / पतीचे नाव</ion-card-header>
               </ion-col>
               <ion-col style="text-align: center">
-                <ion-card-header style="width: 215px">DOB<span style="color: Red">*</span></ion-card-header>
+                <ion-card-header style="width: 215px">DOB/जन्म तारीख<span style="color: Red">*</span></ion-card-header>
               </ion-col>
               <ion-col style="width: 10px">
-                <ion-card-header>Age (year)</ion-card-header>
+                <ion-card-header>Age/वय</ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header>Relation<span style="color: Red">*</span></ion-card-header>
+                <ion-card-header>Relation/संबंध<span style="color: Red">*</span></ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header>Profession</ion-card-header>
+                <ion-card-header>Profession/व्यवसाय</ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header>Education<span style="color: Red">*</span></ion-card-header>
+                <ion-card-header>Education/शिक्षण<span style="color: Red">*</span></ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header> Aadhar No. </ion-card-header>
+                <ion-card-header>Aadhar No./आधार क्रमांक</ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header> BOCW Worker </ion-card-header>
+                <ion-card-header>BOCW Worker/
+                  BOCW कामगार </ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header> BOCW Reg. No. </ion-card-header>
+                <ion-card-header>BOCW Reg. No./BOCW नोंदणी क्रमांक </ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
-                <ion-card-header>Nominee</ion-card-header>
+                <ion-card-header>Nominee/
+                  नौमिनी</ion-card-header>
               </ion-col>
               <ion-col style="width: 15px">
                 <ion-card-header>Delete</ion-card-header>
@@ -817,7 +829,7 @@
                   <ion-input *ngIf="surname_mr.value" formControlName="surname_mr" readonly> </ion-input>
                   <div class="text-danger"
                     *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('surname').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('surname').touched">
-                    <small *ngIf="!!surname.errors?.required">Please enter your surname.</small>
+                    <small *ngIf="!!surname.errors?.required">Please enter your Surname.</small>
                     <small *ngIf="!!surname.errors?.maxlength">You have exceeded the max length.</small>
                   </div>
                 </ion-col>
@@ -951,7 +963,7 @@
         </ion-list-header>
 
         <ion-item>
-          <ion-label position="floating">IFSC Code<span style="color: Red">*</span> </ion-label>
+          <ion-label position="floating">IFSC Code / IFSC कोड<span style="color: Red">*</span> </ion-label>
           <ion-input type="text" formControlName="ifscCode" [class.is-invalid]="ifscCode.invalid && ifscCode.touched"
             maxlength="11" minlength="11" autocapitalize="characters" clearInput></ion-input>
           <ion-button (click)="searchByIfscCode()">Search</ion-button>
@@ -962,7 +974,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Bank Name<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Bank Name / बँकेचे नाव<span style="color: Red">*</span></ion-label>
           <ion-input [readonly]="isIfscCodeFound" formControlName="bankName"
             [class.is-invalid]="bankName.invalid && bankName.touched"></ion-input>
           <div class="text-danger" *ngIf="bankName.invalid && bankName.touched">
@@ -972,7 +984,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Bank Branch<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Bank Branch / बँक शाखा<span style="color: Red">*</span></ion-label>
           <ion-input [readonly]="isIfscCodeFound" formControlName="bankBranch"
             [class.is-invalid]="bankBranch.invalid && bankBranch.touched"></ion-input>
           <div class="text-danger" *ngIf="bankBranch.invalid && bankBranch.touched">
@@ -982,7 +994,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Bank Address<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Bank Address / बँकेचा पत्ता<span style="color: Red">*</span></ion-label>
           <ion-input [readonly]="isIfscCodeFound" formControlName="bankAddress"
             [class.is-invalid]="bankAddress.invalid && bankAddress.touched"></ion-input>
           <div class="text-danger" *ngIf="bankAddress.invalid && bankAddress.touched">
@@ -992,7 +1004,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">MICR Code</ion-label>
+          <ion-label position="floating">MICR Code / MICR कोड</ion-label>
           <ion-input maxlength="9" type="tel" formControlName="micrCode" id='bankDetails-micrCode'
             [class.is-invalid]="micrCode.invalid && micrCode.touched"></ion-input>
           <div class="text-danger" *ngIf="micrCode.invalid && micrCode.touched">
@@ -1001,7 +1013,8 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Account No.<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Account No. / 
+            खाते क्रमांक<span style="color: Red">*</span></ion-label>
           <ion-input minlength="9" maxlength="18" type="tel" formControlName="accountNumber"
             [class.is-invalid]="accountNumber.invalid && accountNumber.touched" id='bankDetails-accountNumber'>
           </ion-input>
@@ -1019,7 +1032,8 @@
         <ion-list-header color="secondary" style="margin-top: 10px; text-align: center; font-size: 18px;color:white;">
           Present Employer Details / सध्याच्या नियोक्त्याचा तपशील</ion-list-header>
         <ion-item>
-          <ion-label position="floating">Name of Contractor / Developer ठेकेदार / विकसक<span style="color: Red">*</span>
+          <ion-label position="floating">Name of Contractor/Developer / 
+            ठेकेदार / विकसकाचे नाव<span style="color: Red">*</span>
           </ion-label>
           <ion-input class="transliterate" formControlName="contractorNameEmp"
             [class.is-invalid]="contractorNameEmp.invalid && contractorNameEmp.touched" type="text" maxlength="60"
@@ -1037,7 +1051,7 @@
 
 
         <ion-item>
-          <ion-label position="floating">Contractor company Name/ठेकेदार कंपनीचे नाव<span style="color: Red">*</span>
+          <ion-label position="floating">Contractor company Name / ठेकेदार कंपनीचे नाव<span style="color: Red">*</span>
           </ion-label>
           <ion-input class="transliterate" maxlength="40" id='employerDetails-contractorCompanyNameEmp'
             formControlName="contractorCompanyNameEmp"
@@ -1055,7 +1069,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Type of Work /कामाचा प्रकार<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Type of Work / कामाचा प्रकार<span style="color: Red">*</span></ion-label>
           <ion-select formControlName='typeOfWorkEmp'
             [class.is-invalid]="typeOfWorkEmp.invalid && typeOfWorkEmp.touched" id='employerDetails-typeOfWorkEmp'
             (ionChange)="handleSpecialDropdowns($event)" interface="action-sheet">
@@ -1072,7 +1086,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Workplace / Site Address कामाची जागा / साइट पत्ता<span
+          <ion-label position="floating">Workplace/Site Address / कामाची जागा/साइट पत्ता<span
               style="color: Red">*</span></ion-label>
           <ion-textarea class="transliterate" rows="1" type="text" maxlength="150"
             [class.is-invalid]="workPlaceEmp.invalid && workPlaceEmp.touched" formControlName="workPlaceEmp"
@@ -1099,7 +1113,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">District / जिल्हा<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">District<span style="color: Red">*</span></ion-label>
           <ion-select interface="action-sheet" formControlName="districtEmp" id='employerDetails-districtEmp'
             [class.is-invalid]="districtEmp.invalid && districtEmp.touched" (ionChange)="transliterateDTP($event)"
             class="transliterate">
@@ -1116,7 +1130,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Taluka/तालुका<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Taluka<span style="color: Red">*</span></ion-label>
           <ion-select required id='employerDetails-talukaEmp' formControlName="talukaEmp"
             [class.is-invalid]="talukaEmp.invalid && talukaEmp.touched" interface="action-sheet"
             (ionChange)="transliterateDTP($event)" class="transliterate">
@@ -1134,7 +1148,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Town/City / गाव/शहर<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Town/City<span style="color: Red">*</span></ion-label>
           <ion-input class="transliterate" id='employerDetails-townEmp' formControlName="townEmp"
             [class.is-invalid]="townEmp.invalid && townEmp.touched" class="transliterate"
             (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
@@ -1149,7 +1163,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Pincode/पिन कोड<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Pincode / पिन कोड<span style="color: Red">*</span></ion-label>
           <ion-input type="tel" formControlName="pinCodeEmp" minlength="6" maxlength="6"
             [class.is-invalid]="pinCodeEmp.invalid && pinCodeEmp.touched" id='employerDetails-pinCodeEmp' clearInput>
           </ion-input>
@@ -1161,7 +1175,7 @@
 
         <ion-item>
           <ion-icon slot="end" name="calendar"></ion-icon>
-          <ion-label position="floating">Appointment Date/नियुक्तीची तारीख<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Appointment Date / नियुक्तीची तारीख<span style="color: Red">*</span></ion-label>
           <ion-datetime displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [min]="minAppointmentDate"
             [max]="maxAppointmentDate" id='employerDetails-appointmentDateEmp' formControlName="appointmentDateEmp"
             [class.is-invalid]=" appointmentDateEmp.invalid && appointmentDateEmp.touched"></ion-datetime>
@@ -1172,7 +1186,7 @@
 
         <ion-item>
           <ion-icon slot="end" name="calendar"></ion-icon>
-          <ion-label position="floating">Dispatch Date/पाठविण्याची तारीख<span style="color: Red">*</span></ion-label>
+          <ion-label position="floating">Dispatch Date / पाठविण्याची तारीख<span style="color: Red">*</span></ion-label>
           <ion-datetime formControlName="dispatchDateEmp" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY"
             [min]="appointmentDate" [max]="maxTodaysDate" id='employerDetails-dispatchDateEmp'></ion-datetime>
           <div class="text-danger" *ngIf="dispatchDateEmp.invalid && dispatchDateEmp.touched">
@@ -1208,7 +1222,7 @@
         </ion-item>
 
         <ion-list-header color="secondary" style="margin-top: 10px; text-align: center; font-size: 18px;color:white;">
-          Details of the person who issued the 90 days working certificate</ion-list-header>
+          Details of the person who issued the 90 days working certificate / ज्याने 90 दिवसांचे कार्यरत प्रमाणपत्र दिले आहे त्याचा तपशील</ion-list-header>
         <ion-item>
           <ion-label position="floating">Type of Issuer / जारी करणार्‍याचा प्रकार<span style="color: red">*</span>
           </ion-label>
@@ -1574,7 +1588,7 @@
         <ion-item *ngIf="workingDayFlag" style="color:red;">
           Working days are less than 90
         </ion-item>
-        <ion-button style="margin-left: 11px;margin-top: 8px;" (click)="addMoreWorkerDetails()">Add More </ion-button>
+        <ion-button style="margin-left: 11px;margin-top: 8px;" (click)="addMoreWorkerDetails()">Add More/आणखी जोडा </ion-button>
       </ion-list>
     </form>
 

@@ -151,6 +151,8 @@ export class RenewalPage implements OnInit {
       districtOfEmployer_mr: new FormControl(''),
       talukaOfEmployer: new FormControl(''),
       talukaOfEmployer_mr: new FormControl(''),
+      nameOfGramsevak: new FormControl(''),
+      nameOfGramsevak_mr: new FormControl(''),
       nameOfGramPanchayat: new FormControl(''),
       nameOfGramPanchayat_mr: new FormControl(''),
       districtOfGramPanchayat: new FormControl(''),
@@ -855,6 +857,14 @@ export class RenewalPage implements OnInit {
 
   get talukaOfEmployer_mr() {
     return this.renewalFormGroup.get('talukaOfEmployer_mr');
+  }
+
+  get nameOfGramsevak() {
+    return this.renewalFormGroup.get('nameOfGramsevak');
+  }
+
+  get nameOfGramsevak_mr() {
+    return this.renewalFormGroup.get('nameOfGramsevak_mr');
   }
 
   get nameOfGramPanchayat() {

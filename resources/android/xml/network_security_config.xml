@@ -4,7 +4,6 @@
         <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">iwbms.mahabocw.in</domain>
         <domain includeSubdomains="true">storage.mahabocw.in</domain>
-        <domain includeSubdomains="true">192.168.1.66</domain>
-        <domain includeSubdomains="true">10.42.0.208</domain>
+        <domain includeSubdomains="true">192.168.0.104</domain>
     </domain-config>
 </network-security-config>

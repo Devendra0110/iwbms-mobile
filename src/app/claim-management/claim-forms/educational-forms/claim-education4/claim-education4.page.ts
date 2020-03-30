@@ -80,6 +80,7 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
   ngOnInit() {
     this.maxTodaysDate = this.getIonDate([this.todaysDate.day,this.todaysDate.month,this.todaysDate.year]);
     this.assignBenefits(true);
+    this.formChildArray();
 
     this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
     // this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
@@ -87,16 +88,16 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
     //     return eachFamily;
     //     }else{ }
     // });
-    this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
-      if (eachFamily.category === 'children') {
-        return eachFamily;
-      }else if(eachFamily.category === 'spouse' && eachFamily.relation === '4'){
-        return eachFamily;
-      }else if(eachFamily.relation === '1' && this.user.genderPersonal === '3') {
-        return eachFamily;
-      }
-    });
-    this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
+    // this.childArray = this.familyDetailsArray.filter((eachFamily: any) => {
+    //   if (eachFamily.category === 'children') {
+    //     return eachFamily;
+    //   }else if(eachFamily.category === 'spouse' && eachFamily.relation === '4'){
+    //     return eachFamily;
+    //   }else if(eachFamily.relation === '1' && this.user.genderPersonal === '3') {
+    //     return eachFamily;
+    //   }
+    // });
+    // this.childArray = _.reverse(_.sortBy(this.childArray, 'ageFamily'));
     
     this.familyRelation.valueChanges.subscribe((childName) => {
       this.childDetail = this.childArray.find((child: any) => child.firstNameFamily === childName );
@@ -111,6 +112,28 @@ export class ClaimEducation4Page extends ClaimBasePage implements OnInit {
       this.getEducationArray = data.slice(20, 23);
     });
     this.dateReg = moment(this.user.registrationDatePersonal).format('YYYY-MM-DD');
+  }
+
+  private formChildArray() {
+    setTimeout(() => {
+      if (this.familyDetailsArray) {
+        if (typeof this.familyDetailsArray === 'string') {
+          this.familyDetailsArray = JSON.parse(this.familyDetailsArray);
+        }
+        this.familyDetailsArray = _.sortBy(this.familyDetailsArray, 'dobFamily');
+        let childCount = 0;
+        for(const index in this.familyDetailsArray) {
+          if (this.familyDetailsArray[index].category === 'children' && childCount < 2){
+            this.childArray.push(this.familyDetailsArray[index]);
+            childCount++;
+          } else if(this.familyDetailsArray[index].category === 'spouse' || this.familyDetailsArray[index].relation === '1') {
+            this.childArray.push(this.familyDetailsArray[index]);
+          }
+        }
+      } else {
+        this.formChildArray();
+      }
+    }, 5);
   }
 
   //marathi getters
