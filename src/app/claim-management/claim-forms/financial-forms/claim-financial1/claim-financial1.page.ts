@@ -149,7 +149,7 @@ export class ClaimFinancial1Page extends ClaimBasePage implements OnInit {
   get issuingAuthority() { return this.formGroup.get('issuingAuthority') }
   get policeStationAdd() { return this.formGroup.get('policeStationAdd') }
   get policeStationAdd_mr() { return this.formGroup.get('policeStationAdd_mr') }
-  get panchnamaDoc() { return this.formGroup.get('panchnamaDoc'); }
+  get panchnamaDoc() { return this.formGroup.get('panchnamaDoc') }
 
   get FIRNo() { return this.formGroup.get('FIRNo') }
   get dateOfFir() { return this.formGroup.get('dateOfFir') }
@@ -337,8 +337,8 @@ this.agePersonal.patchValue(age)
             scannedPassbookDoc: this.fileOptions['scannedPassbookDoc'],
             aadharCardDoc: this.fileOptions['aadharCardDoc'],
             selfDeclaration: this.fileOptions['selfDeclaration'],
-            nomineeCertificate: this.fileOptions['nomineeCertificate']
-
+            nomineeCertificate: this.fileOptions['nomineeCertificate'],
+            panchnamaDoc: this.fileOptions['panchnamaDoc']
           }
         }
       };

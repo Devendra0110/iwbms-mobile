@@ -94,7 +94,7 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
       // this.dobPersonal.patchValue(childSelected.dobFamily);
       if (childSelected !== undefined) {
         this.aadharNumber.patchValue(childSelected.aadharNoFamily);
-        this.relation.patchValue(Number(childSelected.relation));
+        this.relation.patchValue(childSelected.relation);
         // this.relation_mr.patchValue(childSelected.category_mr);
         // if (typeof childSelected.dobFamily === 'string') {
         //   childSelected.dobFamily = moment(childSelected.dobFamily).format('YYYY-MM-DD').split('/');
@@ -107,7 +107,7 @@ export class ClaimFinancial5Page extends ClaimBasePage implements OnInit {
         const formattedAge = moment(childSelected.dobFamily).format('YYYY-MM-DD');
         this.agePersonal.disable()
         this.dobPersonal.patchValue(formattedAge)
-        this.agePersonal.patchValue(this.calculateAge(formattedAge))
+        this.agePersonal.patchValue(Number(this.calculateAge(formattedAge)))
 
       }
     })

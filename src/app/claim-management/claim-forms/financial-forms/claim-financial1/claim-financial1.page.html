@@ -14,6 +14,7 @@
         <ion-header class="ml-2"  style="font-size:18px">DECEASED WORKER DETAILS: / अर्जदाराचा तपशील:
           </ion-header>
       <ion-item>
+        <ion-icon slot="end" name="calendar"></ion-icon>
         <ion-label position="floating">Date of Death /मृत्यूची तारीख<span class="text-danger">*</span></ion-label>
         <ion-datetime [class.is-invalid]="deathDate.invalid && deathDate.touched" [min]="minDate" [max]='maxTodaysDate' formControlName="deathDate">
         </ion-datetime>
