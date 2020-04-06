@@ -1,12 +1,13 @@
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import * as sanscript from '@sanskrit-coders/sanscript';
 import * as uuidv4 from 'uuid/v4';
 
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfterViewInit, Component, ComponentRef, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { EmployerModalData, UserInfo, familyModalData } from '../../assets/common.interface';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
 
 import { Dialogs } from '@ionic-native/dialogs/ngx';
@@ -83,6 +84,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public talukasEmp: any[] = [];
   public talukasIssuerEmp: any[] = [];
   public talukasIssuerGram: any[] = [];
+  public talukasMunicipalCorporation: any;
   public talukasMuncipal: any[] = [];
 
   public genderOptions: string[] = [];
@@ -476,7 +478,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         // create taluka-name:taluka-id key-value in talukaRes
         this.httpService.getTalukas(value).subscribe((talukaArrObj: any) => {
           for (const i of talukaArrObj) this.talukasRes[i.taluka_name] = i.taluka_id;
-
         }, err => console.log(err));
       } else this.talukasRes = [];
     });
@@ -685,12 +686,26 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     }
   }
-  capitaliseifscCodeBank() {
 
+  // public transliterateDirect(event): void {
+  //   if (event.target) {
+  //     if (event.target.classList.contains('transliterate')) {
+  //       this.transliterateValue(event);
+  //     }
+  //     if (event.target.classList.contains('copy-value-marathi')) {
+  //       this.copyValueToMarathi(event);
+  //     }
+  //   } else {
+  //     this.copyValue(event);
+  //   }
+  // }
+
+  capitaliseifscCodeBank() {
     let value = this.ifscCode.value;
     value = value.toString().toUpperCase();
     this.ifscCode.setValue(value);
   }
+
   getApplicantsDetails() {
     const user = JSON.parse(localStorage.getItem('user'));
     this.httpService.getApplicantsDetails(user._id, this.JWTToken).subscribe(
@@ -806,47 +821,47 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-  transliterateValue(event) {
-    let target: any;
-    const targetsArray = event.target.id.split('-');
-    if (event.target.id.split('-').length === 2) {
-      target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
-    } else if (event.target.id.split('-').length === 3) {
-      target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`);
-    } else {
-      target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(targetsArray[2]).get(`${targetsArray[3]}_mr`);
-    }
+  // public async transliterateValue(event) {
+  //   let target: any;
+  //   const targetsArray = event.target.id.split('-');
+  //   if (event.target.id.split('-').length === 2) {
+  //     target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
+  //   } else if (event.target.id.split('-').length === 3) {
+  //     target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`);
+  //   } else {
+  //     target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(targetsArray[2]).get(`${targetsArray[3]}_mr`);
+  //   }
 
-    try {
-      this.transliterate.transliterateText(event.target.value, 'NAME').subscribe((response: any) => {
-        const result = response.split(';').map((item) => {
-          return item.split('^')[0];
-        });
-        switch (event.target.id) {
-          case 'personalDetails-firstNamePersonal':
-            this.firstNameFamily.patchValue(event.target.value, { emitEvent: false });
-            this.firstNameFamily.disable();
-            this.firstNameFamily_mr.patchValue(result.join(' '));
-            this.firstNameFamily_mr.disable();
-            break;
-          case 'personalDetails-middleNamePersonal':
-            this.fatherOrHusbandName.patchValue(event.target.value, { emitEvent: false });
-            this.fatherOrHusbandName_mr.patchValue(result.join(' '));
-            break;
-          case 'personalDetails-lastNamePersonal':
-            this.surname.patchValue(event.target.value, { emitEvent: false });
-            this.surname.disable();
-            this.surname_mr.patchValue(result.join(' '));
-            this.surname_mr.disable();
-            break;
-        }
+  //   try {
+  //     this.transliterate.transliterateText(event.target.value, 'NAME').subscribe((response: any) => {
+  //       const result = response.split(';').map((item) => {
+  //         return item.split('^')[0];
+  //       });
+  //       switch (event.target.id) {
+  //         case 'personalDetails-firstNamePersonal':
+  //           this.firstNameFamily.patchValue(event.target.value, { emitEvent: false });
+  //           this.firstNameFamily.disable();
+  //           this.firstNameFamily_mr.patchValue(result.join(' '));
+  //           this.firstNameFamily_mr.disable();
+  //           break;
+  //         case 'personalDetails-middleNamePersonal':
+  //           this.fatherOrHusbandName.patchValue(event.target.value, { emitEvent: false });
+  //           this.fatherOrHusbandName_mr.patchValue(result.join(' '));
+  //           break;
+  //         case 'personalDetails-lastNamePersonal':
+  //           this.surname.patchValue(event.target.value, { emitEvent: false });
+  //           this.surname.disable();
+  //           this.surname_mr.patchValue(result.join(' '));
+  //           this.surname_mr.disable();
+  //           break;
+  //       }
 
-        target.patchValue(result.join(' '));
-      });
-    } catch {
-      target.patchValue('');
-    }
-  }
+  //       target.patchValue(result.join(' '));
+  //     });
+  //   } catch {
+  //     target.patchValue('');
+  //   }
+  // }
 
   copyValue(x) {
     let idArray;
@@ -911,9 +926,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.minAppointmentDate = moment(this.dobPersonal.value, 'YYYY-MM-DD').add(18, 'years').format('YYYY-MM-DD')
   }
 
-
-
-
   getter(formGroup) {
     const formValue = formGroup.value;
     const formKeys: string[] = Object.keys(formValue);
@@ -926,27 +938,178 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-  copyAddress(event: any) {
+  // copyAddress(event: any) {
+  //   this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').patchValue(this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').value, { emitEvent: false });
+  //   this.talukasPer = this.talukasRes;
+  //   this.postOfficeArrayPer = this.postOfficeArrayRes;
+  //   this.pincodeArrayPer = this.pincodeArrayRes;
+  //   this.migrant.patchValue(false);
+  //   this.migrant_mr.patchValue(false);
+
+  //   const resAddress: any = this.registrationFormGroup.get('personalDetails').get(
+  //     'residentialAddress'
+  //   );
+  //   const permAddress = this.registrationFormGroup.get('personalDetails').get(
+  //     'permanentAddress'
+  //   );
+  //   if (event.target.checked) {
+  //     permAddress.patchValue(resAddress.getRawValue());
+  //     permAddress.disable();
+  //   } else {
+  //     permAddress.reset();
+  //     permAddress.enable();
+  //   }
+  // }
+
+  public copyAddress(event: any, mode?: string): void {
     this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').patchValue(this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').value, { emitEvent: false });
     this.talukasPer = this.talukasRes;
     this.postOfficeArrayPer = this.postOfficeArrayRes;
-    this.pincodeArrayPer = this.pincodeArrayRes;
     this.migrant.patchValue(false);
     this.migrant_mr.patchValue(false);
 
-    const resAddress: any = this.registrationFormGroup.get('personalDetails').get(
-      'residentialAddress'
-    );
-    const permAddress = this.registrationFormGroup.get('personalDetails').get(
-      'permanentAddress'
-    );
-    if (event.target.checked) {
-      permAddress.patchValue(resAddress.getRawValue());
-      permAddress.disable();
+    const resAddress = this.registrationFormGroup.get('personalDetails').get('residentialAddress');
+    const permAddress = this.registrationFormGroup.get('personalDetails').get('permanentAddress');
+
+    if (mode && mode === 'edit') {
+      if (event.target.checked) {
+        this.districtPer.patchValue(this.district);
+        this.talukaPer.patchValue(this.taluka);
+        this.postOfficePer.patchValue(this.postOffice);
+        permAddress.disable();
+      }
     } else {
-      permAddress.reset();
-      permAddress.enable();
+      if (event.target.checked) {
+        permAddress.patchValue(resAddress.value);
+        if (this.district.value && this.taluka.value && this.postOffice.value) {
+          this.districtPer.patchValue(this.districts.find(x => x.district_id === Number(this.district.value)).district_name);
+          this.talukaPer.patchValue(this.talukasPer.find(x => x.taluka_id === Number(this.taluka.value)).taluka_name);
+          this.postOfficePer.patchValue(this.postOfficeArrayPer.find(x => x.post_office_id === Number(this.postOffice.value)).post_office_name);
+        }
+        permAddress.disable();
+      } else {
+        permAddress.patchValue(this.addressFormGroup().value);
+        permAddress.enable();
+      }
     }
+  }
+
+  public async transliterateValue(event): Promise<void> {
+
+    let target: AbstractControl;
+    const targetsArray = event.target.id.split('-');
+    let response: any;
+
+    if (event.target.id.split('-').length === 2) {
+      target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
+    } else if (event.target.id.split('-').length === 3) {
+      target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`);
+    } else {
+      target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(targetsArray[2]).get(`${targetsArray[3]}_mr`);
+    }
+
+    try {
+      setTimeout(() => {
+        if (!target.value) throw new Error('transliteration request time limit reached.');
+      }, 5000);
+      response = await this.transliterate.transliterateText(event.target.value, 'NAME').toPromise();
+    } catch (error) {
+      return target.patchValue(sanscript.t(event.target.value, 'itrans', 'devanagari'));
+    }
+
+    let eventValue;
+
+    try {
+      switch (event.target.id) {
+        case 'personalDetails-residentialAddress-district':
+          eventValue = this.districts.find(x => x.district_id === Number(this.district.value)).district_name;
+          break;
+        case 'personalDetails-residentialAddress-taluka':
+          eventValue = this.talukasRes.find(x => x.taluka_id === Number(this.taluka.value)).taluka_name;
+          break;
+        case 'personalDetails-residentialAddress-postOffice':
+          eventValue = this.postOfficeArrayRes.find(x => x.post_office_id === Number(this.postOffice.value)).post_office_name;
+          break;
+        case 'personalDetails-permanentAddress-statePer':
+          eventValue = this.states.find(x => x.state_id === Number(this.statePer.value)).state_name;
+          break;
+        case 'personalDetails-permanentAddress-district':
+          eventValue = this.districtPer.value;
+          break;
+        case 'personalDetails-permanentAddress-taluka':
+          eventValue = this.talukaPer.value;
+          break;
+        case 'personalDetails-permanentAddress-postOffice':
+          eventValue = this.postOfficePer.value;
+          break;
+        case 'employerDetails-districtEmp':
+          eventValue = this.districts.find(x => x.district_id === Number(this.districtEmp.value)).district_name;
+          break;
+        case 'employerDetails-talukaEmp':
+          eventValue = this.talukasEmp.find(x => x.taluka_id === Number(this.talukaEmp.value)).taluka_name;
+          break;
+        case 'employerDetails-districtOfEmployer':
+          eventValue = this.districts.find(x => x.district_id === Number(this.districtOfEmployer.value)).district_name;
+          break;
+        case 'employerDetails-talukaOfEmployer':
+          eventValue = this.talukasIssuerEmp.find(x => x.taluka_id === Number(this.talukaOfEmployer.value)).taluka_name;
+          break;
+        case 'employerDetails-districtOfGramPanchayat':
+          eventValue = this.districts.find(x => x.district_id === Number(this.districtOfGramPanchayat.value)).district_name;
+          break;
+        case 'employerDetails-talukaOfGramPanchayat':
+          eventValue = this.talukasIssuerGram.find(x => x.taluka_id === Number(this.talukaOfGramPanchayat.value)).taluka_name;
+          break;
+        case 'employerDetails-districtOfMunicipalCorporation':
+          eventValue = this.districts.find(x => x.district_id === Number(this.districtOfMunicipalCorporation.value)).district_name;
+          break;
+        case 'employerDetails-talukaOfMunicipalCorporation':
+          eventValue = this.talukasMunicipalCorporation.find(x => x.taluka_id === Number(this.talukaOfMunicipalCorporation.value)).taluka_name;
+          break;
+        case 'personalDetails-permanentAddress-state':
+          eventValue = this.states.find(state => state.state_id === Number(this.statePer.value)).state_name;
+          break;
+        default:
+          eventValue = event.target.value;
+          break;
+      }
+    } catch {
+
+    }
+
+    if (!eventValue) return;
+
+    try {
+      setTimeout(() => {
+        if (!target.value) throw new Error('Transliteration request time limit reached.');
+      }, 5000);
+      response = await this.transliterate.transliterateText(eventValue, 'NAME').toPromise();
+    } catch (error) {
+      return target.patchValue(sanscript.t(eventValue, 'itrans', 'devanagari'));
+    }
+
+    const result = response.split(';').map((item) => {
+      return item.split('^')[0];
+    });
+    switch (event.target.id) {
+      case 'personalDetails-firstNamePersonal':
+        this.firstNameFamily.patchValue(event.target.value, { emitEvent: false });
+        this.firstNameFamily.disable();
+        this.firstNameFamily_mr.patchValue(result.join(' '));
+        this.firstNameFamily_mr.disable();
+        break;
+      case 'personalDetails-middleNamePersonal':
+        this.fatherOrHusbandName.patchValue(event.target.value, { emitEvent: false });
+        this.fatherOrHusbandName_mr.patchValue(result.join(' '));
+        break;
+      case 'personalDetails-lastNamePersonal':
+        this.surname.patchValue(event.target.value, { emitEvent: false });
+        this.surname.disable();
+        this.surname_mr.patchValue(result.join(' '));
+        this.surname_mr.disable();
+        break;
+    }
+    target.patchValue(result.join(' '));
   }
 
   applyNominee(i: number) {
@@ -1503,7 +1666,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
-
   bankDetailsFormFroup(): FormGroup {
     return new FormGroup({
       ifscCode: new FormControl('', this.validationService.createValidatorsArray('ifscCode')),
@@ -1543,60 +1705,88 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   addressFormGroup(): FormGroup {
     return new FormGroup({
+      // residential address form controls
+      typeOfResidence: new FormControl('', this.validationService.createValidatorsArray('typeOfResidence')),
+      typeOfResidence_mr: new FormControl(''),
+      typeOfHouse: new FormControl('', this.validationService.createValidatorsArray('typeOfHouse')),
+      typeOfHouse_mr: new FormControl(''),
       houseNo: new FormControl('', this.validationService.createValidatorsArray('houseNo')),
+      houseNo_mr: new FormControl(''),
       road: new FormControl('', this.validationService.createValidatorsArray('road')),
+      road_mr: new FormControl(''),
       area: new FormControl('', this.validationService.createValidatorsArray('area')),
+      area_mr: new FormControl(''),
       city: new FormControl('', this.validationService.createValidatorsArray('city')),
+      city_mr: new FormControl(''),
       importantPlace: new FormControl('', this.validationService.createValidatorsArray('importantPlace')),
+      importantPlace_mr: new FormControl(''),
       state: new FormControl('', this.validationService.createValidatorsArray('state')),
+      state_mr: new FormControl(''),
       district: new FormControl('', this.validationService.createValidatorsArray('district')),
+      district_mr: new FormControl(''),
       taluka: new FormControl('', this.validationService.createValidatorsArray('taluka')),
+      taluka_mr: new FormControl(''),
       postOffice: new FormControl('', this.validationService.createValidatorsArray('postOffice')),
+      postOffice_mr: new FormControl(''),
       pincode: new FormControl('', this.validationService.createValidatorsArray('pincode')),
       stdcode: new FormControl('', this.validationService.createValidatorsArray('stdcode')),
       phone: new FormControl('', this.validationService.createValidatorsArray('phone')),
-      typeOfResidence: new FormControl('', [Validators.required]),
-      typeOfHouse: new FormControl('', [Validators.required]),
-      typeOfResidence_mr: new FormControl(''),
-      typeOfHouse_mr: new FormControl(''),
-      houseNo_mr: new FormControl(''),
-      road_mr: new FormControl(''),
-      area_mr: new FormControl(''),
-      city_mr: new FormControl(''),
-      importantPlace_mr: new FormControl(''),
-      postOffice_mr: new FormControl(''),
-      taluka_mr: new FormControl(''),
-      district_mr: new FormControl(''),
-      state_mr: new FormControl(''),
+
+      // permanent address form control
+      typeOfResidencePer: new FormControl(''),
+      typeOfResidencePer_mr: new FormControl(''),
+      typeOfHousePer: new FormControl(''),
+      typeOfHousePer_mr: new FormControl(''),
+      houseNoPer: new FormControl(''),
+      houseNo_mrPer: new FormControl(''),
+      roadPer: new FormControl(''),
+      road_mrPer: new FormControl(''),
+      areaPer: new FormControl(''),
+      area_mrPer: new FormControl(''),
+      cityPer: new FormControl(''),
+      city_mrPer: new FormControl(''),
+      importantPlacePer: new FormControl(''),
+      importantPlace_mrPer: new FormControl(''),
+      postOfficePer: new FormControl(''),
+      postOffice_mrPer: new FormControl(''),
+      talukaPer: new FormControl(''),
+      taluka_mrPer: new FormControl(''),
+      districtPer: new FormControl(''),
+      district_mrPer: new FormControl(''),
+      statePer: new FormControl(''),
+      state_mrPer: new FormControl(''),
+      pincodePer: new FormControl(''),
+      stdcodePer: new FormControl(''),
+      phonePer: new FormControl(''),
     });
   }
 
   employerDetailsFormFroup(): FormGroup {
     return new FormGroup({
       contractorNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorNameEmp')),
+      contractorNameEmp_mr: new FormControl(''),
       contractorCompanyNameEmp: new FormControl('', this.validationService.createValidatorsArray('contractorCompanyNameEmp')),
+      contractorCompanyNameEmp_mr: new FormControl(''),
       contractorPhoneEmp: new FormControl('', [Validators.required, Validators.pattern('^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[6789]\\d{9}$')]),
       workPlaceEmp: new FormControl('', [Validators.required, Validators.maxLength(150)]),
+      workPlaceEmp_mr: new FormControl(''),
       townEmp: new FormControl('', [Validators.required]),
-      talukaEmp: new FormControl('', [Validators.required]),
+      townEmp_mr: new FormControl(''),
       districtEmp: new FormControl('', [Validators.required]),
+      districtEmp_mr: new FormControl(''),
+      talukaEmp: new FormControl('', [Validators.required]),
+      talukaEmp_mr: new FormControl(''),
       pinCodeEmp: new FormControl('', [Validators.required, Validators.pattern('^\\d{6}$')]),
       appointmentDateEmp: new FormControl(null, [Validators.required]),
       dispatchDateEmp: new FormControl('', [Validators.required]),
       // remunerationPerDayEmp: new FormControl('', [Validators.required,Validators.maxLength(8)]),
       natureOfWorkEmp: new FormControl('', [Validators.required]),
+      natureOfWorkEmp_mr: new FormControl(''),
       migrant: new FormControl(''),
       migrant_mr: new FormControl(''),
       MNREGACardNumberEmp: new FormControl(''),
-      contractorNameEmp_mr: new FormControl(''),
-      contractorCompanyNameEmp_mr: new FormControl(''),
-      workPlaceEmp_mr: new FormControl(''),
       typeOfWorkEmp: new FormControl('', [Validators.required]),
       typeOfWorkEmp_mr: new FormControl(''),
-      townEmp_mr: new FormControl(''),
-      talukaEmp_mr: new FormControl(''),
-      districtEmp_mr: new FormControl(''),
-      natureOfWorkEmp_mr: new FormControl(''),
       typeOfIssuer: new FormControl('', [Validators.required]),
       typeOfIssuer_mr: new FormControl(''),
       registeredWith: new FormControl(''),
@@ -1722,6 +1912,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     //   this.checkValidationErrors(this.registrationFormGroup);
     // });
   }
+
   employerWorkDetailsFormFroup(): FormGroup {
     return new FormGroup({
       typeOfEmployerEmp: new FormControl('', [Validators.required]),
@@ -1760,7 +1951,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   }
 
   // private checkForAadharFamilyUniqueness(index: number) {
-
   //   const familyDetails = this.registrationFormGroup.getRawValue()['familyDetails'].filter((eachFamilyDetail: any) => {
   //     if (eachFamilyDetail.aadharNoFamily !== aadharNo.value) {
   //       return eachFamilyDetail;
@@ -1783,6 +1973,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   //     }
   //   }
   // }
+
   private checkValidationErrors(formGroup: FormGroup): void {
     this.errorMsgList = [];
     const subFormGroup = formGroup['controls'];
@@ -2150,30 +2341,30 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   // personal residential address
   get typeOfResidence() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('typeOfResidence'); }
-  get typeOfHouse() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('typeOfHouse'); }
   get typeOfResidence_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('typeOfResidence_mr'); }
+  get typeOfHouse() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('typeOfHouse'); }
   get typeOfHouse_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('typeOfHouse_mr'); }
   get houseNo() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('houseNo'); }
+  get houseNo_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('houseNo_mr'); }
   get road() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('road'); }
+  get road_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('road_mr'); }
   get area() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('area'); }
+  get area_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('area_mr'); }
   get city() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('city'); }
+  get city_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('city_mr'); }
   get importantPlace() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('importantPlace'); }
+  get importantPlace_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('importantPlace_mr'); }
   get postOffice() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('postOffice'); }
+  get postOffice_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('postOffice_mr'); }
   get taluka() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('taluka'); }
+  get taluka_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('taluka_mr'); }
   get district() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('district'); }
+  get district_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('district_mr'); }
   get state() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('state'); }
+  get state_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('state_mr'); }
   get pincode() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('pincode'); }
   get stdcode() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('stdcode'); }
   get phone() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('phone'); }
-  get houseNo_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('houseNo_mr'); }
-  get road_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('road_mr'); }
-  get area_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('area_mr'); }
-  get city_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('city_mr'); }
-  get importantPlace_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('importantPlace_mr'); }
-  get postOffice_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('postOffice_mr'); }
-  get taluka_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('taluka_mr'); }
-  get district_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('district_mr'); }
-  get state_mr() { return this.registrationFormGroup.get('personalDetails').get('residentialAddress').get('state_mr'); }
 
 
   // personal permanent address
@@ -2182,26 +2373,26 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get typeOfHousePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('typeOfHouse'); }
   get typeOfHousePer_mr() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('typeOfHouse_mr'); }
   get houseNoPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('houseNo'); }
-  get roadPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('road'); }
+  get houseNo_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('houseNo_mr'); }
+  get roadPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('roadPer'); }
+  get road_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('road_mr'); }
   get areaPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('area'); }
+  get area_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('area_mr'); }
   get cityPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('city'); }
+  get city_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('city_mr'); }
   get importantPlacePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('importantPlace'); }
+  get importantPlace_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('importantPlace_mr'); }
   get postOfficePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('postOffice'); }
+  get postOffice_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('postOffice_mr'); }
   get talukaPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka'); }
+  get taluka_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka_mr'); }
   get districtPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('district'); }
-  get statePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('state'); }
+  get district_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('district_mr'); }
+  get statePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('statePer'); }
+  get state_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('state_mr'); }
   get pincodePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('pincode'); }
   get stdcodePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('stdcode'); }
   get phonePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('phone'); }
-  get houseNo_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('houseNo_mr'); }
-  get road_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('road_mr'); }
-  get area_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('area_mr'); }
-  get city_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('city_mr'); }
-  get importantPlace_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('importantPlace_mr'); }
-  get postOffice_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('postOffice_mr'); }
-  get taluka_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka_mr'); }
-  get district_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('district_mr'); }
-  get state_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('state_mr'); }
 
 
   // employer getters
@@ -2317,8 +2508,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get talukaOfMunicipalCorporation_mr() {
     return this.registrationFormGroup.get('employerDetails').get('talukaOfMunicipalCorporation_mr');
   }
-
-
 
   get typeOfEmployerEmp() {
     return this.registrationFormGroup.get('employerWorkDetails')['controls'][0].get('typeOfEmployerEmp');
