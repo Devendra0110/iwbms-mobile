@@ -19,6 +19,7 @@ export class VerificationPage implements OnInit {
 
   public verificationForm: FormGroup;
   public unverifiedUser = false;
+  public covidData: any;
   public ECode: string;
   public otpflag = false;
   public resendOtpFlag=true;
@@ -85,6 +86,11 @@ export class VerificationPage implements OnInit {
           async (res: any) => {
             await loading.dismiss();
             if (res.message === 'OTP Sent') {
+              if(res.covid_data){
+                this.covidData = res.covid_data;
+              }else{
+                this.covidData = undefined;
+              }
               this.toast.show(`OTP sent`, '2000', 'bottom').subscribe(
                 toast => {
                   console.log(toast);
@@ -106,7 +112,7 @@ export class VerificationPage implements OnInit {
               this.ECode = 'E1';
             } else if (err.error.message === 'Aadhar No. already Registered') {
               this.ECode = 'E2';
-            }else if(err.error.message === 'Mobile No. already Registered & Aadhar No. already Registered'){
+            }else if(err.error.message === 'Mobile No. & Aadhar No. already Registered'){
               this.ECode = 'E3';
             }else{
               this.ECode =undefined;
@@ -139,7 +145,8 @@ export class VerificationPage implements OnInit {
             const mobileAndAadhar: NavigationExtras = {
               state: {
                 mobile: this.verificationForm.get('mobileNo').value,
-                aadhar: this.verificationForm.get('aadharNo').value
+                aadhar: this.verificationForm.get('aadharNo').value,
+                covid: this.covidData
               }
             };
             this.verificationForm.reset();

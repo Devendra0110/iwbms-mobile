@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+
 import { AuthGuardService } from './services/auth-guard.service';
+import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: 'yellow-book', loadChildren: './yellow-book/yellow-book.module#YellowBookPageModule' },
   { path: 'redata-verification', loadChildren: './redata-verification/redata-verification.module#RedataVerificationPageModule' },
   { path: 'cash-receipt-modal', loadChildren: './cash-receipt-modal/cash-receipt-modal.module#CashReceiptModalPageModule' },
-  { path: 'claim-modal', loadChildren: './claim-modal/claim-modal.module#ClaimModalPageModule' }
+  { path: 'claim-modal', loadChildren: './claim-modal/claim-modal.module#ClaimModalPageModule' },
+
 ];
 
 @NgModule({

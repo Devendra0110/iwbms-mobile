@@ -26,7 +26,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Mobile Number / दूरध्वनी क्रमांक</ion-label>
-          <ion-input type="tel" maxlength='10' id="mobileNo" formControlName="mobileNo" (ionInput)="resetMobileNo()"
+          <ion-input type="tel" maxlength='10' minlength='10' id="mobileNo" formControlName="mobileNo" (ionInput)="resetMobileNo()"
             clearInput></ion-input>
           <div class="text-danger" *ngIf="mobileNo.invalid && mobileNo.touched">
             <small *ngIf="!!mobileNo.errors?.required">Please enter your Mobile No.</small>
@@ -35,7 +35,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Aadhar Number / आधार क्रमांक</ion-label>
-          <ion-input type="tel" maxlength='12' id="aadharNo" formControlName="aadharNo" clearInput></ion-input>
+          <ion-input type="tel" maxlength='12' minlength='12' id="aadharNo" formControlName="aadharNo" clearInput></ion-input>
           <div class="text-danger" *ngIf="aadharNo.invalid && aadharNo.touched">
             <small *ngIf="!!aadharNo.errors?.required">Please enter your Aadhar Number.</small>
             <small *ngIf="!!aadharNo.errors?.pattern">Please enter appropriate Aadhar Number.</small>

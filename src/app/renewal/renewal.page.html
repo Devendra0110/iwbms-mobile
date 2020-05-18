@@ -35,7 +35,7 @@
           id='contractorNameEmp' class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words"
           clearInput></ion-input>
         <div class="text-danger" *ngIf="contractorNameEmp.invalid && contractorNameEmp.touched">
-          <small *ngIf="!!contractorNameEmp.errors?.required">Please enter Name of contactor.</small>
+          <small *ngIf="!!contractorNameEmp.errors?.required">Please enter Name of Contactor.</small>
           <small *ngIf="!!contractorNameEmp.errors?.pattern">Please enter appropriate name.</small>
         </div>
       </ion-item>
@@ -52,8 +52,8 @@
           [class.is-invalid]="contractorCompanyNameEmp.invalid && contractorCompanyNameEmp.touched"
           class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words" clearInput></ion-input>
         <div class="text-danger" *ngIf="contractorCompanyNameEmp.invalid && contractorCompanyNameEmp.touched">
-          <small *ngIf="!!contractorCompanyNameEmp.errors?.required">Please enter Name of company.</small>
-          <small *ngIf="!!contractorCompanyNameEmp.errors?.maxlength">You have exceeded max length.</small>
+          <small *ngIf="!!contractorCompanyNameEmp.errors?.required">Please enter Name of Company.</small>
+          <small *ngIf="!!contractorCompanyNameEmp.errors?.maxlength">You have exceeded maximum.</small>
           <small *ngIf="!!contractorCompanyNameEmp.errors?.pattern">Please enter appropriate name.</small>
         </div>
       </ion-item>
@@ -70,8 +70,8 @@
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="!!typeOfWorkEmp.invalid && typeOfWorkEmp.touched">
-          <small *ngIf="!!typeOfWorkEmp.errors?.required">Please choose your Nature of work.</small>
-          <small *ngIf="!!typeOfWorkEmp.errors?.maxlength">You have exceeded max length.</small>
+          <small *ngIf="!!typeOfWorkEmp.errors?.required">Please select your Type of Work.</small>
+          <small *ngIf="!!typeOfWorkEmp.errors?.maxlength">You have exceeded maximum.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="typeOfWorkEmp_mr.value">
@@ -86,8 +86,8 @@
           id='workPlaceEmp' class="transliterate" (ionBlur)="transliterateDirect($event)" autocapitalize="words"
           clearInput></ion-input>
         <div class="text-danger" *ngIf="workPlaceEmp.invalid && workPlaceEmp.touched">
-          <small *ngIf="!!workPlaceEmp.errors?.required">Please enter workplace</small>
-          <small *ngIf="!!workPlaceEmp.errors?.maxlength">You have exceeded max length.</small>
+          <small *ngIf="!!workPlaceEmp.errors?.required">Please enter your Workplace/Site Address.</small>
+          <small *ngIf="!!workPlaceEmp.errors?.maxlength">You have exceeded maximum.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="workPlaceEmp_mr.value">
@@ -100,8 +100,8 @@
           [class.is-invalid]="contractorPhoneEmp.invalid && contractorPhoneEmp.touched" id='contractorPhoneEmp'
           clearInput></ion-input>
         <div class="text-danger" *ngIf="contractorPhoneEmp.invalid && contractorPhoneEmp.touched">
-          <small *ngIf="!!contractorPhoneEmp.errors?.required">Please enter Mobile number.</small>
-          <small *ngIf="!!contractorPhoneEmp.errors?.pattern">Please enter appropriate Mobile number.</small>
+          <small *ngIf="!!contractorPhoneEmp.errors?.required">Please enter your Mobile Number.</small>
+          <small *ngIf="!!contractorPhoneEmp.errors?.pattern">Please enter appropriate Mobile Number.</small>
         </div>
       </ion-item>
 
@@ -114,7 +114,7 @@
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="districtEmp.invalid && districtEmp.touched">
-          <small *ngIf="!!districtEmp.errors?.required">Please choose District.</small>
+          <small *ngIf="!!districtEmp.errors?.required">Please select District.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="districtEmp_mr.value">
@@ -130,7 +130,7 @@
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="talukaEmp.invalid && talukaEmp.touched">
-          <small *ngIf="!!talukaEmp.errors?.required">Please choose Taluka.</small>
+          <small *ngIf="!!talukaEmp.errors?.required">Please select Taluka.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="talukaEmp_mr.value ">
@@ -205,7 +205,7 @@
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="!!natureOfWorkEmp.invalid && natureOfWorkEmp.touched">
-          <small *ngIf="!!natureOfWorkEmp.errors?.required">Please choose your Nature of work.</small>
+          <small *ngIf="!!natureOfWorkEmp.errors?.required">Please select your Nature of Work.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="natureOfWorkEmp.value">
@@ -224,7 +224,7 @@
             {{ issuerType.value }}</ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="typeOfIssuer.invalid && typeOfIssuer.touched">
-          <small *ngIf="!!typeOfIssuer.errors?.required">Please select type of certificate issuer.</small>
+          <small *ngIf="!!typeOfIssuer.errors?.required">Please select Type of Issuer.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="typeOfIssuer.value==='1'">
@@ -236,7 +236,7 @@
             {{ registrationType.value }}</ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="registeredWith.invalid && registeredWith.touched">
-          <small *ngIf="!!registeredWith.errors?.required">Please select type of registration of employer.</small>
+          <small *ngIf="!!registeredWith.errors?.required">Please select Type of Registration of Employer.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="typeOfIssuer.value==='1'">
@@ -246,7 +246,7 @@
           formControlName='registrationNoOfIssuer' class='transliterate' id='registrationNoOfIssuer'>
         </ion-input>
         <div class="text-danger" *ngIf="registrationNoOfIssuer.invalid && registrationNoOfIssuer.touched">
-          <small *ngIf="!!registrationNoOfIssuer.errors?.required">Please enter registration number of issuer.</small>
+          <small *ngIf="!!registrationNoOfIssuer.errors?.required">Please enter Registration No. of Issuer.</small>
           <small *ngIf="!!registrationNoOfIssuer.errors?.pattern">Please enter appropriate number.</small>
 
         </div>
@@ -257,7 +257,7 @@
         <ion-input maxlength="50" type="tel" [class.is-invalid]="dispatchNo.invalid && dispatchNo.touched"
           formControlName='dispatchNo' id='dispatchNo' class='transliterate'></ion-input>
         <div class="text-danger" *ngIf="dispatchNo.invalid && dispatchNo.touched">
-          <small *ngIf="!!dispatchNo.errors?.required">Please enter your dispatch number.</small>
+          <small *ngIf="!!dispatchNo.errors?.required">Please enter your Dispatch Number.</small>
         </div>
       </ion-item>
       <ion-item>
@@ -268,7 +268,7 @@
           [class.is-invalid]="dispatchDate.invalid && dispatchDate.touched" formControlName='dispatchDate'
           id='dispatchDate'></ion-datetime>
         <div class="text-danger" *ngIf="dispatchDate.invalid && dispatchDate.touched">
-          <small *ngIf="!!dispatchDate.errors?.required">Please enter date of dispatch.</small>
+          <small *ngIf="!!dispatchDate.errors?.required">Please enter Date of Dispatch.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="typeOfIssuer.value==='1'">
@@ -278,7 +278,7 @@
           [class.is-invalid]="nameOfEmployer.invalid && nameOfEmployer.touched" class='transliterate'
           (ionBlur)="transliterateDirect($event)"></ion-input>
         <div class="text-danger" *ngIf="nameOfEmployer.invalid && nameOfEmployer.touched">
-          <small *ngIf="!!nameOfEmployer.errors?.required">Please enter name of contractor /developer.</small>
+          <small *ngIf="!!nameOfEmployer.errors?.required">Please enter Name of Contractor/Developer.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="nameOfEmployer_mr.value">
@@ -292,7 +292,7 @@
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="districtOfEmployer.invalid && districtOfEmployer.touched">
-          <small *ngIf="!!districtOfEmployer.errors?.required">Please select district.</small>
+          <small *ngIf="!!districtOfEmployer.errors?.required">Please select District of Employer.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="districtOfEmployer_mr.value">
@@ -307,7 +307,7 @@
             {{eachTaluka.key}} </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="talukaOfEmployer.invalid && talukaOfEmployer.touched">
-          <small *ngIf="!!talukaOfEmployer.errors?.required">Please select taluka.</small>
+          <small *ngIf="!!talukaOfEmployer.errors?.required">Please select Taluka of Employer.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="talukaOfEmployer_mr.value">
@@ -320,7 +320,7 @@
           [class.is-invalid]="nameOfGramsevak.invalid && nameOfGramsevak.touched" class='transliterate'
           (ionBlur)="transliterateDirect($event)"></ion-input>
         <div class="text-danger" *ngIf="nameOfGramsevak.invalid && nameOfGramsevak.touched">
-          <small *ngIf="!!nameOfGramsevak.errors?.required">Please enter the name of gramsevak.</small>
+          <small *ngIf="!!nameOfGramsevak.errors?.required">Please enter the Name of Gramsevak.</small>
         </div>
       </ion-item>
       <ion-item *ngIf=nameOfGramsevak_mr.value>
@@ -332,7 +332,7 @@
           [class.is-invalid]="nameOfGramPanchayat.invalid && nameOfGramPanchayat.touched" class='transliterate'
           (ionBlur)="transliterateDirect($event)"></ion-input>
         <div class="text-danger" *ngIf="nameOfGramPanchayat.invalid && nameOfGramPanchayat.touched">
-          <small *ngIf="!!nameOfGramPanchayat.errors?.required">Please enter name of gram panchayat.</small>
+          <small *ngIf="!!nameOfGramPanchayat.errors?.required">Please enter Name of Gram Panchayat.</small>
         </div>
       </ion-item>
       <ion-item *ngIf=nameOfGramPanchayat_mr.value>
@@ -347,7 +347,7 @@
           </ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="districtOfGramPanchayat.invalid && districtOfGramPanchayat.touched">
-          <small *ngIf="!!districtOfGramPanchayat.errors?.required">Please select district.</small>
+          <small *ngIf="!!districtOfGramPanchayat.errors?.required">Please select District of Gram Panchayat.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="districtOfGramPanchayat_mr.value">
@@ -363,7 +363,7 @@
             {{eachTaluka.key}}</ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="talukaOfGramPanchayat.invalid && talukaOfGramPanchayat.touched">
-          <small *ngIf="!!talukaOfGramPanchayat.errors?.required">Please select taluka.</small>
+          <small *ngIf="!!talukaOfGramPanchayat.errors?.required">Please select Taluka of Gram Panchayat.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="talukaOfGramPanchayat_mr.value">
@@ -378,8 +378,8 @@
           [class.is-invalid]="nameOfMunicipalCorporation.invalid && nameOfMunicipalCorporation.touched"
           class='transliterate' (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
         <div class="text-danger" *ngIf="nameOfMunicipalCorporation.invalid && nameOfMunicipalCorporation.touched">
-          <small *ngIf="nameOfMunicipalCorporation.errors?.required">Please enter name of municipal
-            corporation.</small>
+          <small *ngIf="nameOfMunicipalCorporation.errors?.required">Please enter Name of Municipal
+            Corporation.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="nameOfMunicipalCorporation_mr.value">
@@ -397,7 +397,7 @@
         </ion-select>
         <div class="text-danger"
           *ngIf="districtOfMunicipalCorporation.invalid && districtOfMunicipalCorporation.touched">
-          <small *ngIf="districtOfMunicipalCorporation.errors?.required">Please select district.</small>
+          <small *ngIf="districtOfMunicipalCorporation.errors?.required">Please select district of Municipal Corporation.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="districtOfMunicipalCorporation_mr.value">
@@ -414,7 +414,7 @@
             {{eachTaluka.key}}</ion-select-option>
         </ion-select>
         <div class="text-danger" *ngIf="talukaOfMunicipalCorporation.invalid && talukaOfMunicipalCorporation.touched">
-          <small *ngIf="talukaOfMunicipalCorporation.errors?.required">Please select taluka.</small>
+          <small *ngIf="talukaOfMunicipalCorporation.errors?.required">Please select Taluka of Municipal Corporation.</small>
         </div>
       </ion-item>
       <ion-item *ngIf="talukaOfMunicipalCorporation_mr.value">
@@ -487,7 +487,7 @@
                         value="{{ typeOfIssuer.key }}">{{ typeOfIssuer.value }}</ion-select-option>
                     </ion-select>
                     <div class="text-danger" *ngIf="typeOfEmployerEmp.invalid && typeOfEmployerEmp.touched">
-                      <small *ngIf="!!typeOfEmployerEmp.errors?.required">Please choose Type of employer.</small>
+                      <small *ngIf="!!typeOfEmployerEmp.errors?.required">Please select Type of employer.</small>
                     </div>
                   </ion-col>
                   <ion-col style="width: 15px">
@@ -512,8 +512,8 @@
                         id='employerWorkDetails-{{i}}-mobileNumberOfIssuerEmp' clearInput></ion-input>
                     </ion-item>
                     <div class="text-danger" *ngIf="mobileNumberOfIssuerEmp.invalid && mobileNumberOfIssuerEmp.touched">
-                      <small *ngIf="!!mobileNumberOfIssuerEmp.errors?.required">Please enter Mobile number.</small>
-                      <small *ngIf="!!mobileNumberOfIssuerEmp.errors?.pattern">Please enter appropriate Mobile
+                      <small *ngIf="!!mobileNumberOfIssuerEmp.errors?.required">Please enter mobile number.</small>
+                      <small *ngIf="!!mobileNumberOfIssuerEmp.errors?.pattern">Please enter appropriate mobile
                         number.</small>
                     </div>
                   </ion-col>

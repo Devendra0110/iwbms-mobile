@@ -62,6 +62,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public dateOfBirth: any;
   public attachmentDetails: any = [];
   public errorMsgList: any[];
+  
 
   bankDetails: any = {
     BANK: '',
@@ -215,7 +216,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     private toast: Toast,
     private fileChooser: FileChooser,
     private siteLocation: Geolocation,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
   ) {
 
     // network subscribers check the status of network even its type
@@ -223,21 +224,36 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.network.onConnect().subscribe(() => { });
 
 
-    this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
-        this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-        this.familyAaadhar.push(this.router.getCurrentNavigation().extras.state.aadhar)
-        this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-        if (this.router.getCurrentNavigation().extras.state.oldRegNo) {
-          this.oldRegistrationNo.setValue(this.router.getCurrentNavigation().extras.state.oldRegNo);
-          this.oldRegistrationNo.disable();
-          this.reDataEntry = true
-        }
-      } else {
-        this.router.navigate(['/verification']);
-      }
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   if (this.router.getCurrentNavigation().extras.state) {
+
+    //     this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
+    //     this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+    //     this.familyAaadhar.push(this.router.getCurrentNavigation().extras.state.aadhar)
+    //     this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+        
+    //     // Re-Data Entry
+    //     if (this.router.getCurrentNavigation().extras.state.oldRegNo) {
+    //       this.oldRegistrationNo.setValue(this.router.getCurrentNavigation().extras.state.oldRegNo);
+    //       this.oldRegistrationNo.disable();
+    //       this.reDataEntry = true
+    //     } 
+
+    //     // Covid
+    //     else if (this.router.getCurrentNavigation().extras.state.covid){
+    //       this.firstNamePersonal.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[0]); // first name
+    //       this.lastNamePersonal.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[1]); // last name
+    //       this.firstNameFamily.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[0]); // first name fam deetails
+    //       this.surname.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[1]); // surname fam details 
+    //       this.ifscCode.setValue(this.router.getCurrentNavigation().extras.state.covid['bankIFSC']);
+    //       this.accountNumber.setValue(this.router.getCurrentNavigation().extras.state.covid['bankAccountNumber']);
+    //       this.dobPersonal.setValue(this.router.getCurrentNavigation().extras.state.covid['dateOfBirth']);
+    //       this.covidTempRegistrationNo.setValue(this.router.getCurrentNavigation().extras.state.covid['tempRegistrationNo']);
+    //     }
+    //   } else {
+    //     this.router.navigate(['/verification']);
+    //   }
+    // });
 
     // re-route to homepage if not logged-in
     this.storage.get('token').then((val) => {
@@ -507,7 +523,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       const rationCardNoControl = this.registrationFormGroup.get('personalDetails').get('rationCardNumberPersonal');
       const rationCardTypeControl = this.registrationFormGroup.get('personalDetails').get('rationCardTypePersonal');
 
-      if (value === 'MAHARASHTRA' || value === '21' || value === 21) {
+      if (value === 'MAHARASHTRA' || value === '21' || value === 21 ||  value === "") {
         this.statePer.patchValue(21, { emitEvent: false });
         this.elseStateFlag = false;
         this.migrant.patchValue(false);
@@ -595,6 +611,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
 
     this.typeOfIssuer.valueChanges.subscribe((typeOfIssuerId) => {
+      this.nameOfGramsevak.reset();
+      this.nameOfGramsevak_mr.reset();
       this.nameOfGramPanchayat.reset();
       this.nameOfGramPanchayat_mr.reset();
       this.districtOfGramPanchayat.reset();
@@ -670,6 +688,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
       this.dispatchNo.reset();
     })
+
   }
 
   ngAfterViewInit() {
@@ -821,47 +840,47 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-  // public async transliterateValue(event) {
-  //   let target: any;
-  //   const targetsArray = event.target.id.split('-');
-  //   if (event.target.id.split('-').length === 2) {
-  //     target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
-  //   } else if (event.target.id.split('-').length === 3) {
-  //     target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`);
-  //   } else {
-  //     target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(targetsArray[2]).get(`${targetsArray[3]}_mr`);
-  //   }
+  public async transliterateValue(event) {
+    let target: any;
+    const targetsArray = event.target.id.split('-');
+    if (event.target.id.split('-').length === 2) {
+      target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
+    } else if (event.target.id.split('-').length === 3) {
+      target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`);
+    } else {
+      target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(targetsArray[2]).get(`${targetsArray[3]}_mr`);
+    }
 
-  //   try {
-  //     this.transliterate.transliterateText(event.target.value, 'NAME').subscribe((response: any) => {
-  //       const result = response.split(';').map((item) => {
-  //         return item.split('^')[0];
-  //       });
-  //       switch (event.target.id) {
-  //         case 'personalDetails-firstNamePersonal':
-  //           this.firstNameFamily.patchValue(event.target.value, { emitEvent: false });
-  //           this.firstNameFamily.disable();
-  //           this.firstNameFamily_mr.patchValue(result.join(' '));
-  //           this.firstNameFamily_mr.disable();
-  //           break;
-  //         case 'personalDetails-middleNamePersonal':
-  //           this.fatherOrHusbandName.patchValue(event.target.value, { emitEvent: false });
-  //           this.fatherOrHusbandName_mr.patchValue(result.join(' '));
-  //           break;
-  //         case 'personalDetails-lastNamePersonal':
-  //           this.surname.patchValue(event.target.value, { emitEvent: false });
-  //           this.surname.disable();
-  //           this.surname_mr.patchValue(result.join(' '));
-  //           this.surname_mr.disable();
-  //           break;
-  //       }
+    try {
+      this.transliterate.transliterateText(event.target.value, 'NAME').subscribe((response: any) => {
+        const result = response.split(';').map((item) => {
+          return item.split('^')[0];
+        });
+        switch (event.target.id) {
+          case 'personalDetails-firstNamePersonal':
+            this.firstNameFamily.patchValue(event.target.value, { emitEvent: false });
+            this.firstNameFamily.disable();
+            this.firstNameFamily_mr.patchValue(result.join(' '));
+            this.firstNameFamily_mr.disable();
+            break;
+          case 'personalDetails-middleNamePersonal':
+            this.fatherOrHusbandName.patchValue(event.target.value, { emitEvent: false });
+            this.fatherOrHusbandName_mr.patchValue(result.join(' '));
+            break;
+          case 'personalDetails-lastNamePersonal':
+            this.surname.patchValue(event.target.value, { emitEvent: false });
+            this.surname.disable();
+            this.surname_mr.patchValue(result.join(' '));
+            this.surname_mr.disable();
+            break;
+        }
 
-  //       target.patchValue(result.join(' '));
-  //     });
-  //   } catch {
-  //     target.patchValue('');
-  //   }
-  // }
+        target.patchValue(result.join(' '));
+      });
+    } catch {
+      target.patchValue('');
+    }
+  }
 
   copyValue(x) {
     let idArray;
@@ -938,179 +957,29 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     }
   }
 
-  // copyAddress(event: any) {
-  //   this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').patchValue(this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').value, { emitEvent: false });
-  //   this.talukasPer = this.talukasRes;
-  //   this.postOfficeArrayPer = this.postOfficeArrayRes;
-  //   this.pincodeArrayPer = this.pincodeArrayRes;
-  //   this.migrant.patchValue(false);
-  //   this.migrant_mr.patchValue(false);
-
-  //   const resAddress: any = this.registrationFormGroup.get('personalDetails').get(
-  //     'residentialAddress'
-  //   );
-  //   const permAddress = this.registrationFormGroup.get('personalDetails').get(
-  //     'permanentAddress'
-  //   );
-  //   if (event.target.checked) {
-  //     permAddress.patchValue(resAddress.getRawValue());
-  //     permAddress.disable();
-  //   } else {
-  //     permAddress.reset();
-  //     permAddress.enable();
-  //   }
-  // }
-
-  public copyAddress(event: any, mode?: string): void {
+  copyAddress(event: any) {
     this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').patchValue(this.registrationFormGroup.get('personalDetails').get('permanentEqualsResidentialAddress').value, { emitEvent: false });
     this.talukasPer = this.talukasRes;
     this.postOfficeArrayPer = this.postOfficeArrayRes;
+    this.pincodeArrayPer = this.pincodeArrayRes;
     this.migrant.patchValue(false);
     this.migrant_mr.patchValue(false);
 
-    const resAddress = this.registrationFormGroup.get('personalDetails').get('residentialAddress');
-    const permAddress = this.registrationFormGroup.get('personalDetails').get('permanentAddress');
-
-    if (mode && mode === 'edit') {
-      if (event.target.checked) {
-        this.districtPer.patchValue(this.district);
-        this.talukaPer.patchValue(this.taluka);
-        this.postOfficePer.patchValue(this.postOffice);
-        permAddress.disable();
-      }
+    const resAddress: any = this.registrationFormGroup.get('personalDetails').get(
+      'residentialAddress'
+    );
+    const permAddress = this.registrationFormGroup.get('personalDetails').get(
+      'permanentAddress'
+    );
+    if (event.target.checked) {
+      permAddress.patchValue(resAddress.getRawValue());
+      permAddress.disable();
     } else {
-      if (event.target.checked) {
-        permAddress.patchValue(resAddress.value);
-        if (this.district.value && this.taluka.value && this.postOffice.value) {
-          this.districtPer.patchValue(this.districts.find(x => x.district_id === Number(this.district.value)).district_name);
-          this.talukaPer.patchValue(this.talukasPer.find(x => x.taluka_id === Number(this.taluka.value)).taluka_name);
-          this.postOfficePer.patchValue(this.postOfficeArrayPer.find(x => x.post_office_id === Number(this.postOffice.value)).post_office_name);
-        }
-        permAddress.disable();
-      } else {
-        permAddress.patchValue(this.addressFormGroup().value);
-        permAddress.enable();
-      }
+      permAddress.reset();
+      permAddress.enable();
     }
   }
 
-  public async transliterateValue(event): Promise<void> {
-
-    let target: AbstractControl;
-    const targetsArray = event.target.id.split('-');
-    let response: any;
-
-    if (event.target.id.split('-').length === 2) {
-      target = this.registrationFormGroup.get(targetsArray[0]).get(`${targetsArray[1]}_mr`);
-    } else if (event.target.id.split('-').length === 3) {
-      target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(`${targetsArray[2]}_mr`);
-    } else {
-      target = this.registrationFormGroup.get(targetsArray[0]).get(targetsArray[1]).get(targetsArray[2]).get(`${targetsArray[3]}_mr`);
-    }
-
-    try {
-      setTimeout(() => {
-        if (!target.value) throw new Error('transliteration request time limit reached.');
-      }, 5000);
-      response = await this.transliterate.transliterateText(event.target.value, 'NAME').toPromise();
-    } catch (error) {
-      return target.patchValue(sanscript.t(event.target.value, 'itrans', 'devanagari'));
-    }
-
-    let eventValue;
-
-    try {
-      switch (event.target.id) {
-        case 'personalDetails-residentialAddress-district':
-          eventValue = this.districts.find(x => x.district_id === Number(this.district.value)).district_name;
-          break;
-        case 'personalDetails-residentialAddress-taluka':
-          eventValue = this.talukasRes.find(x => x.taluka_id === Number(this.taluka.value)).taluka_name;
-          break;
-        case 'personalDetails-residentialAddress-postOffice':
-          eventValue = this.postOfficeArrayRes.find(x => x.post_office_id === Number(this.postOffice.value)).post_office_name;
-          break;
-        case 'personalDetails-permanentAddress-statePer':
-          eventValue = this.states.find(x => x.state_id === Number(this.statePer.value)).state_name;
-          break;
-        case 'personalDetails-permanentAddress-district':
-          eventValue = this.districtPer.value;
-          break;
-        case 'personalDetails-permanentAddress-taluka':
-          eventValue = this.talukaPer.value;
-          break;
-        case 'personalDetails-permanentAddress-postOffice':
-          eventValue = this.postOfficePer.value;
-          break;
-        case 'employerDetails-districtEmp':
-          eventValue = this.districts.find(x => x.district_id === Number(this.districtEmp.value)).district_name;
-          break;
-        case 'employerDetails-talukaEmp':
-          eventValue = this.talukasEmp.find(x => x.taluka_id === Number(this.talukaEmp.value)).taluka_name;
-          break;
-        case 'employerDetails-districtOfEmployer':
-          eventValue = this.districts.find(x => x.district_id === Number(this.districtOfEmployer.value)).district_name;
-          break;
-        case 'employerDetails-talukaOfEmployer':
-          eventValue = this.talukasIssuerEmp.find(x => x.taluka_id === Number(this.talukaOfEmployer.value)).taluka_name;
-          break;
-        case 'employerDetails-districtOfGramPanchayat':
-          eventValue = this.districts.find(x => x.district_id === Number(this.districtOfGramPanchayat.value)).district_name;
-          break;
-        case 'employerDetails-talukaOfGramPanchayat':
-          eventValue = this.talukasIssuerGram.find(x => x.taluka_id === Number(this.talukaOfGramPanchayat.value)).taluka_name;
-          break;
-        case 'employerDetails-districtOfMunicipalCorporation':
-          eventValue = this.districts.find(x => x.district_id === Number(this.districtOfMunicipalCorporation.value)).district_name;
-          break;
-        case 'employerDetails-talukaOfMunicipalCorporation':
-          eventValue = this.talukasMunicipalCorporation.find(x => x.taluka_id === Number(this.talukaOfMunicipalCorporation.value)).taluka_name;
-          break;
-        case 'personalDetails-permanentAddress-state':
-          eventValue = this.states.find(state => state.state_id === Number(this.statePer.value)).state_name;
-          break;
-        default:
-          eventValue = event.target.value;
-          break;
-      }
-    } catch {
-
-    }
-
-    if (!eventValue) return;
-
-    try {
-      setTimeout(() => {
-        if (!target.value) throw new Error('Transliteration request time limit reached.');
-      }, 5000);
-      response = await this.transliterate.transliterateText(eventValue, 'NAME').toPromise();
-    } catch (error) {
-      return target.patchValue(sanscript.t(eventValue, 'itrans', 'devanagari'));
-    }
-
-    const result = response.split(';').map((item) => {
-      return item.split('^')[0];
-    });
-    switch (event.target.id) {
-      case 'personalDetails-firstNamePersonal':
-        this.firstNameFamily.patchValue(event.target.value, { emitEvent: false });
-        this.firstNameFamily.disable();
-        this.firstNameFamily_mr.patchValue(result.join(' '));
-        this.firstNameFamily_mr.disable();
-        break;
-      case 'personalDetails-middleNamePersonal':
-        this.fatherOrHusbandName.patchValue(event.target.value, { emitEvent: false });
-        this.fatherOrHusbandName_mr.patchValue(result.join(' '));
-        break;
-      case 'personalDetails-lastNamePersonal':
-        this.surname.patchValue(event.target.value, { emitEvent: false });
-        this.surname.disable();
-        this.surname_mr.patchValue(result.join(' '));
-        this.surname_mr.disable();
-        break;
-    }
-    target.patchValue(result.join(' '));
-  }
 
   applyNominee(i: number) {
     const familyDetails = this.registrationFormGroup.get('familyDetails')['controls'];
@@ -1528,6 +1397,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         formData.append('fileOptions', JSON.stringify(this.fileOptions));
         formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
         formData.append('modeOfApplication', 'By Field Agent');
+        // covid temp reg number
+        formData.append('covidBeneficiaryRegNo', this.registrationFormGroup.get('covidTempRegistrationNo').value);
 
         try {
           await this.httpService.uploadFiles(filesFormData).toPromise();
@@ -1560,8 +1431,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           this.dialogs.alert(this.errorMsgList + ' is required')
         }
         this.dialogs.alert('Form is not Valid')
-
-        // familyDetailsFormGroup()
       }
     }
   }
@@ -1637,6 +1506,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   personalDetailsFormFroup(): FormGroup {
     return new FormGroup({
       oldRegistrationNo: new FormControl(''),
+      covidTempRegistrationNo: new FormControl(''),
       firstNamePersonal: new FormControl('', this.validationService.createValidatorsArray('firstName')),
       firstNamePersonal_mr: new FormControl(''),
       middleNamePersonal: new FormControl('', this.validationService.createValidatorsArray('middleName')),
@@ -1887,6 +1757,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       }
     }
 
+    this.nameOfGramsevak.reset();
+    this.nameOfGramsevak_mr.reset();
     this.nameOfGramPanchayat.reset();
     this.nameOfGramPanchayat_mr.reset();
     this.districtOfGramPanchayat.reset();
@@ -1935,6 +1807,16 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     });
   }
 
+  // private convertToDateFormatForPatchValue(date) {
+  //   const momentFormattedDate = moment(date).format('DD/MM/YYYY');
+  //   const splittedEndDate = momentFormattedDate.split('/');
+  //   return {
+  //     year: Number(splittedEndDate[2]),
+  //     month: Number(splittedEndDate[1]),
+  //     day: Number(splittedEndDate[0])
+  //   };
+  // }
+
   supportingDocumentsFormFroup(): FormGroup {
     return new FormGroup({
       attachmentList: new FormArray([]),
@@ -1969,7 +1851,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   //       // })
   //       alert('Aadhar no. should be unique for every family member')
   //         aadharNo.reset();
-
   //     }
   //   }
   // }
@@ -2314,6 +2195,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   // personal getters
   get oldRegistrationNo() { return this.registrationFormGroup.get('personalDetails').get('oldRegistrationNo'); }
+  get covidTempRegistrationNo() { return this.registrationFormGroup.get('personalDetails').get('covidTempRegistrationNo'); }
   get firstNamePersonal() { return this.registrationFormGroup.get('personalDetails').get('firstNamePersonal'); }
   get firstNamePersonal_mr() { return this.registrationFormGroup.get('personalDetails').get('firstNamePersonal_mr'); }
   get middleNamePersonal() { return this.registrationFormGroup.get('personalDetails').get('middleNamePersonal'); }
@@ -2388,7 +2270,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get taluka_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka_mr'); }
   get districtPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('district'); }
   get district_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('district_mr'); }
-  get statePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('statePer'); }
+  get statePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('state'); }
   get state_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('state_mr'); }
   get pincodePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('pincode'); }
   get stdcodePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('stdcode'); }

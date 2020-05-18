@@ -549,7 +549,7 @@
             <ion-item>
               <ion-label position="floating">State / राज्य<span style="color: Red"> *</span> </ion-label>
               <ion-select required class=" transliterate" id='personalDetails-permanentAddress-state'
-                [class.is-invalid]="statePer.invalid && statePer.touched" formControlName="state"
+                [class.is-invalid]="statePer.invalid && statePer.touched" formControlName="statePer"
                 (ionChange)="transliterateDTP($event)" interface="action-sheet">
                 <ion-select-option *ngFor="let eachState of states|keyvalue" [value]="eachState.value">{{eachState.key}}
                 </ion-select-option>
@@ -848,6 +848,9 @@
                     *ngIf="registrationFormGroup.get('familyDetails')['controls'][i].get('relation').invalid && registrationFormGroup.get('familyDetails')['controls'][i].get('relation').touched">
                     <small *ngIf="!!relation.errors?.required">Please select the Relation.</small>
                   </div>
+                  <ion-select *ngIf="relation.value">
+                    <ion-select-option>{{familyRelationOptionsMarathi[relation.value]}}</ion-select-option>
+                  </ion-select>
                 </ion-col>
 
                 <ion-col style="width: 15px">
@@ -877,6 +880,9 @@
                     <small *ngIf="!!education.errors?.required">Please select the Education</small>
                   </div>
                 </ion-col>
+                <ion-item *ngIf="education.value">
+                  <ion-label>{{educationOptionsMarathi[education.value]}}</ion-label>
+                </ion-item>
 
                 <ion-col style="width:15px">
                   <ion-item>
@@ -1085,6 +1091,7 @@
             class="transliterate">
             <ion-select-option *ngFor="let district of districts|keyvalue" [value]="district.value">{{ district.key }}
             </ion-select-option>
+            <!-- <ion-select-option [selected]="true" value="4">Amravati</ion-select-option> -->
           </ion-select>
           <div class="text-danger" *ngIf="districtEmp.invalid && districtEmp.touched">
             <small *ngIf="!!districtEmp.errors?.required">Please select District.</small>
@@ -1192,15 +1199,14 @@
             <small *ngIf="!!natureOfWorkEmp.errors?.required">Please select your Nature of Work.</small>
           </div>
         </ion-item>
-        <ion-item *ngIf="natureOfWorkEmp_mr.value">
-          <ion-label>{{natureOfWorkEmp_mr.value}}</ion-label>
+        <ion-item *ngIf="natureOfWorkEmp.value">
+          <ion-label>{{natureOfWorkOptionsMarathi[natureOfWorkEmp.value]}}</ion-label>
         </ion-item>
 
         <ion-list-header color="secondary" style="margin-top: 10px; text-align: center; font-size: 18px;color:white;">
           Details of the person who issued the 90 days working certificate / ज्याने 90 दिवसांचे कार्यरत प्रमाणपत्र दिले आहे त्याचा तपशील</ion-list-header>
         <ion-item>
-          <ion-label position="floating">Type of Certificate Issuer /<br> 
-            प्रमाणपत्र जारी करणार्‍याचा प्रकार<span style="color: red">*</span>
+          <ion-label position="floating">Type of Issuer /<br> जारी करणार्‍याचा प्रकार<span style="color: red">*</span>
           </ion-label>
           <ion-select [class.is-invalid]="typeOfIssuer.invalid && typeOfIssuer.touched" interface="action-sheet"
             formControlName="typeOfIssuer" id='employerDetails-typeOfIssuer'>
@@ -1208,11 +1214,11 @@
               {{ issuerType.value }}</ion-select-option>
           </ion-select>
           <div class="text-danger" *ngIf="typeOfIssuer.invalid && typeOfIssuer.touched">
-            <small *ngIf="!!typeOfIssuer.errors?.required">Please select Type of Certificate Issuer.</small>
+            <small *ngIf="!!typeOfIssuer.errors?.required">Please select Type of Issuer.</small>
           </div>
         </ion-item>
-        <ion-item *ngIf="typeOfIssuer_mr.value">
-          <ion-label>{{typeOfIssuer_mr.value}}</ion-label>
+        <ion-item *ngIf="typeOfIssuer.value">
+          <ion-label>{{typeOfIssuerOptionsMarathi[typeOfIssuer.value]}}</ion-label>
         </ion-item>
 
         <ion-item *ngIf="typeOfIssuer.value==='1'">
@@ -1329,7 +1335,7 @@
             [class.is-invalid]="nameOfGramsevak.invalid && nameOfGramsevak.touched" class='transliterate'
             (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
           <div class="text-danger" *ngIf="nameOfGramsevak.invalid && nameOfGramsevak.touched">
-            <small *ngIf="!!nameOfGramsevak.errors?.required">Please enter Name of GramSevak.</small>
+            <small *ngIf="!!nameOfGramsevak.errors?.required">Please enter Name of Gramsevak.</small>
           </div>
         </ion-item>
         <ion-item *ngIf="nameOfGramsevak_mr.value">

@@ -3,6 +3,7 @@ export class Constants {
     public static DB_ORIGIN_DATA_MIGRATION = 'data_migration';
     public static DB_ORIGIN_IWBMS = 'iwbms';
     public static DB_ORIGIN_LEGACY_DATA_ENTRY = 'legacy_data_entry';
+    public static TEMP_REG_NO_INITIALS = 'TR';
   
     /** Database */
     public static ERROR_CONNECTOR_NOT_CONFIGURED = 'The database connector is not configured. Use Database.Instance.configure() method to configure connector.';
