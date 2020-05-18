@@ -461,7 +461,7 @@
                 <small *ngIf="!!typeOfResidencePer.errors?.required">Please select Type of Residence.</small>
               </div>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-typeOfResidence_mr'>
+            <ion-item *ngIf="typeOfResidencePer_mr.value">
               <ion-label>{{typeOfResidencePer_mr.value}}</ion-label>
             </ion-item>
 
@@ -477,7 +477,7 @@
                 <small *ngIf="!!typeOfHousePer.errors?.required">Please select Type of House.</small>
               </div>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-typeOfHouse_mr'>
+            <ion-item *ngIf="typeOfHousePer_mr.value">
               <ion-label>{{typeOfHousePer_mr.value}}</ion-label>
             </ion-item>
 
@@ -487,7 +487,7 @@
                 autocapitalize="words" class="transliterate" (ionBlur)="transliterateDirect($event)"
                 id='personalDetails-permanentAddress-houseNo' type="text" clearInput></ion-input>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-houseNo_mr'>
+            <ion-item *ngIf="houseNo_mrPer.value">
               <ion-label>{{houseNo_mrPer.value}}</ion-label>
             </ion-item>
 
@@ -502,7 +502,7 @@
                 <small *ngIf="!!roadPer.errors?.maxlength">You have exceeded the maximum.</small>
               </div>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-road_mr'>
+            <ion-item *ngIf="road_mrPer.value">
               <ion-label>{{road_mrPer.value}}</ion-label>
             </ion-item>
 
@@ -516,7 +516,7 @@
                 <small *ngIf="!!areaPer.errors?.maxlength">You have exceeded the maximum.</small>
               </div>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-area_mr'>
+            <ion-item  *ngIf="area_mrPer.value">
               <ion-label>{{area_mrPer.value}}</ion-label>
             </ion-item>
 
@@ -531,7 +531,7 @@
                 <small *ngIf="!!cityPer.errors?.pattern">Please enter appropriate Town/City.</small>
               </div>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-city_mr'>
+            <ion-item *ngIf="city_mrPer.value">
               <ion-label>{{city_mrPer.value}}</ion-label>
             </ion-item>
 
@@ -542,7 +542,7 @@
                 (ionBlur)="transliterateDirect($event)" id='personalDetails-permanentAddress-importantPlace'
                 autocapitalize="words" clearInput></ion-input>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-importantPlace'>
+            <ion-item *ngIf="importantPlace_mrPer.value">
               <ion-label>{{importantPlace_mrPer.value}}</ion-label>
             </ion-item>
 
@@ -558,7 +558,7 @@
                 <small *ngIf="!!statePer.errors?.required">Please select your State.</small>
               </div>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-statePer_mr'>
+            <ion-item *ngIf="state_mr.value">
               <ion-label>{{state_mrPer.value}}</ion-label>
             </ion-item>
 
@@ -579,7 +579,7 @@
                 <small *ngIf="!!districtPer.errors?.required">Please enter your District.</small>
               </div>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-district_mr'>
+            <ion-item *ngIf="district_mr.value">
               <ion-label>{{district_mrPer.value}}</ion-label>
             </ion-item>
 
@@ -601,7 +601,7 @@
                 <small *ngIf="!!talukaPer.errors?.required">Please enter your Taluka.</small>
               </div>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-taluka_mr'>
+            <ion-item *ngIf="taluka_mr.value">
               <ion-label>{{taluka_mrPer.value}}</ion-label>
             </ion-item>
 
@@ -623,7 +623,7 @@
                 <small *ngIf="!!postOfficePer.errors?.required">Please enter your Post Office.</small>
               </div>
             </ion-item>
-            <ion-item id='personalDetails-permanentAddress-postOffice_mr'>
+            <ion-item *ngIf="postOffice_mr.value">
               <ion-label>{{postOffice_mrPer.value}}</ion-label>
             </ion-item>
 

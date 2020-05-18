@@ -224,36 +224,36 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.network.onConnect().subscribe(() => { });
 
 
-    // this.route.queryParams.subscribe(params => {
-    //   if (this.router.getCurrentNavigation().extras.state) {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
 
-    //     this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
-    //     this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
-    //     this.familyAaadhar.push(this.router.getCurrentNavigation().extras.state.aadhar)
-    //     this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+        this.mobilePersonal.setValue(this.router.getCurrentNavigation().extras.state.mobile);
+        this.aadharNoPersonal.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
+        this.familyAaadhar.push(this.router.getCurrentNavigation().extras.state.aadhar)
+        this.aadharNoFamily.setValue(this.router.getCurrentNavigation().extras.state.aadhar);
         
-    //     // Re-Data Entry
-    //     if (this.router.getCurrentNavigation().extras.state.oldRegNo) {
-    //       this.oldRegistrationNo.setValue(this.router.getCurrentNavigation().extras.state.oldRegNo);
-    //       this.oldRegistrationNo.disable();
-    //       this.reDataEntry = true
-    //     } 
+        // Re-Data Entry
+        if (this.router.getCurrentNavigation().extras.state.oldRegNo) {
+          this.oldRegistrationNo.setValue(this.router.getCurrentNavigation().extras.state.oldRegNo);
+          this.oldRegistrationNo.disable();
+          this.reDataEntry = true
+        } 
 
-    //     // Covid
-    //     else if (this.router.getCurrentNavigation().extras.state.covid){
-    //       this.firstNamePersonal.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[0]); // first name
-    //       this.lastNamePersonal.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[1]); // last name
-    //       this.firstNameFamily.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[0]); // first name fam deetails
-    //       this.surname.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[1]); // surname fam details 
-    //       this.ifscCode.setValue(this.router.getCurrentNavigation().extras.state.covid['bankIFSC']);
-    //       this.accountNumber.setValue(this.router.getCurrentNavigation().extras.state.covid['bankAccountNumber']);
-    //       this.dobPersonal.setValue(this.router.getCurrentNavigation().extras.state.covid['dateOfBirth']);
-    //       this.covidTempRegistrationNo.setValue(this.router.getCurrentNavigation().extras.state.covid['tempRegistrationNo']);
-    //     }
-    //   } else {
-    //     this.router.navigate(['/verification']);
-    //   }
-    // });
+        // Covid
+        else if (this.router.getCurrentNavigation().extras.state.covid){
+          this.firstNamePersonal.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[0]); // first name
+          this.lastNamePersonal.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[1]); // last name
+          this.firstNameFamily.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[0]); // first name fam deetails
+          this.surname.setValue(this.router.getCurrentNavigation().extras.state.covid['nameOfWorkerOnAadhaar'].split(' ')[1]); // surname fam details 
+          this.ifscCode.setValue(this.router.getCurrentNavigation().extras.state.covid['bankIFSC']);
+          this.accountNumber.setValue(this.router.getCurrentNavigation().extras.state.covid['bankAccountNumber']);
+          this.dobPersonal.setValue(this.router.getCurrentNavigation().extras.state.covid['dateOfBirth']);
+          this.covidTempRegistrationNo.setValue(this.router.getCurrentNavigation().extras.state.covid['tempRegistrationNo']);
+        }
+      } else {
+        this.router.navigate(['/verification']);
+      }
+    });
 
     // re-route to homepage if not logged-in
     this.storage.get('token').then((val) => {
@@ -2192,7 +2192,6 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get familyDetails() { return (this.registrationFormGroup.get('familyDetails') as FormArray).controls; }
 
 
-
   // personal getters
   get oldRegistrationNo() { return this.registrationFormGroup.get('personalDetails').get('oldRegistrationNo'); }
   get covidTempRegistrationNo() { return this.registrationFormGroup.get('personalDetails').get('covidTempRegistrationNo'); }
@@ -2264,14 +2263,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   get city_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('city_mr'); }
   get importantPlacePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('importantPlace'); }
   get importantPlace_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('importantPlace_mr'); }
-  get postOfficePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('postOffice'); }
-  get postOffice_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('postOffice_mr'); }
-  get talukaPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka'); }
-  get taluka_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka_mr'); }
+  get statePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('statePer'); }
+  get state_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('state_mr'); }
   get districtPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('district'); }
   get district_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('district_mr'); }
-  get statePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('state'); }
-  get state_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('state_mr'); }
+  get talukaPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka'); }
+  get taluka_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('taluka_mr'); }
+  get postOfficePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('postOffice'); }
+  get postOffice_mrPer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('postOffice_mr'); }
   get pincodePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('pincode'); }
   get stdcodePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('stdcode'); }
   get phonePer() { return this.registrationFormGroup.get('personalDetails').get('permanentAddress').get('phone'); }
