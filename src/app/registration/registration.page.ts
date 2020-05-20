@@ -62,6 +62,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   public dateOfBirth: any;
   public attachmentDetails: any = [];
   public errorMsgList: any[];
+  // public covidBeneficiaryTempRegno: any;
   
 
   bankDetails: any = {
@@ -248,7 +249,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
           this.ifscCode.setValue(this.router.getCurrentNavigation().extras.state.covid['bankIFSC']);
           this.accountNumber.setValue(this.router.getCurrentNavigation().extras.state.covid['bankAccountNumber']);
           this.dobPersonal.setValue(this.router.getCurrentNavigation().extras.state.covid['dateOfBirth']);
-          this.covidTempRegistrationNo.setValue(this.router.getCurrentNavigation().extras.state.covid['tempRegistrationNo']);
+          this.covidBeneficiaryTempRegno.setValue(this.router.getCurrentNavigation().extras.state.covid['tempRegistrationNo']);
         }
       } else {
         this.router.navigate(['/verification']);
@@ -1398,7 +1399,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         formData.append('data', JSON.stringify(this.registrationFormGroup.getRawValue()));
         formData.append('modeOfApplication', 'By Field Agent');
         // covid temp reg number
-        formData.append('covidBeneficiaryRegNo', this.registrationFormGroup.get('covidTempRegistrationNo').value);
+        // if(this.covidBeneficiaryTempRegno) formData.append('covidBeneficiaryTempRegno', this.covidBeneficiaryTempRegno);
+        formData.append('covidBeneficiaryTempRegno', JSON.stringify(this.registrationFormGroup.get('personalDetails').value['covidBeneficiaryTempRegno']));
 
         try {
           await this.httpService.uploadFiles(filesFormData).toPromise();
@@ -1506,7 +1508,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
   personalDetailsFormFroup(): FormGroup {
     return new FormGroup({
       oldRegistrationNo: new FormControl(''),
-      covidTempRegistrationNo: new FormControl(''),
+      covidBeneficiaryTempRegno: new FormControl(''),
       firstNamePersonal: new FormControl('', this.validationService.createValidatorsArray('firstName')),
       firstNamePersonal_mr: new FormControl(''),
       middleNamePersonal: new FormControl('', this.validationService.createValidatorsArray('middleName')),
@@ -1821,8 +1823,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     return new FormGroup({
       attachmentList: new FormArray([]),
       supportingDocuments: new FormControl('', Validators.required),
-      applicantPhoto: new FormControl(''),
-      workSitePhoto: new FormControl(''),
+      applicantPhoto: new FormControl('', Validators.required),
+      workSitePhoto: new FormControl('', Validators.required),
       selfDeclarationDocuments: new FormControl('', Validators.required),
       aadharDeclaration: new FormControl('', Validators.required),
       bankPassbook: new FormControl('', Validators.required),
@@ -2194,7 +2196,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
 
   // personal getters
   get oldRegistrationNo() { return this.registrationFormGroup.get('personalDetails').get('oldRegistrationNo'); }
-  get covidTempRegistrationNo() { return this.registrationFormGroup.get('personalDetails').get('covidTempRegistrationNo'); }
+  get covidBeneficiaryTempRegno() { return this.registrationFormGroup.get('personalDetails').get('covidBeneficiaryTempRegno'); }
   get firstNamePersonal() { return this.registrationFormGroup.get('personalDetails').get('firstNamePersonal'); }
   get firstNamePersonal_mr() { return this.registrationFormGroup.get('personalDetails').get('firstNamePersonal_mr'); }
   get middleNamePersonal() { return this.registrationFormGroup.get('personalDetails').get('middleNamePersonal'); }
