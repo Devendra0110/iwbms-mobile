@@ -273,7 +273,7 @@
             </ion-item>
 
             <ion-item>
-              <ion-label position="floating">House No./Building No. /<br>घर क्रमांक/इमारत क्रमांक</ion-label>
+              <ion-label position="floating">House/Building No. /<br>घर/इमारत क्रमांक</ion-label>
               <ion-input id="personalDetails-residentialAddress-houseNo" formControlName="houseNo" type="text"
                 class="transliterate" (ionBlur)="transliterateDirect($event)"
                 [class.is-invalid]="houseNo.invalid && houseNo.touched" clearInput></ion-input>
@@ -1433,7 +1433,7 @@
           <ion-grid style='width: 1511px;' border="1">
             <ion-row *ngIf="appointmentDateEmp.value===null || dispatchDateEmp.value ===null">
               <ion-col>
-                <small style="color:red;">Please choose the appointment and dispatch date first.</small>
+                <small style="color:red;">Please choose the appointment and registration certificate issue date first.</small>
               </ion-col>
             </ion-row>
             <ion-row *ngIf="dispatchDateFlag">

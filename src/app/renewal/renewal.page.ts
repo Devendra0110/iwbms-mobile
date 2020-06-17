@@ -216,7 +216,7 @@ export class RenewalPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.registrationNoOfIssuer)
+    // console.log(this.registrationNoOfIssuer)
     this.httpService.getDistricts(21).subscribe((districtsArrObj: any) => {
       // create district-name:district-id key-value in district
       for (const i of districtsArrObj) this.districts[i.district_name] = i.district_id;
@@ -580,28 +580,56 @@ export class RenewalPage implements OnInit {
     }
   }
 
+  // uploadFile(event) {
+  //   const file = event.target.files[0];
+  //   this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
+  //   });
+  //   this.files[event.target.id] = file;
+  //   this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
+  //   // if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152 && (file.type === 'application/pdf' || file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === "image/png")) {
+  //   //   this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
+  //   //   });
+  //   //   this.files[event.target.id] = file;
+  //   //   this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
+  //   // } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
+  //   //   this.renewalFormGroup.get(event.target.id).patchValue(null);
+  //   //   this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
+  //   //   });
+
+  //   // } else {
+  //   //   this.renewalFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
+  //   //   this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
+  //   //   });
+
+  //   // }
+  // }
+
   uploadFile(event) {
     const file = event.target.files[0];
-    this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
-    });
-    this.files[event.target.id] = file;
-    this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
-    // if (event.target.files[0].size > 0 && event.target.files[0].size < 2097152 && (file.type === 'application/pdf' || file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === "image/png")) {
-    //   this.toast.show('File uploaded successfully', '1000', 'bottom').subscribe((toast) => {
-    //   });
-    //   this.files[event.target.id] = file;
-    //   this.fileOptions[event.target.id] = `${uuidv4()}.${file.name.split('.')[length]}.pdf`;
-    // } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== "image/png") {
-    //   this.renewalFormGroup.get(event.target.id).patchValue(null);
-    //   this.toast.show('File Should Be PDF or JPG or PNG', '2000', 'bottom').subscribe((toast) => {
-    //   });
-
-    // } else {
-    //   this.renewalFormGroup.get('supportingDocuments').get(event.target.id).patchValue(null);
-    //   this.toast.show('File Should Be Less Than 2MB', '2000', 'bottom').subscribe((toast) => {
-    //   });
-
-    // }
+    if (!file) return;
+    if (file.size > 0 && file.size < 2097152 && (file.type.includes('pdf') || file.type.includes('jpg') || file.type.includes('jpeg') || file.type.includes('png'))) {
+      // TODO: provide success message for file attachment.
+      // this.toastObj['type'] = 'success';
+      // this.toastObj['title'] = 'File uploaded successfully';
+      // this.toastService.fireToast(this.toastObj);
+      this.dialogs.alert('File uploaded successfully');
+      this.files[event.target.id] = file;
+      const splitFileName = file.name.split('.');
+      this.fileOptions[event.target.id] = `${uuidv4()}.${splitFileName[splitFileName.length - 1]}`;
+      this.renewalFormGroup.get(event.target.id).setErrors(null);
+    } else if (file.type !== 'application/pdf' && file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== 'image/png') {
+      // this.toastObj['type'] = 'error';
+      // this.toastObj['title'] = 'File Should Be PDF or JPG or PNG';
+      // this.toastService.fireToast(this.toastObj);
+      this.dialogs.alert('File Should Be PDF or JPG or PNG');
+      event.target.value = null;
+    } else {
+      // this.toastObj['type'] = 'error';
+      // this.toastObj['title'] = 'File Should Be Less Than 2MB';
+      // this.toastService.fireToast(this.toastObj);
+      this.dialogs.alert('File Should Be Less Than 2MB');
+      event.target.value = null;
+    }
   }
 
   public joinWfcNames(wfcs) {
