@@ -30,7 +30,7 @@
           [class.is-invalid]="nameOfHospital.invalid && nameOfHospital.touched" maxlength="120"></ion-input>
         <div class="text-danger" *ngIf="nameOfHospital.invalid && nameOfHospital.touched">
           <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['required']">Please enter name of
-            hHospital</small>
+            hospital.</small>
           <small *ngIf="nameOfHospital.errors && nameOfHospital.errors['maxlength']">You have reached your
             maximum</small>
         </div>
@@ -46,7 +46,7 @@
           [class.is-invalid]="locationOfHospital.invalid && locationOfHospital.touched"></ion-input>
         <div class="text-danger" *ngIf="locationOfHospital.invalid && locationOfHospital.touched">
           <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['required']">Please enter address of
-            hospital </small>
+            hospital.</small>
           <small *ngIf="locationOfHospital.errors && locationOfHospital.errors['maxlength']">You have reached your
             maximum</small>
         </div>

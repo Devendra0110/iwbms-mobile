@@ -681,14 +681,14 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.isBocwRegistered(0);
 
     //bocw act dispatch number not required.
-    this.registeredWith.valueChanges.subscribe((registeredWith_id) => {
-      if (registeredWith_id === '1') {
-        this.dispatchNo.setValidators([]);
-      } else {
-        this.dispatchNo.setValidators([Validators.required]);
-      }
-      this.dispatchNo.reset();
-    })
+    // this.registeredWith.valueChanges.subscribe((registeredWith_id) => {
+    //   if (registeredWith_id === '1') {
+    //     this.dispatchNo.setValidators([]);
+    //   } else {
+    //     this.dispatchNo.setValidators([Validators.required]);
+    //   }
+    //   this.dispatchNo.reset();
+    // })
 
   }
 
@@ -1664,7 +1664,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       registeredWith: new FormControl(''),
       registrationNoOfIssuer: new FormControl(''),
       dispatchNo: new FormControl('', [Validators.required]),
-      dispatchDate: new FormControl('', [Validators.required]),
+      dispatchDate: new FormControl(null),
       nameOfGramsevak: new FormControl(''),
       nameOfGramsevak_mr: new FormControl(''),
       nameOfEmployer: new FormControl(''),
@@ -1701,6 +1701,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.talukaOfEmployer.setValidators([Validators.required]);
     this.registeredWith.setValidators([Validators.required]);
     this.registrationNoOfIssuer.setValidators([Validators.required]);
+    this.dispatchDate.setValidators([Validators.required]);
   }
 
   public employerOrGramsevak(): void {
@@ -1711,8 +1712,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
       case '1': {
         this.registrationNoOfIssuer.setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9]{4,10}$'),]);
         this.registeredWith.setValidators([Validators.required]);
-        this.dispatchDate.setValidators([Validators.required]);
-        this.dispatchDate.updateValueAndValidity()
+        this.dispatchDate.setValidators([]);
+        this.dispatchNo.setValidators([]);
         this.nameOfGramPanchayat.setValidators([]);
         this.districtOfGramPanchayat.setValidators([]);
         this.talukaOfGramPanchayat.setValidators([]);
@@ -1731,6 +1732,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         this.talukaOfEmployer.setValidators([]);
         this.registeredWith.setValidators([]);
         this.registrationNoOfIssuer.setValidators([]);
+        this.dispatchNo.setValidators([Validators.required]);
         break;
       }
       case '5': {
@@ -1742,6 +1744,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         this.talukaOfEmployer.setValidators([]);
         this.registeredWith.setValidators([]);
         this.registrationNoOfIssuer.setValidators([]);
+        this.dispatchNo.setValidators([Validators.required]);
         break;
       }
       default: {
@@ -1756,6 +1759,7 @@ export class RegistrationPage implements OnInit, AfterViewInit {
         this.talukaOfEmployer.setValidators([]);
         this.registeredWith.setValidators([]);
         this.registrationNoOfIssuer.setValidators([]);
+        this.dispatchNo.setValidators([Validators.required]);
       }
     }
 
@@ -1781,6 +1785,8 @@ export class RegistrationPage implements OnInit, AfterViewInit {
     this.talukaOfEmployer_mr.reset();
     this.registeredWith.reset();
     this.registrationNoOfIssuer.reset();
+    this.dispatchNo.reset();
+    this.dispatchDate.reset();
 
     // this.registrationFormGroup.valueChanges.subscribe(() => {
     //   this.checkValidationErrors(this.registrationFormGroup);

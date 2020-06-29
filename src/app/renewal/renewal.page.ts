@@ -143,8 +143,8 @@ export class RenewalPage implements OnInit {
       typeOfIssuer_mr: new FormControl(''),
       registeredWith: new FormControl(''),
       registrationNoOfIssuer: new FormControl(''),
-      dispatchNo: new FormControl('', this.validationService.createValidatorsArray('dispatchNo')),
-      dispatchDate: new FormControl(''),
+      dispatchNo: new FormControl('', [Validators.required]),
+      dispatchDate: new FormControl(null),
       nameOfEmployer: new FormControl(''),
       nameOfEmployer_mr: new FormControl(''),
       districtOfEmployer: new FormControl(''),
@@ -299,14 +299,14 @@ export class RenewalPage implements OnInit {
     }, err => console.log(err));
 
       //bocw act dispatch number not required.
-      this.registeredWith.valueChanges.subscribe((registeredWith_id)=>{
-        if(registeredWith_id==='1'){
-          this.dispatchNo.setValidators([]);
-        }else{
-          this.dispatchNo.setValidators([Validators.required]);
-        }
-        this.dispatchNo.reset();
-      })
+      // this.registeredWith.valueChanges.subscribe((registeredWith_id)=>{
+      //   if(registeredWith_id==='1'){
+      //     this.dispatchNo.setValidators([]);
+      //   }else{
+      //     this.dispatchNo.setValidators([Validators.required]);
+      //   }
+      //   this.dispatchNo.reset();
+      // })
 
   }
 
@@ -648,6 +648,7 @@ export class RenewalPage implements OnInit {
     this.nameOfEmployer.setValidators([Validators.required]);
     this.districtOfEmployer.setValidators([Validators.required]);
     this.talukaOfEmployer.setValidators([Validators.required]);
+    this.dispatchDate.setValidators([Validators.required]);
   }
 
   public employerOrGramsevak(): void {
@@ -659,15 +660,15 @@ export class RenewalPage implements OnInit {
 
         this.registrationNoOfIssuer.setValidators([Validators.required, Validators.pattern('^[a-zA-Z0-9]{4,10}$'),]);
         this.registeredWith.setValidators([Validators.required]);
-        this.dispatchDate.setValidators([Validators.required]);
-        this.dispatchDate.updateValueAndValidity()
+        this.dispatchDate.setValidators([]);
+        this.dispatchDate.updateValueAndValidity();
+        this.dispatchNo.setValidators([]);
         this.nameOfGramPanchayat.setValidators([]);
         this.districtOfGramPanchayat.setValidators([]);
         this.talukaOfGramPanchayat.setValidators([]);
         this.nameOfMunicipalCorporation.setValidators([]);
         this.districtOfMunicipalCorporation.setValidators([]);
         this.talukaOfMunicipalCorporation.setValidators([]);
-
         this.nameOfGramPanchayat.setErrors(null);
         this.districtOfGramPanchayat.setErrors(null);
         this.talukaOfGramPanchayat.setErrors(null);
@@ -689,7 +690,7 @@ export class RenewalPage implements OnInit {
         this.districtOfEmployer.setValidators([]);
         this.talukaOfEmployer.setValidators([]);
         this.nameOfMunicipalCorporation.setErrors(null);
-
+        this.dispatchNo.setValidators([Validators.required]);
         this.nameOfMunicipalCorporation.setErrors(null);
         this.districtOfMunicipalCorporation.setErrors(null);
         this.talukaOfMunicipalCorporation.setErrors(null);
@@ -710,7 +711,7 @@ export class RenewalPage implements OnInit {
         this.nameOfEmployer.setValidators([]);
         this.districtOfEmployer.setValidators([]);
         this.talukaOfEmployer.setValidators([]);
-
+        this.dispatchNo.setValidators([Validators.required]);
         this.nameOfGramPanchayat.setErrors(null);
         this.districtOfGramPanchayat.setErrors(null);
         this.talukaOfGramPanchayat.setErrors(null);
@@ -734,7 +735,7 @@ export class RenewalPage implements OnInit {
         this.talukaOfEmployer.setValidators([]);
         this.registeredWith.setValidators([]);
         this.registrationNoOfIssuer.setValidators([]);
-
+        this.dispatchNo.setValidators([Validators.required]);
         this.nameOfMunicipalCorporation.setErrors(null);
         this.districtOfMunicipalCorporation.setErrors(null);
         this.talukaOfMunicipalCorporation.setErrors(null);
@@ -770,6 +771,11 @@ export class RenewalPage implements OnInit {
     this.districtOfEmployer_mr.reset();
     this.talukaOfEmployer.reset();
     this.talukaOfEmployer_mr.reset();
+    this.registeredWith.reset();
+    this.registrationNoOfIssuer.reset();
+    this.dispatchDate.reset();
+    this.dispatchNo.reset();
+
   }
   async save() {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
