@@ -22,32 +22,32 @@ export class VerificationPage implements OnInit {
   public covidData: any;
   public ECode: string;
   public otpflag = false;
-  public resendOtpFlag=true;
-  public otpCountdown:number;
+  public resendOtpFlag = true;
+  public otpCountdown: number;
   // E0 : unregistered mobile no and aadhar
   // E1 : already registered mobile no
   // E2 : already registered aadhar
   // E3 : both already registered
   // E4 : both already registered with different users
+
   constructor(
     private validationService: ValidationService,
     private router: Router,
     private mobileVerification: MobileVerificationService,
     private dialogs: Dialogs,
     private network: Network,
-    private loadingController:LoadingController,
+    private loadingController: LoadingController,
     private toast: Toast) {
-      this.otpCountdown=32;
-      this.network.onDisconnect().subscribe(() => { });
-      this.network.onConnect().subscribe(() => { });
-      this.verificationForm = new FormGroup({
-        mobileNo: new FormControl('', this.validationService.createValidatorsArray('mobile')),
-        aadharNo: new FormControl('', this.validationService.createValidatorsArray('aadharNo'))
-      });
+    this.otpCountdown = 32;
+    this.network.onDisconnect().subscribe(() => { });
+    this.network.onConnect().subscribe(() => { });
+    this.verificationForm = new FormGroup({
+      mobileNo: new FormControl('', this.validationService.createValidatorsArray('mobile')),
+      aadharNo: new FormControl('', this.validationService.createValidatorsArray('aadharNo'))
+    });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ionViewDidEnter() {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
@@ -55,15 +55,12 @@ export class VerificationPage implements OnInit {
     }
   }
 
-  get mobileNo() {
-    return this.verificationForm.get('mobileNo');
-  }
-  get aadharNo() {
-    return this.verificationForm.get('aadharNo');
-  }
+  // getters
+  get mobileNo() { return this.verificationForm.get('mobileNo'); }
+  get aadharNo() { return this.verificationForm.get('aadharNo'); }
 
-  resetMobileNo(){
-    this.unverifiedUser=false;
+  resetMobileNo() {
+    this.unverifiedUser = false;
   }
 
   async sendOTP() {
@@ -86,9 +83,9 @@ export class VerificationPage implements OnInit {
           async (res: any) => {
             await loading.dismiss();
             if (res.message === 'OTP Sent') {
-              if(res.covid_data){
+              if (res.covid_data) {
                 this.covidData = res.covid_data;
-              }else{
+              } else {
                 this.covidData = undefined;
               }
               this.toast.show(`OTP sent`, '2000', 'bottom').subscribe(
@@ -97,10 +94,10 @@ export class VerificationPage implements OnInit {
                 }
               );
               this.unverifiedUser = false;
-              setInterval(()=>{
+              setInterval(() => {
                 this.otpCountdown--;
-                this.resendOtpFlag = this.otpCountdown<1?false:true
-              },1000)
+                this.resendOtpFlag = this.otpCountdown < 1 ? false : true
+              }, 1000)
             }
           },
           async (err: any) => {
@@ -112,16 +109,16 @@ export class VerificationPage implements OnInit {
               this.ECode = 'E1';
             } else if (err.error.message === 'Aadhar No. already Registered') {
               this.ECode = 'E2';
-            }else if(err.error.message === 'Mobile No. & Aadhar No. already Registered'){
+            } else if (err.error.message === 'Mobile No. & Aadhar No. already Registered') {
               this.ECode = 'E3';
-            }else{
-              this.ECode =undefined;
+            } else {
+              this.ECode = undefined;
               this.dialogs.alert('Server is unreachable at this moment. Please try again later.')
             }
           }
         );
       } else {
-        await loading.dismiss().then((result) => { 
+        await loading.dismiss().then((result) => {
           this.dialogs.alert('Details are not valid.');
         })
       }
@@ -138,7 +135,7 @@ export class VerificationPage implements OnInit {
         spinner: "crescent"
       });
       await loading.present()
-      this.mobileVerification.validateOTP(mobileNo,otp).subscribe(
+      this.mobileVerification.validateOTP(mobileNo, otp).subscribe(
         async (res: any) => {
           if (res.message === 'OTP Verified') {
             // otp verified
@@ -151,18 +148,17 @@ export class VerificationPage implements OnInit {
             };
             this.verificationForm.reset();
             this.otpflag = false;
-            await loading.dismiss().then((result)=>{
+            await loading.dismiss().then((result) => {
               this.router.navigate(['/registration'], mobileAndAadhar);
             });
           }
         },
         async (err: any) => {
-          await loading.dismiss().then((result)=>{
+          await loading.dismiss().then((result) => {
             this.dialogs.alert('Invalid OTP');
           })
-          this.otpCountdown=0;
-          this.resendOtpFlag=false;
-          
+          this.otpCountdown = 0;
+          this.resendOtpFlag = false;
         }
       );
     }

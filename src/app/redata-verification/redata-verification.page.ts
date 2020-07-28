@@ -27,6 +27,7 @@ export class RedataVerificationPage implements OnInit {
   // E2 : already registered aadhar
   // E3 : both already registered
   // E4 : both already registered with different users
+
   constructor(
     private validationService: ValidationService,
     private router: Router,
@@ -54,29 +55,24 @@ export class RedataVerificationPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ionViewDidEnter() {
     if (this.network.type === 'none' || this.network.type === 'NONE') {
       this.dialogs.alert('Please check your internet connectivity.');
     }
   }
-
-  get mobileNo() {
-    return this.verificationForm.get('mobileNo');
-  }
-  get aadharNo() {
-    return this.verificationForm.get('aadharNo');
-  }
+  
+  // getters
+  get mobileNo() { return this.verificationForm.get('mobileNo'); }
+  get aadharNo() { return this.verificationForm.get('aadharNo'); }
   get registrationNo() { return this.verificationForm.get('registrationNo'); }
 
   resetMobileNo() {
     this.unverifiedUser = false;
   }
 
-  clearErrors() {
-  }
+  clearErrors() { }
 
   async sendOTP() {
     this.resendOtpFlag = true;

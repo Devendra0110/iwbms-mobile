@@ -1,4 +1,3 @@
-import { UserManagementService } from 'src/app/services/user-management.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
@@ -10,6 +9,7 @@ import { MobileVerificationService } from '../../services/mobile-verification.se
 import { Network } from '@ionic-native/network/ngx';
 import { Storage } from '@ionic/storage';
 import { Toast } from '@ionic-native/toast/ngx';
+import { UserManagementService } from 'src/app/services/user-management.service';
 import { ValidationService } from '../../services/validation.service';
 import { states } from './../../models/states';
 
@@ -36,7 +36,7 @@ export class ClaimVerificationPage implements OnInit {
 
   constructor(
     private validationService: ValidationService,
-    private userManagement:UserManagementService,
+    private userManagement: UserManagementService,
     private router: Router,
     private dialogs: Dialogs,
     private storage: Storage,
@@ -95,27 +95,27 @@ export class ClaimVerificationPage implements OnInit {
         }).then((res) => {
           res.present();
         });
-        if(this.deathToggle){
+        if (this.deathToggle) {
           this.claimService.checkRegistrationAndRenewalValidity(tokenObj, this.JWTToken).subscribe(
-          (res: any) => {
-            this.redataEntry = false;
-            if (res.subscription === 'active') {
-              this.passingResponse = res;
-              this.allowOTP = true;
-              this.cardTitle = "Registered Worker Mobile Verification"
-            } else {
-              this.allowOTP = false;
-              this.dialogs.alert('Worker is not eligible.')
-              this.ineligible = true
+            (res: any) => {
+              this.redataEntry = false;
+              if (res.subscription === 'active') {
+                this.passingResponse = res;
+                this.allowOTP = true;
+                this.cardTitle = "Registered Worker Mobile Verification"
+              } else {
+                this.allowOTP = false;
+                this.dialogs.alert('Worker is not eligible.')
+                this.ineligible = true
+              }
+            }, err => {
+              this.unregisteredUser = true;
+              this.redataEntry = true;
+              this.dialogs.alert('Your BOCW Registration Number is not registered. Please enter registered Registration Number or re-enter your data by clicking on the Re-data Entry button. आपला BOCW नोंदणी क्रमांक नोंदणीकृत नाही. कृपया नोंदणीकृत नोंदणी क्रमांक प्रविष्ट करा किंवा री-डेटा एन्ट्री बटणावर क्लिक करुन आपला डेटा पुन्हा प्रविष्ट करा.');
             }
-          }, err => {
-            this.unregisteredUser = true;
-            this.redataEntry = true;
-            this.dialogs.alert('Your BOCW Registration Number is not registered. Please enter registered Registration Number or re-enter your data by clicking on the Re-data Entry button. आपला BOCW नोंदणी क्रमांक नोंदणीकृत नाही. कृपया नोंदणीकृत नोंदणी क्रमांक प्रविष्ट करा किंवा री-डेटा एन्ट्री बटणावर क्लिक करुन आपला डेटा पुन्हा प्रविष्ट करा.');
-          }
-        )
-        }else{
-          this.userManagement.getUserById(this.registrationNo.value,this.JWTToken).subscribe((res:any)=>{
+          )
+        } else {
+          this.userManagement.getUserById(this.registrationNo.value, this.JWTToken).subscribe((res: any) => {
             this.passingResponse = res[0];
             this.passingResponse['deathWorker'] = !this.deathToggle;
             this.passingResponse['JWTToken'] = this.JWTToken;
@@ -129,9 +129,9 @@ export class ClaimVerificationPage implements OnInit {
             this.loadingController.dismiss();
             this.cardTitle = 'BOCW Registration No. Verification'
             this.router.navigate(['/claim-management/claim-main-form'], userObject);
-          },err=>console.log(err))
+          }, err => console.log(err))
         }
-        
+
       } else {
         this.dialogs.alert('Registration No. is not valid')
         this.ineligible = true;
@@ -141,13 +141,11 @@ export class ClaimVerificationPage implements OnInit {
     }
   }
 
-  
-
   checkFcn(event) {
     this.deathToggle = !this.deathToggle;
-    if(this.deathToggle){
+    if (this.deathToggle) {
       this.mobileNo.setValidators([Validators.required])
-    }else{
+    } else {
       this.mobileNo.setValidators([]);
     }
     this.mobileNo.updateValueAndValidity();
@@ -237,20 +235,20 @@ export class ClaimVerificationPage implements OnInit {
           }
         },
         (err: any) => {
-          if(err.statusText === 'Unknown Error'){
+          if (err.statusText === 'Unknown Error') {
             this.loadingController.dismiss();
             this.otpCountdown = 0;
             this.dialogs.alert('Server is unreachable at the moment. Please try again.');
-          }else{
-          this.resendOtpFlag = false;
-          this.dialogs.alert('Invalid OTP');
-        }
+          } else {
+            this.resendOtpFlag = false;
+            this.dialogs.alert('Invalid OTP');
+          }
         });
     }
   }
 
+  // getters
   get registrationNo() { return this.claimVerificationForm.get('registrationNo'); }
   get mobileNo() { return this.claimVerificationForm.get('mobileNo'); }
-
 
 }

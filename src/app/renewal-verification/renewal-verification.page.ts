@@ -31,7 +31,8 @@ export class RenewalVerificationPage implements OnInit {
   public redataEntry = false;
   public otpCountdown: number;
   public subscription: string;
-  public next_renewal_date:string;
+  public next_renewal_date: string;
+
   constructor(
     private router: Router,
     private network: Network,
@@ -87,7 +88,7 @@ export class RenewalVerificationPage implements OnInit {
         this.renewalService.checkForRenewal(this.registrationNo.value, this.JWTToken).subscribe(async (res: any) => {
           if (res) {
             this.mobileNo.setValue(res.mobilePersonal)
-            this.subscription =res.subscription;
+            this.subscription = res.subscription;
             this.next_renewal_date = res.next_renewal_date;
             this.passingResponse = res;
             this.allowOTP = true;
@@ -103,13 +104,13 @@ export class RenewalVerificationPage implements OnInit {
           await loading.dismiss();
           console.log(res)
         }, err => {
-        if(err.statusText==='Unknown Error'){
-          this.dialogs.alert('Server is unreachable at the moment. Please try again.');
-        }else{}
-        if(err.statusText==='Not Found'){
-          console.log(); this.loadingController.dismiss();
-          this.dialogs.alert('Please enter valid registration number or fill the re-data entry form.');
-        }else{}
+          if (err.statusText === 'Unknown Error') {
+            this.dialogs.alert('Server is unreachable at the moment. Please try again.');
+          } else { }
+          if (err.statusText === 'Not Found') {
+            console.log(); this.loadingController.dismiss();
+            this.dialogs.alert('Please enter valid registration number or fill the re-data entry form.');
+          } else { }
         })
       } else {
         this.unregisteredUser = true;
@@ -119,7 +120,6 @@ export class RenewalVerificationPage implements OnInit {
         });
       }
     }
-
   }
 
   redataVerification() {
@@ -166,7 +166,7 @@ export class RenewalVerificationPage implements OnInit {
           (err: any) => {
             this.loadingController.dismiss();
             console.log(err);
-            if(err.statusText === 'Unknown Error'){
+            if (err.statusText === 'Unknown Error') {
               this.dialogs.alert('Server is unreachable at this moment. Please try again.');
               this.unregisteredUser = true;
             }
@@ -220,6 +220,7 @@ export class RenewalVerificationPage implements OnInit {
     }
   }
 
+  // getters
   get registrationNo() { return this.verificationForm.get('registrationNo'); }
   get mobileNo() { return this.verificationForm.get('mobileNo'); }
 
