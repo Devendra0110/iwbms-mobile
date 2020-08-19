@@ -3,115 +3,153 @@
     <ion-title>Family Details</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-<form [formGroup]="familyFormGroup">
-<ion-list>
-  <ion-item>
-    <ion-label position="floating">First Name<span style="color: Red">*</span></ion-label>
-    <ion-input [readonly]="selfFlag" formControlName="firstNameFamily" [class.is-invalid]="firstNameFamily.touched && firstNameFamily.invalid" id="firstNameFamily" class="transliterate" autocapitalize="words" (ionBlur)="transliterateDirect($event)" clearInput ></ion-input>
-    <div class="text-danger" *ngIf="firstNameFamily.invalid && firstNameFamily.touched">
-      <small *ngIf="!!firstNameFamily.errors?.required">Please enter your First Name.</small>
-      <small *ngIf="!!firstNameFamily.errors?.maxlength">You have exceeded the max length.</small>
-      <small *ngIf="!!firstNameFamily.errors?.pattern">Please enter appropriate name.</small>
-    </div>
-  </ion-item>
-  <ion-item *ngIf="firstNameFamily_mr.value">
-    <ion-label>{{firstNameFamily_mr.value}}</ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Surname<span style="color: Red">*</span></ion-label>
-    <ion-input [readonly]="selfFlag" formControlName="surname" [class.is-invalid]="surname.touched && surname.invalid" (ionBlur)="transliterateDirect($event)"
-      id="surname" class="transliterate" autocapitalize="words" clearInput></ion-input>
-    <div class="text-danger" *ngIf="surname.invalid && surname.touched">
-      <small *ngIf="!!surname.errors?.required">Please enter your ame.</small>
-      <small *ngIf="!!surname.errors?.maxlength">You have exceeded the max length.</small>
-      <small *ngIf="!!surname.errors?.pattern">Please enter appropriate Name.</small>
-    </div>
-  </ion-item>
-  <ion-item *ngIf="surname_mr.value">
-    <ion-label>{{surname_mr.value}}</ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Father/ Husband Name</ion-label>
-    <ion-input maxlength="20" [class.is-invalid]="fatherOrHusbandName.invalid && fatherOrHusbandName.touched" (ionBlur)="transliterateDirect($event)" 
-      formControlName="fatherOrHusbandName"  id="fatherOrHusbandName" class="transliterate" autocapitalize="words" clearInput ></ion-input>
-    <div class="text-danger" *ngIf="fatherOrHusbandName.invalid && fatherOrHusbandName.touched">
-      <small *ngIf="!!fatherOrHusbandName.errors?.required">Please enter your First Name.</small>
-      <small *ngIf="!!fatherOrHusbandName.errors?.maxlength">You have exceeded the max length.</small>
-      <small *ngIf="!!fatherOrHusbandName.errors?.pattern">Please enter appropriate Name.</small>
-    </div>
-  </ion-item>
-  <ion-item *ngIf="fatherOrHusbandName_mr.value">
-    <ion-label>{{fatherOrHusbandName_mr.value}}</ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-icon slot="end" name="calendar"></ion-icon>
-    <ion-label position="floating">Date of Birth<span style="color: Red">*</span></ion-label>
-    <ion-datetime [readonly]="selfFlag" formControlName="dobFamily" displayFormat="DD MMMM, YYYY" picker-format="DD MMMM YYYY" [class.is-invalid]="dobFamily.touched && dobFamily.invalid" (ionChange)="calculateAge($event)"></ion-datetime>
-    <div class="text-danger" *ngIf="dobFamily.touched && dobFamily.invalid">
-      <small *ngIf="!!dobFamily.errors?.required">Please enter your Date Of Birth.</small>
-    </div>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Age</ion-label>
-    <ion-input readonly formControlName="ageFamily"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Relation<span style="color: Red">*</span></ion-label>
-    <ion-select [disabled]="selfFlag" interface="action-sheet" formControlName="relation" id="relation" [class.is-invalid]="relation.invalid && relation.touched" (ionChange)="handleDropdown($event)">
-      <ion-select-option  *ngFor="let familyRelation of familyRelationOptions|keyvalue"  value="{{familyRelation.key}}"><span *ngIf="!(familyRelation.key === '1')">{{familyRelation.value}}</span><span *ngIf="(familyRelation.key === '1')">Self</span></ion-select-option>
-    </ion-select>
-    <div class="text-danger" *ngIf="relation.touched && relation.invalid">
-      <small *ngIf="!!relation.errors?.required">Please choose relation.</small>
-    </div>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Profession</ion-label>
-    <ion-input formControlName="profession" id="profession" [class.is-invalid]="profession.touched && profession.invalid" class="transliterate" autocapitalize="words" (ionBlur)="transliterateDirect($event)" clearInput ></ion-input>
-  </ion-item>
-  <ion-item *ngIf="profession_mr.value">
-    <ion-label>{{profession_mr.value}}</ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Education<span style="color: Red">*</span></ion-label>
-    <ion-select interface="action-sheet" formControlName="education" id='education' (ionChange)="handleDropdown($event)">
-      <ion-select-option *ngFor="let education of educationOptions|keyvalue" value={{education.key}}>{{education.value}}
-      </ion-select-option>
-    </ion-select>
-    <div class="text-danger" *ngIf="education.invalid && education.touched">
-      <small *ngIf="!!education.errors?.required">Please choose the education</small>
-    </div>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Aadhar No</ion-label>
-    <ion-input [readonly]="selfFlag" (ionBlur)="checkAadharUnique()" type="tel" maxlength="12" formControlName="aadharNoFamily" [class.is-invalid]="aadharNoFamily.invalid && aadharNoFamily.touched" class="transliterate" clearInput></ion-input>
-    <div class="text-danger" *ngIf="aadharNoFamily.invalid && aadharNoFamily.touched">
-      <small *ngIf="!!aadharNoFamily.errors?.pattern">Please enter appropriate aadhar number.</small>
-      <small *ngIf="!!aadharNoFamily.errors?.required">Please enter aadhar number.</small>
-    </div>
-  </ion-item>
-  <ion-item *ngIf="!selfFlag && adultFlag">
-    <ion-label>BOCW Registered Worker</ion-label>
-    <ion-checkbox mode="ios" formControlName="isRegisteredInBOCW" color="primary" slot="start" (ionChange)="bocwValidatorsChange()" >
-    </ion-checkbox>
-  </ion-item>
-  <ion-item *ngIf="isRegisteredInBOCW.value">
-    <ion-label position="floating"> BOCW Reg. No.</ion-label>
-    <ion-input [readonly]="selfFlag" type="tel" maxlength="12" formControlName="bocwRegistrationNo"
-      [class.is-invalid]="bocwRegistrationNo.invalid && bocwRegistrationNo.touched" class="transliterate" clearInput></ion-input>
-    <div class="text-danger" *ngIf="bocwRegistrationNo.invalid && bocwRegistrationNo.touched">
-      <small *ngIf="!!bocwRegistrationNo.errors?.required">Please enter BOCW registration number.</small>
-      <small *ngIf="!!bocwRegistrationNo.errors?.pattern">Please enter appropriate BOCW registration number.</small>
-    </div>
-  </ion-item>
-  <ion-item *ngIf="!selfFlag">
-    <ion-label>Nominee</ion-label>
-    <ion-checkbox   mode="ios" formControlName="nominee" color="primary" slot="start"></ion-checkbox>
-  </ion-item>
-</ion-list>
 
-</form>
+<ion-content>
+  <form [formGroup]="familyFormGroup">
+    <ion-list>
+
+      <ion-item>
+        <ion-label position="floating">First Name<span style="color: Red">*</span></ion-label>
+        <ion-input [readonly]="selfFlag" formControlName="firstNameFamily"
+          [class.is-invalid]="firstNameFamily.touched && firstNameFamily.invalid" id="firstNameFamily"
+          class="transliterate" autocapitalize="words" (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
+        <div class="text-danger" *ngIf="firstNameFamily.invalid && firstNameFamily.touched">
+          <small *ngIf="!!firstNameFamily.errors?.required">Please enter First Name.</small>
+          <small *ngIf="!!firstNameFamily.errors?.maxlength">You have exceeded the max length.</small>
+          <small *ngIf="!!firstNameFamily.errors?.pattern">Please enter appropriate name.</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="firstNameFamily_mr.value">
+        <ion-label>{{firstNameFamily_mr.value}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Surname<span style="color: Red">*</span></ion-label>
+        <ion-input [readonly]="selfFlag" formControlName="surname"
+          [class.is-invalid]="surname.touched && surname.invalid" (ionBlur)="transliterateDirect($event)" id="surname"
+          class="transliterate" autocapitalize="words" clearInput></ion-input>
+        <div class="text-danger" *ngIf="surname.invalid && surname.touched">
+          <small *ngIf="!!surname.errors?.required">Please enter Surname.</small>
+          <small *ngIf="!!surname.errors?.maxlength">You have exceeded the max length.</small>
+          <small *ngIf="!!surname.errors?.pattern">Please enter appropriate name.</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="surname_mr.value">
+        <ion-label>{{surname_mr.value}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Father/ Husband Name</ion-label>
+        <ion-input maxlength="20" [class.is-invalid]="fatherOrHusbandName.invalid && fatherOrHusbandName.touched"
+          (ionBlur)="transliterateDirect($event)" formControlName="fatherOrHusbandName" id="fatherOrHusbandName"
+          class="transliterate" autocapitalize="words" clearInput></ion-input>
+        <div class="text-danger" *ngIf="fatherOrHusbandName.invalid && fatherOrHusbandName.touched">
+          <small *ngIf="!!fatherOrHusbandName.errors?.required">Please enter Father/Husband Name.</small>
+          <small *ngIf="!!fatherOrHusbandName.errors?.maxlength">You have exceeded the max length.</small>
+          <small *ngIf="!!fatherOrHusbandName.errors?.pattern">Please enter appropriate name.</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="fatherOrHusbandName_mr.value">
+        <ion-label>{{fatherOrHusbandName_mr.value}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon slot="end" name="calendar"></ion-icon>
+        <ion-label position="floating">Date of Birth<span style="color: Red">*</span></ion-label>
+        <ion-datetime [readonly]="selfFlag" formControlName="dobFamily" displayFormat="DD MMMM, YYYY"
+          picker-format="DD MMMM YYYY" [class.is-invalid]="dobFamily.touched && dobFamily.invalid"
+          (ionChange)="calculateAge($event)"></ion-datetime>
+        <div class="text-danger" *ngIf="dobFamily.touched && dobFamily.invalid">
+          <small *ngIf="!!dobFamily.errors?.required">Please enter Date Of Birth.</small>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Age</ion-label>
+        <ion-input readonly formControlName="ageFamily"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Relation<span style="color: Red">*</span></ion-label>
+        <ion-select [disabled]="selfFlag" interface="action-sheet" formControlName="relation" id="relation"
+          [class.is-invalid]="relation.invalid && relation.touched" (ionChange)="handleDropdown($event)">
+          <ion-select-option *ngFor="let familyRelation of familyRelationOptions|keyvalue"
+            value="{{familyRelation.key}}"><span
+              *ngIf="!(familyRelation.key === '1')">{{familyRelation.value}}</span><span
+              *ngIf="(familyRelation.key === '1')">Self</span></ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="relation.touched && relation.invalid">
+          <small *ngIf="!!relation.errors?.required">Please select relation.</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="relation_mr.value">
+        <ion-label>{{familyRelationOptionsMarathi[relation_mr.value]}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Profession</ion-label>
+        <ion-input formControlName="profession" id="profession"
+          [class.is-invalid]="profession.touched && profession.invalid" class="transliterate" autocapitalize="words"
+          (ionBlur)="transliterateDirect($event)" clearInput></ion-input>
+      </ion-item>
+      <ion-item *ngIf="profession_mr.value">
+        <ion-label>{{profession_mr.value}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Education<span style="color: Red">*</span></ion-label>
+        <ion-select interface="action-sheet" formControlName="education" id='education'
+          (ionChange)="handleDropdown($event)">
+          <ion-select-option *ngFor="let education of educationOptions|keyvalue" value={{education.key}}>
+            {{education.value}}
+          </ion-select-option>
+        </ion-select>
+        <div class="text-danger" *ngIf="education.invalid && education.touched">
+          <small *ngIf="!!education.errors?.required">Please select education level.</small>
+        </div>
+      </ion-item>
+      <ion-item *ngIf="education_mr.value">
+        <ion-label>{{educationOptionsMarathi[education_mr.value]}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Aadhar Number</ion-label>
+        <ion-input [readonly]="selfFlag" (ionBlur)="checkAadharUnique()" type="tel" maxlength="12"
+          formControlName="aadharNoFamily" [class.is-invalid]="aadharNoFamily.invalid && aadharNoFamily.touched"
+          class="transliterate" clearInput></ion-input>
+        <div class="text-danger" *ngIf="aadharNoFamily.invalid && aadharNoFamily.touched">
+          <small *ngIf="!!aadharNoFamily.errors?.required">Please enter Aadhar Number.</small>
+          <small *ngIf="!!aadharNoFamily.errors?.pattern">Please enter appropriate Aadhar Number.</small>
+        </div>
+      </ion-item>
+
+      <ion-item *ngIf="!selfFlag && adultFlag">
+        <ion-label>BOCW Registered Worker</ion-label>
+        <ion-checkbox mode="ios" formControlName="isRegisteredInBOCW" color="primary" slot="start"
+          (ionChange)="bocwValidatorsChange()">
+        </ion-checkbox>
+      </ion-item>
+
+      <ion-item *ngIf="isRegisteredInBOCW.value">
+        <ion-label position="floating">BOCW Reg. No.</ion-label>
+        <ion-input [readonly]="selfFlag" type="tel" maxlength="12" formControlName="bocwRegistrationNo"
+          [class.is-invalid]="bocwRegistrationNo.invalid && bocwRegistrationNo.touched" class="transliterate"
+          clearInput></ion-input>
+        <div class="text-danger" *ngIf="bocwRegistrationNo.invalid && bocwRegistrationNo.touched">
+          <small *ngIf="!!bocwRegistrationNo.errors?.required">Please enter BOCW Registration No.</small>
+          <small *ngIf="!!bocwRegistrationNo.errors?.pattern">Please enter appropriate BOCW Registration No.</small>
+        </div>
+      </ion-item>
+
+      <ion-item *ngIf="!selfFlag">
+        <ion-label>Nominee</ion-label>
+        <ion-checkbox mode="ios" formControlName="nominee" color="primary" slot="start"></ion-checkbox>
+      </ion-item>
+
+    </ion-list>
+  </form>
 </ion-content>
+
 <ion-footer>
   <ion-toolbar>
     <ion-fab horizontal="start">

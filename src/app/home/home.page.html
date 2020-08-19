@@ -1,37 +1,33 @@
 <ion-header>
-  <ion-toolbar  color="primary">
+  <ion-toolbar color="primary">
     <ion-title>
-      Home
+      IWBMS Mobile
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="background">
-    <ion-card class="welcome-card">
-      <img src="/assets/logo.png" alt="" />
-      <!-- <ion-card-header>
-        <ion-card-subtitle>Get Started</ion-card-subtitle> 
-        <ion-card-title>IWBMS</ion-card-title> 
-      </ion-card-header> -->
-      <ion-card-content>
-        <form [formGroup]="loginForm">
+  <ion-card class="welcome-card">
+    <img src="/assets/logo.png" alt="" />
+    <ion-card-content>
+      <form [formGroup]="loginForm">
         <ion-item>
           <ion-label position="floating">Username</ion-label>
           <ion-input color="primary" type="email" formControlName="username" clearInput></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Password</ion-label>
-          <ion-input [type]="passwordType" formControlName="password" clearInput></ion-input><ion-icon style="margin-top:21px" mode="ios" slot="end" [name]="passwordIcon" (click)="showPassword()"></ion-icon>
+          <ion-input [type]="passwordType" formControlName="password" clearInput></ion-input>
+          <ion-icon style="margin-top:21px" mode="ios" slot="end" [name]="passwordIcon" (click)="showPassword()">
+          </ion-icon>
         </ion-item>
-        <ion-item *ngIf="wrongUser"> 
-          <ion-label style="color: Red" class="ion-text-wrap" >Please enter a valid username and password.</ion-label>
+        <ion-item *ngIf="wrongUser">
+          <ion-label style="color: Red" class="ion-text-wrap">Please enter a valid username and password.</ion-label>
         </ion-item>
         <ion-button [disabled]='!loginForm.valid' mode="ios" expand="block" (click)="loginUser()">
-          Log-in<ion-icon slot="start" name="log-in"></ion-icon>
+          Login<ion-icon slot="start" name="log-in"></ion-icon>
         </ion-button>
-      </form >
-
-
-      </ion-card-content>
-    </ion-card>    
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
